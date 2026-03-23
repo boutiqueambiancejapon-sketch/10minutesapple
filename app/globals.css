@@ -280,10 +280,10 @@ body {
 
 /* --- Nav --- */
 @media (min-width: 768px) {
-  .nav-hamburger { display: none; }
+  .nav-hamburger { display: none !important; }
 }
 @media (max-width: 767px) {
-  .nav-desktop { display: none; }
+  .nav-desktop { display: none !important; }
 }
 
 /* --- Bento grid FeaturedTools --- */

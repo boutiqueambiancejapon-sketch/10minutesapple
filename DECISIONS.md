@@ -43,3 +43,33 @@
 ## Abandonnées / Exceptions
 - dark mode toggle abandonné — dark-only by design (aligné avec l'audience tech)
 - next/font variable nommée `--next-font-*` au lieu de `--font-*` → évite la référence circulaire CSS quand Tailwind @theme et Next.js injectent la même propriété dans :root
+
+## DA — composants effets (Étape 2)
+
+### Évitement patterns IA génériques
+- Pas de blobs flottants libres → AuroraBackground : 3 faisceaux ancrés (haut-gauche, haut-droite, bas-centre), animation respiration uniquement (scale + opacité)
+- Pas de glassmorphism systématique → glass uniquement quiz/cards comparateur
+- Pas de wavy SVG divider → SectionDivider : variant 'rule' (filet + label smallcaps) ou 'number' (watermark Syne 800)
+- Pas de fade-from-bottom générique → AnimatedHeading : wipe clip-path gauche→droite
+
+### Décisions techniques composants
+- effect-aurora : `mix-blend-mode:screen` sur faisceaux → additivité lumineuse, pas de superposition
+- effect-aurora : `filter:blur(90px)` minimum → forme elliptique invisible, seule la couleur reste
+- effect-aurora : `@property --aurora-opacity-*` → transition CSS native sur custom properties
+- effect-noise : SVG inline `<feTurbulence>` → pas de PNG tile, pas de base64
+- effect-marquee : 2× contenu dans 1 div → `translateX(-50%)` = 1 copie seamless
+- effect-marquee : `.marquee-container` + `mask-image` fondu bords → finition premium
+- typo-rotating : machine d'état idle/exit/enter + double rAF pour transition CSS sans flash
+- typo-scramble : `interval` + résolution progressive (iteration += 0.35) → décodage fluide
+- effect-countup : `IntersectionObserver` threshold 0.5 + `requestAnimationFrame` ease-out cubic
+- effect-announcement : `animation: slide-down` CSS + dismiss `useState` — seul le dismiss est 'use client'
+
+### AuthorCard
+- Monogramme "M" CSS : Syne 800, --accent-1, 45% de la taille du conteneur
+- Variant inline (bas article) : border-top 3px --accent-1
+- Variant full (page auteur) : border normale, lien "Voir tous les articles →"
+
+### PriceTag
+- JetBrains Mono chargé dans le composant (`preload: false`) — pas dans layout global
+- `font-variant-numeric: tabular-nums` obligatoire sur tous les chiffres
+- Badge économie : fond --accent-3 (vert menthe), couleur --bg-primary

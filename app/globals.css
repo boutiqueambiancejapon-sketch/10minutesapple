@@ -143,3 +143,126 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ===== ANIMATABLE CUSTOM PROPERTIES (CSS @property) ===== */
+
+@property --aurora-opacity-1 {
+  syntax: '<number>';
+  initial-value: 0.55;
+  inherits: false;
+}
+@property --aurora-opacity-2 {
+  syntax: '<number>';
+  initial-value: 0.45;
+  inherits: false;
+}
+@property --aurora-opacity-3 {
+  syntax: '<number>';
+  initial-value: 0.35;
+  inherits: false;
+}
+
+/* ===== KEYFRAMES ===== */
+
+/* Aurora — lumière ancrée, pas de blobs flottants */
+@keyframes aurora-breathe-1 {
+  0%, 100% { --aurora-opacity-1: 0.55; transform: scale(1) rotate(0deg); }
+  40%       { --aurora-opacity-1: 0.40; transform: scale(1.06) rotate(4deg); }
+  70%       { --aurora-opacity-1: 0.60; transform: scale(0.97) rotate(-2deg); }
+}
+@keyframes aurora-breathe-2 {
+  0%, 100% { --aurora-opacity-2: 0.45; transform: scale(1) rotate(0deg); }
+  35%       { --aurora-opacity-2: 0.60; transform: scale(1.08) rotate(-5deg); }
+  65%       { --aurora-opacity-2: 0.35; transform: scale(1.02) rotate(3deg); }
+}
+@keyframes aurora-breathe-3 {
+  0%, 100% { --aurora-opacity-3: 0.35; transform: scale(1); }
+  50%       { --aurora-opacity-3: 0.55; transform: scale(1.12); }
+}
+
+/* Marquee CSS pur — translateX sur 2× le contenu dupliqué */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Heading — wipe gauche→droite */
+@keyframes heading-reveal {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+
+/* Reveal stagger — sections au scroll */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Badge pulse — deals HOT */
+@keyframes pulse-accent {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+
+/* Border pulse lent — comparateur */
+@keyframes border-pulse {
+  0%, 100% { border-color: var(--accent-1); }
+  50%       { border-color: rgba(255, 61, 87, 0.25); }
+}
+
+/* Announcement bar — slide depuis le haut */
+@keyframes slide-down {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== UTILITAIRES DA ===== */
+
+/* Gradient text — H1 hero uniquement */
+.text-gradient-hero {
+  background: linear-gradient(
+    var(--gradient-angle),
+    var(--accent-1),
+    var(--accent-2)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* Marquee container — fondu bords */
+.marquee-container {
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 6%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+/* Watermark numéro — sections */
+.section-watermark {
+  font-family: var(--next-font-display), system-ui, sans-serif;
+  font-size: clamp(120px, 18vw, 200px);
+  font-weight: 800;
+  line-height: 1;
+  opacity: 0.05;
+  color: var(--accent-2);
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.04em;
+}

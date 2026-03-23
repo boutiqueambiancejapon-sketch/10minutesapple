@@ -1,8 +1,15 @@
-// Placeholder — Home complète construite en Étape 3
+import { HeroSection } from '@/components/home/HeroSection'
+import { DealsStrip } from '@/components/home/DealsStrip'
+import { FeaturedTools } from '@/components/home/FeaturedTools'
+import { AuthorTeaser } from '@/components/home/AuthorTeaser'
+
 export default function HomePage() {
   return (
     <main id="main-content">
-      <p>10minutesapple.com — en construction</p>
+      <HeroSection />
+      <DealsStrip />
+      <FeaturedTools />
+      <AuthorTeaser />
     </main>
   )
 }

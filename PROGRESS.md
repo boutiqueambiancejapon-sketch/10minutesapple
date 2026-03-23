@@ -28,18 +28,27 @@
 - [x] public/icons/brand/ (logo.svg · favicon.svg · og-default.svg)
 - [x] content/ dirs (blog · produits · historique-prix)
 
-## En cours — Étape 2
+## Complété — Étape 2 (2026-03-23)
 
 ### Design system & utils
-- [ ] Composants effets : AuroraBackground · NoiseOverlay · SectionDivider · AnimatedHeading
-- [ ] Composants UI : AuthorByline · AuthorCard · AffiliateLink · AffiliateButton · PriceTag
-- [ ] Tests composants (Vitest + RTL)
-- [ ] JetBrains Mono (chargé dans composant Price/PriceTag)
+- [x] Composants effets : AuroraBackground · NoiseOverlay · SectionDivider · AnimatedHeading
+- [x] Composants effets : RotatingWords · TextScramble · CountUp · MarqueeStrip · AnnouncementBar
+- [x] Composants UI : AuthorByline · AuthorCard · AffiliateLink · AffiliateButton · PriceTag
+- [x] Tests composants (Vitest + RTL) — 34 tests pass
+- [x] JetBrains Mono (chargé dans composant PriceTag)
 
-## En attente — Étape 3
-- Page /auteurs/mathias (AVANT tout article)
-- Layout global (nav + footer)
-- Home hero (aurora + H1 clip gradient)
+## Complété — Étape 3 (2026-03-23)
+
+### Layout & pages
+- [x] app/(site)/layout.tsx (route group Nav + Footer)
+- [x] components/layout/Nav.tsx (sticky blur · mobile overlay · usePathname actif)
+- [x] components/layout/Footer.tsx (3 cols · diagonal clip-path · disclaimer affilié)
+- [x] components/home/HeroSection.tsx (Aurora · AnimatedHeading · RotatingWords · CTAs)
+- [x] components/home/FeaturedTools.tsx (bento grid asymétrique 2/3 + 1/3)
+- [x] components/home/DealsStrip.tsx (MarqueeStrip · chips affiliés)
+- [x] components/home/AuthorTeaser.tsx (monogramme M · bio · lien auteur)
+- [x] app/(site)/page.tsx (home complète)
+- [x] app/(site)/auteurs/[slug]/page.tsx (ISR 86400s · JSON-LD Person · watermark M)
 
 ## En attente — Étape 4
 - Blog hub · articles (5 min)

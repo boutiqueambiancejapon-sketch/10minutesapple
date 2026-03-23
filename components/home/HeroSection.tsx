@@ -21,18 +21,9 @@ export function HeroSection() {
 
       <div
         style={{
-          minHeight: 'min(100svh, 820px)',
-          display: 'flex',
-          alignItems: 'center',
-          paddingTop: 'var(--space-20)',
-          paddingBottom: 'var(--space-20)',
-        }}
-      >
-      <div
-        style={{
           maxWidth: '1280px',
           margin: '0 auto',
-          padding: '0 var(--space-6)',
+          padding: 'var(--space-20) var(--space-6)',
           width: '100%',
           position: 'relative',
           zIndex: 3,
@@ -167,7 +158,6 @@ export function HeroSection() {
             Quel Apple me convient ?
           </Link>
         </AnimatedHeading>
-      </div>
       </div>
     </AuroraBackground>
   )

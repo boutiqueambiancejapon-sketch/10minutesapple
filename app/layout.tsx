@@ -13,7 +13,7 @@ const fontPrimary = Space_Grotesk({
 
 const fontDisplay = Syne({
   subsets: ['latin'],
-  weight: ['700', '800'],
+  weight: ['400', '700', '800'],
   variable: '--next-font-display',
   adjustFontFallback: true,
   preload: true,

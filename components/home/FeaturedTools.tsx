@@ -187,13 +187,12 @@ export function FeaturedTools() {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
-          gridTemplateRows: 'auto auto',
           gap: 'var(--space-4)',
         }}
         className="bento-grid"
       >
-        {/* Grande cellule Comparateur — 2 colonnes sur 2 rangées */}
-        <div style={{ gridColumn: '1 / 3', gridRow: '1 / 3' }}>
+        {/* Grande cellule Comparateur — 2 colonnes sur 2 rangées (CSS class pour responsive) */}
+        <div className="bento-featured">
           <ToolCard
             href="/comparer"
             eyebrow="Comparateur"

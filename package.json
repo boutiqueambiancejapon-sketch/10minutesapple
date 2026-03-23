@@ -1,0 +1,42 @@
+{
+  "name": "10minutesapple",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "audit": "npm audit --audit-level=high --omit=dev"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "lucide-react": "latest",
+    "next": "~16.2.1",
+    "next-mdx-remote": "^6.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4.2.2",
+    "@testing-library/jest-dom": "^6",
+    "@testing-library/react": "^16",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4",
+    "eslint": "^9",
+    "eslint-config-next": "~16.2.1",
+    "jsdom": "^25",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5",
+    "vite-tsconfig-paths": "^5",
+    "vitest": "^2"
+  }
+}

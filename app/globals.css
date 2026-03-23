@@ -1,0 +1,145 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-accent-1: #FF3D57;
+  --color-accent-2: #FFD23F;
+  --color-accent-3: #3DFFC0;
+  --color-accent-4: #7B61FF;
+  --color-bg-primary: #0A0A0F;
+  --color-bg-surface: #13131A;
+  --color-bg-surface-2: #1C1C26;
+  --color-text-primary: #F0F0F5;
+  --color-text-secondary: #9090A8;
+  --color-text-muted: #55556A;
+  --color-success: #3DFFC0;
+  --color-warning: #FFD23F;
+  --color-error: #FF3D57;
+
+  /* Fonts — Next.js injects the actual values via class on <html> */
+  --font-primary: var(--next-font-primary);
+  --font-display: var(--next-font-display);
+  --font-mono: var(--next-font-mono);
+}
+
+:root {
+  /* Fonds */
+  --bg-primary:   #0A0A0F;
+  --bg-surface:   #13131A;
+  --bg-surface-2: #1C1C26;
+
+  /* Accents */
+  --accent-1: #FF3D57;
+  --accent-2: #FFD23F;
+  --accent-3: #3DFFC0;
+  --accent-4: #7B61FF;
+
+  /* Texte */
+  --text-primary:   #F0F0F5;
+  --text-secondary: #9090A8;
+  --text-muted:     #55556A;
+
+  /* Borders */
+  --border:        rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.15);
+
+  /* Sémantique */
+  --success: #3DFFC0;
+  --warning: #FFD23F;
+  --error:   #FF3D57;
+
+  /* Glass */
+  --glass-bg:     rgba(19, 19, 26, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-blur:   16px;
+
+  /* Effets DA */
+  --noise-opacity:    0.04;
+  --aurora-1:         #FF3D57;
+  --aurora-2:         #7B61FF;
+  --aurora-3:         #3DFFC0;
+  --gradient-angle:   135deg;
+
+  /* Shadows */
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow-accent: 0 0 24px rgba(255, 61, 87, 0.25);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 200ms;
+
+  /* Espacement */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* Border radius */
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+}
+
+/* Reset minimal */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--next-font-primary), system-ui, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100svh;
+}
+
+/* Focus accessible — jamais supprimé */
+:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 3px;
+}
+
+/* Skip to content */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: 100;
+  padding: var(--space-2) var(--space-4);
+  background: var(--accent-1);
+  color: var(--bg-primary);
+  font-weight: 700;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: top var(--duration) var(--ease-out);
+}
+
+.skip-to-content:focus {
+  top: var(--space-4);
+}
+
+/* prefers-reduced-motion — obligatoire sur toute animation */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

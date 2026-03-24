@@ -384,6 +384,94 @@ function watchContent(year: number): ChoisirProductContent {
 }
 
 // ---------------------------------------------------------------------------
+// AirPods
+// ---------------------------------------------------------------------------
+function airpodsContent(year: number): ChoisirProductContent {
+  return {
+    tldr: [
+      `Les AirPods Pro 2 à 249 € sont le meilleur choix en ${year} — meilleure ANC Apple, audio spatial personnalisé, IP54.`,
+      `Les AirPods 4 ANC à 179 € sont parfaits si tu n'aimes pas les embouts intra — ANC active dans un format ouvert.`,
+      `Les AirPods Max à 599 € ne se justifient que pour une écoute audio premium ou un usage bureau intensif en open space.`,
+    ],
+    sections: [
+      {
+        id: 'quels-airpods-acheter',
+        title: `Quels AirPods acheter selon ton usage ?`,
+        intro: `En ${year}, Apple vend 4 modèles d'AirPods. Le bon choix dépend de deux choses : est-ce que tu supportes les embouts intra, et est-ce que tu as besoin de réduction de bruit ?`,
+        table: {
+          headers: ['Usage', 'Modèle', 'Prix', 'Verdict'],
+          rows: [
+            ['Quotidien / appels', 'AirPods 4', '149 €', 'Format ouvert, confortable, pas d\'ANC — l\'essentiel'],
+            ['Trajets / bureau', 'AirPods 4 ANC', '179 €', 'ANC sans embouts intra — le compromis malin'],
+            ['Sport / isolation', 'AirPods Pro 2', '249 €', 'Meilleure ANC, IP54, audio spatial — le top'],
+            ['Audio premium', 'AirPods Max', '599 €', 'Over-ear, 20h d\'autonomie, ANC de référence'],
+          ],
+        },
+        internalLink: { text: 'Comparer tous les AirPods côte à côte', href: '/comparer/airpods' },
+      },
+      {
+        id: 'airpods-pro-vs-airpods-4',
+        title: `AirPods Pro 2 vs AirPods 4 ANC — lequel choisir ?`,
+        intro: `Honnêtement, les deux ont l'ANC. La vraie question c'est : embouts intra ou pas ? Les Pro 2 s'insèrent dans le conduit auditif avec des embouts en silicone. Les AirPods 4 ANC se posent à l'entrée de l'oreille, sans rien insérer.`,
+        paragraphs: [
+          `Les Pro 2 ont une meilleure isolation passive (embouts) donc une meilleure ANC, une meilleure étanchéité (IP54 vs IPX4) et 1,5h d'autonomie en plus. Si tu fais du sport, les Pro 2 tiennent mieux en place grâce aux embouts.`,
+          `Le vrai tip : si les écouteurs intra te gênent après 1h, les AirPods 4 ANC sont le bon choix. Si l'isolation sonore est ta priorité, les Pro 2 sont nettement supérieurs.`,
+        ],
+      },
+      {
+        id: 'airpods-max-pour-qui',
+        title: `Les AirPods Max — pour qui exactement ?`,
+        intro: `Les AirPods Max à 599 € sont un casque over-ear premium, pas des écouteurs. Ils visent un usage sédentaire : bureau en open space, trajets longs, écoute musicale exigeante.`,
+        paragraphs: [
+          `L'ANC circumaurale des Max est objectivement la meilleure d'Apple — coussins en mousse + ANC active = isolation quasi totale. L'audio spatial avec suivi de la tête est aussi plus convaincant sur un casque que sur des écouteurs.`,
+          `En clair : si tu travailles en open space ou tu voyages beaucoup en avion, les Max valent leur prix. Si tu veux des écouteurs polyvalents pour le sport et le quotidien, les Pro 2 sont le meilleur choix pour 350 € de moins.`,
+        ],
+        tip: `Les AirPods Max ne sont pas étanches. Pour le sport, reste sur les Pro 2 (IP54) ou les AirPods 4 (IPX4).`,
+      },
+      {
+        id: 'airpods-entretien',
+        title: `Combien de temps durent les AirPods ?`,
+        intro: `La batterie d'un AirPod perd environ 20 % de capacité après 2 ans d'usage quotidien. Après 3-4 ans, l'autonomie chute significativement. C'est le principal défaut des écouteurs true wireless.`,
+        paragraphs: [
+          `Apple propose un remplacement de batterie à 89 € par écouteur (Pro) ou 79 € (AirPods 4). Autant acheter une nouvelle paire à ce prix. C'est un produit consommable — prévois un renouvellement tous les 3 ans.`,
+        ],
+        internalLink: { text: 'Voir le simulateur de prix Apple', href: '/simulateur' },
+      },
+    ],
+    faq: [
+      {
+        q: `Quels sont les meilleurs AirPods en ${year} ?`,
+        a: `Les AirPods Pro 2 à 249 € sont le meilleur choix global : meilleure ANC d'Apple en format intra, audio spatial personnalisé, IP54, et 5,5h d'autonomie. Ils conviennent à la majorité des usages.`,
+      },
+      {
+        q: `AirPods 4 ou AirPods Pro 2 ?`,
+        a: `Les AirPods 4 ANC (179 €) conviennent si tu n'aimes pas les embouts intra-auriculaires. Les Pro 2 (249 €) offrent une meilleure isolation, une meilleure étanchéité (IP54) et plus d'autonomie. Pour le sport, les Pro 2 sont clairement supérieurs.`,
+      },
+      {
+        q: `Les AirPods Max valent-ils 599 € ?`,
+        a: `Seulement pour un usage sédentaire premium : bureau en open space, longs trajets, ou écoute musicale exigeante. L'ANC over-ear est la meilleure d'Apple. Pour un usage polyvalent, les Pro 2 à 249 € sont un bien meilleur investissement.`,
+      },
+      {
+        q: `Quel modèle d'AirPods pour le sport ?`,
+        a: `Les AirPods Pro 2 (IP54) pour la course et le fitness en salle. Ils tiennent bien en place grâce aux embouts silicone. Les AirPods 4 (IPX4) conviennent pour du sport léger mais tiennent moins bien dans l'oreille.`,
+      },
+      {
+        q: `Les AirPods sont-ils compatibles avec Android ?`,
+        a: `Oui, tous les AirPods fonctionnent en Bluetooth avec un téléphone Android. Mais tu perds l'appairage automatique, l'audio spatial avec suivi de la tête, et Siri. L'ANC fonctionne normalement.`,
+      },
+      {
+        q: `Quelle est l'autonomie des AirPods ?`,
+        a: `AirPods 4 : 5h (30h avec boîtier). AirPods 4 ANC : 4h (24h avec boîtier). AirPods Pro 2 : 5,5h (30h avec boîtier). AirPods Max : 20h. Tous se rechargent en USB-C.`,
+      },
+      {
+        q: `Faut-il attendre les AirPods Pro 3 ?`,
+        a: `Les AirPods Pro 3 sont attendus courant ${year}. Si tes écouteurs actuels fonctionnent encore, patienter peut valoir le coup. Sinon, les Pro 2 restent un excellent achat — Apple les supportera encore plusieurs années.`,
+      },
+    ],
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Registry
 // ---------------------------------------------------------------------------
 const CONTENT_REGISTRY: Record<string, (year: number) => ChoisirProductContent> = {
@@ -391,6 +479,7 @@ const CONTENT_REGISTRY: Record<string, (year: number) => ChoisirProductContent> 
   mac: macContent,
   ipad: ipadContent,
   watch: watchContent,
+  airpods: airpodsContent,
 }
 
 export function getChoisirContent(

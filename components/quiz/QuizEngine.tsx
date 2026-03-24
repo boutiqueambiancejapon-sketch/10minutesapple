@@ -77,8 +77,17 @@ const STEPS: Step[] = [
 
 /* ─── Moteur de recommandation ───────────────────────── */
 
+const COMPARER_HREF: Record<string, string> = {
+  iphone:  '/comparer/iphone',
+  mac:     '/comparer/mac',
+  ipad:    '/comparer/ipad',
+  watch:   '/comparer/watch',
+  airpods: '/comparer/airpods',
+}
+
 function recommend(answers: Answers): Recommendation {
   const { produit, budget, usage } = answers
+  const comparerHref = COMPARER_HREF[produit] ?? '/comparer'
 
   if (produit === 'iphone') {
     if (budget === 'eco') {
@@ -88,7 +97,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Le meilleur rapport qualité-prix du moment. Puce A16 Bionic, caméra 48 MP, autonomie solide — et la baisse de prix post-annonce iPhone 16 en fait un deal évident.',
         prix: 'à partir de 769 €',
         href: '/blog/iphone/quand-acheter-iphone',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     if (budget === 'pro' || (budget === 'high' && usage === 'photo')) {
@@ -98,7 +107,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Honnêtement, seulement si tu utilises vraiment la caméra à fond ou l\'écran ProMotion 120Hz tous les jours. Sinon le 16 standard fait 90% du travail.',
         prix: 'à partir de 1 479 €',
         href: '/blog/iphone/quand-acheter-iphone',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     if (budget === 'high' || budget === 'mid') {
@@ -108,7 +117,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Le vrai tip : l\'iPhone 16 standard couvre 95% des usages. Puce A18, Apple Intelligence, charge USB-C. Inutile de payer Pro si tu ne filmes pas en ProRAW.',
         prix: 'à partir de 869 €',
         href: '/blog/iphone/quand-acheter-iphone',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
   }
@@ -121,7 +130,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Le MacBook Air M3 est la référence pour 90% des usages : bureau, développement léger, montage vidéo occasionnel. Silencieux, fin, autonomie 18h. En clair : difficile de faire mieux à ce prix.',
         prix: 'à partir de 1 299 €',
         href: '/blog',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     if (budget === 'high') {
@@ -131,7 +140,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Si tu fais du rendu 3D, de la musique ou du montage 4K régulier, le Pro M4 vaut l\'écart de prix. La puce M4 Pro est une rupture pour les workflows lourds.',
         prix: 'à partir de 2 099 €',
         href: '/blog',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     return {
@@ -140,7 +149,7 @@ function recommend(answers: Answers): Recommendation {
       pourquoi: 'Le vrai tip si tu as déjà un écran : le Mac mini M4 à 699 € est la puce M4 la moins chère du catalogue. Performances identiques au MacBook Air M3 pour 600 € de moins.',
       prix: 'à partir de 699 €',
       href: '/blog',
-      comparerHref: '/comparer',
+      comparerHref,
     }
   }
 
@@ -152,7 +161,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Pour la lecture, Netflix, les cours et la navigation — l\'iPad standard fait tout ça très bien. Pas besoin de dépenser plus si tu n\'as pas de workflow de création.',
         prix: 'à partir de 399 €',
         href: '/blog',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     if (budget === 'mid' || (budget === 'high' && usage !== 'photo')) {
@@ -162,7 +171,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'L\'iPad Air M2 est la version "sans compromis" pour le travail : puce M2, écran Liquid Retina, compatible Apple Pencil Pro. Le bon équilibre prix/puissance.',
         prix: 'à partir de 799 €',
         href: '/blog',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     return {
@@ -171,7 +180,7 @@ function recommend(answers: Answers): Recommendation {
       pourquoi: 'L\'iPad Pro M4 a l\'écran OLED le plus fin jamais produit par Apple. Pertinent si tu fais de l\'illustration, du montage ou si tu remplaces un Mac.',
       prix: 'à partir de 1 199 €',
       href: '/blog',
-      comparerHref: '/comparer',
+      comparerHref,
     }
   }
 
@@ -183,7 +192,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Honnêtement, la Watch SE couvre 80% des fonctionnalités à la moitié du prix. Suivi activité, cardiaque, ECG, crash detection. Ce qu\'il manque : l\'écran always-on et l\'AOD.',
         prix: 'à partir de 279 €',
         href: '/blog',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     if (budget === 'pro' || usage === 'sport') {
@@ -193,7 +202,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Pour les sportifs sérieux et les randonneurs. Autonomie 60h, GPS de précision, bouton Action. À éviter si tu ne fais pas de sport extrême — c\'est un outil, pas un bijou.',
         prix: 'à partir de 899 €',
         href: '/blog',
-        comparerHref: '/comparer',
+        comparerHref,
       }
     }
     return {
@@ -202,7 +211,7 @@ function recommend(answers: Answers): Recommendation {
       pourquoi: 'Le vrai tip : la Series 10 est la Watch la plus fine jamais produite. Chargée en 30 min, écran always-on, sleep apnea detection. Le meilleur choix quotidien.',
       prix: 'à partir de 449 €',
       href: '/blog',
-      comparerHref: '/comparer',
+      comparerHref,
     }
   }
 
@@ -214,7 +223,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'Les AirPods 4 sont les premiers sans embouts intra à proposer une réduction de bruit active. Pour les réunions et les trajets, ils suffisent largement.',
         prix: 'à partir de 179 €',
         href: '/blog',
-        comparerHref: '/deals',
+        comparerHref,
       }
     }
     if (budget === 'pro') {
@@ -224,7 +233,7 @@ function recommend(answers: Answers): Recommendation {
         pourquoi: 'La meilleure réduction de bruit du marché selon Mathias (testé côte à côte avec le Sony XM5). Pertinent si tu travailles en open space ou tu voyages beaucoup. Aucun sens si tu veux du sport.',
         prix: 'à partir de 599 €',
         href: '/blog',
-        comparerHref: '/deals',
+        comparerHref,
       }
     }
     return {
@@ -233,7 +242,7 @@ function recommend(answers: Answers): Recommendation {
       pourquoi: 'En clair : les AirPods Pro 2 sont le meilleur rapport qualité/prix des écouteurs Apple. ANC de référence, spatial audio, résistance à l\'eau IP54. Le choix par défaut si tu hésites.',
       prix: 'à partir de 249 €',
       href: '/blog',
-      comparerHref: '/deals',
+      comparerHref,
     }
   }
 
@@ -244,7 +253,7 @@ function recommend(answers: Answers): Recommendation {
     pourquoi: 'Le choix le plus polyvalent du catalogue Apple pour la plupart des usages.',
     prix: 'à partir de 869 €',
     href: '/blog',
-    comparerHref: '/comparer',
+    comparerHref: '/comparer/iphone',
   }
 }
 

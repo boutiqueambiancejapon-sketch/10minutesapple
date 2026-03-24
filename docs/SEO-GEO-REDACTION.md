@@ -106,11 +106,40 @@ Avantage no-image : LCP = texte/SVG. CLS = 0 structurel. Budget 80kb SSG dominan
 
 ## 7. Maillage interne
 
-- Pages piliers : `/comparer` `/quiz` `/simulateur` `/deals` `/blog`
-- Chaque article : ≥ 2 liens vers outils interactifs
-- Chaque outil : lien vers articles liés
-- Breadcrumbs : `Accueil > Blog > [Catégorie] > [Titre]`
-- Lien auteur : chaque article → `/auteurs/mathias` · ancre = "Mathias"
+**Règle générale** : tout contenu publié (page, outil interactif, article blog) DOIT contenir
+des liens internes vers d'autres pages du site si c'est pertinent pour le lecteur.
+Le maillage est une obligation éditoriale, pas une option.
+
+### Pages piliers (hubs)
+`/comparer` · `/quiz` · `/simulateur` · `/deals` · `/blog`
+
+### Matrice de maillage — qui doit lier vers quoi
+
+| Page source | Liens internes obligatoires | Format recommandé |
+|---|---|---|
+| Article blog | ≥ 1 vers un outil interactif pertinent (comparateur, quiz ou simulateur) | Lien ancré dans le corps du texte |
+| Article blog | ≥ 1 vers un autre article de la même catégorie | Section "Continuer votre lecture" |
+| Article blog | 1 vers `/auteurs/mathias` · ancre = "Mathias" | AuthorByline + AuthorCard |
+| Comparateur `/comparer/[produit]` | ≥ 1 vers le quiz · ≥ 1 vers un article blog lié | CTA ou bloc "Besoin d'aide pour choisir ?" |
+| Quiz `/quiz` | 1 vers le comparateur du produit recommandé | CTA résultat "Comparer maintenant" |
+| Simulateur `/simulateur` | ≥ 1 vers le comparateur · ≥ 1 vers article "quand acheter" | Bloc contextuel selon résultat |
+| Deals `/deals` | ≥ 1 vers le comparateur du produit en deal | Sous chaque deal pertinent |
+| Home `/` | Liens vers les 5 pages piliers + 1 article récent | Navigation + sections hero |
+| Page auteur `/auteurs/mathias` | Liste des articles publiés (ItemList JSON-LD) | Grille d'articles |
+
+### Règles d'ancrage
+- Ancre descriptive, jamais générique : "comparer les iPhone" ✓ · "cliquer ici" ✗
+- Ancre = mot-clé cible de la page de destination quand possible
+- Pas deux liens vers la même URL dans le même bloc de texte
+
+### Breadcrumbs
+- Format : `Accueil > Blog > [Catégorie] > [Titre article]`
+- Implémenter en HTML + JSON-LD `BreadcrumbList` sur toutes les pages `/blog/**`
+
+### Maillage dans les pages "Quel [produit] choisir ?"
+- Quiz en haut → résultat pointe vers `/comparer/[produit]`
+- Contenu article dessous → lien vers au moins 1 article blog de la même famille
+- Section FAQ → réponses peuvent contenir 1 lien interne chacune si pertinent
 
 ## 8. CTA standards (FR)
 

@@ -77,14 +77,13 @@ export function ToolCTA({ categorie }: Props) {
     >
       <div
         style={{
-          background: tool.bgRgba,
-          border: `1px solid ${tool.borderRgba}`,
-          borderRadius: 'var(--radius-lg)',
-          padding: 'var(--space-6) var(--space-7)',
+          borderLeft: `3px solid ${tool.accentVar}`,
+          paddingLeft: 'var(--space-6)',
+          paddingTop: 'var(--space-4)',
+          paddingBottom: 'var(--space-4)',
           display: 'flex',
           flexDirection: 'column',
           gap: 'var(--space-2)',
-          transition: 'transform 200ms var(--ease-out)',
         }}
         className="tool-card"
       >

@@ -1,6 +1,7 @@
 /**
- * ProductAffiliate — carte produit avec lien Amazon affilié.
- * Server Component. Toujours passer par addAffiliateTag() pour les URLs Amazon.
+ * ProductAffiliate — ligne produit avec lien Amazon affilié.
+ * Design : border-left accent + typo, zéro boîte blanche.
+ * Server Component.
  */
 import Link from 'next/link'
 import { addAffiliateTag } from '@/lib/utils/affiliate'
@@ -11,10 +12,10 @@ type Props = {
   priceFrom: string
   amazonUrl: string
   accent: string
-  bgRgba: string
+  bgRgba: string  // conservé pour compatibilité, non utilisé
 }
 
-export function ProductAffiliate({ name, hint, priceFrom, amazonUrl, accent, bgRgba }: Props) {
+export function ProductAffiliate({ name, hint, priceFrom, amazonUrl, accent }: Props) {
   return (
     <Link
       href={addAffiliateTag(amazonUrl)}
@@ -25,41 +26,29 @@ export function ProductAffiliate({ name, hint, priceFrom, amazonUrl, accent, bgR
       <div
         className="product-affiliate"
         style={{
-          background: bgRgba,
-          border: `1px solid color-mix(in srgb, ${accent} 22%, transparent)`,
-          borderRadius: 'var(--radius-lg)',
-          padding: 'var(--space-4) var(--space-4)',
+          borderLeft: `2px solid color-mix(in srgb, ${accent} 35%, transparent)`,
+          paddingLeft: 'var(--space-3)',
+          paddingTop: 'var(--space-1)',
+          paddingBottom: 'var(--space-1)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--space-2)',
-          transition: 'transform 180ms ease',
+          gap: '3px',
+          transition: 'border-color 150ms ease',
         }}
       >
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 'var(--space-2)' }}>
+          <p style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 700, fontSize: '13px', color: 'var(--text-primary)', margin: 0, lineHeight: 1.2 }}>
+            {name}
+          </p>
+          <span style={{ fontSize: '12px', fontWeight: 700, color: accent, flexShrink: 0 }}>
+            dès {priceFrom}
+          </span>
+        </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span
-            style={{
-              fontSize: '10px', fontWeight: 700, letterSpacing: '0.09em',
-              textTransform: 'uppercase', color: accent,
-            }}
-          >
+          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: accent, opacity: 0.75 }}>
             {hint}
           </span>
-          <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>amazon.fr</span>
-        </div>
-        <p
-          style={{
-            fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontWeight: 700, fontSize: '14px',
-            color: 'var(--text-primary)', margin: 0, lineHeight: 1.2,
-          }}
-        >
-          {name}
-        </p>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
-            dès <strong style={{ color: 'var(--text-primary)' }}>{priceFrom}</strong>
-          </span>
-          <span style={{ fontSize: '11px', fontWeight: 700, color: accent }}>Voir →</span>
+          <span style={{ fontSize: '10px', color: 'var(--text-muted)' }}>amazon.fr →</span>
         </div>
       </div>
     </Link>

@@ -700,18 +700,17 @@ body {
   margin-bottom: var(--space-5);
 }
 
-/* Hover sur article-card */
-.article-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-sm);
+/* Hover sur article-card — titre change de couleur, zéro box-shadow */
+.article-card:hover .article-card-title {
+  color: var(--accent-1);
 }
 
-/* Hover sur tool-card */
+/* Hover sur tool-card — border-left s'intensifie */
 .tool-card:hover {
-  transform: translateY(-2px);
+  border-left-width: 4px;
 }
 
-/* Hover sur product-affiliate */
+/* Hover sur product-affiliate — border-left pleine couleur */
 .product-affiliate:hover {
-  transform: translateY(-1px);
+  border-left-color: currentColor;
 }

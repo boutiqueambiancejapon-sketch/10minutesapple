@@ -101,7 +101,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       {
         nom: 'iPhone 16e',
         prix: 699,
-        nouveaute: true,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DXQQ65T2',
         specs: {
           puce: 'A16 Bionic',
@@ -113,8 +113,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16',
-        prix: 869,
-        nouveaute: true,
+        prix: 769,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHN3YNR',
         specs: {
           puce: 'A18',
@@ -126,8 +126,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16 Plus',
-        prix: 969,
-        nouveaute: true,
+        prix: 869,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHQW185',
         specs: {
           puce: 'A18',
@@ -139,8 +139,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16 Pro',
-        prix: 1229,
-        nouveaute: true,
+        prix: 1029,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHH9JY3',
         specs: {
           puce: 'A18 Pro',
@@ -152,8 +152,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16 Pro Max',
-        prix: 1479,
-        nouveaute: true,
+        prix: 1279,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHYHG25',
         specs: {
           puce: 'A18 Pro',
@@ -165,7 +165,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 15',
-        prix: 769,
+        prix: 669,
         nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0CHX7Z69Z',
         specs: {
@@ -178,7 +178,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 15 Plus',
-        prix: 869,
+        prix: 769,
         nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0CHX2DRNW',
         specs: {

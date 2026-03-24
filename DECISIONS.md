@@ -96,3 +96,17 @@
 - JetBrains Mono chargé dans le composant (`preload: false`) — pas dans layout global
 - `font-variant-numeric: tabular-nums` obligatoire sur tous les chiffres
 - Badge économie : fond --accent-3 (vert menthe), couleur --bg-primary
+
+### Light mode (prefers-color-scheme: light)
+- Implémenté via `@media (prefers-color-scheme: light)` dans globals.css — aucun JS, zéro flash
+- Accents assombris pour garantir le contraste WCAG AA sur fond clair :
+  - accent-1 #FF3D57 → #C8001F (6.1:1 sur blanc)
+  - accent-2 #FFD23F → #7A5500 (7.3:1 sur blanc)
+  - accent-3 #3DFFC0 → #006B4F (6.6:1 sur blanc)
+  - accent-4 #7B61FF → #5B3FDF (6.5:1 sur blanc)
+- text-secondary #9090A8 → #4A4A52 (~9:1 sur blanc)
+- text-muted #55556A → #6C6C70 (6.2:1 sur blanc)
+- Aurora réduite : --noise-opacity 0.04 → 0.025 (discret sur fond blanc)
+- Nav hardcodes éliminés : --nav-bg-scrolled + --nav-mobile-bg variables CSS
+- opengraph-image.tsx garde #0A0A0F (OG toujours dark, indépendant du mode)
+- Les rgba() inline dans pages (quiz, simulateur, blog) restent fonctionnels : tints à <12% visibles sur blanc

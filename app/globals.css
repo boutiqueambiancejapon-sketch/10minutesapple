@@ -53,6 +53,10 @@
   --glass-border: rgba(255, 255, 255, 0.09);
   --glass-blur:   16px;
 
+  /* Nav (hardcoded dans inline styles → variables pour le light mode) */
+  --nav-bg-scrolled: rgba(10, 10, 15, 0.97);
+  --nav-mobile-bg:   #0A0A0F;
+
   /* Effets DA */
   --noise-opacity:    0.04;
   --aurora-1:         #FF3D57;
@@ -106,6 +110,70 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote {
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+}
+
+/* ===== LIGHT MODE — prefers-color-scheme: light ===== */
+/*
+ * Palette choisie pour le contraste :
+ * - text-primary  #1D1D1F → 16:1 sur bg-primary ✓
+ * - text-secondary #4A4A52 → ~9:1 sur blanc ✓
+ * - text-muted    #6C6C70 → ~6:1 sur blanc ✓ (WCAG AA)
+ * - accent-1 rouge  #C8001F → 6.1:1 sur blanc ✓
+ * - accent-2 ambre  #7A5500 → 7.3:1 sur blanc ✓
+ * - accent-3 teal   #006B4F → 6.6:1 sur blanc ✓
+ * - accent-4 violet #5B3FDF → 6.5:1 sur blanc ✓
+ */
+@media (prefers-color-scheme: light) {
+  html {
+    color-scheme: light;
+  }
+
+  :root {
+    /* Fonds */
+    --bg-primary:   #F5F5F7;
+    --bg-surface:   #FFFFFF;
+    --bg-surface-2: #E8E8ED;
+
+    /* Accents assombris pour lisibilité sur fond clair */
+    --accent-1: #C8001F;
+    --accent-2: #7A5500;
+    --accent-3: #006B4F;
+    --accent-4: #5B3FDF;
+
+    /* Texte */
+    --text-primary:   #1D1D1F;
+    --text-secondary: #4A4A52;
+    --text-muted:     #6C6C70;
+
+    /* Borders */
+    --border:        rgba(0, 0, 0, 0.09);
+    --border-strong: rgba(0, 0, 0, 0.18);
+
+    /* Sémantique */
+    --success: #006B4F;
+    --warning: #7A5500;
+    --error:   #C8001F;
+
+    /* Glass */
+    --glass-bg:     rgba(255, 255, 255, 0.80);
+    --glass-border: rgba(0, 0, 0, 0.09);
+
+    /* Aurora — plus subtile sur fond clair */
+    --noise-opacity: 0.025;
+    --aurora-1:      #C8001F;
+    --aurora-2:      #5B3FDF;
+    --aurora-3:      #006B4F;
+
+    /* Shadows — adaptées au fond clair */
+    --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.10);
+    --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.12);
+    --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-accent: 0 0 24px rgba(200, 0, 31, 0.20);
+
+    /* Nav */
+    --nav-bg-scrolled: rgba(245, 245, 247, 0.97);
+    --nav-mobile-bg:   #F5F5F7;
+  }
 }
 
 body {

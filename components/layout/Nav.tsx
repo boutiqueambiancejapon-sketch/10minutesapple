@@ -47,7 +47,7 @@ export function Nav() {
           position: 'sticky',
           top: 0,
           zIndex: 40,
-          backgroundColor: (scrolled || open) ? 'rgba(10,10,15,0.97)' : 'transparent',
+          backgroundColor: (scrolled || open) ? 'var(--nav-bg-scrolled)' : 'transparent',
           backdropFilter: (scrolled || open) ? 'blur(16px)' : 'none',
           WebkitBackdropFilter: (scrolled || open) ? 'blur(16px)' : 'none',
           borderBottom: (scrolled || open) ? '1px solid var(--border)' : '1px solid transparent',
@@ -118,7 +118,7 @@ export function Nav() {
           style={{
             position: 'fixed',
             inset: '60px 0 0 0',
-            backgroundColor: '#0A0A0F',
+            backgroundColor: 'var(--nav-mobile-bg)',
             borderTop: '1px solid var(--border)',
             padding: 'var(--space-8) var(--space-6)',
             display: 'flex',

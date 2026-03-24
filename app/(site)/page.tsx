@@ -1,4 +1,5 @@
 import { HeroSection } from '@/components/home/HeroSection'
+import { ArticleTicker } from '@/components/home/ArticleTicker'
 import { DealsStrip } from '@/components/home/DealsStrip'
 import { RecentArticles } from '@/components/home/RecentArticles'
 import { IphoneSection } from '@/components/home/IphoneSection'
@@ -12,6 +13,7 @@ export default function HomePage() {
   return (
     <main id="main-content">
       <HeroSection />
+      <ArticleTicker />
       <DealsStrip />
       {/* Éditorial — derniers articles featured + grille */}
       <RecentArticles />

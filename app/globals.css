@@ -348,6 +348,50 @@ body {
   to   { transform: translateY(0); opacity: 1; }
 }
 
+/* ── Article ticker marquee ──────────────────────────────── */
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.article-ticker-track {
+  animation: ticker-scroll 40s linear infinite;
+}
+.article-ticker-track:hover,
+.article-ticker-track:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .article-ticker-track {
+    animation: none;
+    overflow-x: auto;
+  }
+}
+.ticker-item:hover {
+  background: var(--bg-surface);
+}
+
+/* ── Hero layout 2 colonnes ──────────────────────────────── */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Hover sur hero-family-item */
+.hero-family-item:hover .hero-family-label {
+  color: var(--accent-1);
+}
+.hero-family-item:hover .hero-family-arrow {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
 /* ===== UTILITAIRES DA ===== */
 
 /* Gradient text — H1 hero uniquement */

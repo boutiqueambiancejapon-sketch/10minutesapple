@@ -159,6 +159,7 @@ export default async function ChoisirPage({ params }: { params: Params }) {
       {editorial && (
         <ChoisirEditorial
           content={editorial}
+          produit={produit}
           publishedAt={PUBLISHED_DATES[produit] ?? '2026-03-24'}
         />
       )}

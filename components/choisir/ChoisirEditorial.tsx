@@ -6,11 +6,22 @@
 import Link from 'next/link'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
+import { AffiliateLink } from '@/components/ui/AffiliateLink'
+import { COMPARATEURS } from '@/lib/comparateur'
 import type { ChoisirProductContent } from '@/lib/choisir-content'
 
 type Props = {
   content: ChoisirProductContent
+  produit: string
   publishedAt: string
+}
+
+/** Resolve Amazon URL from comparateur data by matching model name in card title. */
+function findAmazonUrl(produit: string, modeleName: string): string | null {
+  const data = COMPARATEURS[produit]
+  if (!data) return null
+  const modele = data.modeles.find((m) => modeleName.includes(m.nom) || m.nom.includes(modeleName))
+  return modele?.amazonUrl || null
 }
 
 const sectionStyle: React.CSSProperties = {
@@ -34,7 +45,7 @@ const pStyle: React.CSSProperties = {
   marginBottom: 'var(--space-4)',
 }
 
-export function ChoisirEditorial({ content, publishedAt }: Props) {
+export function ChoisirEditorial({ content, produit, publishedAt }: Props) {
   return (
     <article
       style={{
@@ -96,34 +107,54 @@ export function ChoisirEditorial({ content, publishedAt }: Props) {
                 marginBottom: 'var(--space-6)',
               }}
             >
-              {section.table.rows.map((row, ri) => (
-                <div
-                  key={ri}
-                  style={{
-                    background: 'var(--surface-2)',
-                    border: '1px solid var(--glass-border)',
-                    borderRadius: 'var(--radius-md)',
-                    padding: 'var(--space-4) var(--space-5)',
-                  }}
-                >
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-2)', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-                    <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--next-font-display), system-ui, sans-serif' }}>
-                      {row[1]}
-                    </span>
-                    <span style={{ fontSize: '14px', fontFamily: 'var(--next-font-mono), monospace', color: 'var(--accent-1)', fontWeight: 600 }}>
-                      {row[2]}
-                    </span>
+              {section.table.rows.map((row, ri) => {
+                const amazonUrl = findAmazonUrl(produit, row[1])
+                return (
+                  <div
+                    key={ri}
+                    style={{
+                      background: 'var(--surface-2)',
+                      border: '1px solid var(--glass-border)',
+                      borderRadius: 'var(--radius-md)',
+                      padding: 'var(--space-4) var(--space-5)',
+                    }}
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-2)', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                      <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--next-font-display), system-ui, sans-serif' }}>
+                        {row[1]}
+                      </span>
+                      <span style={{ fontSize: '14px', fontFamily: 'var(--next-font-mono), monospace', color: 'var(--accent-1)', fontWeight: 600 }}>
+                        {row[2]}
+                      </span>
+                    </div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase' as const, letterSpacing: '0.04em', marginBottom: 'var(--space-1)' }}>
+                      {row[0]}
+                    </div>
+                    {row[3] && (
+                      <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                        {row[3]}
+                      </p>
+                    )}
+                    {amazonUrl && (
+                      <AffiliateLink
+                        href={amazonUrl}
+                        style={{
+                          display: 'inline-block',
+                          marginTop: 'var(--space-3)',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          color: 'var(--accent-2)',
+                          textDecoration: 'none',
+                          borderBottom: '1px solid rgba(255,210,63,0.35)',
+                          paddingBottom: '1px',
+                        }}
+                      >
+                        Voir le prix sur Amazon →
+                      </AffiliateLink>
+                    )}
                   </div>
-                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase' as const, letterSpacing: '0.04em', marginBottom: 'var(--space-1)' }}>
-                    {row[0]}
-                  </div>
-                  {row[3] && (
-                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                      {row[3]}
-                    </p>
-                  )}
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
 

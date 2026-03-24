@@ -248,9 +248,8 @@ export function ComparateurSelector({ modeles, specsLabels }: Props) {
       >
         {selectedModeles.map((m, i) => (
           <div key={i} style={{ textAlign: 'center' }}>
-            {m.amazonUrl ? (
-              <AffiliateLink
-                href={m.amazonUrl}
+            <AffiliateLink
+                href={m.amazonUrl || 'https://amzn.to/4c4vSyD'}
                 style={{
                   display: 'inline-block',
                   background: 'var(--accent-1)',
@@ -267,18 +266,6 @@ export function ComparateurSelector({ modeles, specsLabels }: Props) {
               >
                 Voir le prix sur Amazon
               </AffiliateLink>
-            ) : (
-              <span
-                style={{
-                  display: 'inline-block',
-                  fontSize: '12px',
-                  color: 'var(--text-muted)',
-                  padding: 'var(--space-3)',
-                }}
-              >
-                Lien bientôt disponible
-              </span>
-            )}
           </div>
         ))}
       </div>

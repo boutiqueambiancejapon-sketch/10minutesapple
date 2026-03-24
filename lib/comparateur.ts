@@ -722,7 +722,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         nom: 'AirPods 4',
         prix: 149,
         nouveaute: true,
-        amazonUrl: '',
+        amazonUrl: 'https://amzn.to/4c4vSyD',
         specs: {
           anc: 'Non',
           autonomie: '5h (30h boîtier)',

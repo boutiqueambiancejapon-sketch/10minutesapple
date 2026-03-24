@@ -21,7 +21,7 @@ function findAmazonUrl(produit: string, modeleName: string): string | null {
   const data = COMPARATEURS[produit]
   if (!data) return null
   const modele = data.modeles.find((m) => modeleName.includes(m.nom) || m.nom.includes(modeleName))
-  return modele?.amazonUrl || null
+  return modele?.amazonUrl || 'https://amzn.to/4c4vSyD'
 }
 
 const sectionStyle: React.CSSProperties = {

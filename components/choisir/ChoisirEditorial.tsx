@@ -89,56 +89,41 @@ export function ChoisirEditorial({ content, publishedAt }: Props) {
           <p style={pStyle}>{section.intro}</p>
 
           {section.table && (
-            <div style={{ overflowX: 'auto', marginBottom: 'var(--space-4)' }}>
-              <table
-                style={{
-                  width: '100%',
-                  borderCollapse: 'collapse',
-                  fontSize: '14px',
-                  color: 'var(--text-secondary)',
-                }}
-              >
-                <thead>
-                  <tr>
-                    {section.table.headers.map((h) => (
-                      <th
-                        key={h}
-                        style={{
-                          textAlign: 'left',
-                          padding: 'var(--space-3) var(--space-4)',
-                          borderBottom: '2px solid var(--glass-border)',
-                          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                          fontWeight: 700,
-                          color: 'var(--text-primary)',
-                          fontSize: '13px',
-                          whiteSpace: 'nowrap',
-                        }}
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {section.table.rows.map((row, ri) => (
-                    <tr key={ri}>
-                      {row.map((cell, ci) => (
-                        <td
-                          key={ci}
-                          style={{
-                            padding: 'var(--space-3) var(--space-4)',
-                            borderBottom: '1px solid var(--glass-border)',
-                            fontFamily: ci === 2 ? 'var(--next-font-mono), monospace' : undefined,
-                            whiteSpace: ci <= 2 ? 'nowrap' : undefined,
-                          }}
-                        >
-                          {cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div
+              style={{
+                display: 'grid',
+                gap: 'var(--space-3)',
+                marginBottom: 'var(--space-6)',
+              }}
+            >
+              {section.table.rows.map((row, ri) => (
+                <div
+                  key={ri}
+                  style={{
+                    background: 'var(--surface-2)',
+                    border: '1px solid var(--glass-border)',
+                    borderRadius: 'var(--radius-md)',
+                    padding: 'var(--space-4) var(--space-5)',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-2)', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                    <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--next-font-display), system-ui, sans-serif' }}>
+                      {row[1]}
+                    </span>
+                    <span style={{ fontSize: '14px', fontFamily: 'var(--next-font-mono), monospace', color: 'var(--accent-1)', fontWeight: 600 }}>
+                      {row[2]}
+                    </span>
+                  </div>
+                  <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase' as const, letterSpacing: '0.04em', marginBottom: 'var(--space-1)' }}>
+                    {row[0]}
+                  </div>
+                  {row[3] && (
+                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                      {row[3]}
+                    </p>
+                  )}
+                </div>
+              ))}
             </div>
           )}
 

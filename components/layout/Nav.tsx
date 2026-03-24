@@ -17,7 +17,7 @@ const CHOISIR = [
   { href: '/choisir/iphone',  label: 'Quel iPhone choisir ?' },
   { href: '/choisir/mac',     label: 'Quel Mac choisir ?' },
   { href: '/choisir/ipad',    label: 'Quel iPad choisir ?' },
-  { href: '/choisir/watch',   label: 'Quelle Watch choisir ?' },
+  { href: '/choisir/watch',   label: 'Quelle Apple Watch choisir ?' },
   { href: '/choisir/airpods', label: 'Quels AirPods choisir ?' },
 ]
 

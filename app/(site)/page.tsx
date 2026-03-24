@@ -1,6 +1,7 @@
 import { HeroSection } from '@/components/home/HeroSection'
 import { DealsStrip } from '@/components/home/DealsStrip'
 import { FeaturedTools } from '@/components/home/FeaturedTools'
+import { RecentArticles } from '@/components/home/RecentArticles'
 import { AuthorTeaser } from '@/components/home/AuthorTeaser'
 
 export default function HomePage() {
@@ -9,6 +10,7 @@ export default function HomePage() {
       <HeroSection />
       <DealsStrip />
       <FeaturedTools />
+      <RecentArticles />
       <AuthorTeaser />
     </main>
   )

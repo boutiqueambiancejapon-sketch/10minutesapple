@@ -10,6 +10,39 @@ import matter from 'gray-matter'
 
 const BLOG_DIR = path.join(process.cwd(), 'content/blog')
 
+export const CATEGORY_LABELS: Record<string, string> = {
+  iphone:      'iPhone',
+  mac:         'Mac',
+  ipad:        'iPad',
+  accessoires: 'Accessoires',
+  deals:       'Deals',
+}
+
+export const CATEGORY_ACCENT: Record<string, string> = {
+  iphone:      'var(--accent-1)',
+  mac:         'var(--accent-4)',
+  ipad:        'var(--accent-3)',
+  accessoires: 'var(--accent-2)',
+  deals:       'var(--accent-1)',
+}
+
+/** Formatte une date ISO en français. */
+export function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('fr-FR', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  })
+}
+
+/** Retourne les catégories qui ont au moins un article, avec leur nombre. */
+export function getCategories(): { slug: string; label: string; count: number }[] {
+  const articles = getAllArticles()
+  const map: Record<string, number> = {}
+  for (const a of articles) map[a.categorie] = (map[a.categorie] ?? 0) + 1
+  return Object.entries(map).map(([slug, count]) => ({
+    slug, label: CATEGORY_LABELS[slug] ?? slug, count,
+  }))
+}
+
 export type ArticleMeta = {
   slug: string
   categorie: string

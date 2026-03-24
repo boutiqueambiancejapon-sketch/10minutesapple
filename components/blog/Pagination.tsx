@@ -4,6 +4,7 @@
  * Affiche au plus 5 numéros autour de la page courante.
  */
 import Link from 'next/link'
+import type { CSSProperties } from 'react'
 
 type Props = {
   currentPage: number
@@ -25,7 +26,7 @@ export function Pagination({ currentPage, totalPages, basePath }: Props) {
   const end = Math.min(totalPages, currentPage + delta)
   const pages = Array.from({ length: end - start + 1 }, (_, i) => start + i)
 
-  const btnBase: React.CSSProperties = {
+  const btnBase: CSSProperties = {
     display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
     minWidth: '36px', height: '36px', padding: '0 var(--space-2)',
     borderRadius: 'var(--radius-md)',

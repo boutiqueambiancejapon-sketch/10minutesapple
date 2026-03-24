@@ -648,3 +648,70 @@ body {
     transparent 70%
   );
 }
+
+/* ── Home sections — layouts responsives ─────────────────── */
+
+/* Grille : contenu principal + sidebar produits */
+.home-sidebar-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+@media (min-width: 860px) {
+  .home-sidebar-grid {
+    grid-template-columns: minmax(0, 1fr) 250px;
+  }
+}
+
+/* Carousel horizontal scroll-snap */
+.article-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: var(--space-5);
+  padding-bottom: var(--space-3);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  /* Hint de débordement */
+  mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .article-carousel {
+    scroll-snap-type: none;
+  }
+}
+.carousel-item {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: clamp(240px, 28vw, 310px);
+}
+
+/* Masonry CSS columns */
+.article-masonry {
+  columns: 2 240px;
+  gap: var(--space-5);
+}
+.masonry-item {
+  break-inside: avoid;
+  display: block;
+  margin-bottom: var(--space-5);
+}
+
+/* Hover sur article-card */
+.article-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Hover sur tool-card */
+.tool-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Hover sur product-affiliate */
+.product-affiliate:hover {
+  transform: translateY(-1px);
+}

@@ -208,11 +208,189 @@ function macContent(year: number): ChoisirProductContent {
 }
 
 // ---------------------------------------------------------------------------
+// iPad
+// ---------------------------------------------------------------------------
+function ipadContent(year: number): ChoisirProductContent {
+  return {
+    tldr: [
+      `L'iPad Air 11" M3 à 799 € est le meilleur iPad pour la majorité des usages en ${year} — puissant, polyvalent, compatible Apple Pencil Pro.`,
+      `L'iPad 11e génération à 369 € est le point d'entrée idéal pour Netflix, les cours et la navigation — inutile de payer plus pour un usage basique.`,
+      `L'iPad Pro M5 ne se justifie que pour les créatifs pro : illustration, montage 4K, remplacement de Mac portable.`,
+    ],
+    sections: [
+      {
+        id: 'quel-ipad-acheter',
+        title: `Quel iPad acheter selon ton usage ?`,
+        intro: `En ${year}, Apple vend 6 iPad différents. Le bon choix dépend de ce que tu fais avec — pas de la puce. Un iPad à 369 € fait tourner Netflix exactement pareil qu'un Pro à 1 599 €.`,
+        table: {
+          headers: ['Usage', 'Modèle', 'Prix', 'Verdict'],
+          rows: [
+            ['Loisirs / Netflix / cours', 'iPad 11e génération', '369 €', 'Le strict nécessaire — bien fait, pas cher'],
+            ['Lecture / déplacement', 'iPad mini 7', '599 €', 'Format 8,3" unique, puce A17 Pro, ultra portable'],
+            ['Études / travail', 'iPad Air 11" M3', '799 €', 'Le meilleur compromis puissance-prix du moment'],
+            ['Grand écran portable', 'iPad Air 13" M3', '1 099 €', 'Même puce, écran 13" pour le confort visuel'],
+            ['Création / illustration', 'iPad Pro 11" M5', '1 199 €', 'Écran OLED XDR, Thunderbolt, Apple Pencil Pro'],
+            ['Station créative', 'iPad Pro 13" M5', '1 599 €', 'Le remplaçant de Mac pour les workflows lourds'],
+          ],
+        },
+        internalLink: { text: 'Comparer tous les iPad côte à côte', href: '/comparer/ipad' },
+      },
+      {
+        id: 'ipad-air-vs-pro',
+        title: `iPad Air M3 vs iPad Pro M5 — lequel choisir ?`,
+        intro: `Honnêtement, 80 % des acheteurs d'iPad Pro auraient dû prendre un Air. L'iPad Air M3 gère la retouche photo, les présentations, la prise de notes avec Apple Pencil Pro et même du montage vidéo léger.`,
+        paragraphs: [
+          `Le Pro M5 se démarque sur 3 points : l'écran OLED Ultra Retina XDR (contraste et couleurs supérieurs), le port Thunderbolt (transferts rapides vers un disque externe), et la puissance brute de la puce M5 pour le rendu 3D ou le montage multicam.`,
+          `Le vrai tip : si tu ne dessines pas avec Procreate ou tu ne montes pas de vidéo 4K, l'Air M3 fait le même travail pour 400 € de moins.`,
+        ],
+      },
+      {
+        id: 'ipad-mini-pour-qui',
+        title: `L'iPad mini 7 — pour qui ?`,
+        intro: `L'iPad mini est le seul iPad qui tient dans une poche de veste. Son écran 8,3" et ses 293 g en font le compagnon idéal pour la lecture, les notes rapides et les déplacements fréquents.`,
+        paragraphs: [
+          `Sa puce A17 Pro (la même que l'iPhone 15 Pro) lui donne assez de puissance pour le multitâche et les jeux. En clair : ce n'est pas un outil de production, mais c'est le meilleur terminal mobile Apple.`,
+        ],
+        tip: `L'iPad mini est compatible Apple Pencil Pro — parfait pour les annotations PDF en déplacement ou les croquis rapides.`,
+      },
+      {
+        id: 'ipad-reconditionne',
+        title: `Faut-il acheter un iPad reconditionné ?`,
+        intro: `L'iPad Air M1 ou M2 reconditionné autour de 450-550 € reste une excellente affaire en ${year}. La puce M1 est encore largement suffisante pour un usage quotidien et sera supportée encore 4-5 ans minimum.`,
+        paragraphs: [
+          `En dessous de l'iPad Air 5 (M1), tu risques de perdre le support iPadOS rapidement. L'iPad 9e génération en Lightning est à éviter — USB-C uniquement.`,
+        ],
+        internalLink: { text: 'Voir le simulateur de prix Apple', href: '/simulateur' },
+      },
+    ],
+    faq: [
+      {
+        q: `Quel est le meilleur iPad en ${year} ?`,
+        a: `L'iPad Air 11" M3 à 799 € est le meilleur choix pour la majorité des utilisateurs. Il combine la puce M3, la compatibilité Apple Pencil Pro et un écran Liquid Retina dans un format léger (462 g).`,
+      },
+      {
+        q: `Quel iPad pour un étudiant ?`,
+        a: `L'iPad Air 11" M3 est idéal pour un étudiant : prise de notes avec Apple Pencil Pro, multitâche Split View, et assez de puissance pour tenir toute la scolarité. Budget serré ? L'iPad 11e génération à 369 € convient pour les cours et la recherche.`,
+      },
+      {
+        q: `L'iPad mini 7 vaut-il le coup ?`,
+        a: `Oui, si tu cherches la portabilité avant tout. L'iPad mini 7 (599 €) est le seul iPad qui tient dans une main. Il excelle pour la lecture, les annotations et les déplacements. Il est moins adapté à la productivité bureau avec son écran 8,3".`,
+      },
+      {
+        q: `Quelle différence entre iPad Air et iPad Pro ?`,
+        a: `L'iPad Air M3 a un écran Liquid Retina LCD, l'iPad Pro M5 a un écran OLED Ultra Retina XDR avec un contraste supérieur. Le Pro ajoute Thunderbolt, Face ID avec TrueDepth, et la puce M5 plus puissante. Pour la plupart des usages, la différence ne justifie pas les 400 € d'écart.`,
+      },
+      {
+        q: `Quel iPad pour dessiner avec Procreate ?`,
+        a: `L'iPad Pro 11" M5 est le meilleur choix pour le dessin : écran OLED 120 Hz avec ProMotion, Apple Pencil Pro avec retour haptique, et puissance M5 pour les toiles très détaillées. L'iPad Air M3 convient aussi pour le dessin amateur.`,
+      },
+      {
+        q: `L'iPad peut-il remplacer un ordinateur ?`,
+        a: `En partie. Avec iPadOS, Stage Manager et un Magic Keyboard, l'iPad Air ou Pro peut gérer email, navigation, documents et retouche photo. Il reste limité pour le développement, les logiciels pro desktop et le multitâche intensif par rapport à un Mac.`,
+      },
+      {
+        q: `128 Go ou 256 Go de stockage pour un iPad ?`,
+        a: `128 Go suffisent pour un usage courant (apps, streaming, documents). Si tu stockes des photos, des vidéos ou des fichiers Procreate en local, passe à 256 Go. L'iPad Pro démarre directement à 256 Go.`,
+      },
+    ],
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Apple Watch
+// ---------------------------------------------------------------------------
+function watchContent(year: number): ChoisirProductContent {
+  return {
+    tldr: [
+      `L'Apple Watch Series 11 à 449 € est le meilleur choix global — capteurs santé dernière génération, écran always-on, charge rapide.`,
+      `L'Apple Watch SE 2 à 279 € couvre 80 % des fonctionnalités pour la moitié du prix — le choix malin si tu débutes.`,
+      `L'Ultra 2 ne se justifie que pour le sport d'endurance et la plongée — 899 € pour 60h d'autonomie et un GPS double fréquence.`,
+    ],
+    sections: [
+      {
+        id: 'quelle-apple-watch-acheter',
+        title: `Quelle Apple Watch acheter selon ton profil ?`,
+        intro: `En ${year}, Apple vend 3 gammes de montres. Le choix se résume à une question simple : quel est ton usage principal — santé au quotidien, sport sérieux, ou juste les notifications ?`,
+        table: {
+          headers: ['Profil', 'Modèle', 'Prix', 'Verdict'],
+          rows: [
+            ['Notifications / début', 'Apple Watch SE 2', '279 €', 'L\'essentiel sans superflu — suivi cardio, chute, crash'],
+            ['Quotidien / santé', 'Apple Watch Series 11', '449 €', 'Capteurs complets : ECG, SpO2, apnée, température'],
+            ['Fitness / running', 'Apple Watch Series 11', '449 €', 'GPS précis, suivi workout, charge en 30 min'],
+            ['Sport extrême / trail', 'Apple Watch Ultra 2', '899 €', '60h d\'autonomie, GPS double fréquence, plongée 100 m'],
+          ],
+        },
+        internalLink: { text: 'Comparer toutes les Apple Watch côte à côte', href: '/comparer/watch' },
+      },
+      {
+        id: 'series-11-vs-se',
+        title: `Apple Watch Series 11 vs SE 2 — les vraies différences`,
+        intro: `Honnêtement, la Watch SE 2 est une montre connectée très complète pour 279 €. Elle fait le suivi cardio, la détection de chute et de crash, les notifications, et les appels.`,
+        paragraphs: [
+          `Ce qui manque à la SE : l'écran always-on (tu dois lever le poignet), l'ECG, la détection d'apnée du sommeil, le capteur de température et le SpO2. Si ces fonctions santé comptent pour toi, la Series 11 vaut les 170 € de plus.`,
+          `Le vrai tip : si tu veux juste les notifications, le suivi d'activité et la détection de chute, la SE suffit largement. C'est le meilleur rapport qualité-prix de la gamme Watch.`,
+        ],
+      },
+      {
+        id: 'apple-watch-ultra-pour-qui',
+        title: `L'Apple Watch Ultra 2 — pour qui exactement ?`,
+        intro: `L'Ultra 2 à 899 € est un outil de sport, pas un accessoire de mode. Elle se justifie dans 3 cas : trail et ultra-running (60h d'autonomie GPS), plongée (certifiée EN 13319 à 100 m), et randonnée en montagne (GPS double fréquence, sirène d'urgence).`,
+        paragraphs: [
+          `Pour la course en ville, le fitness en salle ou le suivi santé au quotidien, la Series 11 fait exactement le même travail. En clair : si tu ne fais pas de sport extrême, tu paies 450 € de plus pour un boîtier en titane et un bouton Action.`,
+        ],
+        tip: `Le bouton Action de l'Ultra permet de lancer un workout, un chrono ou une lampe torche d'un geste. Si tu l'utilises en randonnée ou en course, c'est un vrai plus. Sinon, c'est gadget.`,
+      },
+      {
+        id: 'faut-il-attendre-prochaine-watch',
+        title: `Faut-il attendre la prochaine Apple Watch ?`,
+        intro: `La Series 11 vient de sortir début ${year} avec des capteurs santé de nouvelle génération. Apple lancera probablement une Series 12 à l'automne ${year}, mais les améliorations devraient être mineures.`,
+        paragraphs: [
+          `Si tu as une Series 9 ou 10, l'upgrade n'est pas indispensable. Si tu as une Series 7 ou plus ancienne, la Series 11 est un bond en avant significatif. Si tu as une SE 1, passer à la SE 2 ou la Series 11 vaut clairement le coup.`,
+        ],
+        internalLink: { text: 'Voir le simulateur de prix Apple', href: '/simulateur' },
+      },
+    ],
+    faq: [
+      {
+        q: `Quelle est la meilleure Apple Watch en ${year} ?`,
+        a: `L'Apple Watch Series 11 à 449 € est le meilleur choix global. Elle intègre tous les capteurs santé (ECG, SpO2, température, apnée du sommeil), un écran always-on et la charge rapide en 30 minutes.`,
+      },
+      {
+        q: `Apple Watch SE ou Series 11 ?`,
+        a: `La SE 2 (279 €) suffit pour les notifications, le suivi d'activité et la détection de chute. La Series 11 (449 €) ajoute l'écran always-on, l'ECG, le SpO2, la détection d'apnée et le capteur de température. Si ta priorité est la santé, prends la Series 11.`,
+      },
+      {
+        q: `L'Apple Watch Ultra 2 vaut-elle son prix ?`,
+        a: `Seulement si tu fais du sport d'endurance (trail, plongée, randonnée longue). Son autonomie de 60h et son GPS double fréquence sont ses vrais atouts. Pour un usage quotidien, la Series 11 fait le même travail pour 450 € de moins.`,
+      },
+      {
+        q: `Quelle taille d'Apple Watch choisir ?`,
+        a: `La Series 11 existe en 42 mm et 46 mm. Pour les poignets fins (moins de 16 cm), le 42 mm est plus confortable. Pour les poignets larges ou si tu veux un écran plus lisible, le 46 mm est préférable. L'Ultra 2 n'existe qu'en 49 mm.`,
+      },
+      {
+        q: `Faut-il prendre la version Cellular ?`,
+        a: `La version Cellular (+ 100 €) permet de passer des appels et recevoir des messages sans iPhone à proximité. Utile pour le running en solo ou si tu veux laisser ton iPhone à la maison. Sinon, la version GPS suffit.`,
+      },
+      {
+        q: `Combien de temps Apple met-elle à jour l'Apple Watch ?`,
+        a: `Apple supporte ses montres environ 5 à 6 ans. Une Apple Watch Series 11 achetée en ${year} recevra des mises à jour watchOS au moins jusqu'en 2031.`,
+      },
+      {
+        q: `L'Apple Watch fonctionne-t-elle avec un téléphone Android ?`,
+        a: `Non. L'Apple Watch nécessite un iPhone (8 ou plus récent) pour la configuration et la synchronisation. Si tu es sur Android, regarde du côté de la Samsung Galaxy Watch ou de la Google Pixel Watch.`,
+      },
+    ],
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Registry
 // ---------------------------------------------------------------------------
 const CONTENT_REGISTRY: Record<string, (year: number) => ChoisirProductContent> = {
   iphone: iphoneContent,
   mac: macContent,
+  ipad: ipadContent,
+  watch: watchContent,
 }
 
 export function getChoisirContent(

@@ -187,27 +187,47 @@ function recommend(answers: Answers): Recommendation {
     if (budget === 'eco') {
       return {
         produit: 'iPad',
-        modele: 'iPad 10e génération',
-        pourquoi: 'Pour la lecture, Netflix, les cours et la navigation — l\'iPad standard fait tout ça très bien. Pas besoin de dépenser plus si tu n\'as pas de workflow de création.',
-        prix: 'à partir de 399 €',
+        modele: 'iPad 11e génération',
+        pourquoi: 'Pour la lecture, Netflix, les cours et la navigation — l\'iPad 11e gen fait tout ça très bien à 369 €. Puce A16, USB-C, écran 10,9". Pas besoin de payer plus si tu n\'as pas de workflow de création.',
+        prix: 'à partir de 369 €',
         href: '/choisir/ipad',
         comparerHref,
       }
     }
-    if (budget === 'mid' || (budget === 'high' && usage !== 'photo')) {
+    if (budget === 'mid') {
+      if (usage === 'social' || usage === 'gaming') {
+        return {
+          produit: 'iPad',
+          modele: 'iPad mini 7',
+          pourquoi: 'L\'iPad mini 7 tient dans une main avec son écran 8,3" et sa puce A17 Pro. Parfait pour la lecture, les jeux et les déplacements — 293 g seulement.',
+          prix: 'à partir de 599 €',
+          href: '/choisir/ipad',
+          comparerHref,
+        }
+      }
       return {
         produit: 'iPad',
         modele: 'iPad Air 11" M3',
-        pourquoi: 'L\'iPad Air M3 est la version "sans compromis" pour le travail : puce M3, écran Liquid Retina, compatible Apple Pencil Pro. Le bon équilibre prix/puissance.',
+        pourquoi: 'L\'iPad Air M3 est le choix évident pour le travail et les études : puce M3, écran Liquid Retina, compatible Apple Pencil Pro. Le meilleur compromis puissance-prix.',
         prix: 'à partir de 799 €',
+        href: '/choisir/ipad',
+        comparerHref,
+      }
+    }
+    if (budget === 'high' && usage !== 'photo') {
+      return {
+        produit: 'iPad',
+        modele: 'iPad Air 13" M3',
+        pourquoi: 'Même puce M3 que le 11", mais avec un écran 13" pour le confort. Idéal si tu travailles sur des tableurs, des présentations ou des documents longs.',
+        prix: 'à partir de 1 099 €',
         href: '/choisir/ipad',
         comparerHref,
       }
     }
     return {
       produit: 'iPad',
-      modele: 'iPad Pro 11" M4',
-      pourquoi: 'L\'iPad Pro M4 a l\'écran OLED le plus fin jamais produit par Apple. Pertinent si tu fais de l\'illustration, du montage ou si tu remplaces un Mac.',
+      modele: 'iPad Pro 11" M5',
+      pourquoi: 'L\'iPad Pro M5 a le meilleur écran du marché : OLED Ultra Retina XDR. Pertinent si tu fais de l\'illustration avec Procreate, du montage 4K ou si tu remplaces un Mac.',
       prix: 'à partir de 1 199 €',
       href: '/choisir/ipad',
       comparerHref,
@@ -218,8 +238,8 @@ function recommend(answers: Answers): Recommendation {
     if (budget === 'eco') {
       return {
         produit: 'Apple Watch',
-        modele: 'Apple Watch SE 2e génération',
-        pourquoi: 'Honnêtement, la Watch SE couvre 80 % des fonctionnalités à la moitié du prix. Suivi activité, cardiaque, crash detection. Ce qu\'il manque : l\'écran always-on.',
+        modele: 'Apple Watch SE 2',
+        pourquoi: 'Honnêtement, la Watch SE couvre 80 % des fonctionnalités à la moitié du prix. Suivi cardio, détection de chute et de crash. Ce qu\'il manque : l\'écran always-on et l\'ECG.',
         prix: 'à partir de 279 €',
         href: '/choisir/watch',
         comparerHref,
@@ -229,7 +249,7 @@ function recommend(answers: Answers): Recommendation {
       return {
         produit: 'Apple Watch',
         modele: 'Apple Watch Ultra 2',
-        pourquoi: 'Pour les sportifs sérieux et les randonneurs. Autonomie 60h, GPS double fréquence, bouton Action. À éviter si tu ne fais pas de sport extrême — c\'est un outil, pas un bijou.',
+        pourquoi: 'Pour les sportifs sérieux : 60h d\'autonomie GPS, plongée 100 m certifiée, GPS double fréquence. À éviter si tu ne fais pas de sport extrême — la Series 11 fait le même job au quotidien.',
         prix: 'à partir de 899 €',
         href: '/choisir/watch',
         comparerHref,
@@ -237,8 +257,8 @@ function recommend(answers: Answers): Recommendation {
     }
     return {
       produit: 'Apple Watch',
-      modele: 'Apple Watch Series 10',
-      pourquoi: 'Le vrai tip : la Series 10 est la Watch la plus fine jamais produite. Chargée en 30 min, écran always-on, détection d\'apnée du sommeil. Le meilleur choix quotidien.',
+      modele: 'Apple Watch Series 11',
+      pourquoi: 'Le vrai tip : la Series 11 a les capteurs santé les plus complets — ECG, SpO2, température, détection d\'apnée du sommeil. Écran always-on, charge en 30 min. Le meilleur choix quotidien.',
       prix: 'à partir de 449 €',
       href: '/choisir/watch',
       comparerHref,

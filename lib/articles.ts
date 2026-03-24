@@ -11,6 +11,8 @@ import matter from 'gray-matter'
 
 const ARTICLES_DIR = path.join(process.cwd(), 'content/articles')
 
+export type StickyCTAData = { label: string; url: string }
+
 export type StandaloneArticleMeta = {
   slug: string
   title: string
@@ -22,6 +24,8 @@ export type StandaloneArticleMeta = {
   tags?: string[]
   aiSummary?: string[]
   faq?: { q: string; a: string }[]
+  stickyCta?: StickyCTAData[]
+  stickyCtaMessage?: string
 }
 
 export function getAllStandaloneArticles(): StandaloneArticleMeta[] {

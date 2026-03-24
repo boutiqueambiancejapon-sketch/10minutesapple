@@ -9,6 +9,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
+import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles, articleHref } from '@/lib/blog'
 import { currentYear } from '@/lib/utils/year'
 import { AISummarize } from '@/components/blog/AISummarize'
@@ -71,7 +72,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
   const { meta, content } = getArticleRaw(categorie, slug)
   const { content: mdxContent } = await compileMDX({
     source: content,
-    options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
+    options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
     components: {
       Tip,
       Warning,

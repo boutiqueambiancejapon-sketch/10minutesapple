@@ -10,6 +10,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
+import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getRelatedArticles, articleHref, CATEGORY_LABELS } from '@/lib/blog'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
 import { Tip } from '@/components/blog/Tip'
@@ -18,6 +19,7 @@ import { Verdict } from '@/components/blog/Verdict'
 import { ProConTable } from '@/components/blog/ProConTable'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
+import { StickyCTA } from '@/components/blog/StickyCTA'
 import type { ReactNode } from 'react'
 
 export const revalidate = 86400
@@ -59,7 +61,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
   const { meta, content } = data
   const { content: mdxContent } = await compileMDX({
     source: content,
-    options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
+    options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
     components: {
       Tip, Warning, Verdict, ProConTable,
       table: ({ children }: { children: ReactNode }) => (
@@ -207,6 +209,14 @@ export default async function StandaloneArticlePage({ params }: { params: Params
           </div>
         </article>
       </main>
+
+      {/* Sticky CTA */}
+      {meta.stickyCta && meta.stickyCta.length > 0 && (
+        <StickyCTA
+          items={meta.stickyCta}
+          message={meta.stickyCtaMessage}
+        />
+      )}
     </>
   )
 }

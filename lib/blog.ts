@@ -96,3 +96,23 @@ export function articleExists(categorie: string, slug: string): boolean {
     path.join(BLOG_DIR, categorie, `${slug}.mdx`)
   )
 }
+
+/**
+ * Retourne jusqu'à `limit` articles liés.
+ * Priorité : même catégorie → autres catégories.
+ * Exclut l'article courant.
+ */
+export function getRelatedArticles(
+  categorie: string,
+  currentSlug: string,
+  limit = 3
+): ArticleMeta[] {
+  const all = getAllArticles()
+  const sameCat = all.filter(
+    (a) => a.categorie === categorie && a.slug !== currentSlug
+  )
+  const otherCat = all.filter(
+    (a) => a.categorie !== categorie
+  )
+  return [...sameCat, ...otherCat].slice(0, limit)
+}

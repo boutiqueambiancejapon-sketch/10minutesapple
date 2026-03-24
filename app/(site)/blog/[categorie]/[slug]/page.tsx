@@ -1,6 +1,6 @@
 /**
  * /blog/[categorie]/[slug] — article MDX.
- * Rendu serveur : AISummarize · AuthorByline · MDX content · FAQ · AuthorCard · JSON-LD.
+ * Rendu serveur : AISummarize · AuthorByline · MDX content · FAQ · related · AuthorCard · JSON-LD.
  * next-mdx-remote/rsc pour le rendu MDX côté serveur (App Router).
  */
 
@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
-import { getAllArticles, getArticleRaw, articleExists } from '@/lib/blog'
+import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles } from '@/lib/blog'
 import { currentYear } from '@/lib/utils/year'
 import { AISummarize } from '@/components/blog/AISummarize'
 import { AuthorByline } from '@/components/ui/AuthorByline'
@@ -63,6 +63,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
   const { meta, content } = getArticleRaw(categorie, slug)
   const { content: mdxContent } = await compileMDX({ source: content })
+  const related = getRelatedArticles(categorie, slug, 3)
 
   const catLabel = CATEGORY_LABELS[categorie] ?? categorie
 
@@ -290,8 +291,95 @@ export default async function ArticlePage({ params }: { params: Params }) {
               </section>
             )}
 
+            {/* Continuer votre lecture */}
+            {related.length > 0 && (
+              <section
+                aria-labelledby="related-titre"
+                style={{ marginTop: 'var(--space-12)' }}
+              >
+                <h2
+                  id="related-titre"
+                  style={{
+                    fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                    fontSize: 'clamp(18px, 2.5vw, 22px)',
+                    fontWeight: 800,
+                    color: 'var(--text-primary)',
+                    marginBottom: 'var(--space-5)',
+                    letterSpacing: '-0.01em',
+                  }}
+                >
+                  Continuer votre lecture
+                </h2>
+                <ul
+                  role="list"
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+                    gap: 'var(--space-4)',
+                    listStyle: 'none',
+                  }}
+                >
+                  {related.map((a) => (
+                    <li key={`${a.categorie}/${a.slug}`}>
+                      <Link
+                        href={`/blog/${a.categorie}/${a.slug}`}
+                        style={{ textDecoration: 'none', display: 'block', height: '100%' }}
+                      >
+                        <article
+                          style={{
+                            background: 'var(--bg-surface)',
+                            border: '1px solid var(--border)',
+                            borderTop: '3px solid var(--accent-1)',
+                            borderRadius: 'var(--radius-md)',
+                            padding: 'var(--space-5)',
+                            height: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 'var(--space-2)',
+                          }}
+                        >
+                          <span
+                            style={{
+                              fontSize: '10px',
+                              fontWeight: 700,
+                              letterSpacing: '0.08em',
+                              textTransform: 'uppercase',
+                              color: 'var(--accent-1)',
+                            }}
+                          >
+                            {CATEGORY_LABELS[a.categorie] ?? a.categorie}
+                          </span>
+                          <h3
+                            style={{
+                              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                              fontSize: '14px',
+                              fontWeight: 700,
+                              color: 'var(--text-primary)',
+                              lineHeight: 1.35,
+                              flex: 1,
+                            }}
+                          >
+                            {a.title}
+                          </h3>
+                          <span
+                            style={{
+                              fontSize: '12px',
+                              color: 'var(--text-muted)',
+                              marginTop: 'auto',
+                            }}
+                          >
+                            {a.readingTimeMin} min
+                          </span>
+                        </article>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
             {/* AuthorCard */}
-            <div style={{ marginTop: 'var(--space-12)' }}>
+            <div style={{ marginTop: 'var(--space-10)' }}>
               <AuthorCard
                 authorSlug="mathias"
                 authorName="Mathias"

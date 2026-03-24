@@ -531,7 +531,9 @@ body {
   color: var(--text-primary);
   margin-top: var(--space-10);
   margin-bottom: var(--space-4);
-  text-wrap: balance;
+  text-wrap: pretty;
+  hyphens: none;
+  overflow-wrap: normal;
 }
 .prose-article h3 {
   font-family: var(--next-font-display), system-ui, sans-serif;

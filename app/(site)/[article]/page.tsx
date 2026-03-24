@@ -9,6 +9,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import { getRelatedArticles, articleHref, CATEGORY_LABELS } from '@/lib/blog'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
 import { Tip } from '@/components/blog/Tip'
@@ -58,6 +59,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
   const { meta, content } = data
   const { content: mdxContent } = await compileMDX({
     source: content,
+    options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
     components: {
       Tip, Warning, Verdict, ProConTable,
       table: ({ children }: { children: ReactNode }) => (

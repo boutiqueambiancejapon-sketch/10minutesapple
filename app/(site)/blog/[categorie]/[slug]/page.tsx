@@ -8,6 +8,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles, articleHref } from '@/lib/blog'
 import { currentYear } from '@/lib/utils/year'
 import { AISummarize } from '@/components/blog/AISummarize'
@@ -70,12 +71,12 @@ export default async function ArticlePage({ params }: { params: Params }) {
   const { meta, content } = getArticleRaw(categorie, slug)
   const { content: mdxContent } = await compileMDX({
     source: content,
+    options: { mdxOptions: { remarkPlugins: [remarkGfm] } },
     components: {
       Tip,
       Warning,
       Verdict,
       ProConTable,
-      // Responsive table wrapper injecté automatiquement
       table: ({ children }: { children: ReactNode }) => (
         <div className="table-scroll-wrap">
           <table>{children}</table>

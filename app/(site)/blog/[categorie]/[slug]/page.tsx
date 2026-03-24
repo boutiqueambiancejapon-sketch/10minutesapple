@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
-import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles } from '@/lib/blog'
+import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles, articleHref } from '@/lib/blog'
 import { currentYear } from '@/lib/utils/year'
 import { AISummarize } from '@/components/blog/AISummarize'
 import { Tip } from '@/components/blog/Tip'
@@ -348,7 +348,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
                   {related.map((a) => (
                     <li key={`${a.categorie}/${a.slug}`}>
                       <Link
-                        href={`/blog/${a.categorie}/${a.slug}`}
+                        href={articleHref(a)}
                         style={{ textDecoration: 'none', display: 'block', height: '100%' }}
                       >
                         <article

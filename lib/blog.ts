@@ -1,6 +1,7 @@
 /**
  * lib/blog.ts — utilitaires serveur pour les articles MDX.
- * Lecture de content/blog/**\/*.mdx via gray-matter.
+ * Lecture de content/blog/**\/*.mdx ET content/articles/*.mdx.
+ * Les articles standalone (ex-WordPress) sont servis à la racine.
  * Server-side uniquement (fs, path).
  */
 
@@ -9,12 +10,15 @@ import path from 'path'
 import matter from 'gray-matter'
 
 const BLOG_DIR = path.join(process.cwd(), 'content/blog')
+const ARTICLES_DIR = path.join(process.cwd(), 'content/articles')
 
 export const CATEGORY_LABELS: Record<string, string> = {
   iphone:      'iPhone',
   mac:         'Mac',
   ipad:        'iPad',
+  watch:       'Apple Watch',
   accessoires: 'Accessoires',
+  astuces:     'Astuces',
   deals:       'Deals',
 }
 
@@ -22,7 +26,9 @@ export const CATEGORY_ACCENT: Record<string, string> = {
   iphone:      'var(--accent-1)',
   mac:         'var(--accent-4)',
   ipad:        'var(--accent-3)',
+  watch:       'var(--accent-2)',
   accessoires: 'var(--accent-2)',
+  astuces:     'var(--accent-4)',
   deals:       'var(--accent-1)',
 }
 
@@ -31,16 +37,6 @@ export function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('fr-FR', {
     day: 'numeric', month: 'long', year: 'numeric',
   })
-}
-
-/** Retourne les catégories qui ont au moins un article, avec leur nombre. */
-export function getCategories(): { slug: string; label: string; count: number }[] {
-  const articles = getAllArticles()
-  const map: Record<string, number> = {}
-  for (const a of articles) map[a.categorie] = (map[a.categorie] ?? 0) + 1
-  return Object.entries(map).map(([slug, count]) => ({
-    slug, label: CATEGORY_LABELS[slug] ?? slug, count,
-  }))
 }
 
 export type ArticleMeta = {
@@ -54,6 +50,14 @@ export type ArticleMeta = {
   aiSummary?: string[]
   tags?: string[]
   faq?: { q: string; a: string }[]
+  /** True pour les articles dans content/articles/ (URLs racine). */
+  standalone?: boolean
+}
+
+/** Retourne le href correct pour un article (blog ou standalone). */
+export function articleHref(article: ArticleMeta): string {
+  if (article.standalone) return `/${article.slug}`
+  return `/blog/${article.categorie}/${article.slug}`
 }
 
 export type ArticleRaw = {
@@ -61,38 +65,57 @@ export type ArticleRaw = {
   content: string
 }
 
-export function getAllArticles(): ArticleMeta[] {
-  const categories = fs
-    .readdirSync(BLOG_DIR)
-    .filter((f) => fs.statSync(path.join(BLOG_DIR, f)).isDirectory())
+function parseMeta(data: Record<string, unknown>, slug: string, categorie: string, standalone = false): ArticleMeta {
+  return {
+    slug,
+    categorie,
+    title: (data.title as string) ?? '',
+    description: (data.description as string) ?? '',
+    publishedAt: (data.publishedAt as string) ?? '',
+    updatedAt: data.updatedAt as string | undefined,
+    readingTimeMin: (data.readingTimeMin as number) ?? 5,
+    aiSummary: data.aiSummary as string[] | undefined,
+    tags: data.tags as string[] | undefined,
+    faq: data.faq as { q: string; a: string }[] | undefined,
+    standalone,
+  }
+}
 
+export function getAllArticles(): ArticleMeta[] {
   const articles: ArticleMeta[] = []
 
-  for (const categorie of categories) {
+  // 1. Blog articles (content/blog/[categorie]/[slug].mdx)
+  if (fs.existsSync(BLOG_DIR)) {
+    const categories = fs
+      .readdirSync(BLOG_DIR)
+      .filter((f) => fs.statSync(path.join(BLOG_DIR, f)).isDirectory())
+
+    for (const categorie of categories) {
+      const files = fs
+        .readdirSync(path.join(BLOG_DIR, categorie))
+        .filter((f) => f.endsWith('.mdx'))
+
+      for (const file of files) {
+        const slug = file.replace(/\.mdx$/, '')
+        const raw = fs.readFileSync(path.join(BLOG_DIR, categorie, file), 'utf-8')
+        const { data } = matter(raw)
+        articles.push(parseMeta(data, slug, categorie, false))
+      }
+    }
+  }
+
+  // 2. Standalone articles (content/articles/[slug].mdx)
+  if (fs.existsSync(ARTICLES_DIR)) {
     const files = fs
-      .readdirSync(path.join(BLOG_DIR, categorie))
+      .readdirSync(ARTICLES_DIR)
       .filter((f) => f.endsWith('.mdx'))
 
     for (const file of files) {
       const slug = file.replace(/\.mdx$/, '')
-      const raw = fs.readFileSync(
-        path.join(BLOG_DIR, categorie, file),
-        'utf-8'
-      )
+      const raw = fs.readFileSync(path.join(ARTICLES_DIR, file), 'utf-8')
       const { data } = matter(raw)
-
-      articles.push({
-        slug,
-        categorie,
-        title: data.title ?? '',
-        description: data.description ?? '',
-        publishedAt: data.publishedAt ?? '',
-        updatedAt: data.updatedAt,
-        readingTimeMin: data.readingTimeMin ?? 5,
-        aiSummary: data.aiSummary,
-        tags: data.tags,
-        faq: data.faq,
-      })
+      const categorie = (data.categorie as string) ?? 'accessoires'
+      articles.push(parseMeta(data, slug, categorie, true))
     }
   }
 
@@ -102,32 +125,29 @@ export function getAllArticles(): ArticleMeta[] {
   )
 }
 
+/** Retourne les catégories qui ont au moins un article, avec leur nombre. */
+export function getCategories(): { slug: string; label: string; count: number }[] {
+  const articles = getAllArticles()
+  const map: Record<string, number> = {}
+  for (const a of articles) map[a.categorie] = (map[a.categorie] ?? 0) + 1
+  return Object.entries(map).map(([slug, count]) => ({
+    slug, label: CATEGORY_LABELS[slug] ?? slug, count,
+  }))
+}
+
 export function getArticleRaw(categorie: string, slug: string): ArticleRaw {
   const filePath = path.join(BLOG_DIR, categorie, `${slug}.mdx`)
   const raw = fs.readFileSync(filePath, 'utf-8')
   const { data, content } = matter(raw)
 
   return {
-    meta: {
-      slug,
-      categorie,
-      title: data.title ?? '',
-      description: data.description ?? '',
-      publishedAt: data.publishedAt ?? '',
-      updatedAt: data.updatedAt,
-      readingTimeMin: data.readingTimeMin ?? 5,
-      aiSummary: data.aiSummary,
-      tags: data.tags,
-      faq: data.faq,
-    },
+    meta: parseMeta(data, slug, categorie, false),
     content,
   }
 }
 
 export function articleExists(categorie: string, slug: string): boolean {
-  return fs.existsSync(
-    path.join(BLOG_DIR, categorie, `${slug}.mdx`)
-  )
+  return fs.existsSync(path.join(BLOG_DIR, categorie, `${slug}.mdx`))
 }
 
 /**

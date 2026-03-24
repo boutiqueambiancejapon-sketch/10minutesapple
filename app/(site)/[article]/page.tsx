@@ -1,13 +1,15 @@
 /**
  * /[article] — articles standalone (ex-WordPress).
  * Sert les MDX depuis content/articles/[slug].mdx aux mêmes URLs que WordPress.
- * Server Component — même rendu que /blog/[categorie]/[slug].
+ * Intégré au système blog : apparaît dans listings, auteur, articles liés.
+ * Server Component.
  */
 
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
+import { getRelatedArticles, articleHref, CATEGORY_LABELS } from '@/lib/blog'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
 import { Tip } from '@/components/blog/Tip'
 import { Warning } from '@/components/blog/Warning'
@@ -48,16 +50,6 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   }
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  iphone: 'iPhone',
-  mac: 'Mac',
-  ipad: 'iPad',
-  accessoires: 'Accessoires',
-  watch: 'Apple Watch',
-  deals: 'Deals',
-  astuces: 'Astuces',
-}
-
 export default async function StandaloneArticlePage({ params }: { params: Params }) {
   const { article: slug } = await params
   const data = getStandaloneArticle(slug)
@@ -67,19 +59,15 @@ export default async function StandaloneArticlePage({ params }: { params: Params
   const { content: mdxContent } = await compileMDX({
     source: content,
     components: {
-      Tip,
-      Warning,
-      Verdict,
-      ProConTable,
+      Tip, Warning, Verdict, ProConTable,
       table: ({ children }: { children: ReactNode }) => (
-        <div className="table-scroll-wrap">
-          <table>{children}</table>
-        </div>
+        <div className="table-scroll-wrap"><table>{children}</table></div>
       ),
     },
   })
 
   const catLabel = CATEGORY_LABELS[meta.categorie] ?? meta.categorie
+  const related = getRelatedArticles(meta.categorie, slug, 3)
 
   const jsonLd = [
     {
@@ -133,6 +121,8 @@ export default async function StandaloneArticlePage({ params }: { params: Params
                 <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
                   <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Accueil</Link></li>
                   <li aria-hidden="true">›</li>
+                  <li><Link href="/blog" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Blog</Link></li>
+                  <li aria-hidden="true">›</li>
                   <li style={{ color: 'var(--text-secondary)' }}>{catLabel}</li>
                 </ol>
               </nav>
@@ -163,6 +153,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
 
             <div className="prose-article">{mdxContent}</div>
 
+            {/* FAQ */}
             {meta.faq && meta.faq.length > 0 && (
               <section aria-labelledby="faq-titre" style={{ marginTop: 'var(--space-12)' }}>
                 <h2 id="faq-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 'var(--space-6)' }}>
@@ -179,6 +170,35 @@ export default async function StandaloneArticlePage({ params }: { params: Params
               </section>
             )}
 
+            {/* Continuer votre lecture */}
+            {related.length > 0 && (
+              <section aria-labelledby="related-titre" style={{ marginTop: 'var(--space-12)' }}>
+                <h2 id="related-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
+                  Continuer votre lecture
+                </h2>
+                <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--space-4)', listStyle: 'none' }}>
+                  {related.map((a) => (
+                    <li key={a.slug}>
+                      <Link href={articleHref(a)} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+                        <div style={{ background: 'var(--surface-2)', border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-md)', padding: 'var(--space-5)', height: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent-1)' }}>
+                            {CATEGORY_LABELS[a.categorie] ?? a.categorie}
+                          </span>
+                          <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, flex: 1 }}>
+                            {a.title}
+                          </span>
+                          <span style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: 'auto' }}>
+                            {a.readingTimeMin} min
+                          </span>
+                        </div>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* AuthorCard */}
             <div style={{ marginTop: 'var(--space-10)' }}>
               <AuthorCard authorSlug="mathias" bio="Fan Apple depuis le 3G. Testeur du quotidien, jailbreakeur de la première heure. Pas d'affiliation constructeur — juste l'honnêteté." variant="inline" />
             </div>

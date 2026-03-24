@@ -6,7 +6,7 @@
  */
 import Link from 'next/link'
 import type { ArticleMeta } from '@/lib/blog'
-import { CATEGORY_LABELS, CATEGORY_ACCENT, formatDate } from '@/lib/blog'
+import { CATEGORY_LABELS, CATEGORY_ACCENT, formatDate, articleHref } from '@/lib/blog'
 
 type Props = {
   article: ArticleMeta
@@ -20,7 +20,7 @@ export function ArticleCard({ article, featured = false, showCategory = true }: 
 
   if (featured) {
     return (
-      <Link href={`/blog/${article.categorie}/${article.slug}`} style={{ textDecoration: 'none', display: 'block' }}>
+      <Link href={articleHref(article)} style={{ textDecoration: 'none', display: 'block' }}>
         <article
           className="article-card"
           style={{
@@ -66,7 +66,7 @@ export function ArticleCard({ article, featured = false, showCategory = true }: 
   }
 
   return (
-    <Link href={`/blog/${article.categorie}/${article.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
+    <Link href={articleHref(article)} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
       <article
         className="article-card"
         style={{

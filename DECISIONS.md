@@ -33,6 +33,29 @@
 ## OG Image
 - Fond #0A0A0F + barre gradient accent en haut + eyebrow --accent-1 + headline 72px 800 + watermark "10" --accent-2 0.05
 
+## DA — Étape 4 (2026-03-24)
+
+### Fix Nav mobile menu
+- Bug : overlay `position:fixed` enfant du `<header>` avec `backdropFilter` → stacking context crée fond transparent
+- Fix : overlay sorti du `<header>`, rendu comme sibling dans Fragment `<>…</>` — zIndex 39, background `#0A0A0F` hardcodé pour fiabilité cross-browser
+- Décision hardcode : valeur unique et immuable, CSS var ne résout pas fiablement hors contexte stacking filter
+
+### AISummarize (composant blog)
+- effect-aisummarize : `border-left: 3px solid var(--accent-4)` (violet) + label Syne 800 10px smallcaps + bullets `→` accent-4
+- Background `--bg-surface` · border-radius `0 radius-md radius-md 0` pour l'effet "callout ancré"
+- Données dans le frontmatter MDX (`aiSummary: string[]`) — Server Component, zéro JS client
+
+### prose-article (CSS MDX)
+- Lettrine `::first-letter` : Syne 800, 3.5em, float:left, --accent-1 — typo-article-intro documenté
+- h2/h3 : display font + weights 800/700, text-wrap:balance
+- `code` inline : --bg-surface-2 + --accent-3 (menthe) · border-radius-sm
+
+### Pages piliers
+- effect-comparer → bento auto-fill minmax(280,1fr) + badge "Nouveau" --accent-3 + animation border-pulse
+- effect-quiz → `radial-gradient(ellipse 80% 60% at 50% 0%, rgba(123,97,255,0.18)…)` hero + chips glassmorphism --bg-surface-2
+- effect-simulateur → watermark "€" Syne 800 opacity 0.05 --accent-2 + tableau responsive auto-fit
+- effect-deals → watermark "%" + MarqueeStrip + badge HOT animation pulse-accent
+
 ## À valider
 - [ ] Nom de famille de Mathias pour mentions légales
 - [ ] URL LinkedIn Mathias pour schema Person
@@ -73,3 +96,17 @@
 - JetBrains Mono chargé dans le composant (`preload: false`) — pas dans layout global
 - `font-variant-numeric: tabular-nums` obligatoire sur tous les chiffres
 - Badge économie : fond --accent-3 (vert menthe), couleur --bg-primary
+
+### Light mode (prefers-color-scheme: light)
+- Implémenté via `@media (prefers-color-scheme: light)` dans globals.css — aucun JS, zéro flash
+- Accents assombris pour garantir le contraste WCAG AA sur fond clair :
+  - accent-1 #FF3D57 → #C8001F (6.1:1 sur blanc)
+  - accent-2 #FFD23F → #7A5500 (7.3:1 sur blanc)
+  - accent-3 #3DFFC0 → #006B4F (6.6:1 sur blanc)
+  - accent-4 #7B61FF → #5B3FDF (6.5:1 sur blanc)
+- text-secondary #9090A8 → #4A4A52 (~9:1 sur blanc)
+- text-muted #55556A → #6C6C70 (6.2:1 sur blanc)
+- Aurora réduite : --noise-opacity 0.04 → 0.025 (discret sur fond blanc)
+- Nav hardcodes éliminés : --nav-bg-scrolled + --nav-mobile-bg variables CSS
+- opengraph-image.tsx garde #0A0A0F (OG toujours dark, indépendant du mode)
+- Les rgba() inline dans pages (quiz, simulateur, blog) restent fonctionnels : tints à <12% visibles sur blanc

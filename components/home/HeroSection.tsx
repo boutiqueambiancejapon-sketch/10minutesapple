@@ -8,6 +8,7 @@ import { AuroraBackground } from '@/components/effects/AuroraBackground'
 import { NoiseOverlay } from '@/components/effects/NoiseOverlay'
 import { AnimatedHeading } from '@/components/effects/AnimatedHeading'
 import { RotatingWords } from '@/components/effects/RotatingWords'
+import { HeroVisual } from './HeroVisual'
 import Link from 'next/link'
 
 const ROTATING = ['iPhone', 'Mac', 'iPad', 'Apple Watch', 'AirPods']
@@ -29,6 +30,9 @@ export function HeroSection() {
           zIndex: 3,
         }}
       >
+        <div className="hero-grid">
+        {/* ── Colonne gauche — texte ── */}
+        <div>
         {/* Eyebrow */}
         <AnimatedHeading
           as="p"
@@ -158,6 +162,12 @@ export function HeroSection() {
             Quel Apple me convient ?
           </Link>
         </AnimatedHeading>
+        </div>{/* /colonne gauche */}
+
+        {/* ── Colonne droite — navigation familles ── */}
+        <HeroVisual />
+
+        </div>{/* /hero-grid */}
       </div>
     </AuroraBackground>
   )

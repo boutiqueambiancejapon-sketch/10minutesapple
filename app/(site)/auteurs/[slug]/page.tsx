@@ -143,9 +143,9 @@ export default async function AuthorPage(
         <h1
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+            fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
             fontWeight: 800,
-            letterSpacing: '-0.03em',
+            letterSpacing: '0',
             color: 'var(--text-primary)',
             lineHeight: 1.1,
             marginBottom: 'var(--space-3)',
@@ -185,9 +185,9 @@ export default async function AuthorPage(
         <h2
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: '1.2rem',
+            fontSize: '1.1rem',
             fontWeight: 700,
-            letterSpacing: '-0.02em',
+            letterSpacing: '0',
             color: 'var(--text-primary)',
             marginBottom: 'var(--space-6)',
           }}

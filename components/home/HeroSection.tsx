@@ -53,10 +53,10 @@ export function HeroSection() {
           duration={900}
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: 'clamp(2.6rem, 7vw, 5.5rem)',
+            fontSize: 'clamp(2rem, 5.5vw, 4.5rem)',
             fontWeight: 800,
-            lineHeight: 1.05,
-            letterSpacing: '-0.03em',
+            lineHeight: 1.1,
+            letterSpacing: '0',
             color: 'var(--text-primary)',
             marginBottom: '0.15em',
           }}
@@ -71,10 +71,10 @@ export function HeroSection() {
           duration={900}
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: 'clamp(2.6rem, 7vw, 5.5rem)',
+            fontSize: 'clamp(2rem, 5.5vw, 4.5rem)',
             fontWeight: 800,
-            lineHeight: 1.05,
-            letterSpacing: '-0.03em',
+            lineHeight: 1.1,
+            letterSpacing: '0',
             marginBottom: 'var(--space-8)',
             display: 'flex',
             alignItems: 'baseline',

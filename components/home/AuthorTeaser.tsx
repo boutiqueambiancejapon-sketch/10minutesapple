@@ -48,7 +48,7 @@ export function AuthorTeaser() {
               fontSize: '45%',
               fontWeight: 800,
               color: 'var(--text-primary)',
-              letterSpacing: '-0.05em',
+              letterSpacing: '0',
               lineHeight: 1,
               userSelect: 'none',
             }}
@@ -86,9 +86,9 @@ export function AuthorTeaser() {
           <h2
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(1.4rem, 2.5vw, 2rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.03em',
+              fontSize: 'clamp(1.2rem, 2.2vw, 1.7rem)',
+              fontWeight: 700,
+              letterSpacing: '0',
               color: 'var(--text-primary)',
               marginBottom: 'var(--space-4)',
               lineHeight: 1.15,

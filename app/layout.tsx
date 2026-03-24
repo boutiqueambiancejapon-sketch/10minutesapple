@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, Syne } from 'next/font/google'
+import { Space_Grotesk, Unbounded } from 'next/font/google'
 import './globals.css'
 
 const fontPrimary = Space_Grotesk({
@@ -11,7 +11,7 @@ const fontPrimary = Space_Grotesk({
   display: 'swap',
 })
 
-const fontDisplay = Syne({
+const fontDisplay = Unbounded({
   subsets: ['latin'],
   weight: ['400', '700', '800'],
   variable: '--next-font-display',

@@ -39,7 +39,7 @@ function Monogram({ size }: { size: number }) {
           fontWeight: 800,
           color: 'var(--accent-1)',
           lineHeight: 1,
-          letterSpacing: '-0.02em',
+          letterSpacing: '0',
         }}
       >
         M

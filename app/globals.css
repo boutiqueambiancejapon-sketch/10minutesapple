@@ -273,7 +273,7 @@ body {
   color: var(--accent-2);
   pointer-events: none;
   user-select: none;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
 }
 
 /* ===== RESPONSIVE & COMPOSANTS ===== */

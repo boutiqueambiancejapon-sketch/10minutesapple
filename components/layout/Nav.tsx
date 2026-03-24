@@ -71,9 +71,9 @@ export function Nav() {
           aria-label="10minutesapple — accueil"
           style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: '1px' }}
         >
-          <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 800, fontSize: '17px', color: 'var(--text-primary)', letterSpacing: '-0.03em' }}>10min</span>
-          <span style={{ color: 'var(--accent-1)', fontWeight: 800, fontSize: '17px' }}>·</span>
-          <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 400, fontSize: '17px', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>Apple</span>
+          <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 800, fontSize: '14px', color: 'var(--text-primary)', letterSpacing: '0' }}>10min</span>
+          <span style={{ color: 'var(--accent-1)', fontWeight: 800, fontSize: '14px' }}>·</span>
+          <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 400, fontSize: '14px', color: 'var(--text-secondary)', letterSpacing: '0' }}>Apple</span>
         </Link>
 
         {/* Desktop links */}

@@ -83,12 +83,12 @@ function ToolCard({ href, eyebrow, title, description, cta, accent, large = fals
         <h3
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: large ? 'clamp(1.4rem, 2.5vw, 2rem)' : '1.1rem',
+            fontSize: large ? 'clamp(1.3rem, 2.2vw, 1.8rem)' : '1rem',
             fontWeight: 700,
-            letterSpacing: '-0.02em',
+            letterSpacing: '0',
             color: 'var(--text-primary)',
             marginBottom: 'var(--space-3)',
-            lineHeight: 1.2,
+            lineHeight: 1.25,
           }}
         >
           {title}
@@ -164,11 +164,11 @@ export function FeaturedTools() {
           <h2
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(1.6rem, 3vw, 2.4rem)',
-              fontWeight: 800,
-              letterSpacing: '-0.03em',
+              fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
+              fontWeight: 700,
+              letterSpacing: '0',
               color: 'var(--text-primary)',
-              lineHeight: 1.1,
+              lineHeight: 1.2,
             }}
           >
             Décidez en connaissance<br />de cause

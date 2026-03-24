@@ -354,3 +354,77 @@ body {
     padding-right: var(--space-4) !important;
   }
 }
+
+/* ===== PROSE ARTICLE — styles MDX rendus côté serveur ===== */
+.prose-article {
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.75;
+}
+.prose-article h2 {
+  font-family: var(--next-font-display), system-ui, sans-serif;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-top: var(--space-10);
+  margin-bottom: var(--space-4);
+  text-wrap: balance;
+}
+.prose-article h3 {
+  font-family: var(--next-font-display), system-ui, sans-serif;
+  font-size: clamp(17px, 2.5vw, 20px);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+  text-wrap: balance;
+}
+.prose-article p {
+  margin-bottom: var(--space-5);
+}
+.prose-article ul,
+.prose-article ol {
+  padding-left: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.prose-article li {
+  margin-bottom: var(--space-2);
+}
+.prose-article strong {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+.prose-article a {
+  color: var(--accent-1);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.prose-article a:hover {
+  color: var(--text-primary);
+}
+.prose-article blockquote {
+  border-left: 3px solid var(--accent-4);
+  padding-left: var(--space-5);
+  color: var(--text-secondary);
+  font-style: italic;
+  margin: var(--space-6) 0;
+}
+.prose-article code {
+  font-family: var(--next-font-mono), monospace;
+  font-size: 0.88em;
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-sm);
+  padding: 2px 6px;
+  color: var(--accent-3);
+}
+/* Lettrine première lettre — typo-article-intro */
+.prose-article > p:first-of-type::first-letter {
+  font-family: var(--next-font-display), system-ui, sans-serif;
+  font-size: 3.5em;
+  font-weight: 800;
+  color: var(--accent-1);
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.12em;
+  margin-top: 0.08em;
+}

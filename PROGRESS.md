@@ -50,9 +50,29 @@
 - [x] app/(site)/page.tsx (home complète)
 - [x] app/(site)/auteurs/[slug]/page.tsx (ISR 86400s · JSON-LD Person · watermark M)
 
-## En attente — Étape 4
-- Blog hub · articles (5 min)
-- Comparateur V1 · Quiz V1 · Simulateur V1 · Deals
+## Complété — Étape 4 (2026-03-24)
+
+### Pages piliers & blog
+- [x] Fix Nav mobile menu — overlay extrait hors `<header>` (bug stacking context backdrop-filter)
+- [x] lib/blog.ts (getAllArticles · getArticleRaw · articleExists via gray-matter)
+- [x] components/blog/AISummarize.tsx (bloc "En bref" · border-left --accent-4 · Syne label)
+- [x] app/globals.css → `.prose-article` (styles MDX article : h2/h3/p/ul/a/code/lettrine)
+- [x] app/(site)/blog/page.tsx (hub · ISR 3600s · grille asymétrique · cards border-top --accent-1)
+- [x] app/(site)/blog/[categorie]/[slug]/page.tsx (article · AISummarize · AuthorByline · FAQ · AuthorCard · JSON-LD)
+- [x] content/blog/iphone/quand-acheter-iphone.mdx (premier article · 7 FAQ · aiSummary)
+- [x] app/(site)/comparer/page.tsx (bento grid · 6 modèles · border-pulse animation)
+- [x] app/(site)/quiz/page.tsx (radial gradient --accent-4 · 4 questions · glass cards)
+- [x] app/(site)/simulateur/page.tsx (cycles de prix · watermark € · 4 modèles)
+- [x] app/(site)/deals/page.tsx (MarqueeStrip · watermark % · 4 deals · badge HOT)
+
+## En attente — Étape 5
+- Blog : 4 articles supplémentaires (objectif 5 total)
+- Comparateur : filtres interactifs ('use client' isolé)
+- Quiz : moteur de recommandation interactif V2
+- Simulateur : sélecteur modèle interactif
+- Deals : ISR enrichi + liens affiliés Amazon réels
+- Pages légales (/mentions-legales · /confidentialite)
+- sitemap.ts mis à jour avec les nouvelles routes
 
 ## Bloqué
 - Nom de famille Mathias requis pour mentions légales [DÉCISION À VALIDER]

@@ -33,6 +33,29 @@
 ## OG Image
 - Fond #0A0A0F + barre gradient accent en haut + eyebrow --accent-1 + headline 72px 800 + watermark "10" --accent-2 0.05
 
+## DA — Étape 4 (2026-03-24)
+
+### Fix Nav mobile menu
+- Bug : overlay `position:fixed` enfant du `<header>` avec `backdropFilter` → stacking context crée fond transparent
+- Fix : overlay sorti du `<header>`, rendu comme sibling dans Fragment `<>…</>` — zIndex 39, background `#0A0A0F` hardcodé pour fiabilité cross-browser
+- Décision hardcode : valeur unique et immuable, CSS var ne résout pas fiablement hors contexte stacking filter
+
+### AISummarize (composant blog)
+- effect-aisummarize : `border-left: 3px solid var(--accent-4)` (violet) + label Syne 800 10px smallcaps + bullets `→` accent-4
+- Background `--bg-surface` · border-radius `0 radius-md radius-md 0` pour l'effet "callout ancré"
+- Données dans le frontmatter MDX (`aiSummary: string[]`) — Server Component, zéro JS client
+
+### prose-article (CSS MDX)
+- Lettrine `::first-letter` : Syne 800, 3.5em, float:left, --accent-1 — typo-article-intro documenté
+- h2/h3 : display font + weights 800/700, text-wrap:balance
+- `code` inline : --bg-surface-2 + --accent-3 (menthe) · border-radius-sm
+
+### Pages piliers
+- effect-comparer → bento auto-fill minmax(280,1fr) + badge "Nouveau" --accent-3 + animation border-pulse
+- effect-quiz → `radial-gradient(ellipse 80% 60% at 50% 0%, rgba(123,97,255,0.18)…)` hero + chips glassmorphism --bg-surface-2
+- effect-simulateur → watermark "€" Syne 800 opacity 0.05 --accent-2 + tableau responsive auto-fit
+- effect-deals → watermark "%" + MarqueeStrip + badge HOT animation pulse-accent
+
 ## À valider
 - [ ] Nom de famille de Mathias pour mentions légales
 - [ ] URL LinkedIn Mathias pour schema Person

@@ -43,6 +43,7 @@ Voir AUTHOR-mathias.md pour le schema complet.
 
 ### FAQPage (tous les articles)
 Minimum 6 questions. Utiliser l'accordéon HTML accessible + JSON-LD.
+**Balisage obligatoire** : chaque question = `<h3>` — jamais `<dt>` nu, `<p>` ou `<strong>` seuls.
 
 ### BreadcrumbList (blog, articles)
 Format : Accueil > Blog > [Catégorie] > [Titre]

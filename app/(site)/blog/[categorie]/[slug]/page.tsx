@@ -11,8 +11,14 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles } from '@/lib/blog'
 import { currentYear } from '@/lib/utils/year'
 import { AISummarize } from '@/components/blog/AISummarize'
+import { Tip } from '@/components/blog/Tip'
+import { Warning } from '@/components/blog/Warning'
+import { Verdict } from '@/components/blog/Verdict'
+import { ProConTable } from '@/components/blog/ProConTable'
+import { ToolCTA } from '@/components/blog/ToolCTA'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
+import type { ReactNode } from 'react'
 
 export const revalidate = 86400
 
@@ -62,7 +68,21 @@ export default async function ArticlePage({ params }: { params: Params }) {
   if (!articleExists(categorie, slug)) notFound()
 
   const { meta, content } = getArticleRaw(categorie, slug)
-  const { content: mdxContent } = await compileMDX({ source: content })
+  const { content: mdxContent } = await compileMDX({
+    source: content,
+    components: {
+      Tip,
+      Warning,
+      Verdict,
+      ProConTable,
+      // Responsive table wrapper injecté automatiquement
+      table: ({ children }: { children: ReactNode }) => (
+        <div className="table-scroll-wrap">
+          <table>{children}</table>
+        </div>
+      ),
+    },
+  })
   const related = getRelatedArticles(categorie, slug, 3)
 
   const catLabel = CATEGORY_LABELS[categorie] ?? categorie
@@ -138,7 +158,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
       <main id="main-content">
         <article>
-          {/* Header */}
+          {/* Header — bande gradient accent-4 pleine largeur */}
+          <div className="article-hero-band">
           <header
             style={{
               maxWidth: '760px',
@@ -217,6 +238,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
               readingTimeMin={meta.readingTimeMin}
             />
           </header>
+          </div>{/* /article-hero-band */}
 
           {/* Body */}
           <div
@@ -233,6 +255,9 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
             {/* MDX content */}
             <div className="prose-article">{mdxContent}</div>
+
+            {/* CTA outil contextuel */}
+            <ToolCTA categorie={categorie} />
 
             {/* FAQ */}
             {meta.faq && meta.faq.length > 0 && (
@@ -253,29 +278,30 @@ export default async function ArticlePage({ params }: { params: Params }) {
                 >
                   Questions fréquentes
                 </h2>
-                <dl style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
                   {meta.faq.map(({ q, a }, i) => (
                     <div
                       key={i}
                       style={{
                         background: 'var(--bg-surface)',
                         border: '1px solid var(--border)',
+                        borderLeft: '3px solid var(--accent-4)',
                         borderRadius: 'var(--radius-md)',
                         padding: 'var(--space-5) var(--space-6)',
                       }}
                     >
-                      <dt
+                      <h3
                         style={{
                           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                           fontWeight: 700,
                           fontSize: '15px',
                           color: 'var(--text-primary)',
-                          marginBottom: 'var(--space-2)',
+                          margin: '0 0 var(--space-2)',
                         }}
                       >
                         {q}
-                      </dt>
-                      <dd
+                      </h3>
+                      <p
                         style={{
                           fontSize: '14px',
                           color: 'var(--text-secondary)',
@@ -284,10 +310,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
                         }}
                       >
                         {a}
-                      </dd>
+                      </p>
                     </div>
                   ))}
-                </dl>
+                </div>
               </section>
             )}
 

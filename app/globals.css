@@ -496,3 +496,104 @@ body {
   margin-right: 0.12em;
   margin-top: 0.08em;
 }
+
+/* --- Tables markdown dans prose-article --- */
+/* Le wrapper scroll est appliqué via le composant MDX <table> override */
+.prose-article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.prose-article thead {
+  background: var(--accent-4);
+}
+.prose-article th {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-family: var(--next-font-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  white-space: nowrap;
+}
+.prose-article tbody tr:nth-child(odd) td {
+  background: var(--bg-surface);
+}
+.prose-article tbody tr:nth-child(even) td {
+  background: var(--bg-surface-2);
+}
+.prose-article td {
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.prose-article tbody tr:last-child td {
+  border-bottom: none;
+}
+/* Wrapper scroll — injecté via composant MDX */
+.table-scroll-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin: var(--space-6) 0;
+}
+.table-scroll-wrap table {
+  margin: 0;
+}
+
+/* --- Nav dropdown — desktop CSS pure --- */
+.dropdown-trigger {
+  position: relative;
+}
+.dropdown-panel {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 210px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-2);
+  z-index: 50;
+  flex-direction: column;
+  gap: 2px;
+}
+.dropdown-trigger:hover .dropdown-panel,
+.dropdown-trigger:focus-within .dropdown-panel {
+  display: flex;
+}
+.dropdown-item {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: background 150ms ease, color 150ms ease;
+}
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+}
+.dropdown-item-active {
+  color: var(--accent-1) !important;
+  font-weight: 600;
+}
+
+/* --- Hero article — gradient header --- */
+.article-hero-band {
+  background: radial-gradient(
+    ellipse 130% 100% at 50% 0%,
+    rgba(91, 63, 223, 0.10) 0%,
+    transparent 70%
+  );
+}

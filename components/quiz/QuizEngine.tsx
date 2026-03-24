@@ -259,9 +259,17 @@ function recommend(answers: Answers): Recommendation {
 
 /* ─── Composant ──────────────────────────────────────── */
 
-export function QuizEngine() {
-  const [step, setStep] = useState(0)
-  const [answers, setAnswers] = useState<Answers>({})
+type QuizEngineProps = {
+  /** Pré-sélectionne le produit et saute l'étape 0 (pour les pages /choisir/[produit]). */
+  defaultProduit?: string
+}
+
+export function QuizEngine({ defaultProduit }: QuizEngineProps = {}) {
+  const initialStep = defaultProduit ? 1 : 0
+  const initialAnswers: Answers = defaultProduit ? { produit: defaultProduit } : {}
+
+  const [step, setStep] = useState(initialStep)
+  const [answers, setAnswers] = useState<Answers>(initialAnswers)
   const [done, setDone] = useState(false)
 
   const current = STEPS[step]

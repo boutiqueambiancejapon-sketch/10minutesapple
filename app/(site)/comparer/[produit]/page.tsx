@@ -1,16 +1,14 @@
 /**
- * /comparer/[produit] — comparateur par famille de produit.
- * Familles : iphone · mac · ipad · watch · airpods.
- * DA : bento grid + border-pulse --accent-1.
- * Server Component · ISR 3600s.
- * Bouton "Acheter sur Amazon" via AffiliateLink (amazonUrl vide = désactivé).
+ * /comparer/[produit] — comparateur côte à côte style Apple.
+ * Sélecteurs dropdown + specs alignés en colonnes.
+ * Server Component — ComparateurSelector isolé en 'use client'.
  */
 
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { getProduit, PRODUIT_SLUGS } from '@/lib/comparateur'
-import { AffiliateLink } from '@/components/ui/AffiliateLink'
+import { ComparateurSelector } from '@/components/comparer/ComparateurSelector'
 import { currentYear } from '@/lib/utils/year'
 
 export const revalidate = 3600
@@ -54,7 +52,6 @@ export default async function ComparateurProduitPage({ params }: { params: Param
   if (!data) notFound()
 
   const year = currentYear()
-  const specKeys = Object.keys(data.specsLabels)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -77,20 +74,11 @@ export default async function ComparateurProduitPage({ params }: { params: Param
         {/* Hero */}
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: '960px',
             margin: '0 auto',
-            padding: 'var(--space-12) var(--space-6) var(--space-8)',
-            position: 'relative',
+            padding: 'var(--space-12) var(--space-6) var(--space-6)',
           }}
         >
-          <span
-            aria-hidden="true"
-            className="section-watermark"
-            style={{ position: 'absolute', top: 'var(--space-4)', right: 'var(--space-6)' }}
-          >
-            02
-          </span>
-
           <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-5)' }}>
             <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
               <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Accueil</Link></li>
@@ -111,9 +99,9 @@ export default async function ComparateurProduitPage({ params }: { params: Param
                   fontSize: '13px',
                   fontWeight: p.slug === produit ? 700 : 400,
                   color: p.slug === produit ? 'var(--bg-primary)' : 'var(--text-secondary)',
-                  background: p.slug === produit ? 'var(--accent-1)' : 'var(--bg-surface)',
+                  background: p.slug === produit ? 'var(--accent-1)' : 'transparent',
                   border: '1px solid',
-                  borderColor: p.slug === produit ? 'var(--accent-1)' : 'var(--border)',
+                  borderColor: p.slug === produit ? 'var(--accent-1)' : 'var(--glass-border)',
                   borderRadius: 'var(--radius-full)',
                   padding: 'var(--space-1) var(--space-4)',
                   textDecoration: 'none',
@@ -127,7 +115,7 @@ export default async function ComparateurProduitPage({ params }: { params: Param
           <h1
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(28px, 4vw, 52px)',
+              fontSize: 'clamp(24px, 4vw, 44px)',
               fontWeight: 800,
               color: 'var(--text-primary)',
               lineHeight: 1.1,
@@ -136,156 +124,62 @@ export default async function ComparateurProduitPage({ params }: { params: Param
           >
             Comparateur {data.label} {year}
           </h1>
-          <p style={{ fontSize: '16px', color: 'var(--text-secondary)', maxWidth: '560px', lineHeight: 1.6 }}>
+          <p style={{ fontSize: '15px', color: 'var(--text-secondary)', maxWidth: '520px', lineHeight: 1.6, marginBottom: 'var(--space-2)' }}>
             {data.description}
+          </p>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
+            Sélectionne les modèles à comparer côte à côte.
           </p>
         </section>
 
-        {/* Grille modèles */}
+        {/* Comparateur interactif */}
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: '960px',
             margin: '0 auto',
-            padding: '0 var(--space-6) var(--space-24)',
+            padding: '0 var(--space-6) var(--space-16)',
           }}
         >
-          <ul
-            role="list"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-              gap: 'var(--space-5)',
-              listStyle: 'none',
-            }}
-          >
-            {data.modeles.map((modele) => (
-              <li key={modele.nom}>
-                <article
-                  style={{
-                    background: 'var(--bg-surface)',
-                    border: '1px solid var(--border)',
-                    borderRadius: 'var(--radius-lg)',
-                    padding: 'var(--space-6)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--space-4)',
-                    height: '100%',
-                    animation: 'border-pulse 4s ease-in-out infinite',
-                    position: 'relative',
-                  }}
-                >
-                  {modele.nouveaute && (
-                    <span
-                      style={{
-                        position: 'absolute',
-                        top: 'var(--space-3)',
-                        right: 'var(--space-3)',
-                        fontSize: '10px',
-                        fontWeight: 700,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        color: 'var(--bg-primary)',
-                        background: 'var(--accent-3)',
-                        padding: '2px 8px',
-                        borderRadius: 'var(--radius-full)',
-                      }}
-                    >
-                      Nouveau
-                    </span>
-                  )}
+          <ComparateurSelector
+            modeles={data.modeles}
+            specsLabels={data.specsLabels}
+          />
 
-                  <div>
-                    <h2
-                      style={{
-                        fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                        fontSize: '17px',
-                        fontWeight: 800,
-                        color: 'var(--text-primary)',
-                        marginBottom: 'var(--space-1)',
-                      }}
-                    >
-                      {modele.nom}
-                    </h2>
-                    <div
-                      style={{
-                        fontFamily: 'var(--next-font-mono), monospace',
-                        fontVariantNumeric: 'tabular-nums',
-                        fontSize: '20px',
-                        fontWeight: 400,
-                        color: 'var(--accent-2)',
-                      }}
-                    >
-                      {modele.prix.toLocaleString('fr-FR')} €
-                    </div>
-                  </div>
-
-                  {/* Specs */}
-                  <dl
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'auto 1fr',
-                      gap: 'var(--space-1) var(--space-4)',
-                      fontSize: '13px',
-                      flex: 1,
-                    }}
-                  >
-                    {specKeys.map((key) => (
-                      <>
-                        <dt key={`dt-${key}`} style={{ color: 'var(--text-muted)', whiteSpace: 'nowrap' }}>
-                          {data.specsLabels[key]}
-                        </dt>
-                        <dd key={`dd-${key}`} style={{ color: 'var(--text-secondary)', margin: 0 }}>
-                          {modele.specs[key] ?? '—'}
-                        </dd>
-                      </>
-                    ))}
-                  </dl>
-
-                  {/* CTA Amazon */}
-                  <div style={{ marginTop: 'auto', paddingTop: 'var(--space-3)', borderTop: '1px solid var(--border)' }}>
-                    {modele.amazonUrl ? (
-                      <AffiliateLink
-                        href={modele.amazonUrl}
-                        style={{
-                          display: 'block',
-                          textAlign: 'center',
-                          background: 'var(--accent-2)',
-                          color: 'var(--bg-primary)',
-                          fontWeight: 700,
-                          fontSize: '13px',
-                          padding: 'var(--space-3) var(--space-4)',
-                          borderRadius: 'var(--radius-md)',
-                          textDecoration: 'none',
-                        }}
-                      >
-                        Acheter sur Amazon
-                      </AffiliateLink>
-                    ) : (
-                      <span
-                        style={{
-                          display: 'block',
-                          textAlign: 'center',
-                          fontSize: '12px',
-                          color: 'var(--text-muted)',
-                          padding: 'var(--space-3)',
-                          background: 'var(--bg-surface-2)',
-                          borderRadius: 'var(--radius-md)',
-                        }}
-                      >
-                        Lien Amazon bientôt disponible
-                      </span>
-                    )}
-                  </div>
-                </article>
-              </li>
-            ))}
-          </ul>
-
-          <p style={{ marginTop: 'var(--space-6)', fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
-            Prix indicatifs Apple Store France au{' '}
-            <time dateTime="2026-03-24">24 mars 2026</time>. Les liens Amazon sont des liens affiliés
+          <p style={{ marginTop: 'var(--space-8)', fontSize: '12px', color: 'var(--text-muted)', lineHeight: 1.5 }}>
+            Prix indicatifs Apple Store France. Les liens Amazon sont des liens affiliés
             — le prix que tu paies reste identique.
           </p>
+
+          {/* CTA vers le quiz */}
+          <div
+            style={{
+              marginTop: 'var(--space-8)',
+              padding: 'var(--space-6)',
+              background: 'var(--surface-2)',
+              border: '1px solid var(--glass-border)',
+              borderRadius: 'var(--radius-lg)',
+              textAlign: 'center',
+            }}
+          >
+            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', marginBottom: 'var(--space-3)' }}>
+              Tu hésites encore ? Réponds à 4 questions pour trouver ton modèle.
+            </p>
+            <Link
+              href={`/choisir/${produit}`}
+              style={{
+                display: 'inline-block',
+                background: 'var(--accent-4)',
+                color: '#fff',
+                fontWeight: 700,
+                fontSize: '14px',
+                padding: 'var(--space-3) var(--space-6)',
+                borderRadius: 'var(--radius-md)',
+                textDecoration: 'none',
+              }}
+            >
+              Faire le quiz →
+            </Link>
+          </div>
         </section>
       </main>
     </>

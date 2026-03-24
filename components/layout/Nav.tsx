@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { Menu, X, ChevronDown } from 'lucide-react'
+import { ThemeToggle } from './ThemeToggle'
 
 const CHOISIR = [
   { href: '/choisir/iphone',  label: 'Quel iPhone choisir ?' },
@@ -138,8 +139,11 @@ export function Nav() {
             ))}
           </ul>
 
+          {/* Bouton thème — desktop et mobile */}
+          <ThemeToggle />
+
           {/* Hamburger */}
-          <button aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={open} onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', padding: 'var(--space-2)', marginLeft: 'auto', display: 'flex' }} className="nav-hamburger">
+          <button aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'} aria-expanded={open} onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-primary)', padding: 'var(--space-2)', display: 'flex' }} className="nav-hamburger">
             {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </nav>

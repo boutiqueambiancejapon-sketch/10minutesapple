@@ -123,12 +123,13 @@ html {
  * - accent-3 teal   #006B4F → 6.6:1 sur blanc ✓
  * - accent-4 violet #5B3FDF → 6.5:1 sur blanc ✓
  */
+
+/* Sélecteur commun — utilisé par la media query ET par data-theme="light" */
 @media (prefers-color-scheme: light) {
-  html {
+  html:not([data-theme="dark"]) {
     color-scheme: light;
   }
-
-  :root {
+  html:not([data-theme="dark"]) :root {
     /* Fonds */
     --bg-primary:   #F5F5F7;
     --bg-surface:   #FFFFFF;
@@ -174,6 +175,45 @@ html {
     --nav-bg-scrolled: rgba(245, 245, 247, 0.97);
     --nav-mobile-bg:   #F5F5F7;
   }
+}
+
+/* Force light mode via data-theme (toggle manuel) */
+html[data-theme="light"] {
+  color-scheme: light;
+}
+html[data-theme="light"] :root {
+  --bg-primary:   #F5F5F7;
+  --bg-surface:   #FFFFFF;
+  --bg-surface-2: #E8E8ED;
+  --accent-1: #C8001F;
+  --accent-2: #7A5500;
+  --accent-3: #006B4F;
+  --accent-4: #5B3FDF;
+  --text-primary:   #1D1D1F;
+  --text-secondary: #4A4A52;
+  --text-muted:     #6C6C70;
+  --border:        rgba(0, 0, 0, 0.09);
+  --border-strong: rgba(0, 0, 0, 0.18);
+  --success: #006B4F;
+  --warning: #7A5500;
+  --error:   #C8001F;
+  --glass-bg:     rgba(255, 255, 255, 0.80);
+  --glass-border: rgba(0, 0, 0, 0.09);
+  --noise-opacity: 0.025;
+  --aurora-1:      #C8001F;
+  --aurora-2:      #5B3FDF;
+  --aurora-3:      #006B4F;
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.10);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.15);
+  --shadow-accent: 0 0 24px rgba(200, 0, 31, 0.20);
+  --nav-bg-scrolled: rgba(245, 245, 247, 0.97);
+  --nav-mobile-bg:   #F5F5F7;
+}
+
+/* Force dark mode via data-theme (toggle manuel) */
+html[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {

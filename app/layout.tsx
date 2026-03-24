@@ -50,6 +50,14 @@ export default function RootLayout({
       lang="fr"
       className={`${fontPrimary.variable} ${fontDisplay.variable}`}
     >
+      {/* Script inline : applique data-theme avant tout rendu pour éviter le flash */}
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body>
         <a href="#main-content" className="skip-to-content">
           Aller au contenu principal

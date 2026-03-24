@@ -46,10 +46,10 @@ export function Nav() {
         position: 'sticky',
         top: 0,
         zIndex: 40,
-        backgroundColor: scrolled ? 'rgba(10,10,15,0.85)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(16px)' : 'none',
-        WebkitBackdropFilter: scrolled ? 'blur(16px)' : 'none',
-        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+        backgroundColor: (scrolled || open) ? 'rgba(10,10,15,0.97)' : 'transparent',
+        backdropFilter: (scrolled || open) ? 'blur(16px)' : 'none',
+        WebkitBackdropFilter: (scrolled || open) ? 'blur(16px)' : 'none',
+        borderBottom: (scrolled || open) ? '1px solid var(--border)' : '1px solid transparent',
         transition: 'background-color 300ms ease, border-color 300ms ease',
       }}
     >

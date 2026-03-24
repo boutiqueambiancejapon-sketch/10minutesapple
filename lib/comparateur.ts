@@ -50,7 +50,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         nom: 'iPhone 17 Air',
         prix: 899,
         nouveaute: true,
-        amazonUrl: 'https://www.amazon.fr/dp/B0FQHDTYT2',
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Air-256-Puissante/dp/B0FQH6GMDX',
         specs: {
           puce: 'A18',
           ecran: '6,6\" OLED Super Retina XDR',
@@ -63,7 +63,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         nom: 'iPhone 17',
         prix: 999,
         nouveaute: true,
-        amazonUrl: '',
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-17-256GB-black/dp/B0FQFJVJBQ',
         specs: {
           puce: 'A19',
           ecran: '6,3\" OLED 120Hz ProMotion',
@@ -76,7 +76,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         nom: 'iPhone 17 Pro',
         prix: 1229,
         nouveaute: true,
-        amazonUrl: '',
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Pro-256-prodigieuse/dp/B0FQH32F7H',
         specs: {
           puce: 'A19 Pro',
           ecran: '6,3\" OLED 120Hz ProMotion',
@@ -89,7 +89,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         nom: 'iPhone 17 Pro Max',
         prix: 1479,
         nouveaute: true,
-        amazonUrl: '',
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Pro-Max-256/dp/B0FQH9R2VG',
         specs: {
           puce: 'A19 Pro',
           ecran: '6,9\" OLED 120Hz ProMotion',

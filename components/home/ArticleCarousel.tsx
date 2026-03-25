@@ -17,12 +17,12 @@ export function ArticleCarousel({ articles, showCategory = false }: Props) {
 
   return (
     <div className="article-grid" role="list" aria-label="Articles">
-      {displayed.map((article) => (
+      {displayed.map((article, i) => (
         <div
           key={`${article.categorie}/${article.slug}`}
           role="listitem"
         >
-          <ArticleCard article={article} showCategory={showCategory} />
+          <ArticleCard article={article} showCategory={showCategory} index={i} />
         </div>
       ))}
     </div>

@@ -12,9 +12,10 @@ type Props = {
   article: ArticleMeta
   featured?: boolean
   showCategory?: boolean
+  index?: number
 }
 
-export function ArticleCard({ article, featured = false, showCategory = true }: Props) {
+export function ArticleCard({ article, featured = false, showCategory = true, index }: Props) {
   const accent = CATEGORY_ACCENT[article.categorie] ?? 'var(--accent-1)'
   const label = CATEGORY_LABELS[article.categorie] ?? article.categorie
 
@@ -65,19 +66,45 @@ export function ArticleCard({ article, featured = false, showCategory = true }: 
     )
   }
 
+  const num = index !== undefined ? String(index + 1).padStart(2, '0') : null
+
   return (
     <Link href={articleHref(article)} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
       <article
         className="article-card"
         style={{
-          borderTop: '1px solid var(--border)',
-          paddingTop: 'var(--space-4)',
+          position: 'relative',
+          overflow: 'hidden',
+          borderTop: `3px solid ${accent}`,
+          paddingTop: 'var(--space-5)',
+          paddingBottom: 'var(--space-4)',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
           gap: 'var(--space-2)',
         }}
       >
+        {/* Numéro oversize en watermark */}
+        {num && (
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: '-8px',
+              right: 'var(--space-2)',
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: '72px',
+              fontWeight: 800,
+              color: accent,
+              opacity: 0.06,
+              lineHeight: 1,
+              pointerEvents: 'none',
+              userSelect: 'none',
+            }}
+          >
+            {num}
+          </span>
+        )}
         {showCategory && (
           <p style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: accent, margin: 0 }}>
             {label}

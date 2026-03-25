@@ -12,15 +12,16 @@ import type { ReactNode } from 'react'
 
 type CompareBarProps = {
   label: string
-  left: number
-  right: number
+  left: number | string
+  right: number | string
   leftName?: string
   rightName?: string
 }
 
-function toTen(v: number): number {
-  if (typeof v !== 'number' || isNaN(v)) return 0
-  return v > 10 ? Math.round(v) / 10 : v
+function toTen(v: unknown): number {
+  const n = Number(v)
+  if (isNaN(n) || n === 0) return 0
+  return n > 10 ? Math.round(n) / 10 : n
 }
 
 /* Hardcoded color tokens for inline styles */
@@ -139,7 +140,7 @@ export function CompareBarGroup({ children, leftName, rightName }: {
   arr.forEach((child) => {
     if (child && typeof child === 'object' && 'props' in child) {
       const p = (child as { props: CompareBarProps }).props
-      if (typeof p.left === 'number' && typeof p.right === 'number') {
+      if (p.left !== undefined && p.right !== undefined) {
         items.push({ left: toTen(p.left), right: toTen(p.right), lN: p.leftName ?? 'A', rN: p.rightName ?? 'B' })
       }
     }

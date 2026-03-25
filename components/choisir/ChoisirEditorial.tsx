@@ -110,48 +110,46 @@ export function ChoisirEditorial({ content, produit, publishedAt }: Props) {
               {section.table.rows.map((row, ri) => {
                 const amazonUrl = findAmazonUrl(produit, row[1])
                 return (
-                  <div
-                    key={ri}
-                    style={{
-                      background: 'var(--surface-2)',
-                      border: '1px solid var(--glass-border)',
-                      borderRadius: 'var(--radius-md)',
-                      padding: 'var(--space-4) var(--space-5)',
-                    }}
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-2)', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
-                      <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--next-font-display), system-ui, sans-serif' }}>
-                        {row[1]}
-                      </span>
-                      <span style={{ fontSize: '14px', fontFamily: 'var(--next-font-mono), monospace', color: 'var(--accent-1)', fontWeight: 600 }}>
-                        {row[2]}
-                      </span>
+                  <div key={ri} className="comparateur-card-wrap">
+                    <div
+                      style={{
+                        padding: 'var(--space-4) var(--space-5)',
+                      }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-2)', flexWrap: 'wrap', gap: 'var(--space-2)' }}>
+                        <span style={{ fontSize: '15px', fontWeight: 700, color: 'var(--text-primary)', fontFamily: 'var(--next-font-display), system-ui, sans-serif' }}>
+                          {row[1]}
+                        </span>
+                        <span style={{ fontSize: '14px', fontFamily: 'var(--next-font-mono), monospace', color: 'var(--accent-1)', fontWeight: 600 }}>
+                          {row[2]}
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase' as const, letterSpacing: '0.04em', marginBottom: 'var(--space-1)' }}>
+                        {row[0]}
+                      </div>
+                      {row[3] && (
+                        <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                          {row[3]}
+                        </p>
+                      )}
+                      {amazonUrl && (
+                        <AffiliateLink
+                          href={amazonUrl}
+                          style={{
+                            display: 'inline-block',
+                            marginTop: 'var(--space-3)',
+                            fontSize: '13px',
+                            fontWeight: 600,
+                            color: 'var(--accent-2)',
+                            textDecoration: 'none',
+                            borderBottom: '1px solid rgba(255,210,63,0.35)',
+                            paddingBottom: '1px',
+                          }}
+                        >
+                          Voir le prix sur Amazon →
+                        </AffiliateLink>
+                      )}
                     </div>
-                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', textTransform: 'uppercase' as const, letterSpacing: '0.04em', marginBottom: 'var(--space-1)' }}>
-                      {row[0]}
-                    </div>
-                    {row[3] && (
-                      <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                        {row[3]}
-                      </p>
-                    )}
-                    {amazonUrl && (
-                      <AffiliateLink
-                        href={amazonUrl}
-                        style={{
-                          display: 'inline-block',
-                          marginTop: 'var(--space-3)',
-                          fontSize: '13px',
-                          fontWeight: 600,
-                          color: 'var(--accent-2)',
-                          textDecoration: 'none',
-                          borderBottom: '1px solid rgba(255,210,63,0.35)',
-                          paddingBottom: '1px',
-                        }}
-                      >
-                        Voir le prix sur Amazon →
-                      </AffiliateLink>
-                    )}
                   </div>
                 )
               })}
@@ -243,30 +241,28 @@ function ChoisirFAQ({ faq }: { faq: Props['content']['faq'] }) {
   return (
     <section id="faq" style={sectionStyle}>
       <h2 style={h2Style}>Questions fréquentes</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
         {faq.map((item, i) => (
           <div
             key={i}
             style={{
-              borderLeft: '3px solid var(--accent-4)',
-              padding: 'var(--space-4) var(--space-5)',
-              background: 'var(--surface-2)',
-              borderRadius: '0 var(--radius-md) var(--radius-md) 0',
+              padding: 'var(--space-5) 0',
+              borderBottom: i < faq.length - 1 ? '1px solid var(--border)' : 'none',
             }}
           >
             <h3
               style={{
-                fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                fontFamily: 'var(--next-font-primary), system-ui, sans-serif',
                 fontSize: 'clamp(15px, 2vw, 17px)',
-                fontWeight: 700,
+                fontWeight: 600,
                 color: 'var(--text-primary)',
                 marginBottom: 'var(--space-2)',
-                lineHeight: 1.3,
+                lineHeight: 1.4,
               }}
             >
               {item.q}
             </h3>
-            <p style={{ ...pStyle, marginBottom: 0 }}>{item.a}</p>
+            <p style={{ ...pStyle, marginBottom: 0, color: 'var(--text-muted)' }}>{item.a}</p>
           </div>
         ))}
       </div>

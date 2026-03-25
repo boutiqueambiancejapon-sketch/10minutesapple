@@ -89,19 +89,19 @@ export function Nav() {
         style={{
           position: 'sticky', top: 0, zIndex: 40,
           backgroundColor: (scrolled || open) ? 'var(--nav-bg-scrolled)' : 'transparent',
-          backdropFilter: (scrolled || open) ? 'blur(16px)' : 'none',
-          WebkitBackdropFilter: (scrolled || open) ? 'blur(16px)' : 'none',
-          borderBottom: (scrolled || open) ? '1px solid var(--border)' : '1px solid transparent',
-          transition: 'background-color 300ms ease, border-color 300ms ease',
+          backdropFilter: (scrolled || open) ? 'blur(20px) saturate(1.4)' : 'none',
+          WebkitBackdropFilter: (scrolled || open) ? 'blur(20px) saturate(1.4)' : 'none',
+          borderBottom: '1px solid transparent',
+          transition: 'background-color 300ms ease, backdrop-filter 300ms ease',
         }}
       >
         <nav aria-label="Navigation principale" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)', height: '60px', display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
 
           {/* Logo */}
-          <Link href="/" aria-label="10minutesapple — accueil" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: '1px' }}>
-            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 800, fontSize: '14px', color: 'var(--text-primary)' }}>10min</span>
-            <span style={{ color: 'var(--accent-1)', fontWeight: 800, fontSize: '14px' }}>·</span>
-            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 400, fontSize: '14px', color: 'var(--text-secondary)' }}>Apple</span>
+          <Link href="/" aria-label="10minutesapple — accueil" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: '2px' }}>
+            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 800, fontSize: '16px', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>10min</span>
+            <span style={{ color: 'var(--accent-1)', fontWeight: 800, fontSize: '18px', lineHeight: 1 }} className="nav-logo-dot">·</span>
+            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 400, fontSize: '16px', color: 'var(--text-secondary)' }}>Apple</span>
           </Link>
 
           {/* Desktop */}
@@ -147,6 +147,19 @@ export function Nav() {
             {open ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
           </button>
         </nav>
+
+        {/* Ligne gradient aurora — signature DA */}
+        <div
+          aria-hidden="true"
+          style={{
+            height: '2px',
+            background: 'linear-gradient(90deg, var(--aurora-1), var(--aurora-2), var(--aurora-3), var(--aurora-1))',
+            backgroundSize: '200% 100%',
+            animation: 'nav-gradient-shift 8s linear infinite',
+            opacity: scrolled || open ? 0.8 : 0.3,
+            transition: 'opacity 300ms ease',
+          }}
+        />
       </header>
 
       {/* Mobile overlay */}

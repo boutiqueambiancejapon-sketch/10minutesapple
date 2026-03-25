@@ -8,6 +8,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { currentYear } from '@/lib/utils/year'
 import { MarqueeStrip } from '@/components/effects/MarqueeStrip'
+import { DealsGrid } from '@/components/deals/DealsGrid'
+import type { Deal } from '@/components/deals/DealsGrid'
 
 export const revalidate = 900
 
@@ -28,60 +30,262 @@ export function generateMetadata(): Metadata {
   }
 }
 
-type Deal = {
-  titre: string
-  categorie: string
-  prixAvant: number
-  prixApres: number
-  source: string
-  chaud: boolean
-  date: string
-}
-
 const DEALS: Deal[] = [
+  // iPhone
   {
-    titre: 'iPhone 15 128 Go — Midnight',
+    titre: 'iPhone 17 256 Go',
     categorie: 'iPhone',
-    prixAvant: 969,
-    prixApres: 769,
-    source: 'Fnac',
+    prixAvant: 999,
+    prixApres: 949,
+    source: 'Amazon',
     chaud: true,
-    date: '2026-03-20',
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/Apple-iPhone-17-256GB-black/dp/B0FQFJVJBQ',
   },
   {
-    titre: 'AirPods Pro 2e génération USB-C',
+    titre: 'iPhone 17 Pro 256 Go',
+    categorie: 'iPhone',
+    prixAvant: 1229,
+    prixApres: 1169,
+    source: 'Amazon',
+    chaud: true,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Pro-256-prodigieuse/dp/B0FQH32F7H',
+  },
+  {
+    titre: 'iPhone 16 256 Go',
+    categorie: 'iPhone',
+    prixAvant: 969,
+    prixApres: 819,
+    source: 'Amazon',
+    chaud: true,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHN3YNR',
+  },
+  {
+    titre: 'iPhone 16 Pro 256 Go',
+    categorie: 'iPhone',
+    prixAvant: 1299,
+    prixApres: 1159,
+    source: 'Amazon',
+    chaud: true,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHH9JY3',
+  },
+  {
+    titre: 'iPhone 16 Plus 256 Go',
+    categorie: 'iPhone',
+    prixAvant: 1119,
+    prixApres: 915,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHQW185',
+  },
+  {
+    titre: 'iPhone 16 Pro Max 256 Go',
+    categorie: 'iPhone',
+    prixAvant: 1479,
+    prixApres: 1389,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHYHG25',
+  },
+  {
+    titre: 'iPhone 15 128 Go',
+    categorie: 'iPhone',
+    prixAvant: 969,
+    prixApres: 729,
+    source: 'Amazon',
+    chaud: true,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0CHX7Z69Z',
+  },
+  {
+    titre: 'iPhone 16e 128 Go',
+    categorie: 'iPhone',
+    prixAvant: 699,
+    prixApres: 669,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DXQQ65T2',
+  },
+  // Mac
+  {
+    titre: 'MacBook Neo 13" 256 Go',
+    categorie: 'Mac',
+    prixAvant: 699,
+    prixApres: 669,
+    source: 'Amazon',
+    chaud: true,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/Apple-MacBook-2026-Portable-avec/dp/B0GR6MBRPB',
+  },
+  {
+    titre: 'MacBook Air 13" M5 256 Go',
+    categorie: 'Mac',
+    prixAvant: 1299,
+    prixApres: 1229,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0GR1W24CR',
+  },
+  {
+    titre: 'MacBook Air 15" M5 256 Go',
+    categorie: 'Mac',
+    prixAvant: 1599,
+    prixApres: 1519,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0GR1NRFZD',
+  },
+  {
+    titre: 'Mac mini M4 256 Go',
+    categorie: 'Mac',
+    prixAvant: 699,
+    prixApres: 659,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DLBW9GNQ',
+  },
+  {
+    titre: 'MacBook Pro 14" M5 512 Go',
+    categorie: 'Mac',
+    prixAvant: 1999,
+    prixApres: 1899,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0FWDCNPPZ',
+  },
+  {
+    titre: 'iMac 24" M4 256 Go',
+    categorie: 'Mac',
+    prixAvant: 1699,
+    prixApres: 1599,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DL6KQ5SP',
+  },
+  // iPad
+  {
+    titre: 'iPad Air 11" M3 128 Go Wi-Fi',
+    categorie: 'iPad',
+    prixAvant: 799,
+    prixApres: 749,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0GQVLW917',
+  },
+  {
+    titre: 'iPad 11e génération 128 Go',
+    categorie: 'iPad',
+    prixAvant: 369,
+    prixApres: 349,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DZ75RKZH',
+  },
+  {
+    titre: 'iPad mini 7 128 Go Wi-Fi',
+    categorie: 'iPad',
+    prixAvant: 599,
+    prixApres: 559,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DK3YHKBB',
+  },
+  {
+    titre: 'iPad Pro 11" M5 256 Go',
+    categorie: 'iPad',
+    prixAvant: 1199,
+    prixApres: 1139,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0FWD6KNY8',
+  },
+  // Apple Watch
+  {
+    titre: 'Apple Watch Series 11 GPS 42 mm',
+    categorie: 'Watch',
+    prixAvant: 449,
+    prixApres: 419,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0FQGHR6SY',
+  },
+  {
+    titre: 'Apple Watch SE 2 GPS 40 mm',
+    categorie: 'Watch',
+    prixAvant: 279,
+    prixApres: 239,
+    source: 'Amazon',
+    chaud: true,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHZ15PD',
+  },
+  {
+    titre: 'Apple Watch Ultra 2 GPS+Cell 49 mm',
+    categorie: 'Watch',
+    prixAvant: 899,
+    prixApres: 849,
+    source: 'Amazon',
+    chaud: false,
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGJ9M892',
+  },
+  // Accessoires
+  {
+    titre: 'AirPods Pro 2 USB-C',
     categorie: 'Accessoires',
     prixAvant: 279,
     prixApres: 219,
     source: 'Amazon',
     chaud: true,
-    date: '2026-03-22',
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHWD7CT',
   },
   {
-    titre: 'iPad Air 11" M2 256 Go Wi-Fi',
-    categorie: 'iPad',
-    prixAvant: 899,
-    prixApres: 749,
-    source: 'Darty',
+    titre: 'AirPods 4 ANC',
+    categorie: 'Accessoires',
+    prixAvant: 199,
+    prixApres: 179,
+    source: 'Amazon',
     chaud: false,
-    date: '2026-03-18',
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0FQF32239',
   },
   {
-    titre: 'MacBook Air 13" M3 8/256 Go',
-    categorie: 'Mac',
-    prixAvant: 1299,
-    prixApres: 1099,
-    source: 'Boulanger',
+    titre: 'AirPods Max USB-C',
+    categorie: 'Accessoires',
+    prixAvant: 579,
+    prixApres: 529,
+    source: 'Amazon',
     chaud: false,
-    date: '2026-03-15',
+    date: '2026-03-25',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHQ1KVY',
   },
 ]
 
 const MARQUEE_ITEMS = [
-  'iPhone 15 à 769 € chez Fnac',
+  'iPhone 17 à 949 €',
+  'iPhone 16 à 819 €',
+  'iPhone 15 à 729 €',
   'AirPods Pro 2 à 219 €',
-  'iPad Air M2 à 749 €',
-  'MacBook Air M3 à 1 099 €',
+  'MacBook Neo à 669 €',
+  'Apple Watch SE 2 à 239 €',
+  'iPad 11e gen à 349 €',
   'Sélection mise à jour chaque semaine',
 ]
 
@@ -208,139 +412,7 @@ export default function DealsPage() {
             padding: '0 var(--space-6) var(--space-24)',
           }}
         >
-          <ul
-            role="list"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: 'var(--space-5)',
-              listStyle: 'none',
-            }}
-          >
-            {DEALS.map((deal) => {
-              const economie = deal.prixAvant - deal.prixApres
-              const pct = Math.round((economie / deal.prixAvant) * 100)
-              return (
-                <li key={deal.titre}>
-                  <article
-                    style={{
-                      background: 'var(--bg-surface)',
-                      border: '1px solid var(--border)',
-                      borderRadius: 'var(--radius-lg)',
-                      padding: 'var(--space-6)',
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'var(--space-4)',
-                      position: 'relative',
-                    }}
-                  >
-                    {deal.chaud && (
-                      <span
-                        aria-label="Deal chaud"
-                        style={{
-                          position: 'absolute',
-                          top: 'var(--space-3)',
-                          right: 'var(--space-3)',
-                          fontSize: '10px',
-                          fontWeight: 700,
-                          letterSpacing: '0.08em',
-                          textTransform: 'uppercase',
-                          color: 'var(--bg-primary)',
-                          background: 'var(--accent-1)',
-                          padding: '2px 8px',
-                          borderRadius: 'var(--radius-full)',
-                          animation: 'pulse-accent 2s ease-in-out infinite',
-                        }}
-                      >
-                        HOT
-                      </span>
-                    )}
-
-                    <div>
-                      <span
-                        style={{
-                          fontSize: '11px',
-                          fontWeight: 700,
-                          letterSpacing: '0.06em',
-                          textTransform: 'uppercase',
-                          color: 'var(--text-muted)',
-                          display: 'block',
-                          marginBottom: 'var(--space-2)',
-                        }}
-                      >
-                        {deal.categorie} · {deal.source}
-                      </span>
-                      <h2
-                        style={{
-                          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                          fontSize: '16px',
-                          fontWeight: 700,
-                          color: 'var(--text-primary)',
-                          lineHeight: 1.3,
-                        }}
-                      >
-                        {deal.titre}
-                      </h2>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-                      <span
-                        style={{
-                          fontFamily: 'var(--next-font-mono), monospace',
-                          fontVariantNumeric: 'tabular-nums',
-                          fontSize: '24px',
-                          fontWeight: 700,
-                          color: 'var(--accent-2)',
-                        }}
-                      >
-                        {deal.prixApres.toLocaleString('fr-FR')} €
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: 'var(--next-font-mono), monospace',
-                          fontVariantNumeric: 'tabular-nums',
-                          fontSize: '14px',
-                          color: 'var(--text-muted)',
-                          textDecoration: 'line-through',
-                        }}
-                      >
-                        {deal.prixAvant.toLocaleString('fr-FR')} €
-                      </span>
-                      <span
-                        style={{
-                          fontSize: '12px',
-                          fontWeight: 700,
-                          color: 'var(--bg-primary)',
-                          background: 'var(--accent-3)',
-                          padding: '2px 8px',
-                          borderRadius: 'var(--radius-full)',
-                        }}
-                      >
-                        −{pct}%
-                      </span>
-                    </div>
-
-                    <div
-                      style={{
-                        fontSize: '12px',
-                        color: 'var(--text-muted)',
-                        marginTop: 'auto',
-                      }}
-                    >
-                      Vérifié le{' '}
-                      <time dateTime={deal.date}>
-                        {new Date(deal.date).toLocaleDateString('fr-FR', {
-                          day: 'numeric',
-                          month: 'long',
-                        })}
-                      </time>
-                    </div>
-                  </article>
-                </li>
-              )
-            })}
-          </ul>
+          <DealsGrid deals={DEALS} />
 
           <div
             style={{

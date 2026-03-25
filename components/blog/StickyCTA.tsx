@@ -82,18 +82,22 @@ export function StickyCTA({ items, message }: Props) {
             style={{
               position: 'relative',
               zIndex: 1,
-              flex: 1,
-              minWidth: '140px',
-              fontSize: '13px',
+              width: '100%',
+              fontSize: '12px',
               color: 'var(--text-primary)',
               lineHeight: 1.3,
+              textAlign: 'center',
             }}
           >
             {message}
           </span>
         )}
 
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', gap: 'var(--space-2)', flexShrink: 0, marginLeft: 'auto' }}>
+        <div style={{
+          position: 'relative', zIndex: 1,
+          display: 'flex', gap: 'var(--space-2)',
+          width: '100%', flexWrap: 'wrap',
+        }}>
           {items.map((item, i) => {
             const isAmazon = item.url.includes('amazon.fr') || item.url.includes('amzn.to')
             const href = isAmazon ? addAffiliateTag(item.url) : item.url
@@ -106,18 +110,23 @@ export function StickyCTA({ items, message }: Props) {
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: 'var(--space-2)',
-                  padding: 'var(--space-2) var(--space-5)',
+                  padding: 'var(--space-2) var(--space-4)',
+                  flex: '1 1 auto',
+                  minWidth: 0,
                   background: i === 0
                     ? 'linear-gradient(135deg, var(--aurora-1), var(--aurora-2))'
                     : 'rgba(255,255,255,0.08)',
                   color: i === 0 ? '#fff' : 'var(--text-primary)',
                   border: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.12)',
                   borderRadius: '10px',
-                  fontSize: '13px',
+                  fontSize: '12px',
                   fontWeight: 700,
                   textDecoration: 'none',
                   whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}
               >
                 {item.label}

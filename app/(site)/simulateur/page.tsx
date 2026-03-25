@@ -7,6 +7,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { currentYear } from '@/lib/utils/year'
+import { AffiliateLink } from '@/components/ui/AffiliateLink'
 
 export const revalidate = 86400
 
@@ -34,6 +35,7 @@ type CyclePrix = {
   prixActuel: number
   prochaineAnnonce: string
   recommandation: 'acheter' | 'attendre' | 'deal'
+  amazonUrl: string
 }
 
 const CYCLES: CyclePrix[] = [
@@ -44,6 +46,7 @@ const CYCLES: CyclePrix[] = [
     prixActuel: 869,
     prochaineAnnonce: 'Septembre 2026',
     recommandation: 'acheter',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHN3YNR',
   },
   {
     modele: 'iPhone 16 Plus',
@@ -52,6 +55,7 @@ const CYCLES: CyclePrix[] = [
     prixActuel: 969,
     prochaineAnnonce: 'Septembre 2026',
     recommandation: 'acheter',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHQW185',
   },
   {
     modele: 'iPhone 16 Pro',
@@ -60,6 +64,7 @@ const CYCLES: CyclePrix[] = [
     prixActuel: 1229,
     prochaineAnnonce: 'Septembre 2026',
     recommandation: 'deal',
+    amazonUrl: 'https://www.amazon.fr/dp/B0DGHH9JY3',
   },
   {
     modele: 'iPhone 15',
@@ -68,6 +73,7 @@ const CYCLES: CyclePrix[] = [
     prixActuel: 769,
     prochaineAnnonce: 'Septembre 2026',
     recommandation: 'deal',
+    amazonUrl: 'https://www.amazon.fr/dp/B0CHX7Z69Z',
   },
 ]
 
@@ -304,6 +310,26 @@ export default function SimulateurPage() {
                     >
                       {rec.label}
                     </span>
+                  </div>
+
+                  <div>
+                    <AffiliateLink
+                      href={c.amazonUrl}
+                      style={{
+                        display: 'inline-block',
+                        background: 'var(--accent-1)',
+                        color: '#fff',
+                        fontWeight: 700,
+                        fontSize: '13px',
+                        padding: 'var(--space-2) var(--space-5)',
+                        borderRadius: 'var(--radius-md)',
+                        textDecoration: 'none',
+                        textAlign: 'center',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Profiter du deal →
+                    </AffiliateLink>
                   </div>
                 </article>
               )

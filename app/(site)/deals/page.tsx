@@ -9,6 +9,7 @@ import type { Metadata } from 'next'
 import { currentYear } from '@/lib/utils/year'
 import { MarqueeStrip } from '@/components/effects/MarqueeStrip'
 import { DealsGrid } from '@/components/deals/DealsGrid'
+import { FaqAccordion } from '@/components/blog/FaqAccordion'
 import type { Deal } from '@/components/deals/DealsGrid'
 
 export const revalidate = 900
@@ -289,7 +290,38 @@ const MARQUEE_ITEMS = [
   'Sélection mise à jour chaque semaine',
 ]
 
-const jsonLd = {
+const FAQ_ITEMS = [
+  {
+    q: 'Où trouver les meilleurs bons plans Apple en ce moment ?',
+    a: 'Sur 10minutesapple.com/deals, on sélectionne manuellement les meilleures réductions Apple chaque semaine : iPhone, Mac, iPad, Apple Watch et accessoires. Pas de faux deals ni de prix gonflés avant promo — que des vraies baisses vérifiées sur Amazon.',
+  },
+  {
+    q: 'Existe-t-il un code promo Apple officiel ?',
+    a: 'Apple ne propose quasiment jamais de code promo direct sur son Apple Store. Les vraies réductions Apple passent par les revendeurs agréés (Amazon, Fnac, Boulanger). Sur Amazon, les baisses de prix sont automatiques — pas besoin de code promo Apple.',
+  },
+  {
+    q: 'Quand acheter un produit Apple au meilleur prix ?',
+    a: 'Les meilleurs moments pour une réduction Apple sont : le Black Friday (fin novembre), les soldes d\'été et d\'hiver, et surtout juste après la sortie d\'un nouveau modèle — l\'ancien baisse immédiatement. Notre simulateur te montre les cycles de prix pour chaque produit.',
+  },
+  {
+    q: 'Les deals Apple sur Amazon sont-ils fiables ?',
+    a: 'Oui. Amazon est revendeur agréé Apple. Les produits sont neufs, sous garantie Apple standard, avec retour gratuit 30 jours. On vérifie chaque deal manuellement avant de le publier ici.',
+  },
+  {
+    q: 'Comment savoir si une réduction Apple est une vraie promo ?',
+    a: 'On compare le prix affiché avec le prix Apple Store officiel et l\'historique des prix Amazon. Si le prix barré est gonflé artificiellement, on ne publie pas le deal. Chaque réduction Apple affichée ici est vérifiée.',
+  },
+  {
+    q: 'Y a-t-il des réductions Apple pour les étudiants ?',
+    a: 'Oui. Apple propose le programme Apple Education avec des remises de 5 à 10 % sur Mac et iPad via apple.com/fr/shop/go/education. En plus, Amazon propose parfois des prix encore inférieurs au tarif Education Apple — vérifie les deux avant d\'acheter.',
+  },
+  {
+    q: 'Comment être alerté des prochains bons plans Apple ?',
+    a: 'Reviens régulièrement sur cette page — on la met à jour chaque semaine. Les deals les plus chauds sont marqués avec le badge HOT. Tu peux aussi consulter notre simulateur de prix pour savoir si c\'est le bon moment d\'acheter.',
+  },
+]
+
+const jsonLdBreadcrumb = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -298,12 +330,26 @@ const jsonLd = {
   ],
 }
 
+const jsonLdFaq = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQ_ITEMS.map(({ q, a }) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
+}
+
 export default function DealsPage() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
       />
 
       <main id="main-content">
@@ -413,6 +459,23 @@ export default function DealsPage() {
           }}
         >
           <DealsGrid deals={DEALS} />
+
+          {/* FAQ — bons plans Apple, code promo, réductions */}
+          <section aria-labelledby="faq-deals" style={{ marginTop: 'var(--space-12)' }}>
+            <h2
+              id="faq-deals"
+              style={{
+                fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                fontSize: 'clamp(20px, 3vw, 28px)',
+                fontWeight: 800,
+                color: 'var(--text-primary)',
+                marginBottom: 'var(--space-6)',
+              }}
+            >
+              Questions fréquentes — bons plans Apple
+            </h2>
+            <FaqAccordion items={FAQ_ITEMS} />
+          </section>
 
           <div
             style={{

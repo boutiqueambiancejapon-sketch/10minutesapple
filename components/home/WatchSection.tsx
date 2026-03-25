@@ -8,8 +8,8 @@ import { getAllArticles } from '@/lib/blog'
 import { ArticleCarousel } from './ArticleCarousel'
 import { ProductAffiliate } from './ProductAffiliate'
 
-const ACCENT = 'var(--accent-2)'
-const BG = 'rgba(255,210,63,0.05)'
+const ACCENT = 'var(--accent-5)'
+const BG = 'rgba(61,155,255,0.05)'
 
 const PRODUCTS = [
   { name: 'Apple Watch Series 11', hint: 'Le meilleur choix', priceFrom: '449 €', amazonUrl: 'https://www.amazon.fr/dp/B0FQGHR6SY' },

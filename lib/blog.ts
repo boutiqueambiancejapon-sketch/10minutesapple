@@ -26,7 +26,7 @@ export const CATEGORY_ACCENT: Record<string, string> = {
   iphone:      'var(--accent-1)',
   mac:         'var(--accent-4)',
   ipad:        'var(--accent-3)',
-  watch:       'var(--accent-2)',
+  watch:       'var(--accent-5)',
   accessoires: 'var(--accent-2)',
   astuces:     'var(--accent-4)',
   deals:       'var(--accent-1)',

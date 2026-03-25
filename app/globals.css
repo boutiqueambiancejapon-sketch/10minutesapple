@@ -475,6 +475,15 @@ body {
 }
 .related-link:hover span:first-child { color: var(--accent-1) !important; }
 .related-link:hover span:nth-child(2) > span:first-child { color: var(--accent-1) !important; }
+/* Nav glass specular highlight */
+.nav-glass-active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(175deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 30%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
 @media (min-width: 768px) {
   .nav-hamburger { display: none !important; }
 }

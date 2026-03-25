@@ -9,20 +9,17 @@ export function Warning({ children }: { children: ReactNode }) {
     <aside
       role="note"
       style={{
-        background: 'rgba(255,210,63,0.07)',
-        border: '1px solid rgba(255,210,63,0.25)',
-        borderLeft: '3px solid var(--accent-2)',
-        borderRadius: 'var(--radius-md)',
-        padding: 'var(--space-4) var(--space-5)',
         margin: 'var(--space-6) 0',
+        borderTop: '2px solid var(--accent-2)',
+        paddingTop: 'var(--space-4)',
       }}
     >
       <p
         style={{
-          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-          fontWeight: 700,
+          fontFamily: 'var(--next-font-mono), monospace',
+          fontWeight: 600,
           fontSize: '11px',
-          letterSpacing: '0.09em',
+          letterSpacing: '0.06em',
           textTransform: 'uppercase',
           color: 'var(--accent-2)',
           margin: '0 0 var(--space-2)',

@@ -554,6 +554,7 @@ body {
   color: var(--text-secondary);
   font-size: 16px;
   line-height: 1.75;
+  counter-reset: section-counter;
 }
 .prose-article h2 {
   font-family: var(--next-font-display), system-ui, sans-serif;
@@ -565,6 +566,20 @@ body {
   text-wrap: pretty;
   hyphens: none;
   overflow-wrap: normal;
+  counter-increment: section-counter;
+  position: relative;
+  padding-top: var(--space-2);
+}
+.prose-article h2::before {
+  content: counter(section-counter, decimal-leading-zero);
+  display: block;
+  font-family: var(--next-font-mono), monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-1);
+  opacity: 0.6;
 }
 .prose-article h3 {
   font-family: var(--next-font-display), system-ui, sans-serif;

@@ -456,6 +456,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .nav-logo-dot { animation: none; }
 }
+.related-link:hover span:first-child { color: var(--accent-1) !important; }
+.related-link:hover span:nth-child(2) > span:first-child { color: var(--accent-1) !important; }
 @media (min-width: 768px) {
   .nav-hamburger { display: none !important; }
 }

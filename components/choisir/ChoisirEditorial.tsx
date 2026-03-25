@@ -243,30 +243,28 @@ function ChoisirFAQ({ faq }: { faq: Props['content']['faq'] }) {
   return (
     <section id="faq" style={sectionStyle}>
       <h2 style={h2Style}>Questions fréquentes</h2>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
         {faq.map((item, i) => (
           <div
             key={i}
             style={{
-              borderLeft: '3px solid var(--accent-4)',
-              padding: 'var(--space-4) var(--space-5)',
-              background: 'var(--surface-2)',
-              borderRadius: '0 var(--radius-md) var(--radius-md) 0',
+              padding: 'var(--space-5) 0',
+              borderBottom: i < faq.length - 1 ? '1px solid var(--border)' : 'none',
             }}
           >
             <h3
               style={{
-                fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                fontFamily: 'var(--next-font-primary), system-ui, sans-serif',
                 fontSize: 'clamp(15px, 2vw, 17px)',
-                fontWeight: 700,
+                fontWeight: 600,
                 color: 'var(--text-primary)',
                 marginBottom: 'var(--space-2)',
-                lineHeight: 1.3,
+                lineHeight: 1.4,
               }}
             >
               {item.q}
             </h3>
-            <p style={{ ...pStyle, marginBottom: 0 }}>{item.a}</p>
+            <p style={{ ...pStyle, marginBottom: 0, color: 'var(--text-muted)' }}>{item.a}</p>
           </div>
         ))}
       </div>

@@ -163,11 +163,11 @@ export default async function StandaloneArticlePage({ params }: { params: Params
                 <h2 id="faq-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 'var(--space-6)' }}>
                   Questions fréquentes
                 </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                   {meta.faq.map(({ q, a }, i) => (
-                    <div key={i} style={{ borderLeft: '3px solid var(--accent-4)', padding: 'var(--space-4) var(--space-5)', background: 'var(--surface-2)', borderRadius: '0 var(--radius-md) var(--radius-md) 0' }}>
-                      <h3 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 700, fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 var(--space-2)' }}>{q}</h3>
-                      <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.65, margin: 0 }}>{a}</p>
+                    <div key={i} style={{ padding: 'var(--space-5) 0', borderBottom: i < meta.faq!.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                      <h3 style={{ fontFamily: 'var(--next-font-primary), system-ui, sans-serif', fontWeight: 600, fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 var(--space-2)', lineHeight: 1.4 }}>{q}</h3>
+                      <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>{a}</p>
                     </div>
                   ))}
                 </div>
@@ -180,21 +180,22 @@ export default async function StandaloneArticlePage({ params }: { params: Params
                 <h2 id="related-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
                   Continuer votre lecture
                 </h2>
-                <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--space-4)', listStyle: 'none' }}>
-                  {related.map((a) => (
-                    <li key={a.slug}>
-                      <Link href={articleHref(a)} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
-                        <div style={{ background: 'var(--surface-2)', border: '1px solid var(--glass-border)', borderRadius: 'var(--radius-md)', padding: 'var(--space-5)', height: '100%', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-                          <span style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent-1)' }}>
-                            {CATEGORY_LABELS[a.categorie] ?? a.categorie}
-                          </span>
-                          <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: '14px', fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, flex: 1 }}>
+                <ul role="list" style={{ display: 'flex', flexDirection: 'column', gap: 0, listStyle: 'none', borderTop: '1px solid var(--border)' }}>
+                  {related.map((a, i) => (
+                    <li key={a.slug} style={{ borderBottom: '1px solid var(--border)' }}>
+                      <Link href={articleHref(a)} className="related-link" style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)', padding: 'var(--space-4) 0' }}>
+                        <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '12px', color: 'var(--text-muted)', flexShrink: 0, minWidth: '24px' }}>
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                          <span style={{ fontFamily: 'var(--next-font-primary), system-ui, sans-serif', fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.35 }}>
                             {a.title}
                           </span>
-                          <span style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: 'auto' }}>
-                            {a.readingTimeMin} min
+                          <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                            {CATEGORY_LABELS[a.categorie] ?? a.categorie} · {a.readingTimeMin} min
                           </span>
-                        </div>
+                        </span>
+                        <span style={{ color: 'var(--text-muted)', fontSize: '14px', flexShrink: 0 }} aria-hidden="true">→</span>
                       </Link>
                     </li>
                   ))}

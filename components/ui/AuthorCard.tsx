@@ -1,6 +1,6 @@
 /**
  * AuthorCard — carte auteur sans photo.
- * Identité : monogramme CSS "M" en Syne 800 --accent-1.
+ * Identité : monogramme CSS "M" en Syne 800.
  * Variants : 'inline' (en bas d'article) | 'full' (page auteur).
  * Server Component.
  */
@@ -23,9 +23,8 @@ function Monogram({ size }: { size: number }) {
       style={{
         width: size,
         height: size,
-        borderRadius: 'var(--radius-lg)',
-        backgroundColor: 'var(--bg-surface-2)',
-        border: '1px solid var(--border)',
+        borderRadius: 'var(--radius-full)',
+        background: 'linear-gradient(135deg, rgba(255,61,87,0.15) 0%, rgba(123,97,255,0.10) 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -35,11 +34,11 @@ function Monogram({ size }: { size: number }) {
       <span
         style={{
           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-          fontSize: size * 0.45,
+          fontSize: size * 0.4,
           fontWeight: 800,
-          color: 'var(--accent-1)',
+          color: 'var(--text-primary)',
           lineHeight: 1,
-          letterSpacing: '0',
+          opacity: 0.85,
         }}
       >
         M
@@ -62,23 +61,20 @@ export function AuthorCard({
         display: 'flex',
         gap: isInline ? 'var(--space-4)' : 'var(--space-6)',
         alignItems: 'flex-start',
-        padding: isInline ? 'var(--space-6)' : 'var(--space-8)',
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border)',
-        borderTop: isInline ? `3px solid var(--accent-1)` : '1px solid var(--border)',
-        borderRadius: isInline ? 'var(--radius-lg)' : 0,
+        padding: isInline ? 'var(--space-5) 0' : 'var(--space-8)',
+        borderTop: '1px solid var(--glass-border)',
       }}
     >
-      <Monogram size={isInline ? 52 : 80} />
+      <Monogram size={isInline ? 44 : 64} />
 
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ marginBottom: 'var(--space-2)' }}>
+        <div style={{ marginBottom: 'var(--space-1)' }}>
           <Link
             href={`/auteurs/${authorSlug}`}
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontWeight: 700,
-              fontSize: isInline ? '16px' : '20px',
+              fontSize: isInline ? '15px' : '20px',
               color: 'var(--text-primary)',
               textDecoration: 'none',
             }}
@@ -87,18 +83,17 @@ export function AuthorCard({
           </Link>
           <span
             style={{
-              display: 'block',
               fontSize: '12px',
               color: 'var(--text-muted)',
-              marginTop: '2px',
+              marginLeft: 'var(--space-2)',
               letterSpacing: '0.02em',
             }}
           >
-            Fan Apple &amp; testeur depuis le 3G
+            · Fan Apple depuis le 3G
           </span>
         </div>
 
-        <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>
+        <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6, margin: 0 }}>
           {bio}
         </p>
 

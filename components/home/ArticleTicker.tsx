@@ -4,7 +4,7 @@
  * Server Component.
  */
 import Link from 'next/link'
-import { getAllArticles, CATEGORY_LABELS, CATEGORY_ACCENT } from '@/lib/blog'
+import { getAllArticles, CATEGORY_LABELS, CATEGORY_ACCENT, articleHref } from '@/lib/blog'
 
 export function ArticleTicker() {
   const articles = getAllArticles().slice(0, 10)
@@ -48,7 +48,7 @@ export function ArticleTicker() {
           return (
             <Link
               key={`${article.slug}-${i}`}
-              href={`/blog/${article.categorie}/${article.slug}`}
+              href={articleHref(article)}
               aria-hidden={i >= articles.length} // les doublons sont cachés aux lecteurs d'écran
               tabIndex={i >= articles.length ? -1 : undefined}
               style={{

@@ -50,7 +50,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         nom: 'iPhone 17 Air',
         prix: 899,
         nouveaute: true,
-        amazonUrl: 'https://www.amazon.fr/dp/B0FQHDTYT2',
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Air-256-Puissante/dp/B0FQH6GMDX',
         specs: {
           puce: 'A18',
           ecran: '6,6\" OLED Super Retina XDR',
@@ -60,9 +60,48 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         },
       },
       {
+        nom: 'iPhone 17',
+        prix: 999,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-17-256GB-black/dp/B0FQFJVJBQ',
+        specs: {
+          puce: 'A19',
+          ecran: '6,3\" OLED 120Hz ProMotion',
+          photo: '48 MP Fusion + 12 MP ultra-grand-angle',
+          batterie: '24h',
+          stockage: '128 Go',
+        },
+      },
+      {
+        nom: 'iPhone 17 Pro',
+        prix: 1229,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Pro-256-prodigieuse/dp/B0FQH32F7H',
+        specs: {
+          puce: 'A19 Pro',
+          ecran: '6,3\" OLED 120Hz ProMotion',
+          photo: '48 MP Fusion + 48 MP ultra-grand-angle + 12 MP téléobjectif 5×',
+          batterie: '27h',
+          stockage: '256 Go',
+        },
+      },
+      {
+        nom: 'iPhone 17 Pro Max',
+        prix: 1479,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Pro-Max-256/dp/B0FQH9R2VG',
+        specs: {
+          puce: 'A19 Pro',
+          ecran: '6,9\" OLED 120Hz ProMotion',
+          photo: '48 MP Fusion + 48 MP ultra-grand-angle + 12 MP téléobjectif 5×',
+          batterie: '37h',
+          stockage: '256 Go',
+        },
+      },
+      {
         nom: 'iPhone 16e',
         prix: 699,
-        nouveaute: true,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DXQQ65T2',
         specs: {
           puce: 'A16 Bionic',
@@ -74,8 +113,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16',
-        prix: 869,
-        nouveaute: true,
+        prix: 769,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHN3YNR',
         specs: {
           puce: 'A18',
@@ -87,8 +126,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16 Plus',
-        prix: 969,
-        nouveaute: true,
+        prix: 869,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHQW185',
         specs: {
           puce: 'A18',
@@ -100,8 +139,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16 Pro',
-        prix: 1229,
-        nouveaute: true,
+        prix: 1029,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHH9JY3',
         specs: {
           puce: 'A18 Pro',
@@ -113,8 +152,8 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 16 Pro Max',
-        prix: 1479,
-        nouveaute: true,
+        prix: 1279,
+        nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHYHG25',
         specs: {
           puce: 'A18 Pro',
@@ -126,7 +165,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 15',
-        prix: 769,
+        prix: 669,
         nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0CHX7Z69Z',
         specs: {
@@ -139,7 +178,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'iPhone 15 Plus',
-        prix: 869,
+        prix: 769,
         nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0CHX2DRNW',
         specs: {
@@ -414,6 +453,20 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
     },
     modeles: [
       {
+        nom: 'MacBook Neo 13\"',
+        prix: 699,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/Apple-MacBook-2026-Portable-avec/dp/B0GR6MBRPB',
+        specs: {
+          puce: 'A18 Pro',
+          ram: '8 Go',
+          stockage: '256 Go',
+          ecran: '13\" Liquid Retina',
+          autonomie: '16h',
+          poids: '1,23 kg',
+        },
+      },
+      {
         nom: 'Mac mini M4',
         prix: 699,
         nouveaute: true,
@@ -425,6 +478,20 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
           ecran: 'Externe requis',
           autonomie: '—',
           poids: '0,67 kg',
+        },
+      },
+      {
+        nom: 'Mac mini M4 Pro',
+        prix: 1649,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/dp/B0DLC5TBJ7',
+        specs: {
+          puce: 'M4 Pro',
+          ram: '24 Go',
+          stockage: '512 Go',
+          ecran: 'Externe requis',
+          autonomie: '—',
+          poids: '0,73 kg',
         },
       },
       {
@@ -484,6 +551,34 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
         },
       },
       {
+        nom: 'MacBook Pro 14\" M5 Pro',
+        prix: 2499,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/dp/B0FWD5WN5T',
+        specs: {
+          puce: 'M5 Pro',
+          ram: '24 Go',
+          stockage: '512 Go',
+          ecran: '14,2\" Liquid Retina XDR',
+          autonomie: '24h',
+          poids: '1,62 kg',
+        },
+      },
+      {
+        nom: 'MacBook Pro 14\" M5 Max',
+        prix: 3999,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/dp/B0FWD7DWVX',
+        specs: {
+          puce: 'M5 Max',
+          ram: '36 Go',
+          stockage: '1 To',
+          ecran: '14,2\" Liquid Retina XDR',
+          autonomie: '22h',
+          poids: '1,64 kg',
+        },
+      },
+      {
         nom: 'MacBook Pro 16\" M5 Pro',
         prix: 2999,
         nouveaute: true,
@@ -495,6 +590,62 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
           ecran: '16,2\" Liquid Retina XDR',
           autonomie: '24h',
           poids: '2,14 kg',
+        },
+      },
+      {
+        nom: 'MacBook Pro 16\" M5 Max',
+        prix: 4499,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/dp/B0FWD4V1M2',
+        specs: {
+          puce: 'M5 Max',
+          ram: '36 Go',
+          stockage: '1 To',
+          ecran: '16,2\" Liquid Retina XDR',
+          autonomie: '22h',
+          poids: '2,16 kg',
+        },
+      },
+      {
+        nom: 'Mac Studio M4 Max',
+        prix: 2399,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/dp/B0DLC4SN2G',
+        specs: {
+          puce: 'M4 Max',
+          ram: '36 Go',
+          stockage: '512 Go',
+          ecran: 'Externe requis',
+          autonomie: '—',
+          poids: '2,7 kg',
+        },
+      },
+      {
+        nom: 'Mac Studio M4 Ultra',
+        prix: 4999,
+        nouveaute: true,
+        amazonUrl: 'https://www.amazon.fr/dp/B0DLC5FWXR',
+        specs: {
+          puce: 'M4 Ultra',
+          ram: '64 Go',
+          stockage: '1 To',
+          ecran: 'Externe requis',
+          autonomie: '—',
+          poids: '3,6 kg',
+        },
+      },
+      {
+        nom: 'Mac Pro M2 Ultra',
+        prix: 7999,
+        nouveaute: false,
+        amazonUrl: 'https://www.amazon.fr/dp/B0D5FVKJ7R',
+        specs: {
+          puce: 'M2 Ultra',
+          ram: '64 Go',
+          stockage: '1 To',
+          ecran: 'Externe requis',
+          autonomie: '—',
+          poids: '16,9 kg',
         },
       },
     ],
@@ -513,6 +664,20 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       poids: 'Poids (Wi-Fi)',
     },
     modeles: [
+      {
+        nom: 'iPad 10e génération',
+        prix: 409,
+        nouveaute: false,
+        amazonUrl: 'https://www.amazon.fr/dp/B0BJLGVG6R',
+        specs: {
+          puce: 'A14 Bionic',
+          ecran: '10,9\" Liquid Retina',
+          stockage: '64 Go',
+          stylet: 'Apple Pencil 1 (USB-C)',
+          connectique: 'USB-C',
+          poids: '477 g',
+        },
+      },
       {
         nom: 'iPad 11e génération',
         prix: 369,
@@ -680,10 +845,23 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
     },
     modeles: [
       {
+        nom: 'AirPods 3',
+        prix: 179,
+        nouveaute: false,
+        amazonUrl: 'https://www.amazon.fr/dp/B0BDHB9Y8H',
+        specs: {
+          anc: 'Non',
+          autonomie: '6h (30h boîtier)',
+          etanche: 'IPX4',
+          spatial: 'Oui (head tracking)',
+          format: 'Intra sans embout',
+        },
+      },
+      {
         nom: 'AirPods 4',
         prix: 149,
         nouveaute: true,
-        amazonUrl: '',
+        amazonUrl: 'https://amzn.to/4c4vSyD',
         specs: {
           anc: 'Non',
           autonomie: '5h (30h boîtier)',
@@ -720,7 +898,7 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
       },
       {
         nom: 'AirPods Max USB-C',
-        prix: 599,
+        prix: 529,
         nouveaute: false,
         amazonUrl: 'https://www.amazon.fr/dp/B0DGHQ1KVY',
         specs: {
@@ -728,6 +906,19 @@ export const COMPARATEURS: Record<string, ProduitComparateur> = {
           autonomie: '20h',
           etanche: 'Non',
           spatial: 'Oui (Personalized)',
+          format: 'Circumaural (over-ear)',
+        },
+      },
+      {
+        nom: 'AirPods Max 2',
+        prix: 579,
+        nouveaute: true,
+        amazonUrl: '',
+        specs: {
+          anc: 'Oui — ANC 1,5× meilleure (puce H2)',
+          autonomie: '20h',
+          etanche: 'Non',
+          spatial: 'Oui (Personalized + Adaptive Audio)',
           format: 'Circumaural (over-ear)',
         },
       },

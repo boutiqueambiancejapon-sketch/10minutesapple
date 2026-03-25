@@ -1,15 +1,16 @@
 /**
  * /choisir/[produit] — "Quel [produit] Apple choisir en {year} ?"
- * Structure : hero + quiz interactif + contenu éditorial à venir.
+ * Structure : hero + quiz interactif + contenu éditorial + FAQ + auteur.
  * Server Component — QuizEngine isolé en 'use client'.
  */
 
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { QuizEngine } from '@/components/quiz/QuizEngine'
+import { ChoisirEditorial } from '@/components/choisir/ChoisirEditorial'
 import { currentYear } from '@/lib/utils/year'
 import { COMPARATEURS, PRODUIT_SLUGS } from '@/lib/comparateur'
-import Link from 'next/link'
+import { getChoisirContent } from '@/lib/choisir-content'
 
 export const revalidate = 86400
 
@@ -26,8 +27,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const year = currentYear()
 
   return {
-    title: `Quel ${data.label} choisir en ${year} ? Quiz + guide | 10minutesapple`,
-    description: `Réponds à 4 questions et trouve le ${data.label} fait pour toi. Guide complet ${year} : modèles, prix, comparatif.`,
+    title: `Quel ${data.label} choisir en ${year} ? Guide complet + quiz | 10minutesapple`,
+    description: `Quel ${data.label} acheter en ${year} ? Quiz en 4 questions, comparatif par profil, prix et verdict honnête. Guide mis à jour.`,
     alternates: {
       canonical: `https://10minutesapple.com/choisir/${produit}`,
     },
@@ -42,6 +43,14 @@ const HERO_CONFIG: Record<string, { emoji: string; accentRgba: string }> = {
   airpods: { emoji: '🎧', accentRgba: 'rgba(123,97,255,0.14)' },
 }
 
+const PUBLISHED_DATES: Record<string, string> = {
+  iphone: '2026-03-24',
+  mac: '2026-03-24',
+  ipad: '2026-03-24',
+  watch: '2026-03-24',
+  airpods: '2026-03-24',
+}
+
 export default async function ChoisirPage({ params }: { params: Params }) {
   const { produit } = await params
   const data = COMPARATEURS[produit]
@@ -49,9 +58,25 @@ export default async function ChoisirPage({ params }: { params: Params }) {
 
   const year = currentYear()
   const hero = HERO_CONFIG[produit] ?? HERO_CONFIG.iphone
+  const editorial = getChoisirContent(produit, year)
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://10minutesapple.com' },
+      { '@type': 'ListItem', position: 2, name: `Choisir son ${data.label}`, item: `https://10minutesapple.com/choisir/${produit}` },
+    ],
+  }
 
   return (
     <main id="main-content">
+      {/* JSON-LD BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Hero */}
       <section
         style={{
@@ -130,35 +155,14 @@ export default async function ChoisirPage({ params }: { params: Params }) {
         </div>
       </section>
 
-      {/* Lien vers le comparateur */}
-      <div
-        style={{
-          maxWidth: '720px',
-          margin: '0 auto',
-          padding: 'var(--space-4) var(--space-6) var(--space-16)',
-          textAlign: 'center',
-        }}
-      >
-        <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginBottom: 'var(--space-3)' }}>
-          Tu préfères comparer tous les modèles côte à côte ?
-        </p>
-        <Link
-          href={`/comparer/${produit}`}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 'var(--space-2)',
-            fontSize: '14px',
-            fontWeight: 600,
-            color: 'var(--accent-1)',
-            textDecoration: 'none',
-            borderBottom: '1px solid rgba(255,61,87,0.35)',
-            paddingBottom: '2px',
-          }}
-        >
-          Voir le comparateur {data.label} →
-        </Link>
-      </div>
+      {/* Editorial content (if available for this product) */}
+      {editorial && (
+        <ChoisirEditorial
+          content={editorial}
+          produit={produit}
+          publishedAt={PUBLISHED_DATES[produit] ?? '2026-03-24'}
+        />
+      )}
     </main>
   )
 }

@@ -15,14 +15,14 @@ type Deal = {
 }
 
 const DEALS: Deal[] = [
-  { label: 'iPhone 16 Pro 256 Go', badge: '−10 %', href: 'https://www.amazon.fr/dp/B0DGHCS411', badgeColor: 'var(--accent-1)' },
-  { label: 'MacBook Air M3 13"', badge: 'Meilleur prix', href: 'https://www.amazon.fr/dp/B0CX23V2ZK', badgeColor: 'var(--accent-2)' },
-  { label: 'AirPods Pro 2', badge: '−25 %', href: 'https://www.amazon.fr/dp/B0D1XD1ZV3', badgeColor: 'var(--accent-1)' },
-  { label: 'iPad Air M2 11"', badge: 'Promo Flash', href: 'https://www.amazon.fr/dp/B0D3J9XDMQ', badgeColor: 'var(--accent-3)' },
-  { label: 'Apple Watch Series 10', badge: '−15 %', href: 'https://www.amazon.fr/dp/B0DGHY5KXZ', badgeColor: 'var(--accent-2)' },
-  { label: 'Magic Keyboard Touch ID', badge: 'Offre du jour', href: 'https://www.amazon.fr/dp/B09BRG3MZ2', badgeColor: 'var(--accent-1)' },
-  { label: 'Mac mini M4', badge: 'Nouveau', href: 'https://www.amazon.fr/dp/B0DLG4QMB6', badgeColor: 'var(--accent-3)' },
-  { label: 'iPhone 16 128 Go', badge: '−8 %', href: 'https://www.amazon.fr/dp/B0DGH1TBGQ', badgeColor: 'var(--accent-1)' },
+  { label: 'AirPods Pro 2', badge: '−25 %', href: 'https://www.amazon.fr/dp/B0DGHWD7CT', badgeColor: 'var(--accent-1)' },
+  { label: 'iPhone 17 Pro 256 Go', badge: 'Nouveau', href: 'https://www.amazon.fr/Apple-iPhone-Pro-256-prodigieuse/dp/B0FQH32F7H', badgeColor: 'var(--accent-3)' },
+  { label: 'MacBook Air 13" M5', badge: 'Nouveau', href: 'https://www.amazon.fr/dp/B0GR1W24CR', badgeColor: 'var(--accent-3)' },
+  { label: 'iPad Air 11" M3', badge: 'Promo Flash', href: 'https://www.amazon.fr/dp/B0GQVLW917', badgeColor: 'var(--accent-2)' },
+  { label: 'Apple Watch Series 11', badge: '−15 %', href: 'https://www.amazon.fr/dp/B0FQGHR6SY', badgeColor: 'var(--accent-2)' },
+  { label: 'Mac mini M4', badge: '699 €', href: 'https://www.amazon.fr/dp/B0DLBW9GNQ', badgeColor: 'var(--accent-3)' },
+  { label: 'iPhone 17 256 Go', badge: 'Nouveau', href: 'https://www.amazon.fr/Apple-iPhone-17-256GB-black/dp/B0FQFJVJBQ', badgeColor: 'var(--accent-3)' },
+  { label: 'AirPods 4 ANC', badge: '−10 %', href: 'https://www.amazon.fr/dp/B0FQF32239', badgeColor: 'var(--accent-1)' },
 ]
 
 function DealChip({ label, badge, href, badgeColor = 'var(--accent-1)' }: Deal) {

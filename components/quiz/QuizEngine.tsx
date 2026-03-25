@@ -93,62 +93,92 @@ function recommend(answers: Answers): Recommendation {
     if (budget === 'eco') {
       return {
         produit: 'iPhone',
-        modele: 'iPhone 15',
-        pourquoi: 'Le meilleur rapport qualité-prix du moment. Puce A16 Bionic, caméra 48 MP, autonomie solide — et la baisse de prix post-annonce iPhone 16 en fait un deal évident.',
-        prix: 'à partir de 769 €',
-        href: '/blog/iphone/quand-acheter-iphone',
+        modele: 'iPhone 16e',
+        pourquoi: 'Le meilleur iPhone pour les petits budgets. Puce A18, Face ID, écran OLED 6,1", compatible Apple Intelligence. Le design moderne sans se ruiner.',
+        prix: 'à partir de 699 €',
+        href: '/choisir/iphone',
         comparerHref,
       }
     }
     if (budget === 'pro' || (budget === 'high' && usage === 'photo')) {
       return {
         produit: 'iPhone',
-        modele: 'iPhone 16 Pro Max',
-        pourquoi: 'Honnêtement, seulement si tu utilises vraiment la caméra à fond ou l\'écran ProMotion 120Hz tous les jours. Sinon le 16 standard fait 90% du travail.',
+        modele: 'iPhone 17 Pro Max',
+        pourquoi: 'Le meilleur iPhone pour la photo et la vidéo : triple capteur 48 MP, zoom 5×, puce A19 Pro. Écran 6,9" et autonomie record de 37h. Honnêtement, le Pro standard a la même caméra — le Max, c\'est pour l\'écran.',
         prix: 'à partir de 1 479 €',
-        href: '/blog/iphone/quand-acheter-iphone',
+        href: '/choisir/iphone',
         comparerHref,
       }
     }
-    if (budget === 'high' || budget === 'mid') {
+    if (budget === 'high') {
       return {
         produit: 'iPhone',
-        modele: 'iPhone 16',
-        pourquoi: 'Le vrai tip : l\'iPhone 16 standard couvre 95% des usages. Puce A18, Apple Intelligence, charge USB-C. Inutile de payer Pro si tu ne filmes pas en ProRAW.',
-        prix: 'à partir de 869 €',
-        href: '/blog/iphone/quand-acheter-iphone',
+        modele: 'iPhone 17 Pro',
+        pourquoi: 'Le vrai tip : l\'iPhone 17 Pro a exactement le même système photo que le Pro Max — triple 48 MP, zoom 5×, ProRes. Si tu n\'as pas besoin de l\'écran géant, c\'est le bon choix.',
+        prix: 'à partir de 1 229 €',
+        href: '/choisir/iphone',
+        comparerHref,
+      }
+    }
+    if (budget === 'mid') {
+      if (usage === 'social' || usage === 'work') {
+        return {
+          produit: 'iPhone',
+          modele: 'iPhone 17 Air',
+          pourquoi: 'Le plus fin jamais fait — 5,5 mm. Si tu privilégies le design et la légèreté, c\'est un objet magnifique. Un seul capteur arrière, mais suffisant pour un usage quotidien.',
+          prix: 'à partir de 899 €',
+          href: '/choisir/iphone',
+          comparerHref,
+        }
+      }
+      return {
+        produit: 'iPhone',
+        modele: 'iPhone 17',
+        pourquoi: 'En clair : l\'iPhone 17 est le meilleur choix global. Écran 120 Hz, puce A19, capteur 48 MP. La vraie nouveauté ? Le ProMotion arrive enfin sur le modèle standard.',
+        prix: 'à partir de 999 €',
+        href: '/choisir/iphone',
         comparerHref,
       }
     }
   }
 
   if (produit === 'mac') {
-    if (budget === 'eco' || budget === 'mid') {
+    if (budget === 'eco') {
       return {
         produit: 'Mac',
-        modele: 'MacBook Air 13" M3',
-        pourquoi: 'Le MacBook Air M3 est la référence pour 90% des usages : bureau, développement léger, montage vidéo occasionnel. Silencieux, fin, autonomie 18h. En clair : difficile de faire mieux à ce prix.',
+        modele: 'Mac mini M4',
+        pourquoi: 'Le vrai tip si tu as déjà un écran : le Mac mini M4 à 699 € est la meilleure affaire du catalogue Apple. Même puce que le MacBook Air, 600 € de moins.',
+        prix: 'à partir de 699 €',
+        href: '/choisir/mac',
+        comparerHref,
+      }
+    }
+    if (budget === 'mid') {
+      return {
+        produit: 'Mac',
+        modele: 'MacBook Air 13" M5',
+        pourquoi: 'Le MacBook Air M5 convient à 90 % des gens. Silencieux (zéro ventilateur), 1,24 kg, 18h d\'autonomie. Bureau, dev web, retouche photo — il gère tout sans broncher.',
         prix: 'à partir de 1 299 €',
-        href: '/blog',
+        href: '/choisir/mac',
         comparerHref,
       }
     }
     if (budget === 'high') {
       return {
         produit: 'Mac',
-        modele: 'MacBook Pro 14" M4',
-        pourquoi: 'Si tu fais du rendu 3D, de la musique ou du montage 4K régulier, le Pro M4 vaut l\'écart de prix. La puce M4 Pro est une rupture pour les workflows lourds.',
-        prix: 'à partir de 2 099 €',
-        href: '/blog',
+        modele: 'MacBook Pro 14" M5',
+        pourquoi: 'Le MacBook Pro M5 se justifie pour le montage 4K, la compilation Xcode ou le machine learning. Écran Liquid Retina XDR, 24h d\'autonomie, ventilation active pour les charges longues.',
+        prix: 'à partir de 1 999 €',
+        href: '/choisir/mac',
         comparerHref,
       }
     }
     return {
       produit: 'Mac',
-      modele: 'Mac mini M4',
-      pourquoi: 'Le vrai tip si tu as déjà un écran : le Mac mini M4 à 699 € est la puce M4 la moins chère du catalogue. Performances identiques au MacBook Air M3 pour 600 € de moins.',
-      prix: 'à partir de 699 €',
-      href: '/blog',
+      modele: 'MacBook Pro 16" M5 Pro',
+      pourquoi: 'La station de travail portable. Puce M5 Pro, 24 Go RAM, écran 16,2" XDR. Pour les studios créatifs et les devs qui poussent les limites. Honnêtement, si tu hésites entre le 14" et le 16", le 14" suffit probablement.',
+      prix: 'à partir de 2 999 €',
+      href: '/choisir/mac',
       comparerHref,
     }
   }
@@ -157,29 +187,49 @@ function recommend(answers: Answers): Recommendation {
     if (budget === 'eco') {
       return {
         produit: 'iPad',
-        modele: 'iPad 10e génération',
-        pourquoi: 'Pour la lecture, Netflix, les cours et la navigation — l\'iPad standard fait tout ça très bien. Pas besoin de dépenser plus si tu n\'as pas de workflow de création.',
-        prix: 'à partir de 399 €',
-        href: '/blog',
+        modele: 'iPad 11e génération',
+        pourquoi: 'Pour la lecture, Netflix, les cours et la navigation — l\'iPad 11e gen fait tout ça très bien à 369 €. Puce A16, USB-C, écran 10,9". Pas besoin de payer plus si tu n\'as pas de workflow de création.',
+        prix: 'à partir de 369 €',
+        href: '/choisir/ipad',
         comparerHref,
       }
     }
-    if (budget === 'mid' || (budget === 'high' && usage !== 'photo')) {
+    if (budget === 'mid') {
+      if (usage === 'social' || usage === 'gaming') {
+        return {
+          produit: 'iPad',
+          modele: 'iPad mini 7',
+          pourquoi: 'L\'iPad mini 7 tient dans une main avec son écran 8,3" et sa puce A17 Pro. Parfait pour la lecture, les jeux et les déplacements — 293 g seulement.',
+          prix: 'à partir de 599 €',
+          href: '/choisir/ipad',
+          comparerHref,
+        }
+      }
       return {
         produit: 'iPad',
-        modele: 'iPad Air 11" M2',
-        pourquoi: 'L\'iPad Air M2 est la version "sans compromis" pour le travail : puce M2, écran Liquid Retina, compatible Apple Pencil Pro. Le bon équilibre prix/puissance.',
+        modele: 'iPad Air 11" M3',
+        pourquoi: 'L\'iPad Air M3 est le choix évident pour le travail et les études : puce M3, écran Liquid Retina, compatible Apple Pencil Pro. Le meilleur compromis puissance-prix.',
         prix: 'à partir de 799 €',
-        href: '/blog',
+        href: '/choisir/ipad',
+        comparerHref,
+      }
+    }
+    if (budget === 'high' && usage !== 'photo') {
+      return {
+        produit: 'iPad',
+        modele: 'iPad Air 13" M3',
+        pourquoi: 'Même puce M3 que le 11", mais avec un écran 13" pour le confort. Idéal si tu travailles sur des tableurs, des présentations ou des documents longs.',
+        prix: 'à partir de 1 099 €',
+        href: '/choisir/ipad',
         comparerHref,
       }
     }
     return {
       produit: 'iPad',
-      modele: 'iPad Pro 11" M4',
-      pourquoi: 'L\'iPad Pro M4 a l\'écran OLED le plus fin jamais produit par Apple. Pertinent si tu fais de l\'illustration, du montage ou si tu remplaces un Mac.',
+      modele: 'iPad Pro 11" M5',
+      pourquoi: 'L\'iPad Pro M5 a le meilleur écran du marché : OLED Ultra Retina XDR. Pertinent si tu fais de l\'illustration avec Procreate, du montage 4K ou si tu remplaces un Mac.',
       prix: 'à partir de 1 199 €',
-      href: '/blog',
+      href: '/choisir/ipad',
       comparerHref,
     }
   }
@@ -188,10 +238,10 @@ function recommend(answers: Answers): Recommendation {
     if (budget === 'eco') {
       return {
         produit: 'Apple Watch',
-        modele: 'Apple Watch SE 2e génération',
-        pourquoi: 'Honnêtement, la Watch SE couvre 80% des fonctionnalités à la moitié du prix. Suivi activité, cardiaque, ECG, crash detection. Ce qu\'il manque : l\'écran always-on et l\'AOD.',
+        modele: 'Apple Watch SE 2',
+        pourquoi: 'Honnêtement, la Watch SE couvre 80 % des fonctionnalités à la moitié du prix. Suivi cardio, détection de chute et de crash. Ce qu\'il manque : l\'écran always-on et l\'ECG.',
         prix: 'à partir de 279 €',
-        href: '/blog',
+        href: '/choisir/watch',
         comparerHref,
       }
     }
@@ -199,18 +249,18 @@ function recommend(answers: Answers): Recommendation {
       return {
         produit: 'Apple Watch',
         modele: 'Apple Watch Ultra 2',
-        pourquoi: 'Pour les sportifs sérieux et les randonneurs. Autonomie 60h, GPS de précision, bouton Action. À éviter si tu ne fais pas de sport extrême — c\'est un outil, pas un bijou.',
+        pourquoi: 'Pour les sportifs sérieux : 60h d\'autonomie GPS, plongée 100 m certifiée, GPS double fréquence. À éviter si tu ne fais pas de sport extrême — la Series 11 fait le même job au quotidien.',
         prix: 'à partir de 899 €',
-        href: '/blog',
+        href: '/choisir/watch',
         comparerHref,
       }
     }
     return {
       produit: 'Apple Watch',
-      modele: 'Apple Watch Series 10',
-      pourquoi: 'Le vrai tip : la Series 10 est la Watch la plus fine jamais produite. Chargée en 30 min, écran always-on, sleep apnea detection. Le meilleur choix quotidien.',
+      modele: 'Apple Watch Series 11',
+      pourquoi: 'Le vrai tip : la Series 11 a les capteurs santé les plus complets — ECG, SpO2, température, détection d\'apnée du sommeil. Écran always-on, charge en 30 min. Le meilleur choix quotidien.',
       prix: 'à partir de 449 €',
-      href: '/blog',
+      href: '/choisir/watch',
       comparerHref,
     }
   }
@@ -222,7 +272,7 @@ function recommend(answers: Answers): Recommendation {
         modele: 'AirPods 4',
         pourquoi: 'Les AirPods 4 sont les premiers sans embouts intra à proposer une réduction de bruit active. Pour les réunions et les trajets, ils suffisent largement.',
         prix: 'à partir de 179 €',
-        href: '/blog',
+        href: '/choisir/airpods',
         comparerHref,
       }
     }
@@ -232,7 +282,7 @@ function recommend(answers: Answers): Recommendation {
         modele: 'AirPods Max',
         pourquoi: 'La meilleure réduction de bruit du marché selon Mathias (testé côte à côte avec le Sony XM5). Pertinent si tu travailles en open space ou tu voyages beaucoup. Aucun sens si tu veux du sport.',
         prix: 'à partir de 599 €',
-        href: '/blog',
+        href: '/choisir/airpods',
         comparerHref,
       }
     }
@@ -241,7 +291,7 @@ function recommend(answers: Answers): Recommendation {
       modele: 'AirPods Pro 2',
       pourquoi: 'En clair : les AirPods Pro 2 sont le meilleur rapport qualité/prix des écouteurs Apple. ANC de référence, spatial audio, résistance à l\'eau IP54. Le choix par défaut si tu hésites.',
       prix: 'à partir de 249 €',
-      href: '/blog',
+      href: '/choisir/airpods',
       comparerHref,
     }
   }
@@ -249,10 +299,10 @@ function recommend(answers: Answers): Recommendation {
   // Fallback
   return {
     produit: 'Apple',
-    modele: 'iPhone 16',
-    pourquoi: 'Le choix le plus polyvalent du catalogue Apple pour la plupart des usages.',
-    prix: 'à partir de 869 €',
-    href: '/blog',
+    modele: 'iPhone 17',
+    pourquoi: 'Le choix le plus polyvalent du catalogue Apple. Écran 120 Hz, puce A19, excellent rapport qualité-prix.',
+    prix: 'à partir de 999 €',
+    href: '/choisir/iphone',
     comparerHref: '/comparer/iphone',
   }
 }
@@ -539,7 +589,7 @@ function Result({
             textDecoration: 'none',
           }}
         >
-          Voir le guide d'achat
+          Voir le guide d&apos;achat
         </Link>
       </div>
 

@@ -1,8 +1,8 @@
 'use client'
 
 /**
- * StickyCTA — barre CTA flottante en bas de l'écran pour les articles.
- * Apparaît après scroll. Effet glass iOS + contour aurora.
+ * StickyCTA — barre CTA flottante en bas de l'écran.
+ * Effet liquid glass iOS : backdrop-blur + reflet spéculaire.
  * 'use client' isolé — la page article reste Server Component.
  */
 
@@ -48,93 +48,82 @@ export function StickyCTA({ items, message }: Props) {
         maxWidth: '680px',
       }}
     >
-      {/* Aurora border wrapper */}
-      <div className="comparateur-card-wrap">
+      <div
+        style={{
+          position: 'relative',
+          overflow: 'hidden',
+          backdropFilter: 'blur(40px) saturate(1.8)',
+          WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
+          background: 'var(--sticky-cta-glass)',
+          padding: 'var(--space-3) var(--space-5)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-3)',
+          flexWrap: 'wrap',
+          border: '1px solid rgba(255,255,255,0.12)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+          borderRadius: '16px',
+        }}
+      >
+        {/* Specular highlight — light hitting glass from top */}
         <div
-          className="glass-inner"
+          aria-hidden="true"
           style={{
-            position: 'relative',
-            overflow: 'hidden',
-            backdropFilter: 'blur(40px) saturate(1.8)',
-            WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
-            background: 'var(--sticky-cta-glass)',
-            padding: 'var(--space-3) var(--space-5)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'var(--space-3)',
-            flexWrap: 'wrap',
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(175deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 35%, transparent 55%)',
+            pointerEvents: 'none',
+            borderRadius: '16px',
           }}
-        >
-          {/* Liquid glass specular highlight */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(175deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 40%, transparent 60%)',
-              pointerEvents: 'none',
-            }}
-          />
-          {/* Subtle edge light — bottom reflection */}
-          <div
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              left: '10%',
-              right: '10%',
-              height: '1px',
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)',
-              pointerEvents: 'none',
-            }}
-          />
-          {message && (
-            <span
-              style={{
-                position: 'relative',
-                zIndex: 1,
-                flex: 1,
-                minWidth: '140px',
-                fontSize: '13px',
-                color: 'var(--text-primary)',
-                lineHeight: 1.3,
-              }}
-            >
-              {message}
-            </span>
-          )}
+        />
 
-          <div style={{ position: 'relative', zIndex: 1, display: 'flex', gap: 'var(--space-2)', flexShrink: 0, marginLeft: 'auto' }}>
-            {items.map((item, i) => {
-              const isAmazon = item.url.includes('amazon.fr') || item.url.includes('amzn.to')
-              const href = isAmazon ? addAffiliateTag(item.url) : item.url
-              return (
-                <a
-                  key={i}
-                  href={href}
-                  rel={isAmazon ? 'nofollow sponsored noopener' : 'noopener'}
-                  target="_blank"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: 'var(--space-2)',
-                    padding: 'var(--space-2) var(--space-5)',
-                    background: i === 0
-                      ? 'linear-gradient(135deg, var(--aurora-1), var(--aurora-2))'
-                      : 'transparent',
-                    color: i === 0 ? '#fff' : 'var(--text-primary)',
-                    border: i === 0 ? 'none' : '1px solid var(--glass-border)',
-                    fontSize: '13px',
-                    fontWeight: 700,
-                    textDecoration: 'none',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {item.label}
-                </a>
-              )
-            })}
-          </div>
+        {message && (
+          <span
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              flex: 1,
+              minWidth: '140px',
+              fontSize: '13px',
+              color: 'var(--text-primary)',
+              lineHeight: 1.3,
+            }}
+          >
+            {message}
+          </span>
+        )}
+
+        <div style={{ position: 'relative', zIndex: 1, display: 'flex', gap: 'var(--space-2)', flexShrink: 0, marginLeft: 'auto' }}>
+          {items.map((item, i) => {
+            const isAmazon = item.url.includes('amazon.fr') || item.url.includes('amzn.to')
+            const href = isAmazon ? addAffiliateTag(item.url) : item.url
+            return (
+              <a
+                key={i}
+                href={href}
+                rel={isAmazon ? 'nofollow sponsored noopener' : 'noopener'}
+                target="_blank"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 'var(--space-2)',
+                  padding: 'var(--space-2) var(--space-5)',
+                  background: i === 0
+                    ? 'linear-gradient(135deg, var(--aurora-1), var(--aurora-2))'
+                    : 'rgba(255,255,255,0.08)',
+                  color: i === 0 ? '#fff' : 'var(--text-primary)',
+                  border: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: '10px',
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {item.label}
+              </a>
+            )
+          })}
         </div>
       </div>
     </div>

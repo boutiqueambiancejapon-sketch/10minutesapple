@@ -168,7 +168,7 @@ export function ChoisirEditorial({ content, produit, publishedAt }: Props) {
               role="note"
               style={{
                 margin: 'var(--space-4) 0',
-                paddingLeft: 'var(--space-5)',
+                paddingLeft: 'var(--space-8)',
                 position: 'relative',
               }}
             >
@@ -177,12 +177,11 @@ export function ChoisirEditorial({ content, produit, publishedAt }: Props) {
                 style={{
                   position: 'absolute',
                   left: 0,
-                  top: 0,
-                  fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                  fontSize: '20px',
-                  fontWeight: 800,
+                  top: '1px',
+                  fontSize: '16px',
+                  fontWeight: 700,
                   color: 'var(--accent-3)',
-                  lineHeight: 1.5,
+                  lineHeight: 1.7,
                 }}
               >
                 →

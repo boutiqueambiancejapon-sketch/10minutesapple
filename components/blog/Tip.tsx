@@ -10,7 +10,7 @@ export function Tip({ children }: { children: ReactNode }) {
       role="note"
       style={{
         margin: 'var(--space-6) 0',
-        paddingLeft: 'var(--space-5)',
+        paddingLeft: 'var(--space-8)',
         position: 'relative',
       }}
     >
@@ -19,12 +19,11 @@ export function Tip({ children }: { children: ReactNode }) {
         style={{
           position: 'absolute',
           left: 0,
-          top: 0,
-          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-          fontSize: '20px',
-          fontWeight: 800,
+          top: '1px',
+          fontSize: '16px',
+          fontWeight: 700,
           color: 'var(--accent-3)',
-          lineHeight: 1.4,
+          lineHeight: 1.65,
         }}
       >
         →

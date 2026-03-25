@@ -829,3 +829,21 @@ body {
 .product-affiliate:hover {
   border-left-color: currentColor;
 }
+
+/* CompareBar — animation progressive des barres */
+@keyframes compare-bar-grow {
+  from { width: 0%; }
+  to { width: var(--bar-width, 0%); }
+}
+
+.compare-bar-fill {
+  width: var(--bar-width, 0%);
+  animation: compare-bar-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--bar-delay, 200ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-bar-fill {
+    animation: none;
+    width: var(--bar-width, 0%);
+  }
+}

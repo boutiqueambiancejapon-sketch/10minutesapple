@@ -17,7 +17,9 @@ import { Tip } from '@/components/blog/Tip'
 import { Warning } from '@/components/blog/Warning'
 import { Verdict } from '@/components/blog/Verdict'
 import { ProConTable } from '@/components/blog/ProConTable'
+import { PullQuote } from '@/components/blog/PullQuote'
 import { ToolCTA } from '@/components/blog/ToolCTA'
+import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
 import type { ReactNode } from 'react'
@@ -78,6 +80,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
       Warning,
       Verdict,
       ProConTable,
+      PullQuote,
       table: ({ children }: { children: ReactNode }) => (
         <div className="table-scroll-wrap">
           <table>{children}</table>
@@ -158,6 +161,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
         />
       ))}
 
+      <ReadingProgress />
       <main id="main-content">
         <article>
           {/* Header — bande gradient accent-4 pleine largeur */}

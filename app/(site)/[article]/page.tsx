@@ -17,6 +17,8 @@ import { Tip } from '@/components/blog/Tip'
 import { Warning } from '@/components/blog/Warning'
 import { Verdict } from '@/components/blog/Verdict'
 import { ProConTable } from '@/components/blog/ProConTable'
+import { PullQuote } from '@/components/blog/PullQuote'
+import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
 import { StickyCTA } from '@/components/blog/StickyCTA'
@@ -63,7 +65,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
     source: content,
     options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
     components: {
-      Tip, Warning, Verdict, ProConTable,
+      Tip, Warning, Verdict, ProConTable, PullQuote,
       table: ({ children }: { children: ReactNode }) => (
         <div className="table-scroll-wrap"><table>{children}</table></div>
       ),
@@ -117,6 +119,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
         <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       ))}
 
+      <ReadingProgress />
       <main id="main-content">
         <article>
           <div className="article-hero-band">

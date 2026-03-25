@@ -1,21 +1,20 @@
 /**
- * AccessoiresSection — AirPods + Apple Watch.
- * Layout : grille compacte 2 familles + produits sidebar.
+ * AccessoiresSection — AirPods.
+ * Layout : grille 3×2 articles + sidebar produits Amazon.
  * Server Component.
  */
 import Link from 'next/link'
 import { getAllArticles } from '@/lib/blog'
-import { ArticleCard } from '@/components/blog/ArticleCard'
+import { ArticleCarousel } from './ArticleCarousel'
 import { ProductAffiliate } from './ProductAffiliate'
 
 const ACCENT = 'var(--accent-2)'
 const BG = 'rgba(255,210,63,0.05)'
 
 const PRODUCTS = [
-  { name: 'AirPods Pro 2', hint: '★ Meilleur choix', priceFrom: '249 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+airpods+pro+2' },
-  { name: 'AirPods 4', hint: 'Standard', priceFrom: '149 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+airpods+4' },
-  { name: 'Apple Watch Series 10', hint: 'Quotidien', priceFrom: '449 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+watch+series+10' },
-  { name: 'Apple Watch Ultra 2', hint: 'Sport extrême', priceFrom: '899 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+watch+ultra+2' },
+  { name: 'AirPods Pro 2', hint: 'Meilleur choix', priceFrom: '249 €', amazonUrl: 'https://www.amazon.fr/dp/B0DGHWD7CT' },
+  { name: 'AirPods 4 ANC', hint: 'Sans embouts', priceFrom: '199 €', amazonUrl: 'https://www.amazon.fr/dp/B0FQF32239' },
+  { name: 'AirPods Max USB-C', hint: 'Over-ear premium', priceFrom: '529 €', amazonUrl: 'https://www.amazon.fr/dp/B0DGHQ1KVY' },
 ]
 
 export function AccessoiresSection() {
@@ -29,18 +28,18 @@ export function AccessoiresSection() {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 'var(--space-8)', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
           <div>
             <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: ACCENT, display: 'block', marginBottom: 'var(--space-2)' }}>
-              AirPods · Apple Watch
+              AirPods
             </span>
             <h2 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(22px, 3vw, 38px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1, margin: 0 }}>
-              Accessoires Apple
+              Guides & tests AirPods
             </h2>
           </div>
           <div style={{ display: 'flex', gap: 'var(--space-3)', flexWrap: 'wrap', alignItems: 'center' }}>
-            <Link href="/comparer/airpods" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', textDecoration: 'none', border: '1px solid var(--border)', borderRadius: 'var(--radius-full)', padding: 'var(--space-2) var(--space-4)', whiteSpace: 'nowrap' }}>
-              Comparer AirPods
+            <Link href="/choisir/airpods" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-secondary)', textDecoration: 'none', border: '1px solid var(--border)', borderRadius: 'var(--radius-full)', padding: 'var(--space-2) var(--space-4)', whiteSpace: 'nowrap' }}>
+              Quels AirPods choisir ?
             </Link>
-            <Link href="/comparer/watch" style={{ fontSize: '13px', fontWeight: 700, color: '#000', textDecoration: 'none', background: ACCENT, borderRadius: 'var(--radius-full)', padding: 'var(--space-2) var(--space-4)', whiteSpace: 'nowrap' }}>
-              Comparer Watch →
+            <Link href="/comparer/airpods" style={{ fontSize: '13px', fontWeight: 700, color: '#000', textDecoration: 'none', background: ACCENT, borderRadius: 'var(--radius-full)', padding: 'var(--space-2) var(--space-4)', whiteSpace: 'nowrap' }}>
+              Comparer →
             </Link>
           </div>
         </div>
@@ -48,20 +47,16 @@ export function AccessoiresSection() {
         {/* Content grid */}
         <div className="home-sidebar-grid">
           {articles.length > 0 ? (
-            <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 'var(--space-5)', listStyle: 'none', margin: 0, padding: 0 }}>
-              {articles.map((a) => (
-                <li key={a.slug}><ArticleCard article={a} showCategory={false} /></li>
-              ))}
-            </ul>
+            <ArticleCarousel articles={articles} />
           ) : (
-            <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Articles accessoires en cours de rédaction.</p>
+            <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Articles AirPods en cours de rédaction.</p>
           )}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
             {PRODUCTS.map((p) => (
               <ProductAffiliate key={p.name} {...p} accent={ACCENT} bgRgba={BG} />
             ))}
             <Link href="/blog/accessoires" style={{ fontSize: '12px', color: 'var(--text-muted)', textDecoration: 'none', textAlign: 'center', paddingTop: 'var(--space-2)' }}>
-              Tous les articles accessoires →
+              Tous les articles AirPods →
             </Link>
           </div>
         </div>

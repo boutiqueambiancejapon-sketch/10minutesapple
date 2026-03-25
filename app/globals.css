@@ -718,6 +718,15 @@ body {
   flex-direction: column;
   gap: 2px;
 }
+/* Bridge invisible entre le trigger et le panel pour garder le hover */
+.dropdown-panel::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
 .dropdown-trigger:hover .dropdown-panel,
 .dropdown-trigger:focus-within .dropdown-panel {
   display: flex;

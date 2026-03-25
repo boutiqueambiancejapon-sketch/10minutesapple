@@ -21,6 +21,7 @@ import { PullQuote } from '@/components/blog/PullQuote'
 import { StatCard, StatRow } from '@/components/blog/StatCard'
 import { CompareBar, CompareBarGroup } from '@/components/blog/CompareBar'
 import { ToolCTA } from '@/components/blog/ToolCTA'
+import { ProductCTA } from '@/components/blog/ProductCTA'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { FaqAccordion } from '@/components/blog/FaqAccordion'
 import { AuthorByline } from '@/components/ui/AuthorByline'
@@ -83,7 +84,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
       Warning,
       Verdict,
       ProConTable,
-      PullQuote, StatCard, StatRow, CompareBar, CompareBarGroup,
+      PullQuote, StatCard, StatRow, CompareBar, CompareBarGroup, ProductCTA,
       table: ({ children }: { children: ReactNode }) => (
         <div className="table-scroll-wrap">
           <table>{children}</table>

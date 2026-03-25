@@ -18,7 +18,7 @@ const PRODUCTS = [
 ]
 
 export function IphoneSection() {
-  const articles = getAllArticles().filter((a) => a.categorie === 'iphone').slice(0, 8)
+  const articles = getAllArticles().filter((a) => a.categorie === 'iphone').slice(0, 6)
 
   return (
     <section style={{ borderTop: '1px solid var(--border)', padding: 'var(--space-16) 0' }}>

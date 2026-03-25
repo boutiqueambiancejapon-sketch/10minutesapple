@@ -475,6 +475,15 @@ body {
 }
 .related-link:hover span:first-child { color: var(--accent-1) !important; }
 .related-link:hover span:nth-child(2) > span:first-child { color: var(--accent-1) !important; }
+/* Nav glass specular highlight */
+.nav-glass-active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(175deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.02) 30%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
 @media (min-width: 768px) {
   .nav-hamburger { display: none !important; }
 }
@@ -718,6 +727,15 @@ body {
   flex-direction: column;
   gap: 2px;
 }
+/* Bridge invisible entre le trigger et le panel pour garder le hover */
+.dropdown-panel::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+}
 .dropdown-trigger:hover .dropdown-panel,
 .dropdown-trigger:focus-within .dropdown-panel {
   display: flex;
@@ -766,28 +784,20 @@ body {
 }
 
 /* Carousel horizontal scroll-snap */
-.article-carousel {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-5);
-  padding-bottom: var(--space-3);
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-  /* Hint de débordement */
-  mask-image: linear-gradient(to right, black 80%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
 }
-@media (prefers-reduced-motion: reduce) {
-  .article-carousel {
-    scroll-snap-type: none;
+@media (max-width: 900px) {
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-.carousel-item {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  width: clamp(240px, 28vw, 310px);
+@media (max-width: 560px) {
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Masonry CSS columns */

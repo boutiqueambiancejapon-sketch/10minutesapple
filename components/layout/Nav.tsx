@@ -86,13 +86,14 @@ export function Nav() {
   return (
     <>
       <header
+        className={scrolled || open ? 'nav-glass-active' : ''}
         style={{
           position: 'sticky', top: 0, zIndex: 40,
-          backgroundColor: (scrolled || open) ? 'var(--nav-bg-scrolled)' : 'transparent',
-          backdropFilter: (scrolled || open) ? 'blur(20px) saturate(1.4)' : 'none',
-          WebkitBackdropFilter: (scrolled || open) ? 'blur(20px) saturate(1.4)' : 'none',
-          borderBottom: '1px solid transparent',
-          transition: 'background-color 300ms ease, backdrop-filter 300ms ease',
+          backgroundColor: (scrolled || open) ? 'var(--sticky-cta-glass)' : 'transparent',
+          backdropFilter: (scrolled || open) ? 'blur(40px) saturate(1.8)' : 'none',
+          WebkitBackdropFilter: (scrolled || open) ? 'blur(40px) saturate(1.8)' : 'none',
+          borderBottom: (scrolled || open) ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+          transition: 'background-color 300ms ease, backdrop-filter 300ms ease, border-color 300ms ease',
         }}
       >
         <nav aria-label="Navigation principale" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)', height: '60px', display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>

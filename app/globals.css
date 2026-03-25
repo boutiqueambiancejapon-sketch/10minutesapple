@@ -337,27 +337,23 @@ body {
 }
 
 /* Gradient border — comparateur cards */
-@property --gradient-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-@keyframes gradient-rotate {
-  to { --gradient-angle: 360deg; }
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 .comparateur-card-wrap {
   position: relative;
-  border-radius: 2px;
-  padding: 2px;
-  background: conic-gradient(from var(--gradient-angle), var(--aurora-1), var(--aurora-2), var(--aurora-3), var(--aurora-1));
-  animation: gradient-rotate 6s linear infinite;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--aurora-1), var(--aurora-2), var(--aurora-3), var(--aurora-1));
+  background-size: 300% 300%;
+  animation: gradient-shift 8s ease infinite;
 }
 .comparateur-card-wrap > * {
   background: var(--bg-surface);
-  border-radius: 1px;
 }
 @media (prefers-reduced-motion: reduce) {
-  .comparateur-card-wrap { animation: none; background: linear-gradient(135deg, var(--aurora-1), var(--aurora-2), var(--aurora-3)); }
+  .comparateur-card-wrap { animation: none; }
 }
 
 /* Announcement bar — slide depuis le haut */

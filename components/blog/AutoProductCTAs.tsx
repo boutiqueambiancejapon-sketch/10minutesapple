@@ -21,28 +21,63 @@ const INSERT_AFTER_H2 = [1, 3]
 
 function CTACard({ cta }: { cta: ArticleCTA }) {
   return (
-    <div style={{ margin: 'var(--space-8) 0' }}>
+    <div style={{ margin: 'var(--space-10) 0' }}>
       <div className="comparateur-card-wrap">
         <div
           style={{
-            padding: 'var(--space-5) var(--space-6)',
+            position: 'relative',
+            overflow: 'hidden',
+            padding: 'var(--space-8) var(--space-6)',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            textAlign: 'center',
             gap: 'var(--space-4)',
-            flexWrap: 'wrap',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
+          {/* Aurora glow background */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: '-40%',
+              left: '10%',
+              width: '80%',
+              height: '120%',
+              background: 'radial-gradient(ellipse, var(--aurora-1) 0%, transparent 70%)',
+              opacity: 0.06,
+              filter: 'blur(40px)',
+              pointerEvents: 'none',
+            }}
+          />
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              bottom: '-30%',
+              right: '5%',
+              width: '60%',
+              height: '100%',
+              background: 'radial-gradient(ellipse, var(--aurora-3) 0%, transparent 70%)',
+              opacity: 0.05,
+              filter: 'blur(40px)',
+              pointerEvents: 'none',
+            }}
+          />
+
+          {/* Content */}
+          <div style={{ position: 'relative', zIndex: 1 }}>
             {cta.badge && (
               <span
                 style={{
                   fontFamily: 'var(--next-font-mono), monospace',
                   fontSize: '10px',
                   fontWeight: 600,
-                  letterSpacing: '0.06em',
+                  letterSpacing: '0.08em',
                   textTransform: 'uppercase',
                   color: 'var(--accent-3)',
+                  display: 'block',
+                  marginBottom: 'var(--space-2)',
                 }}
               >
                 {cta.badge}
@@ -51,42 +86,54 @@ function CTACard({ cta }: { cta: ArticleCTA }) {
             <span
               style={{
                 fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                fontSize: '17px',
-                fontWeight: 700,
+                fontSize: 'clamp(20px, 3vw, 26px)',
+                fontWeight: 800,
                 color: 'var(--text-primary)',
-                lineHeight: 1.3,
+                lineHeight: 1.2,
+                display: 'block',
               }}
             >
               {cta.name}
             </span>
-            <span
-              style={{
-                fontFamily: 'var(--next-font-mono), monospace',
-                fontSize: '22px',
-                fontWeight: 700,
-                color: 'var(--accent-1)',
-                fontVariantNumeric: 'tabular-nums',
-                letterSpacing: '-0.02em',
-              }}
-            >
-              {cta.price}
-            </span>
           </div>
+
+          {/* Price — hero-sized */}
+          <span
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: 'clamp(36px, 8vw, 52px)',
+              fontWeight: 700,
+              background: 'linear-gradient(135deg, var(--aurora-1), var(--aurora-2))',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              fontVariantNumeric: 'tabular-nums',
+              letterSpacing: '-0.03em',
+              lineHeight: 1,
+            }}
+          >
+            {cta.price}
+          </span>
+
+          {/* CTA button with gradient */}
           <AffiliateLink
             href={cta.url}
             style={{
+              position: 'relative',
+              zIndex: 1,
               display: 'inline-flex',
               alignItems: 'center',
               gap: 'var(--space-2)',
-              background: 'var(--accent-1)',
+              background: 'linear-gradient(135deg, var(--aurora-1), var(--aurora-2))',
               color: '#fff',
               fontWeight: 700,
-              fontSize: '13px',
-              padding: 'var(--space-3) var(--space-5)',
-              borderRadius: '2px',
+              fontSize: '14px',
+              padding: 'var(--space-3) var(--space-8)',
               textDecoration: 'none',
               whiteSpace: 'nowrap',
-              flexShrink: 0,
+              letterSpacing: '0.02em',
             }}
           >
             Voir sur Amazon →

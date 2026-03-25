@@ -148,21 +148,20 @@ export function ComparateurSelector({ modeles, specsLabels }: Props) {
       >
         {selectedModeles.map((m, i) => (
           <div key={i} style={{ textAlign: 'center' }}>
-            {m.nouveaute && (
-              <span
-                style={{
-                  display: 'inline-block',
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  letterSpacing: '0.06em',
-                  textTransform: 'uppercase',
-                  color: 'var(--accent-3)',
-                  marginBottom: 'var(--space-2)',
-                }}
-              >
-                Nouveau
-              </span>
-            )}
+            <span
+              style={{
+                display: 'inline-block',
+                fontSize: '10px',
+                fontWeight: 700,
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                color: m.nouveaute ? 'var(--accent-3)' : 'transparent',
+                marginBottom: 'var(--space-2)',
+                minHeight: '15px',
+              }}
+            >
+              Nouveau
+            </span>
             <h2
               style={{
                 fontFamily: 'var(--next-font-display), system-ui, sans-serif',

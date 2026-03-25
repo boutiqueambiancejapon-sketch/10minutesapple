@@ -52,6 +52,8 @@ export function StickyCTA({ items, message }: Props) {
       <div className="comparateur-card-wrap">
         <div
           style={{
+            position: 'relative',
+            overflow: 'hidden',
             backdropFilter: 'blur(40px) saturate(1.8)',
             WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
             background: 'var(--sticky-cta-glass)',
@@ -62,13 +64,38 @@ export function StickyCTA({ items, message }: Props) {
             flexWrap: 'wrap',
           }}
         >
+          {/* Liquid glass specular highlight */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(175deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 40%, transparent 60%)',
+              pointerEvents: 'none',
+            }}
+          />
+          {/* Subtle edge light — bottom reflection */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: '10%',
+              right: '10%',
+              height: '1px',
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)',
+              pointerEvents: 'none',
+            }}
+          />
           {message && (
             <span
               style={{
+                position: 'relative',
+                zIndex: 1,
                 flex: 1,
                 minWidth: '140px',
                 fontSize: '13px',
-                color: 'var(--text-secondary)',
+                color: 'var(--text-primary)',
                 lineHeight: 1.3,
               }}
             >
@@ -76,7 +103,7 @@ export function StickyCTA({ items, message }: Props) {
             </span>
           )}
 
-          <div style={{ display: 'flex', gap: 'var(--space-2)', flexShrink: 0, marginLeft: 'auto' }}>
+          <div style={{ position: 'relative', zIndex: 1, display: 'flex', gap: 'var(--space-2)', flexShrink: 0, marginLeft: 'auto' }}>
             {items.map((item, i) => {
               const isAmazon = item.url.includes('amazon.fr') || item.url.includes('amzn.to')
               const href = isAmazon ? addAffiliateTag(item.url) : item.url

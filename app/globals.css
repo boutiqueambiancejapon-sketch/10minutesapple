@@ -52,7 +52,7 @@
   --glass-bg:     rgba(19, 19, 26, 0.75);
   --glass-border: rgba(255, 255, 255, 0.09);
   --glass-blur:   16px;
-  --sticky-cta-glass: rgba(10, 10, 15, 0.45);
+  --sticky-cta-glass: rgba(10, 10, 15, 0.35);
 
   /* Nav (hardcoded dans inline styles → variables pour le light mode) */
   --nav-bg-scrolled: rgba(10, 10, 15, 0.97);
@@ -151,7 +151,7 @@ html {
     --error:   #C8001F;
     --glass-bg:     rgba(255, 255, 255, 0.80);
     --glass-border: rgba(0, 0, 0, 0.09);
-    --sticky-cta-glass: rgba(255, 255, 255, 0.45);
+    --sticky-cta-glass: rgba(255, 255, 255, 0.35);
     --noise-opacity: 0.025;
     --aurora-1:      #C8001F;
     --aurora-2:      #5B3FDF;
@@ -185,7 +185,7 @@ html[data-theme="light"] {
   --error:   #C8001F;
   --glass-bg:     rgba(255, 255, 255, 0.80);
   --glass-border: rgba(0, 0, 0, 0.09);
-  --sticky-cta-glass: rgba(255, 255, 255, 0.45);
+  --sticky-cta-glass: rgba(255, 255, 255, 0.35);
   --noise-opacity: 0.025;
   --aurora-1:      #C8001F;
   --aurora-2:      #5B3FDF;

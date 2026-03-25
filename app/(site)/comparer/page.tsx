@@ -118,45 +118,42 @@ export default function ComparateurHubPage() {
             {produits.map((p) => (
               <li key={p.id}>
                 <Link href={`/comparer/${p.id}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
-                  <article
-                    style={{
-                      background: 'var(--bg-surface)',
-                      border: '1px solid var(--border)',
-                      borderTop: '3px solid var(--accent-1)',
-                      borderRadius: 'var(--radius-lg)',
-                      padding: 'var(--space-7)',
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: 'var(--space-3)',
-                      animation: 'border-pulse 4s ease-in-out infinite',
-                    }}
-                  >
-                    <div style={{ fontSize: '32px', lineHeight: 1 }}>{EMOJIS[p.id]}</div>
-                    <h2
+                  <div className="comparateur-card-wrap" style={{ height: '100%' }}>
+                    <article
                       style={{
-                        fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                        fontSize: '20px',
-                        fontWeight: 800,
-                        color: 'var(--text-primary)',
+                        padding: 'var(--space-7)',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 'var(--space-3)',
                       }}
                     >
-                      {p.label}
-                    </h2>
-                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.55, flex: 1 }}>
-                      {p.description}
-                    </p>
-                    <div
-                      style={{
-                        fontSize: '13px',
-                        fontWeight: 600,
-                        color: 'var(--accent-1)',
-                        marginTop: 'auto',
-                      }}
-                    >
-                      {p.modeles.length} modèles →
-                    </div>
-                  </article>
+                      <div style={{ fontSize: '32px', lineHeight: 1 }}>{EMOJIS[p.id]}</div>
+                      <h2
+                        style={{
+                          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                          fontSize: '20px',
+                          fontWeight: 800,
+                          color: 'var(--text-primary)',
+                        }}
+                      >
+                        {p.label}
+                      </h2>
+                      <p style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.55, flex: 1 }}>
+                        {p.description}
+                      </p>
+                      <div
+                        style={{
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          color: 'var(--accent-1)',
+                          marginTop: 'auto',
+                        }}
+                      >
+                        {p.modeles.length} modèles →
+                      </div>
+                    </article>
+                  </div>
                 </Link>
               </li>
             ))}

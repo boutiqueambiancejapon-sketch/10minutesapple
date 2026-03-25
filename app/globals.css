@@ -336,10 +336,28 @@ body {
   50%       { opacity: 0.55; }
 }
 
-/* Border pulse lent — comparateur */
-@keyframes border-pulse {
-  0%, 100% { border-color: var(--accent-1); }
-  50%       { border-color: rgba(255, 61, 87, 0.25); }
+/* Gradient border — comparateur cards */
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes gradient-rotate {
+  to { --gradient-angle: 360deg; }
+}
+.comparateur-card-wrap {
+  position: relative;
+  border-radius: 2px;
+  padding: 2px;
+  background: conic-gradient(from var(--gradient-angle), var(--aurora-1), var(--aurora-2), var(--aurora-3), var(--aurora-1));
+  animation: gradient-rotate 6s linear infinite;
+}
+.comparateur-card-wrap > * {
+  background: var(--bg-surface);
+  border-radius: 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .comparateur-card-wrap { animation: none; background: linear-gradient(135deg, var(--aurora-1), var(--aurora-2), var(--aurora-3)); }
 }
 
 /* Announcement bar — slide depuis le haut */

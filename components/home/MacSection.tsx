@@ -1,21 +1,21 @@
 /**
  * MacSection — section home dédiée aux Mac.
- * Layout : masonry articles + sidebar produits Amazon.
+ * Layout : grille 3×2 articles + sidebar produits Amazon.
  * Server Component.
  */
 import Link from 'next/link'
 import { getAllArticles } from '@/lib/blog'
-import { ArticleMasonry } from './ArticleMasonry'
+import { ArticleCarousel } from './ArticleCarousel'
 import { ProductAffiliate } from './ProductAffiliate'
 
 const ACCENT = 'var(--accent-4)'
 const BG = 'rgba(123,97,255,0.05)'
 
 const PRODUCTS = [
-  { name: 'MacBook Air M3 13"', hint: '★ Meilleur rapport Q/P', priceFrom: '1 299 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+macbook+air+m3+13' },
-  { name: 'MacBook Air M3 15"', hint: 'Grand écran', priceFrom: '1 599 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+macbook+air+m3+15' },
-  { name: 'MacBook Pro M4', hint: 'Pro & créatifs', priceFrom: '1 999 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+macbook+pro+m4' },
-  { name: 'Mac mini M4', hint: 'Bureau compact', priceFrom: '699 €', amazonUrl: 'https://www.amazon.fr/s?k=apple+mac+mini+m4' },
+  { name: 'MacBook Air M5 13"', hint: 'Le choix evident', priceFrom: '1 299 €', amazonUrl: 'https://www.amazon.fr/dp/B0GR1W24CR' },
+  { name: 'MacBook Neo 13"', hint: 'Le Mac le moins cher', priceFrom: '699 €', amazonUrl: 'https://www.amazon.fr/Apple-MacBook-2026-Portable-avec/dp/B0GR6MBRPB' },
+  { name: 'MacBook Pro M5', hint: 'Pro et creatifs', priceFrom: '1 999 €', amazonUrl: 'https://www.amazon.fr/dp/B0FWDCNPPZ' },
+  { name: 'Mac mini M4', hint: 'Bureau compact', priceFrom: '699 €', amazonUrl: 'https://www.amazon.fr/dp/B0DLBW9GNQ' },
 ]
 
 export function MacSection() {
@@ -48,7 +48,7 @@ export function MacSection() {
         {/* Content grid */}
         <div className="home-sidebar-grid">
           {articles.length > 0 ? (
-            <ArticleMasonry articles={articles} />
+            <ArticleCarousel articles={articles} />
           ) : (
             <p style={{ color: 'var(--text-muted)', fontSize: '14px' }}>Articles Mac en cours de rédaction.</p>
           )}

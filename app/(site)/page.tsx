@@ -5,6 +5,7 @@ import { RecentArticles } from '@/components/home/RecentArticles'
 import { IphoneSection } from '@/components/home/IphoneSection'
 import { MacSection } from '@/components/home/MacSection'
 import { IpadSection } from '@/components/home/IpadSection'
+import { WatchSection } from '@/components/home/WatchSection'
 import { AccessoiresSection } from '@/components/home/AccessoiresSection'
 import { FeaturedTools } from '@/components/home/FeaturedTools'
 import { AuthorTeaser } from '@/components/home/AuthorTeaser'
@@ -21,6 +22,7 @@ export default function HomePage() {
       <IphoneSection />
       <MacSection />
       <IpadSection />
+      <WatchSection />
       <AccessoiresSection />
       {/* Outils interactifs */}
       <FeaturedTools />

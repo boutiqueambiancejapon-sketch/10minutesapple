@@ -352,7 +352,7 @@ body {
   background-size: 300% 300%;
   animation: gradient-shift 8s ease infinite;
 }
-.comparateur-card-wrap > * {
+.comparateur-card-wrap > *:not(.glass-inner) {
   background: var(--bg-surface);
 }
 @media (prefers-reduced-motion: reduce) {

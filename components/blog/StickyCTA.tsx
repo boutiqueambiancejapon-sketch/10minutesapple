@@ -51,6 +51,7 @@ export function StickyCTA({ items, message }: Props) {
       {/* Aurora border wrapper */}
       <div className="comparateur-card-wrap">
         <div
+          className="glass-inner"
           style={{
             position: 'relative',
             overflow: 'hidden',

@@ -145,11 +145,14 @@ export default async function StandaloneArticlePage({ params }: { params: Params
 
           <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 var(--space-6) var(--space-12)' }}>
             {meta.aiSummary && meta.aiSummary.length > 0 && (
-              <div style={{ borderLeft: '3px solid var(--accent-4)', background: 'var(--surface-2)', borderRadius: '0 var(--radius-md) var(--radius-md) 0', padding: 'var(--space-5) var(--space-6)', marginBottom: 'var(--space-8)' }}>
-                <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-4)', display: 'block', marginBottom: 'var(--space-3)' }}>En bref</span>
-                <ul style={{ margin: 0, paddingLeft: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+              <div style={{ borderTop: '2px solid var(--accent-4)', borderBottom: '1px solid var(--border)', paddingTop: 'var(--space-4)', paddingBottom: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
+                <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-4)', display: 'block', marginBottom: 'var(--space-3)' }}>En bref</span>
+                <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
                   {meta.aiSummary.map((point, i) => (
-                    <li key={i} style={{ fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>{point}</li>
+                    <li key={i} style={{ display: 'flex', gap: 'var(--space-3)', fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+                      <span style={{ color: 'var(--accent-4)', flexShrink: 0, fontWeight: 700 }} aria-hidden="true">→</span>
+                      <span>{point}</span>
+                    </li>
                   ))}
                 </ul>
               </div>

@@ -64,19 +64,19 @@ export function ChoisirEditorial({ content, produit, publishedAt }: Props) {
       {/* TL;DR */}
       <div
         style={{
-          borderLeft: '3px solid var(--accent-4)',
-          background: 'var(--surface-2)',
-          borderRadius: '0 var(--radius-md) var(--radius-md) 0',
-          padding: 'var(--space-5) var(--space-6)',
+          borderTop: '2px solid var(--accent-4)',
+          borderBottom: '1px solid var(--border)',
+          paddingTop: 'var(--space-4)',
+          paddingBottom: 'var(--space-4)',
           marginTop: 'var(--space-6)',
           marginBottom: 'var(--space-10)',
         }}
       >
         <span
           style={{
-            fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: '11px',
-            fontWeight: 700,
+            fontFamily: 'var(--next-font-mono), monospace',
+            fontSize: '10px',
+            fontWeight: 600,
             textTransform: 'uppercase' as const,
             letterSpacing: '0.08em',
             color: 'var(--accent-4)',
@@ -86,9 +86,12 @@ export function ChoisirEditorial({ content, produit, publishedAt }: Props) {
         >
           En bref
         </span>
-        <ul style={{ margin: 0, paddingLeft: 'var(--space-5)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
           {content.tldr.map((item, i) => (
-            <li key={i} style={{ ...pStyle, marginBottom: 0 }}>{item}</li>
+            <li key={i} style={{ display: 'flex', gap: 'var(--space-3)', ...pStyle, marginBottom: 0 }}>
+              <span style={{ color: 'var(--accent-4)', flexShrink: 0, fontWeight: 700 }} aria-hidden="true">→</span>
+              <span>{item}</span>
+            </li>
           ))}
         </ul>
       </div>
@@ -161,31 +164,33 @@ export function ChoisirEditorial({ content, produit, publishedAt }: Props) {
           ))}
 
           {section.tip && (
-            <div
+            <aside
+              role="note"
               style={{
-                borderLeft: '3px solid var(--accent-3)',
-                background: 'var(--surface-2)',
-                borderRadius: '0 var(--radius-md) var(--radius-md) 0',
-                padding: 'var(--space-4) var(--space-5)',
-                marginBottom: 'var(--space-4)',
+                margin: 'var(--space-4) 0',
+                paddingLeft: 'var(--space-5)',
+                position: 'relative',
               }}
             >
               <span
+                aria-hidden="true"
                 style={{
+                  position: 'absolute',
+                  left: 0,
+                  top: 0,
                   fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                  fontSize: '11px',
-                  fontWeight: 700,
-                  textTransform: 'uppercase' as const,
-                  letterSpacing: '0.08em',
+                  fontSize: '20px',
+                  fontWeight: 800,
                   color: 'var(--accent-3)',
+                  lineHeight: 1.5,
                 }}
               >
-                Tip
+                →
               </span>
-              <p style={{ ...pStyle, marginBottom: 0, marginTop: 'var(--space-2)' }}>
+              <p style={{ ...pStyle, marginBottom: 0 }}>
                 {section.tip}
               </p>
-            </div>
+            </aside>
           )}
 
           {section.internalLink && (

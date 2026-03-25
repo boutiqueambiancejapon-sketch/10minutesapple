@@ -49,7 +49,7 @@ const MAC_CTAS: ArticleCTA[] = [
     price: '699 €',
     url: 'https://www.amazon.fr/Apple-MacBook-2026-Portable-avec/dp/B0GR6MBRPB',
     badge: 'Le Mac le moins cher',
-    hook: 'Puce A18 Pro, 16h d\'autonomie. Le premier Mac portable sous les 700 euros.',
+    hook: 'Puce A18 Pro, macOS complet, Apple Intelligence. Le premier Mac portable sous les 700 euros.',
   },
 ]
 

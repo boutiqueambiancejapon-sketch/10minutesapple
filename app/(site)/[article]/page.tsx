@@ -12,13 +12,19 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getRelatedArticles, articleHref, CATEGORY_LABELS } from '@/lib/blog'
+import { getCTAsForCategory } from '@/lib/article-ctas'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
 import { Tip } from '@/components/blog/Tip'
 import { Warning } from '@/components/blog/Warning'
 import { Verdict } from '@/components/blog/Verdict'
 import { ProConTable } from '@/components/blog/ProConTable'
 import { PullQuote } from '@/components/blog/PullQuote'
+import { StatCard, StatRow } from '@/components/blog/StatCard'
+import { CompareBar, CompareBarGroup } from '@/components/blog/CompareBar'
+import { ProductCTA } from '@/components/blog/ProductCTA'
+import { AutoProductCTAs } from '@/components/blog/AutoProductCTAs'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
+import { FaqAccordion } from '@/components/blog/FaqAccordion'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
 import { StickyCTA } from '@/components/blog/StickyCTA'
@@ -65,7 +71,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
     source: content,
     options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
     components: {
-      Tip, Warning, Verdict, ProConTable, PullQuote,
+      Tip, Warning, Verdict, ProConTable, PullQuote, StatCard, StatRow, CompareBar, CompareBarGroup, ProductCTA,
       table: ({ children }: { children: ReactNode }) => (
         <div className="table-scroll-wrap"><table>{children}</table></div>
       ),
@@ -162,6 +168,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
             )}
 
             <div className="prose-article">{mdxContent}</div>
+            <AutoProductCTAs ctas={getCTAsForCategory(meta.categorie)} />
 
             {/* FAQ */}
             {meta.faq && meta.faq.length > 0 && (
@@ -169,14 +176,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
                 <h2 id="faq-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 'var(--space-6)' }}>
                   Questions fréquentes
                 </h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                  {meta.faq.map(({ q, a }, i) => (
-                    <div key={i} style={{ padding: 'var(--space-5) 0', borderBottom: i < meta.faq!.length - 1 ? '1px solid var(--border)' : 'none' }}>
-                      <h3 style={{ fontFamily: 'var(--next-font-primary), system-ui, sans-serif', fontWeight: 600, fontSize: '15px', color: 'var(--text-primary)', margin: '0 0 var(--space-2)', lineHeight: 1.4 }}>{q}</h3>
-                      <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: 1.7, margin: 0 }}>{a}</p>
-                    </div>
-                  ))}
-                </div>
+                <FaqAccordion items={meta.faq} />
               </section>
             )}
 

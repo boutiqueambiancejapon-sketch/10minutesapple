@@ -1,6 +1,6 @@
 /**
  * PullQuote — citation extraite du texte, affichée en grand.
- * Casse le rythme du texte, crée un point d'accroche visuel.
+ * Ligne verticale gradient aurora à gauche + texte italic display.
  * Usage MDX : <PullQuote>Le choix dépend de l'écosystème, pas des specs.</PullQuote>
  * Server Component.
  */
@@ -11,35 +11,32 @@ export function PullQuote({ children }: { children: ReactNode }) {
     <blockquote
       style={{
         margin: 'var(--space-10) 0',
-        padding: 'var(--space-6) 0',
-        borderTop: '1px solid var(--border)',
-        borderBottom: '1px solid var(--border)',
+        padding: 'var(--space-4) 0 var(--space-4) var(--space-6)',
         position: 'relative',
+        borderLeft: 'none',
       }}
     >
+      {/* Ligne verticale gradient aurora */}
       <span
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '-14px',
           left: 0,
-          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-          fontSize: '40px',
-          fontWeight: 800,
-          color: 'var(--accent-1)',
-          lineHeight: 1,
-          opacity: 0.6,
+          top: 0,
+          bottom: 0,
+          width: '3px',
+          background: 'linear-gradient(180deg, var(--aurora-1), var(--aurora-2), var(--aurora-3))',
+          borderRadius: '2px',
         }}
-      >
-        "
-      </span>
+      />
       <p
         style={{
           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-          fontSize: 'clamp(20px, 3vw, 26px)',
-          fontWeight: 600,
+          fontSize: 'clamp(22px, 3.5vw, 30px)',
+          fontWeight: 700,
+          fontStyle: 'italic',
           color: 'var(--text-primary)',
-          lineHeight: 1.4,
+          lineHeight: 1.35,
           margin: 0,
           textWrap: 'balance',
         }}

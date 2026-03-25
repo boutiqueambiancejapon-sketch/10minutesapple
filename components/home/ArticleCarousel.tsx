@@ -1,10 +1,9 @@
 /**
- * ArticleCarousel — carousel horizontal avec drag-to-scroll desktop.
- * CSS scroll-snap + DragScroll wrapper pour le swipe souris.
+ * ArticleGrid — grille 3×2 d'articles pour les sections home.
+ * Remplace le carousel horizontal. Server Component.
  */
 import type { ArticleMeta } from '@/lib/blog'
 import { ArticleCard } from '@/components/blog/ArticleCard'
-import { DragScroll } from '@/components/ui/DragScroll'
 
 type Props = {
   articles: ArticleMeta[]
@@ -14,17 +13,18 @@ type Props = {
 export function ArticleCarousel({ articles, showCategory = false }: Props) {
   if (articles.length === 0) return null
 
+  const displayed = articles.slice(0, 6)
+
   return (
-    <DragScroll className="article-carousel">
-      {articles.map((article) => (
+    <div className="article-grid" role="list" aria-label="Articles">
+      {displayed.map((article) => (
         <div
           key={`${article.categorie}/${article.slug}`}
-          className="carousel-item"
           role="listitem"
         >
           <ArticleCard article={article} showCategory={showCategory} />
         </div>
       ))}
-    </DragScroll>
+    </div>
   )
 }

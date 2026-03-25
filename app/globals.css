@@ -784,30 +784,20 @@ body {
 }
 
 /* Carousel horizontal scroll-snap */
-.article-carousel {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-5);
-  padding-bottom: var(--space-3);
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  /* Hint de débordement */
-  mask-image: linear-gradient(to right, black 85%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
 }
-.article-carousel::-webkit-scrollbar {
-  display: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .article-carousel {
-    scroll-snap-type: none;
+@media (max-width: 900px) {
+  .article-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-.carousel-item {
-  scroll-snap-align: start;
-  flex-shrink: 0;
-  width: clamp(240px, 28vw, 310px);
+@media (max-width: 560px) {
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Masonry CSS columns */

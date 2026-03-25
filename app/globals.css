@@ -841,6 +841,15 @@ body {
   animation: compare-bar-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--bar-delay, 200ms) both;
 }
 
+.compare-bar-winner {
+  background: var(--bar-color);
+}
+
+.compare-bar-loser {
+  background: var(--text-muted);
+  opacity: 0.25;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .compare-bar-fill {
     animation: none;

@@ -4,8 +4,9 @@
  * Server Component — compatible avec compileMDX de next-mdx-remote/rsc.
  *
  * Usage MDX :
- *   <CompareBar label="Photo" left={88} right={95} leftName="iPhone" rightName="Galaxy" />
+ *   <CompareBar label="Photo" left="88" right="95" leftName="iPhone" rightName="Galaxy" />
  *   Valeurs 0–100 converties en /10. Valeurs 0–10 acceptées aussi.
+ *   Props MUST be strings (compileMDX drops JSX expression props).
  */
 
 import type { ReactNode } from 'react'
@@ -24,13 +25,8 @@ function toTen(v: unknown): number {
   return n > 10 ? Math.round(n) / 10 : n
 }
 
-/* Hardcoded color tokens for inline styles */
-const RED = '#FF3D57'
-const GREEN = '#3DFFC0'
-const MUTED = '#55556A'
-const TRACK = '#1C1C26'
-
-export function CompareBar({ label, left, right, leftName = 'A', rightName = 'B' }: CompareBarProps) {
+export function CompareBar(props: CompareBarProps) {
+  const { label, left, right, leftName = 'A', rightName = 'B' } = props
   const l = toTen(left)
   const r = toTen(right)
   const lPct = Math.min((l / 10) * 100, 100)
@@ -49,17 +45,17 @@ export function CompareBar({ label, left, right, leftName = 'A', rightName = 'B'
       }}>
         {label}
       </span>
-      <BarRow name={leftName} score={l} pct={lPct} wins={leftWins} hex={RED} idx={0} />
-      <BarRow name={rightName} score={r} pct={rPct} wins={rightWins} hex={GREEN} idx={1} />
+      <BarRow name={leftName} score={l} pct={lPct} wins={leftWins} side="left" idx={0} />
+      <BarRow name={rightName} score={r} pct={rPct} wins={rightWins} side="right" idx={1} />
     </div>
   )
 }
 
-function BarRow({ name, score, pct, wins, hex, idx }: {
-  name: string; score: number; pct: number; wins: boolean; hex: string; idx: number
+function BarRow({ name, score, pct, wins, side, idx }: {
+  name: string; score: number; pct: number; wins: boolean; side: 'left' | 'right'; idx: number
 }) {
-  const color = wins ? hex : MUTED
-  const opacity = wins ? 1 : 0.3
+  /* Use CSS variables for theme-aware colors */
+  const accentVar = side === 'left' ? 'var(--accent-1)' : 'var(--accent-3)'
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '6px' }}>
@@ -76,51 +72,38 @@ function BarRow({ name, score, pct, wins, hex, idx }: {
       {/* Bar track */}
       <div style={{
         flex: 1, height: '12px',
-        background: TRACK, borderRadius: '6px',
+        background: 'var(--bg-surface-2)', borderRadius: '6px',
         overflow: 'hidden', position: 'relative',
       }}>
         {/* Graduation marks */}
         {[25, 50, 75].map(p => (
           <div key={p} style={{
             position: 'absolute', left: `${p}%`, top: 0, bottom: 0,
-            width: '1px', background: 'rgba(255,255,255,0.06)', zIndex: 1,
+            width: '1px', background: 'var(--border)', zIndex: 1,
           }} />
         ))}
 
-        {/* Filled bar — uses CSS animation class */}
+        {/* Filled bar */}
         <div
-          className="compare-bar-fill"
+          className={wins ? 'compare-bar-fill compare-bar-winner' : 'compare-bar-fill compare-bar-loser'}
           style={{
             '--bar-width': `${pct}%`,
             '--bar-delay': `${idx * 150 + 200}ms`,
+            '--bar-color': accentVar,
             height: '100%',
-            background: wins
-              ? `linear-gradient(90deg, ${hex}55, ${hex})`
-              : color,
             borderRadius: '6px',
-            opacity,
             position: 'relative',
             zIndex: 2,
-            boxShadow: wins ? `0 0 10px ${hex}30` : 'none',
           } as React.CSSProperties}
-        >
-          {/* Glow tip on winner */}
-          {wins && (
-            <div style={{
-              position: 'absolute', right: 0, top: '-1px', bottom: '-1px',
-              width: '3px', borderRadius: '2px',
-              background: hex,
-              boxShadow: `0 0 8px ${hex}80`,
-            }} />
-          )}
-        </div>
+        />
       </div>
 
       {/* Score /10 */}
       <span style={{
         fontFamily: 'var(--next-font-mono), monospace',
         fontSize: '14px', fontWeight: 700,
-        color, minWidth: '46px', textAlign: 'right', whiteSpace: 'nowrap',
+        color: wins ? accentVar : 'var(--text-muted)',
+        minWidth: '46px', textAlign: 'right', whiteSpace: 'nowrap',
       }}>
         {score.toFixed(1)}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.5 }}>/10</span>
       </span>
@@ -157,7 +140,7 @@ export function CompareBarGroup({ children, leftName, rightName }: {
     <div style={{
       margin: '32px 0', padding: '20px 20px 12px',
       borderRadius: 'var(--radius-md)',
-      background: 'rgba(255,255,255,0.02)',
+      background: 'var(--bg-surface)',
       border: '1px solid var(--border)',
     }}>
       {children}
@@ -171,29 +154,29 @@ export function CompareBarGroup({ children, leftName, rightName }: {
         }}>
           <span style={{
             fontSize: '11px', fontWeight: 700, textTransform: 'uppercase',
-            letterSpacing: '0.08em', color: MUTED,
+            letterSpacing: '0.08em', color: 'var(--text-muted)',
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
           }}>
             Moyenne
           </span>
           <div style={{ display: 'flex', gap: '24px' }}>
-            <ScoreLabel name={lN} avg={lAvg} wins={lWins} hex={RED} />
-            <ScoreLabel name={rN} avg={rAvg} wins={rWins} hex={GREEN} />
+            <span style={{
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: '14px', fontWeight: 700,
+              color: lWins ? 'var(--accent-1)' : 'var(--text-muted)',
+            }}>
+              {lN} {lAvg.toFixed(1)}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.5 }}>/10</span>
+            </span>
+            <span style={{
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: '14px', fontWeight: 700,
+              color: rWins ? 'var(--accent-3)' : 'var(--text-muted)',
+            }}>
+              {rN} {rAvg.toFixed(1)}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.5 }}>/10</span>
+            </span>
           </div>
         </div>
       )}
     </div>
-  )
-}
-
-function ScoreLabel({ name, avg, wins, hex }: { name: string; avg: number; wins: boolean; hex: string }) {
-  return (
-    <span style={{
-      fontFamily: 'var(--next-font-mono), monospace',
-      fontSize: '14px', fontWeight: 700,
-      color: wins ? hex : MUTED,
-    }}>
-      {name} {avg.toFixed(1)}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.5 }}>/10</span>
-    </span>
   )
 }

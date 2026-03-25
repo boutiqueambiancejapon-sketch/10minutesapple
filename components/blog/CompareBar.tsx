@@ -30,9 +30,13 @@ const GREEN = '#3DFFC0'
 const MUTED = '#55556A'
 const TRACK = '#1C1C26'
 
-export function CompareBar({ label, left, right, leftName = 'A', rightName = 'B' }: CompareBarProps) {
+export function CompareBar(props: CompareBarProps) {
+  const { label, left, right, leftName = 'A', rightName = 'B' } = props
   const l = toTen(left)
   const r = toTen(right)
+
+  /* DEBUG — remove after testing */
+  const debugInfo = `left=${JSON.stringify(left)}(${typeof left}) right=${JSON.stringify(right)}(${typeof right}) → l=${l} r=${r} | allProps=${Object.keys(props).join(',')}`
   const lPct = Math.min((l / 10) * 100, 100)
   const rPct = Math.min((r / 10) * 100, 100)
   const leftWins = l > r
@@ -40,6 +44,10 @@ export function CompareBar({ label, left, right, leftName = 'A', rightName = 'B'
 
   return (
     <div style={{ marginBottom: '20px' }}>
+      {/* DEBUG — remove after testing */}
+      <div style={{ fontSize: '10px', color: '#ff0', background: '#300', padding: '4px 8px', borderRadius: '4px', marginBottom: '4px', fontFamily: 'monospace', wordBreak: 'break-all' }}>
+        {debugInfo}
+      </div>
       <span style={{
         display: 'block', fontSize: '11px', fontWeight: 700,
         textTransform: 'uppercase', letterSpacing: '0.08em',

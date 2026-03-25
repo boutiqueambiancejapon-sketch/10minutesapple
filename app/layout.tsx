@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Space_Grotesk, Unbounded } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const fontPrimary = Space_Grotesk({
@@ -63,6 +64,7 @@ export default function RootLayout({
           Aller au contenu principal
         </a>
         {children}
+        <Analytics />
       </body>
     </html>
   )

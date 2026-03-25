@@ -12,6 +12,7 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getRelatedArticles, articleHref, CATEGORY_LABELS } from '@/lib/blog'
+import { getCTAsForCategory } from '@/lib/article-ctas'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
 import { Tip } from '@/components/blog/Tip'
 import { Warning } from '@/components/blog/Warning'
@@ -21,6 +22,7 @@ import { PullQuote } from '@/components/blog/PullQuote'
 import { StatCard, StatRow } from '@/components/blog/StatCard'
 import { CompareBar, CompareBarGroup } from '@/components/blog/CompareBar'
 import { ProductCTA } from '@/components/blog/ProductCTA'
+import { AutoProductCTAs } from '@/components/blog/AutoProductCTAs'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { FaqAccordion } from '@/components/blog/FaqAccordion'
 import { AuthorByline } from '@/components/ui/AuthorByline'
@@ -166,6 +168,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
             )}
 
             <div className="prose-article">{mdxContent}</div>
+            <AutoProductCTAs ctas={getCTAsForCategory(meta.categorie)} />
 
             {/* FAQ */}
             {meta.faq && meta.faq.length > 0 && (

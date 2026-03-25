@@ -98,6 +98,7 @@ const CTA_REGISTRY: Record<string, ArticleCTA[]> = {
   ipad: IPAD_CTAS,
   watch: WATCH_CTAS,
   accessoires: ACCESSOIRES_CTAS,
+  astuces: IPHONE_CTAS,
 }
 
 /**

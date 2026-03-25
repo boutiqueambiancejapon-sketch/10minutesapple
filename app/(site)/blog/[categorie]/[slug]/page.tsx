@@ -22,8 +22,10 @@ import { StatCard, StatRow } from '@/components/blog/StatCard'
 import { CompareBar, CompareBarGroup } from '@/components/blog/CompareBar'
 import { ToolCTA } from '@/components/blog/ToolCTA'
 import { ProductCTA } from '@/components/blog/ProductCTA'
+import { AutoProductCTAs } from '@/components/blog/AutoProductCTAs'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { FaqAccordion } from '@/components/blog/FaqAccordion'
+import { getCTAsForCategory } from '@/lib/article-ctas'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
 import type { ReactNode } from 'react'
@@ -265,6 +267,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
             {/* MDX content */}
             <div className="prose-article">{mdxContent}</div>
+            <AutoProductCTAs ctas={getCTAsForCategory(categorie)} />
 
             {/* CTA outil contextuel */}
             <ToolCTA categorie={categorie} />

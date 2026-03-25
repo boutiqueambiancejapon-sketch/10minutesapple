@@ -32,7 +32,7 @@ function CTACard({ cta }: { cta: ArticleCTA }) {
             flexDirection: 'column',
             alignItems: 'center',
             textAlign: 'center',
-            gap: 'var(--space-4)',
+            gap: 'var(--space-3)',
           }}
         >
           {/* Aurora glow background */}
@@ -65,7 +65,26 @@ function CTACard({ cta }: { cta: ArticleCTA }) {
             }}
           />
 
-          {/* Content */}
+          {/* "Deal du moment" pill */}
+          <span
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: '10px',
+              fontWeight: 700,
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#fff',
+              background: 'linear-gradient(135deg, var(--aurora-1), var(--aurora-2))',
+              padding: '3px 12px',
+              borderRadius: '2px',
+            }}
+          >
+            Deal du moment
+          </span>
+
+          {/* Badge catégorie + nom */}
           <div style={{ position: 'relative', zIndex: 1 }}>
             {cta.badge && (
               <span
@@ -77,7 +96,7 @@ function CTACard({ cta }: { cta: ArticleCTA }) {
                   textTransform: 'uppercase',
                   color: 'var(--accent-3)',
                   display: 'block',
-                  marginBottom: 'var(--space-2)',
+                  marginBottom: 'var(--space-1)',
                 }}
               >
                 {cta.badge}
@@ -117,6 +136,21 @@ function CTACard({ cta }: { cta: ArticleCTA }) {
             {cta.price}
           </span>
 
+          {/* Hook text */}
+          <p
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              fontSize: '13px',
+              color: 'var(--text-muted)',
+              lineHeight: 1.5,
+              margin: 0,
+              maxWidth: '380px',
+            }}
+          >
+            {cta.hook}
+          </p>
+
           {/* CTA button with gradient */}
           <AffiliateLink
             href={cta.url}
@@ -134,10 +168,24 @@ function CTACard({ cta }: { cta: ArticleCTA }) {
               textDecoration: 'none',
               whiteSpace: 'nowrap',
               letterSpacing: '0.02em',
+              marginTop: 'var(--space-1)',
             }}
           >
             Voir sur Amazon →
           </AffiliateLink>
+
+          {/* Trust line */}
+          <span
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              fontSize: '11px',
+              color: 'var(--text-muted)',
+              opacity: 0.6,
+            }}
+          >
+            Livraison gratuite · Retour 30 jours
+          </span>
         </div>
       </div>
     </div>

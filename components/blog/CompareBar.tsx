@@ -5,8 +5,8 @@
  * Notes /10, animation au scroll, gagnant mis en valeur.
  *
  * Usage MDX :
- *   <CompareBar label="Photo" left={9} right={8.5} leftName="iPhone" rightName="Galaxy" />
- *   Valeurs de 0 à 10 (ou 0 à 100, auto-détecté).
+ *   <CompareBar label="Photo" left={88} right={95} leftName="iPhone" rightName="Galaxy" />
+ *   Valeurs 0–100 converties en /10. Valeurs 0–10 acceptées aussi.
  */
 
 import { useRef, useState, useEffect, type ReactNode } from 'react'
@@ -19,7 +19,15 @@ type CompareBarProps = {
   rightName?: string
 }
 
-function toTen(v: number) { return v > 10 ? +(v / 10).toFixed(1) : v }
+function toTen(v: number): number {
+  if (typeof v !== 'number' || isNaN(v)) return 0
+  return v > 10 ? Math.round(v) / 10 : v
+}
+
+/* Color tokens — hardcoded to avoid CSS var concatenation issues in gradients */
+const RED = '#FF3D57'
+const GREEN = '#3DFFC0'
+const MUTED = '#55556A'
 
 export function CompareBar({ label, left, right, leftName = 'A', rightName = 'B' }: CompareBarProps) {
   const ref = useRef<HTMLDivElement>(null)
@@ -30,76 +38,106 @@ export function CompareBar({ label, left, right, leftName = 'A', rightName = 'B'
     if (!el) return
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (mq.matches) { setVisible(true); return }
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect() } }, { threshold: 0.3 })
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect() } },
+      { threshold: 0.15 },
+    )
     obs.observe(el)
     return () => obs.disconnect()
   }, [])
 
   const l = toTen(left)
   const r = toTen(right)
-  const lPct = (l / 10) * 100
-  const rPct = (r / 10) * 100
-  const leftWins = l >= r
-  const tie = l === r
+  const lPct = Math.min((l / 10) * 100, 100)
+  const rPct = Math.min((r / 10) * 100, 100)
+  const leftWins = l > r
+  const rightWins = r > l
 
   return (
-    <div ref={ref} style={{ marginBottom: 'var(--space-5)' }}>
-      <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-primary)', fontFamily: 'var(--next-font-display), system-ui, sans-serif' }}>
+    <div ref={ref} style={{ marginBottom: '20px' }}>
+      <span style={{
+        display: 'block',
+        fontSize: '11px',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        letterSpacing: '0.08em',
+        color: 'var(--text-primary)',
+        fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+        marginBottom: '8px',
+      }}>
         {label}
       </span>
 
-      <Row name={leftName} score={l} pct={lPct} wins={leftWins && !tie} color="var(--accent-1)" visible={visible} />
-      <Row name={rightName} score={r} pct={rPct} wins={!leftWins && !tie} color="var(--accent-3)" visible={visible} />
+      <BarRow name={leftName} score={l} pct={lPct} wins={leftWins} hex={RED} visible={visible} />
+      <BarRow name={rightName} score={r} pct={rPct} wins={rightWins} hex={GREEN} visible={visible} />
     </div>
   )
 }
 
-function Row({ name, score, pct, wins, color, visible }: { name: string; score: number; pct: number; wins: boolean; color: string; visible: boolean }) {
-  const barColor = wins ? color : 'var(--text-muted)'
-  const opacity = wins ? 1 : 0.35
+function BarRow({ name, score, pct, wins, hex, visible }: {
+  name: string; score: number; pct: number; wins: boolean; hex: string; visible: boolean
+}) {
+  const fillColor = wins ? hex : MUTED
+  const fillOpacity = wins ? 1 : 0.3
+  const glowBg = wins ? `${hex}40` : 'transparent'
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginTop: '6px' }}>
-      <span style={{ fontSize: '12px', color: wins ? 'var(--text-primary)' : 'var(--text-muted)', minWidth: '90px', flexShrink: 0, fontWeight: wins ? 600 : 400 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '6px' }}>
+      {/* Label */}
+      <span style={{
+        fontSize: '12px',
+        color: wins ? 'var(--text-primary)' : 'var(--text-muted)',
+        minWidth: '100px',
+        flexShrink: 0,
+        fontWeight: wins ? 600 : 400,
+      }}>
         {name}
       </span>
 
-      <div style={{ flex: 1, height: '10px', background: 'var(--surface-2)', borderRadius: '5px', overflow: 'hidden', position: 'relative' }}>
-        {/* Graduation marks at 25%, 50%, 75% */}
+      {/* Bar track */}
+      <div style={{
+        flex: 1,
+        height: '12px',
+        background: 'var(--bg-surface-2)',
+        borderRadius: '6px',
+        overflow: 'hidden',
+        position: 'relative',
+      }}>
+        {/* Graduation marks */}
         {[25, 50, 75].map(p => (
-          <div key={p} style={{ position: 'absolute', left: `${p}%`, top: 0, bottom: 0, width: '1px', background: 'rgba(255,255,255,0.04)', zIndex: 1 }} />
+          <div key={p} style={{
+            position: 'absolute', left: `${p}%`, top: 0, bottom: 0,
+            width: '1px', background: 'rgba(255,255,255,0.06)', zIndex: 1,
+          }} />
         ))}
-        <div
-          style={{
-            width: visible ? `${pct}%` : '0%',
-            height: '100%',
-            background: wins
-              ? `linear-gradient(90deg, ${barColor}88, ${barColor})`
-              : barColor,
-            borderRadius: '5px',
-            opacity,
-            transition: 'width 800ms cubic-bezier(0.22, 1, 0.36, 1)',
-            position: 'relative',
-            zIndex: 2,
-          }}
-        >
-          {wins && (
-            <div style={{ position: 'absolute', right: 0, top: '-2px', bottom: '-2px', width: '3px', borderRadius: '2px', background: barColor, boxShadow: `0 0 8px ${barColor}80` }} />
-          )}
-        </div>
+
+        {/* Filled bar */}
+        <div style={{
+          width: visible ? `${pct}%` : '0%',
+          height: '100%',
+          background: wins
+            ? `linear-gradient(90deg, ${fillColor}66, ${fillColor})`
+            : fillColor,
+          borderRadius: '6px',
+          opacity: fillOpacity,
+          transition: visible ? 'width 900ms cubic-bezier(0.22, 1, 0.36, 1)' : 'none',
+          position: 'relative',
+          zIndex: 2,
+          boxShadow: wins ? `0 0 12px ${glowBg}` : 'none',
+        }} />
       </div>
 
+      {/* Score /10 */}
       <span style={{
         fontFamily: 'var(--next-font-mono), monospace',
-        fontSize: '13px',
+        fontSize: '14px',
         fontWeight: 700,
-        color: wins ? barColor : 'var(--text-muted)',
-        minWidth: '38px',
+        color: wins ? fillColor : MUTED,
+        minWidth: '44px',
         textAlign: 'right',
-        opacity: visible ? 1 : 0,
-        transition: 'opacity 400ms ease 600ms',
+        whiteSpace: 'nowrap',
       }}>
-        {score}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.6 }}>/10</span>
+        {score.toFixed(1)}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.5 }}>/10</span>
       </span>
     </div>
   )
@@ -108,16 +146,22 @@ function Row({ name, score, pct, wins, color, visible }: { name: string; score: 
 /**
  * CompareBarGroup — wrapper avec légende et score total.
  */
-export function CompareBarGroup({ children, leftName, rightName }: { children: ReactNode; leftName?: string; rightName?: string }) {
-  // Extract scores from children to compute totals
+export function CompareBarGroup({ children, leftName, rightName }: {
+  children: ReactNode; leftName?: string; rightName?: string
+}) {
   const items: { left: number; right: number; lName: string; rName: string }[] = []
   const childArray = Array.isArray(children) ? children : [children]
 
   childArray.forEach((child) => {
     if (child && typeof child === 'object' && 'props' in child) {
       const p = child.props as CompareBarProps
-      if (p.left !== undefined && p.right !== undefined) {
-        items.push({ left: toTen(p.left), right: toTen(p.right), lName: p.leftName ?? 'A', rName: p.rightName ?? 'B' })
+      if (typeof p.left === 'number' && typeof p.right === 'number') {
+        items.push({
+          left: toTen(p.left),
+          right: toTen(p.right),
+          lName: p.leftName ?? 'A',
+          rName: p.rightName ?? 'B',
+        })
       }
     }
   })
@@ -132,20 +176,47 @@ export function CompareBarGroup({ children, leftName, rightName }: { children: R
   const rWins = rAvg > lAvg
 
   return (
-    <div style={{ margin: 'var(--space-8) 0', padding: 'var(--space-5) var(--space-5) var(--space-3)', borderRadius: 'var(--radius-md)', background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border)' }}>
+    <div style={{
+      margin: '32px 0',
+      padding: '20px 20px 12px',
+      borderRadius: 'var(--radius-md)',
+      background: 'rgba(255,255,255,0.02)',
+      border: '1px solid var(--border)',
+    }}>
       {children}
 
       {items.length > 1 && (
-        <div style={{ borderTop: '1px solid var(--border)', marginTop: 'var(--space-4)', paddingTop: 'var(--space-4)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--text-muted)', fontFamily: 'var(--next-font-display), system-ui, sans-serif' }}>
+        <div style={{
+          borderTop: '1px solid var(--border)',
+          marginTop: '16px',
+          paddingTop: '14px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '8px',
+        }}>
+          <span style={{
+            fontSize: '11px', fontWeight: 700, textTransform: 'uppercase',
+            letterSpacing: '0.08em', color: 'var(--text-muted)',
+            fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+          }}>
             Moyenne
           </span>
-          <div style={{ display: 'flex', gap: 'var(--space-6)' }}>
-            <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '14px', fontWeight: 700, color: lWins ? 'var(--accent-1)' : 'var(--text-muted)' }}>
-              {lName} {lAvg}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.6 }}>/10</span>
+          <div style={{ display: 'flex', gap: '24px' }}>
+            <span style={{
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: '14px', fontWeight: 700,
+              color: lWins ? RED : MUTED,
+            }}>
+              {lName} {lAvg.toFixed(1)}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.5 }}>/10</span>
             </span>
-            <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '14px', fontWeight: 700, color: rWins ? 'var(--accent-3)' : 'var(--text-muted)' }}>
-              {rName} {rAvg}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.6 }}>/10</span>
+            <span style={{
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: '14px', fontWeight: 700,
+              color: rWins ? GREEN : MUTED,
+            }}>
+              {rName} {rAvg.toFixed(1)}<span style={{ fontSize: '10px', fontWeight: 400, opacity: 0.5 }}>/10</span>
             </span>
           </div>
         </div>

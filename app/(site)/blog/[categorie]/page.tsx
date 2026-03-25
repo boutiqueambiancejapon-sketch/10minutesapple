@@ -79,7 +79,7 @@ export default async function CategoryPage({
             borderBottom: '1px solid var(--border)',
           }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: 'var(--space-14) var(--space-6) var(--space-10)' }}>
+          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: 'var(--space-14) var(--space-6) var(--space-10)' }} className="blog-hero-inner">
             {/* Breadcrumb */}
             <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
               <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>

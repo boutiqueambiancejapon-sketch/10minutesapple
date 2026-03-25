@@ -63,7 +63,7 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
 
       <main id="main-content">
         {/* ── Hero ── */}
-        <section style={{ maxWidth: '1280px', margin: '0 auto', padding: 'var(--space-16) var(--space-6) var(--space-10)' }}>
+        <section style={{ maxWidth: '1280px', margin: '0 auto', padding: 'var(--space-16) var(--space-6) var(--space-10)' }} className="blog-hero-inner">
           <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
             <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
               <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Accueil</Link></li>

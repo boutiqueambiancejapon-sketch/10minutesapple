@@ -19,46 +19,49 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
         const isOpen = openIndex === i
         return (
           <div key={i} style={{ borderBottom: '1px solid var(--border)' }}>
-            <button
-              onClick={() => setOpenIndex(isOpen ? null : i)}
-              aria-expanded={isOpen}
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'baseline',
-                justifyContent: 'space-between',
-                gap: 'var(--space-4)',
-                padding: 'var(--space-4) 0',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
-                textAlign: 'left',
-              }}
-            >
-              <span
+            <h3 style={{ margin: 0 }}>
+              <button
+                onClick={() => setOpenIndex(isOpen ? null : i)}
+                aria-expanded={isOpen}
                 style={{
-                  fontFamily: 'var(--next-font-primary), system-ui, sans-serif',
-                  fontWeight: 600,
-                  fontSize: '15px',
-                  color: 'var(--text-primary)',
-                  lineHeight: 1.4,
+                  width: '100%',
+                  display: 'flex',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-between',
+                  gap: 'var(--space-4)',
+                  padding: 'var(--space-4) 0',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                  font: 'inherit',
                 }}
               >
-                {q}
-              </span>
-              <span
-                aria-hidden="true"
-                style={{
-                  flexShrink: 0,
-                  fontSize: '18px',
-                  color: 'var(--text-muted)',
-                  transition: 'transform 200ms ease',
-                  transform: isOpen ? 'rotate(45deg)' : 'none',
-                }}
-              >
-                +
-              </span>
-            </button>
+                <span
+                  style={{
+                    fontFamily: 'var(--next-font-primary), system-ui, sans-serif',
+                    fontWeight: 600,
+                    fontSize: '15px',
+                    color: 'var(--text-primary)',
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {q}
+                </span>
+                <span
+                  aria-hidden="true"
+                  style={{
+                    flexShrink: 0,
+                    fontSize: '18px',
+                    color: 'var(--text-muted)',
+                    transition: 'transform 200ms ease',
+                    transform: isOpen ? 'rotate(45deg)' : 'none',
+                  }}
+                >
+                  +
+                </span>
+              </button>
+            </h3>
             <div
               style={{
                 overflow: 'hidden',

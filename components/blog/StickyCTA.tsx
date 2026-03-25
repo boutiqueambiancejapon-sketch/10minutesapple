@@ -52,9 +52,9 @@ export function StickyCTA({ items, message }: Props) {
       <div className="comparateur-card-wrap">
         <div
           style={{
-            backdropFilter: 'blur(24px) saturate(1.5)',
-            WebkitBackdropFilter: 'blur(24px) saturate(1.5)',
-            background: 'var(--nav-bg-scrolled)',
+            backdropFilter: 'blur(40px) saturate(1.8)',
+            WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
+            background: 'var(--sticky-cta-glass)',
             padding: 'var(--space-3) var(--space-5)',
             display: 'flex',
             alignItems: 'center',

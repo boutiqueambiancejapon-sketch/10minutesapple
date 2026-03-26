@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getSession } from '@/packages/cms/lib/get-session'
+import { getSession, getGitHubToken } from '@/packages/cms/lib/get-session'
 import { listFiles, getFile } from '@/packages/cms/lib/github'
 import { parseContent, parseYaml } from '@/packages/cms/lib/parser'
 import { cmsConfig } from '@/cms.config'
@@ -22,8 +22,10 @@ export default async function CollectionListPage({ params }: { params: Params })
 
   const session = await getSession()
   if (!session) notFound()
+  const token = await getGitHubToken()
+  if (!token) notFound()
 
-  const files = await listFiles(session.githubToken, cmsConfig.repo, collDef.path, cmsConfig.branch)
+  const files = await listFiles(token, cmsConfig.repo, collDef.path, cmsConfig.branch)
   const contentFiles = files.filter((f) => f.type === 'file' && (f.name.endsWith('.mdx') || f.name.endsWith('.yaml')))
 
   // Fetch metadata for each entry (parallel, max 30 concurrent)
@@ -31,7 +33,7 @@ export default async function CollectionListPage({ params }: { params: Params })
     contentFiles.map(async (f) => {
       const slug = f.name.replace(/\.(mdx|yaml)$/, '')
       try {
-        const file = await getFile(session.githubToken, cmsConfig.repo, f.path, cmsConfig.branch)
+        const file = await getFile(token, cmsConfig.repo, f.path, cmsConfig.branch)
         if (!file) return { slug, title: slug, publishedAt: '', categorie: '', draft: false }
 
         const data = collDef.format === 'mdx'

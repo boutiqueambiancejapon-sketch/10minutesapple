@@ -63,9 +63,29 @@ export type ContentEntry = {
   sha: string // GitHub file SHA (needed for updates)
 }
 
+/** User role */
+export type CmsRole = 'admin' | 'editor'
+
 /** Session data stored in the cookie */
 export type CmsSession = {
-  githubToken: string
-  githubUser: string
+  /** GitHub token (only for OAuth users) */
+  githubToken?: string
+  /** Display name or email */
+  user: string
+  /** User role */
+  role: CmsRole
+  /** Auth method used */
+  authMethod: 'github' | 'password'
   expiresAt: number
+}
+
+/** A CMS user stored in content/users.yaml */
+export type CmsUser = {
+  email: string
+  name: string
+  role: CmsRole
+  /** PBKDF2 hash of password */
+  hash: string
+  /** Salt used for hashing */
+  salt: string
 }

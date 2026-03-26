@@ -362,6 +362,8 @@ function ImageField({ label, value, onChange, articleTitle, articleSlug }: { lab
   const fileRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
   const [generating, setGenerating] = useState(false)
+  const [showAiPrompt, setShowAiPrompt] = useState(false)
+  const [aiPrompt, setAiPrompt] = useState('')
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -380,18 +382,24 @@ function ImageField({ label, value, onChange, articleTitle, articleSlug }: { lab
     }
   }
 
+  function openAiPrompt() {
+    setAiPrompt(articleTitle || '')
+    setShowAiPrompt(true)
+  }
+
   async function handleGenerate() {
-    const prompt = articleTitle || 'Tech blog article'
+    if (!aiPrompt.trim()) return
     setGenerating(true)
     try {
       const res = await fetch('/api/cms/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt, slug: articleSlug }),
+        body: JSON.stringify({ prompt: aiPrompt, slug: articleSlug }),
       })
       const data = await res.json()
       if (!res.ok) { alert(data.error ?? 'Generation failed'); return }
       onChange(data.url)
+      setShowAiPrompt(false)
     } finally {
       setGenerating(false)
     }
@@ -414,17 +422,18 @@ function ImageField({ label, value, onChange, articleTitle, articleSlug }: { lab
           </button>
         </div>
       )}
+
       <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
         <label style={{ padding: '8px 14px', background: '#1a1a1a', color: '#ccc', borderRadius: 8, cursor: 'pointer', fontSize: 12, border: '1px solid #222', opacity: busy ? 0.5 : 1 }}>
           {uploading ? 'Upload…' : '📁 Choisir'}
           <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} disabled={busy} />
         </label>
         <button
-          onClick={handleGenerate}
+          onClick={openAiPrompt}
           disabled={busy}
           style={{ padding: '8px 14px', background: 'linear-gradient(135deg, #4285f4, #a855f7)', color: '#fff', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 600, opacity: busy ? 0.5 : 1 }}
         >
-          {generating ? '✨ Génération…' : '✨ Générer avec IA'}
+          ✨ Générer avec IA
         </button>
         <input
           type="text"
@@ -434,9 +443,36 @@ function ImageField({ label, value, onChange, articleTitle, articleSlug }: { lab
           style={{ flex: '1 1 200px', padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 13, boxSizing: 'border-box' }}
         />
       </div>
-      {!value && articleTitle && (
-        <div style={{ fontSize: 11, color: '#555', marginTop: 6 }}>
-          L&apos;IA générera une image basée sur le titre : &quot;{articleTitle}&quot;
+
+      {/* AI Prompt panel */}
+      {showAiPrompt && (
+        <div style={{ marginTop: 10, padding: 16, background: '#111', border: '1px solid #222', borderRadius: 10 }}>
+          <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 6 }}>
+            Décrivez l&apos;image souhaitée
+          </label>
+          <textarea
+            value={aiPrompt}
+            onChange={(e) => setAiPrompt(e.target.value)}
+            rows={3}
+            placeholder="Ex: Un iPhone 17 Pro Max sur fond sombre avec des reflets néon bleus et rouges"
+            style={{ width: '100%', padding: 10, background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 13, resize: 'vertical', boxSizing: 'border-box', lineHeight: 1.5 }}
+          />
+          <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
+            <button
+              onClick={handleGenerate}
+              disabled={generating || !aiPrompt.trim()}
+              style={{ padding: '8px 16px', background: 'linear-gradient(135deg, #4285f4, #a855f7)', color: '#fff', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 600, opacity: generating || !aiPrompt.trim() ? 0.5 : 1 }}
+            >
+              {generating ? '✨ Génération en cours…' : '✨ Générer'}
+            </button>
+            <button
+              onClick={() => setShowAiPrompt(false)}
+              disabled={generating}
+              style={{ padding: '8px 16px', background: 'transparent', color: '#888', borderRadius: 8, border: '1px solid #333', cursor: 'pointer', fontSize: 12 }}
+            >
+              Annuler
+            </button>
+          </div>
         </div>
       )}
     </div>

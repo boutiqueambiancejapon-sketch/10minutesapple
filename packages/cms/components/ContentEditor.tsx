@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import type { FieldDef } from '../types'
 import { WysiwygEditor } from './WysiwygEditor'
@@ -60,6 +60,7 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
   const [slugManual, setSlugManual] = useState(!isNew) // user manually edited slug?
   const [saving, setSaving] = useState(false)
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+  const importRef = useRef<HTMLInputElement>(null)
 
   const isDraft = !!data.draft
 
@@ -73,6 +74,93 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
 
   function toggleDraft() {
     setData((prev) => ({ ...prev, draft: !prev.draft }))
+  }
+
+  function handleImportMd(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      const raw = ev.target?.result as string
+      if (!raw) return
+
+      // Check for YAML frontmatter
+      const fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/)
+
+      if (fmMatch) {
+        // Parse frontmatter fields
+        const yamlStr = fmMatch[1]
+        const body = fmMatch[2].trim()
+        const parsed: Record<string, unknown> = {}
+
+        for (const line of yamlStr.split('\n')) {
+          const m = line.match(/^(\w[\w-]*)\s*:\s*(.+)$/)
+          if (m) {
+            let val: unknown = m[2].trim()
+            // Remove quotes
+            if (typeof val === 'string' && ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'")))) {
+              val = (val as string).slice(1, -1)
+            }
+            // Inline array [a, b]
+            if (typeof val === 'string' && val.startsWith('[') && val.endsWith(']')) {
+              val = val.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, ''))
+            }
+            // Number
+            if (typeof val === 'string' && /^\d+$/.test(val)) val = parseInt(val, 10)
+            parsed[m[1]] = val
+          }
+        }
+
+        // Fill fields from frontmatter
+        setData((prev) => ({ ...prev, ...parsed }))
+
+        // Auto-generate slug from title
+        if (parsed.title && isNew) {
+          setEntrySlug(slugify(parsed.title as string))
+        }
+
+        // Fill body
+        setBodyMd(body)
+        setBodyHtml(markdownToHtml(body))
+
+        setToast({ message: 'Fichier importé (avec frontmatter)', type: 'success' })
+      } else {
+        // No frontmatter — extract title from H1, description from first paragraph
+        const lines = raw.trim().split('\n')
+        const h1Match = lines[0]?.match(/^#\s+(.+)$/)
+        const newData: Record<string, unknown> = {}
+
+        let bodyStart = 0
+        if (h1Match) {
+          newData.title = h1Match[1]
+          bodyStart = 1
+          if (isNew) setEntrySlug(slugify(h1Match[1]))
+        }
+
+        // Find first non-empty line after H1 as description
+        for (let i = bodyStart; i < lines.length; i++) {
+          const l = lines[i].trim()
+          if (l && !l.startsWith('#') && !l.startsWith('-') && !l.startsWith('*') && !l.startsWith('>') && !l.startsWith('```')) {
+            newData.description = l
+            bodyStart = i + 1
+            break
+          }
+          if (l) break // non-paragraph line, stop looking
+        }
+
+        setData((prev) => ({ ...prev, ...newData }))
+
+        const body = lines.slice(bodyStart).join('\n').trim()
+        setBodyMd(body)
+        setBodyHtml(markdownToHtml(body))
+
+        setToast({ message: 'Fichier importé (sans frontmatter — titre et description extraits)', type: 'success' })
+      }
+    }
+    reader.readAsText(file)
+    // Reset input so same file can be imported again
+    if (importRef.current) importRef.current.value = ''
   }
 
   async function handleSave() {
@@ -131,6 +219,13 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
           )}
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {/* Import .md */}
+          {isNew && format === 'mdx' && (
+            <label style={{ padding: '8px 12px', background: 'transparent', border: '1px solid #333', color: '#888', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
+              Importer .md
+              <input ref={importRef} type="file" accept=".md,.mdx,.markdown" onChange={handleImportMd} style={{ display: 'none' }} />
+            </label>
+          )}
           {/* Draft toggle */}
           <button onClick={toggleDraft} style={{ padding: '8px 12px', background: 'transparent', border: '1px solid #333', color: isDraft ? '#fa0' : '#888', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
             {isDraft ? 'Passer en publié' : 'Brouillon'}

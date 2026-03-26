@@ -26,6 +26,7 @@ export type StandaloneArticleMeta = {
   faq?: { q: string; a: string }[]
   stickyCta?: StickyCTAData[]
   stickyCtaMessage?: string
+  draft?: boolean
 }
 
 export function getAllStandaloneArticles(): StandaloneArticleMeta[] {
@@ -38,6 +39,7 @@ export function getAllStandaloneArticles(): StandaloneArticleMeta[] {
       const { data } = matter(raw)
       return { slug, ...data } as StandaloneArticleMeta
     })
+    .filter((a) => !a.draft)
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 }
 

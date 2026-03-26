@@ -8,15 +8,16 @@ Domaine : 10minutesapple.com · Stack : Next.js ~16.2.1 + Tailwind v4 + TypeScri
 Langue : FR uniquement · pas de [locale] · routes racine directes
 Repo : boutiqueambiancejapon-sketch/10minutesapple · Vercel région fra1 · prod sur main
 
-## Philosophie no-image
-Ce projet ne contient aucune image raster. La DA repose sur :
-typographie Syne + Space Grotesk · effets aurora/noise CSS · SVG inline · composition dark bold
+## DA & images
+DA : typographie Syne + Space Grotesk · effets aurora/noise CSS · SVG inline · composition dark bold
 Toute section visuellement vide est un bug de DA. Claude Code a toute latitude — documenter dans DECISIONS.md.
 
 ## Assets autorisés
-SVG uniquement — icônes (lucide-react), logo, éléments décoratifs
+Images : `public/images/` — uploadées via le CMS ou commitées directement
+Utiliser `next/image` avec `alt` descriptif pour toutes les images éditoriales
+Icônes : lucide-react · SVG inline pour éléments décoratifs
 OG : générées via app/opengraph-image.tsx
-Jamais : `<img>` · next/image éditorial · picsum · unsplash · placeholder.com
+Jamais : picsum · unsplash · placeholder.com · images hotlinkées depuis un CDN tiers
 
 ## Fonts
 Next.js variables : `--next-font-primary` (Space Grotesk) · `--next-font-display` (Syne) · `--next-font-mono` (JetBrains Mono)
@@ -40,7 +41,7 @@ Jamais de lien Amazon nu sans ?tag=ambiancejap0a-21.
 
 ## Filtre qualité — avant chaque commit
 - [ ] tsc --noEmit · next lint · vitest run
-- [ ] Zéro `<img>` · zéro next/image éditorial · SVG only
+- [ ] Images via next/image uniquement (pas de `<img>` nu) · alt obligatoire
 - [ ] Variables CSS · zéro hardcode · composants < 150 lignes
 - [ ] Secrets hors repo · CSP sans unsafe-eval
 - [ ] zéro fonts.googleapis.com · adjustFontFallback:true

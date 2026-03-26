@@ -51,7 +51,10 @@ export async function getFile(
   if (res.status === 404) return null
   if (!res.ok) throw new Error(`GitHub API error: ${res.status}`)
   const data = (await res.json()) as GHFileContent
-  const content = atob(data.content.replace(/\n/g, ''))
+  // Decode base64 → binary → UTF-8 (atob alone breaks accented chars)
+  const binary = atob(data.content.replace(/\n/g, ''))
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0))
+  const content = new TextDecoder('utf-8').decode(bytes)
   return { content, sha: data.sha }
 }
 

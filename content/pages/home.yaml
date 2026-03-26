@@ -1,0 +1,13 @@
+eyebrow: "Guides indépendants · Comparatifs honnêtes"
+h1_prefix: "Choisir votre"
+h1_suffix: "en 10 minutes"
+rotating_words: ["iPhone", "Mac", "iPad", "Apple Watch", "AirPods"]
+subtitle: "Tests terrain, comparateur interactif, quiz « quel Apple te convient ? » et simulateur de budget — tout ce qu'il faut pour décider vite et bien."
+cta_primary: "Comparer les modèles →"
+cta_primary_url: "/comparer"
+cta_secondary: "Quel Apple me convient ?"
+cta_secondary_url: "/quiz"
+tools_eyebrow: "Outils interactifs"
+tools_title: "Décidez en connaissance de cause"
+tools_cta: "Voir tous les guides →"
+tools_cta_url: "/blog"

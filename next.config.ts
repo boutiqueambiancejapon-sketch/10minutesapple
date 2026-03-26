@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['@keystatic/core', '@keystatic/next'],
   headers: async () => [
     {
-      source: '/(.*)',
+      source: '/((?!keystatic|api/keystatic).*)',
       headers: [
         { key: 'X-Frame-Options', value: 'DENY' },
         { key: 'X-Content-Type-Options', value: 'nosniff' },

@@ -266,7 +266,9 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
       {/* Fields */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
         {Object.entries(fields).map(([key, field]) => (
-          <FieldInput key={key} fieldKey={key} field={field} value={data[key]} onChange={(v) => updateField(key, v)} />
+          field.type === 'image'
+            ? <ImageField key={key} label={field.label} value={(data[key] as string) ?? ''} onChange={(v) => updateField(key, v)} articleTitle={(data.title as string) ?? ''} articleSlug={entrySlug} />
+            : <FieldInput key={key} fieldKey={key} field={field} value={data[key]} onChange={(v) => updateField(key, v)} />
         ))}
       </div>
 
@@ -356,9 +358,10 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
   }
 }
 
-function ImageField({ label, value, onChange }: { label: string; value: string; onChange: (v: unknown) => void }) {
+function ImageField({ label, value, onChange, articleTitle, articleSlug }: { label: string; value: string; onChange: (v: unknown) => void; articleTitle?: string; articleSlug?: string }) {
   const fileRef = useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = useState(false)
+  const [generating, setGenerating] = useState(false)
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -377,35 +380,65 @@ function ImageField({ label, value, onChange }: { label: string; value: string; 
     }
   }
 
+  async function handleGenerate() {
+    const prompt = articleTitle || 'Tech blog article'
+    setGenerating(true)
+    try {
+      const res = await fetch('/api/cms/generate-image', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, slug: articleSlug }),
+      })
+      const data = await res.json()
+      if (!res.ok) { alert(data.error ?? 'Generation failed'); return }
+      onChange(data.url)
+    } finally {
+      setGenerating(false)
+    }
+  }
+
+  const busy = uploading || generating
+
   return (
     <div>
       <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 8 }}>{label}</label>
       {value && (
-        <div style={{ marginBottom: 8, position: 'relative', display: 'inline-block' }}>
+        <div style={{ marginBottom: 10, position: 'relative', display: 'inline-block' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="Feature" style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8, border: '1px solid #333', display: 'block' }} />
+          <img src={value} alt="Feature" style={{ maxWidth: '100%', maxHeight: 220, borderRadius: 10, border: '1px solid #222', display: 'block' }} />
           <button
             onClick={() => onChange('')}
-            style={{ position: 'absolute', top: 6, right: 6, background: 'rgba(0,0,0,0.7)', color: '#f44', border: 'none', borderRadius: 4, padding: '2px 8px', cursor: 'pointer', fontSize: 12 }}
+            style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.7)', color: '#f44', border: 'none', borderRadius: 6, padding: '4px 10px', cursor: 'pointer', fontSize: 12 }}
           >
             ✕
           </button>
         </div>
       )}
-      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-        <label style={{ padding: '8px 14px', background: '#222', color: '#ccc', borderRadius: 6, cursor: 'pointer', fontSize: 12, border: '1px solid #333', opacity: uploading ? 0.5 : 1 }}>
-          {uploading ? 'Upload…' : value ? 'Changer l\'image' : 'Choisir une image'}
-          <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+        <label style={{ padding: '8px 14px', background: '#1a1a1a', color: '#ccc', borderRadius: 8, cursor: 'pointer', fontSize: 12, border: '1px solid #222', opacity: busy ? 0.5 : 1 }}>
+          {uploading ? 'Upload…' : '📁 Choisir'}
+          <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} disabled={busy} />
         </label>
-        <span style={{ fontSize: 11, color: '#555' }}>ou</span>
+        <button
+          onClick={handleGenerate}
+          disabled={busy}
+          style={{ padding: '8px 14px', background: 'linear-gradient(135deg, #4285f4, #a855f7)', color: '#fff', borderRadius: 8, border: 'none', cursor: 'pointer', fontSize: 12, fontWeight: 600, opacity: busy ? 0.5 : 1 }}
+        >
+          {generating ? '✨ Génération…' : '✨ Générer avec IA'}
+        </button>
         <input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="/images/mon-image.webp"
-          style={{ flex: 1, padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 13, boxSizing: 'border-box' }}
+          style={{ flex: '1 1 200px', padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 13, boxSizing: 'border-box' }}
         />
       </div>
+      {!value && articleTitle && (
+        <div style={{ fontSize: 11, color: '#555', marginTop: 6 }}>
+          L&apos;IA générera une image basée sur le titre : &quot;{articleTitle}&quot;
+        </div>
+      )}
     </div>
   )
 }

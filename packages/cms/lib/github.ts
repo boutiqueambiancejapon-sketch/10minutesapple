@@ -1,0 +1,127 @@
+const API = 'https://api.github.com'
+
+type GHFile = {
+  name: string
+  path: string
+  sha: string
+  type: 'file' | 'dir'
+  size: number
+  download_url: string | null
+}
+
+type GHFileContent = {
+  content: string
+  sha: string
+  name: string
+  path: string
+}
+
+function headers(token: string) {
+  return {
+    Authorization: `Bearer ${token}`,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  }
+}
+
+/** List files in a directory */
+export async function listFiles(
+  token: string,
+  repo: string,
+  path: string,
+  branch: string
+): Promise<GHFile[]> {
+  const url = `${API}/repos/${repo}/contents/${path}?ref=${branch}`
+  const res = await fetch(url, { headers: headers(token), cache: 'no-store' })
+  if (res.status === 404) return []
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`)
+  const data = await res.json()
+  return Array.isArray(data) ? data : []
+}
+
+/** Get a single file's content (base64 decoded) */
+export async function getFile(
+  token: string,
+  repo: string,
+  path: string,
+  branch: string
+): Promise<{ content: string; sha: string } | null> {
+  const url = `${API}/repos/${repo}/contents/${path}?ref=${branch}`
+  const res = await fetch(url, { headers: headers(token), cache: 'no-store' })
+  if (res.status === 404) return null
+  if (!res.ok) throw new Error(`GitHub API error: ${res.status}`)
+  const data = (await res.json()) as GHFileContent
+  const content = atob(data.content.replace(/\n/g, ''))
+  return { content, sha: data.sha }
+}
+
+/** Create or update a file */
+export async function putFile(
+  token: string,
+  repo: string,
+  path: string,
+  content: string,
+  message: string,
+  branch: string,
+  sha?: string
+): Promise<{ sha: string }> {
+  const url = `${API}/repos/${repo}/contents/${path}`
+  const body: Record<string, unknown> = {
+    message,
+    content: btoa(unescape(encodeURIComponent(content))),
+    branch,
+  }
+  if (sha) body.sha = sha
+
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: { ...headers(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(`GitHub PUT error: ${res.status} ${err.message ?? ''}`)
+  }
+
+  const data = await res.json()
+  return { sha: data.content.sha }
+}
+
+/** Delete a file */
+export async function deleteFile(
+  token: string,
+  repo: string,
+  path: string,
+  sha: string,
+  message: string,
+  branch: string
+): Promise<void> {
+  const url = `${API}/repos/${repo}/contents/${path}`
+  const res = await fetch(url, {
+    method: 'DELETE',
+    headers: { ...headers(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, sha, branch }),
+  })
+  if (!res.ok) throw new Error(`GitHub DELETE error: ${res.status}`)
+}
+
+/** Upload a binary file (for images) */
+export async function uploadBinary(
+  token: string,
+  repo: string,
+  path: string,
+  base64Content: string,
+  message: string,
+  branch: string
+): Promise<{ sha: string }> {
+  const url = `${API}/repos/${repo}/contents/${path}`
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: { ...headers(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, content: base64Content, branch }),
+  })
+  if (!res.ok) throw new Error(`GitHub upload error: ${res.status}`)
+  const data = await res.json()
+  return { sha: data.content.sha }
+}

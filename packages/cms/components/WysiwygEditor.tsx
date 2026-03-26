@@ -6,7 +6,7 @@ import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import Underline from '@tiptap/extension-underline'
 import Placeholder from '@tiptap/extension-placeholder'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 type Props = {
   value: string
@@ -34,6 +34,15 @@ export function WysiwygEditor({ value, onChange }: Props) {
       },
     },
   })
+
+  // Update editor content when value changes externally (e.g. import)
+  const lastExternalValue = useRef(value)
+  useEffect(() => {
+    if (editor && value !== lastExternalValue.current) {
+      lastExternalValue.current = value
+      editor.commands.setContent(value)
+    }
+  }, [editor, value])
 
   const addLink = useCallback(() => {
     if (!editor) return

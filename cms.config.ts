@@ -3,7 +3,7 @@ import type { CmsConfig } from '@/packages/cms/types'
 export const cmsConfig: CmsConfig = {
   siteName: '10minutesapple',
   repo: 'boutiqueambiancejapon-sketch/10minutesapple',
-  branch: 'claude/setup-nextjs-apple-guide-En4gb',
+  branch: 'main',
   collections: {
     articles: {
       label: 'Articles',

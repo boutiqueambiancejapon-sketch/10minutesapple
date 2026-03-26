@@ -5,13 +5,8 @@ import { cmsConfig } from '@/cms.config'
 
 export const dynamic = 'force-dynamic'
 
-/** Try multiple Gemini model names — availability varies by API key/region */
-const MODELS_TO_TRY = [
-  'gemini-2.0-flash-preview-image-generation',
-  'gemini-2.0-flash-exp-image-generation',
-  'gemini-2.0-flash',
-  'gemini-1.5-flash',
-]
+const BFL_API = 'https://api.bfl.ai/v1'
+const MAX_POLLS = 60 // 30 seconds max (60 * 500ms)
 
 export async function POST(request: Request) {
   const session = await getSession()
@@ -20,85 +15,99 @@ export async function POST(request: Request) {
   const ghToken = await getGitHubToken()
   if (!ghToken) return NextResponse.json({ error: 'No GitHub token' }, { status: 401 })
 
-  const apiKey = process.env.GEMINI_API_KEY
-  if (!apiKey) return NextResponse.json({ error: 'GEMINI_API_KEY not configured' }, { status: 500 })
+  const apiKey = process.env.BFL_API_KEY
+  if (!apiKey) return NextResponse.json({ error: 'BFL_API_KEY not configured' }, { status: 500 })
 
-  const body = (await request.json()) as { prompt: string; slug?: string }
-
-  // If action=list-models, return available models (for debugging)
-  if (body.prompt === '__list_models__') {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`)
-    const data = await res.json()
-    const models = (data.models ?? []).map((m: Record<string, unknown>) => m.name)
-    return NextResponse.json({ models })
-  }
-
-  const { prompt, slug } = body
+  const { prompt, slug } = (await request.json()) as { prompt: string; slug?: string }
   if (!prompt) return NextResponse.json({ error: 'Prompt is required' }, { status: 400 })
 
-  // Try each model until one works
-  for (const model of MODELS_TO_TRY) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`
-
-    try {
-      const geminiRes = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `Generate a high-quality blog header image: ${prompt}. Style: modern, clean, tech-focused, dark background. No text in the image.`
-            }]
-          }],
-          generationConfig: {
-            responseModalities: ['TEXT', 'IMAGE'],
-          }
-        }),
-      })
-
-      if (!geminiRes.ok) continue // Try next model
-
-      const data = await geminiRes.json()
-      const parts = data.candidates?.[0]?.content?.parts ?? []
-      const imagePart = parts.find((p: Record<string, unknown>) => p.inlineData)
-
-      if (!imagePart?.inlineData?.data) continue // Model worked but no image, try next
-
-      const base64Data = imagePart.inlineData.data as string
-      const mimeType = (imagePart.inlineData.mimeType as string) || 'image/png'
-      const ext = mimeType.includes('jpeg') || mimeType.includes('jpg') ? 'jpg' : mimeType.includes('webp') ? 'webp' : 'png'
-      const filename = slug ? `${slug}-feature.${ext}` : `generated-${Date.now()}.${ext}`
-      const filePath = `${cmsConfig.media.path}/${filename}`
-
-      const result = await uploadBinary(
-        ghToken, cmsConfig.repo, filePath, base64Data,
-        `media: AI-generated image for ${slug || 'article'}`, cmsConfig.branch
-      )
-
-      return NextResponse.json({
-        url: `/${filePath.replace(/^public\//, '')}`,
-        sha: result.sha,
-        filename,
-        model, // tell which model worked
-      })
-    } catch {
-      continue // Try next model
-    }
-  }
-
-  // All models failed — list available ones for debugging
   try {
-    const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`)
-    const listData = await listRes.json()
-    const available = (listData.models ?? [])
-      .map((m: Record<string, string>) => m.name)
-      .filter((n: string) => n.includes('gemini'))
-      .slice(0, 10)
-      .join(', ')
+    // 1. Submit generation request
+    const submitRes = await fetch(`${BFL_API}/flux-2-pro-preview`, {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'x-key': apiKey,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        prompt: `${prompt}. Style: modern, clean, tech-focused, dark background preferred. No text in the image.`,
+        width: 1440,
+        height: 810, // 16:9 ratio for blog headers
+      }),
+    })
+
+    if (!submitRes.ok) {
+      const err = await submitRes.text()
+      return NextResponse.json({ error: `Flux API error: ${submitRes.status} ${err.slice(0, 200)}` }, { status: 500 })
+    }
+
+    const submitData = await submitRes.json()
+    const pollingUrl = submitData.polling_url
+    const requestId = submitData.id
+
+    if (!pollingUrl || !requestId) {
+      return NextResponse.json({ error: 'Flux API did not return a polling URL' }, { status: 500 })
+    }
+
+    // 2. Poll for result
+    let imageUrl: string | null = null
+
+    for (let i = 0; i < MAX_POLLS; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 500))
+
+      const pollRes = await fetch(`${pollingUrl}?id=${requestId}`, {
+        headers: {
+          'accept': 'application/json',
+          'x-key': apiKey,
+        },
+      })
+
+      if (!pollRes.ok) continue
+
+      const pollData = await pollRes.json()
+      const status = pollData.status
+
+      if (status === 'Ready') {
+        imageUrl = pollData.result?.sample
+        break
+      }
+
+      if (status === 'Error' || status === 'Failed') {
+        return NextResponse.json({ error: `Génération échouée : ${JSON.stringify(pollData)}` }, { status: 500 })
+      }
+    }
+
+    if (!imageUrl) {
+      return NextResponse.json({ error: 'Timeout — l\'image met trop de temps à se générer. Réessayez.' }, { status: 504 })
+    }
+
+    // 3. Download the image (URLs expire in 10 min)
+    const imageRes = await fetch(imageUrl)
+    if (!imageRes.ok) {
+      return NextResponse.json({ error: 'Failed to download generated image' }, { status: 500 })
+    }
+
+    const imageBuffer = await imageRes.arrayBuffer()
+    const base64Data = btoa(String.fromCharCode(...new Uint8Array(imageBuffer)))
+
+    // 4. Upload to GitHub
+    const contentType = imageRes.headers.get('content-type') || 'image/jpeg'
+    const ext = contentType.includes('png') ? 'png' : contentType.includes('webp') ? 'webp' : 'jpg'
+    const filename = slug ? `${slug}-feature.${ext}` : `generated-${Date.now()}.${ext}`
+    const filePath = `${cmsConfig.media.path}/${filename}`
+
+    const result = await uploadBinary(
+      ghToken, cmsConfig.repo, filePath, base64Data,
+      `media: AI-generated image for ${slug || 'article'}`, cmsConfig.branch
+    )
+
     return NextResponse.json({
-      error: `Aucun modèle Gemini n'a pu générer d'image. Modèles disponibles : ${available}`
-    }, { status: 500 })
-  } catch {
-    return NextResponse.json({ error: 'Tous les modèles ont échoué. Vérifiez votre GEMINI_API_KEY.' }, { status: 500 })
+      url: `/${filePath.replace(/^public\//, '')}`,
+      sha: result.sha,
+      filename,
+    })
+  } catch (e) {
+    return NextResponse.json({ error: e instanceof Error ? e.message : 'Generation failed' }, { status: 500 })
   }
 }

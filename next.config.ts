@@ -10,6 +10,7 @@ const csp = [
 ].join('; ')
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ['@keystatic/core', '@keystatic/next'],
   headers: async () => [
     {
       source: '/(.*)',

@@ -10,7 +10,12 @@ const CSP = [
   "connect-src 'self' https://vitals.vercel-insights.com https://affiliate-api.amazon.fr",
 ].join('; ')
 
-export function middleware(_request: NextRequest) {
+export function middleware(request: NextRequest) {
+  // Skip CSP for Keystatic admin UI — it needs unsafe-eval for its editor
+  if (request.nextUrl.pathname.startsWith('/keystatic') || request.nextUrl.pathname.startsWith('/api/keystatic')) {
+    return NextResponse.next()
+  }
+
   const response = NextResponse.next()
 
   response.headers.set('Content-Security-Policy', CSP)

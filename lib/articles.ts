@@ -17,6 +17,7 @@ export type StandaloneArticleMeta = {
   slug: string
   title: string
   description: string
+  featureImage?: string
   publishedAt: string
   updatedAt?: string
   readingTimeMin: number

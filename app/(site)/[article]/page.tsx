@@ -7,6 +7,7 @@
 
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
@@ -57,6 +58,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       publishedTime: meta.publishedAt,
       modifiedTime: meta.updatedAt ?? meta.publishedAt,
       authors: ['Mathias'],
+      ...(meta.featureImage ? { images: [{ url: meta.featureImage.startsWith('/') ? `https://10minutesapple.com${meta.featureImage}` : meta.featureImage }] } : {}),
     },
   }
 }
@@ -151,6 +153,20 @@ export default async function StandaloneArticlePage({ params }: { params: Params
               <AuthorByline authorSlug="mathias" publishedAt={meta.publishedAt} updatedAt={meta.updatedAt} readingTimeMin={meta.readingTimeMin} />
             </header>
           </div>
+
+          {/* Feature Image */}
+          {meta.featureImage && (
+            <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 var(--space-6) var(--space-6)' }}>
+              <Image
+                src={meta.featureImage}
+                alt={meta.title}
+                width={760}
+                height={400}
+                priority
+                style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-lg, 12px)', objectFit: 'cover' }}
+              />
+            </div>
+          )}
 
           <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 var(--space-6) var(--space-12)' }}>
             {meta.aiSummary && meta.aiSummary.length > 0 && (

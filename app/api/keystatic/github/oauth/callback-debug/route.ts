@@ -5,16 +5,17 @@ export const dynamic = 'force-dynamic'
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
   const code = searchParams.get('code')
+  const error = searchParams.get('error')
+  const errorDescription = searchParams.get('error_description')
 
-  if (!code) {
-    // No code — just redirect to GitHub WITHOUT redirect_uri
-    // (same as Keystatic does — lets GitHub use the default callback)
-    const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID
-    const url = `https://github.com/login/oauth/authorize?client_id=${clientId}`
-    return NextResponse.redirect(url)
+  if (error) {
+    return NextResponse.json({ error, errorDescription })
   }
 
-  // Exchange code for token — show raw GitHub response
+  if (!code) {
+    return NextResponse.json({ error: 'no code received' })
+  }
+
   const clientId = process.env.KEYSTATIC_GITHUB_CLIENT_ID
   const clientSecret = process.env.KEYSTATIC_GITHUB_CLIENT_SECRET
 
@@ -23,16 +24,18 @@ export async function GET(request: Request) {
   tokenUrl.searchParams.set('client_secret', clientSecret ?? '')
   tokenUrl.searchParams.set('code', code)
 
-  const res = await fetch(tokenUrl, {
+  const res = await fetch(tokenUrl.toString(), {
     method: 'POST',
     headers: { Accept: 'application/json' },
     cache: 'no-store',
   })
 
-  const body = await res.json()
+  const rawText = await res.text()
 
   return NextResponse.json({
-    githubStatus: res.status,
-    githubResponse: body,
+    githubHttpStatus: res.status,
+    githubRawResponse: rawText,
+    clientIdLength: clientId?.length,
+    clientSecretLength: clientSecret?.length,
   })
 }

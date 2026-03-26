@@ -1,5 +1,14 @@
 const API = 'https://api.github.com'
 
+/** Encode Uint8Array to base64 (safe for UTF-8 content) */
+function uint8ToBase64(bytes: Uint8Array): string {
+  let binary = ''
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return btoa(binary)
+}
+
 type GHFile = {
   name: string
   path: string
@@ -71,7 +80,7 @@ export async function putFile(
   const url = `${API}/repos/${repo}/contents/${path}`
   const body: Record<string, unknown> = {
     message,
-    content: btoa(unescape(encodeURIComponent(content))),
+    content: uint8ToBase64(new TextEncoder().encode(content)),
     branch,
   }
   if (sha) body.sha = sha

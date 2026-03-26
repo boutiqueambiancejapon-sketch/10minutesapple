@@ -10,15 +10,11 @@ const CATEGORIES = [
   { label: 'Deals', value: 'deals' },
 ] as const
 
-const hasGitHubConfig =
-  !!process.env.KEYSTATIC_GITHUB_CLIENT_ID &&
-  !!process.env.KEYSTATIC_GITHUB_CLIENT_SECRET &&
-  !!process.env.KEYSTATIC_SECRET
+const isVercel = !!process.env.VERCEL
 
-const storage =
-  hasGitHubConfig
-    ? ({ kind: 'github', repo: 'boutiqueambiancejapon-sketch/10minutesapple' } as const)
-    : ({ kind: 'local' } as const)
+const storage = isVercel
+  ? ({ kind: 'github', repo: 'boutiqueambiancejapon-sketch/10minutesapple' } as const)
+  : ({ kind: 'local' } as const)
 
 export default config({
   storage,

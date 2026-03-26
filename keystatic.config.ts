@@ -1,60 +1,5 @@
 import { config, collection, fields } from '@keystatic/core'
-import { wrapper, block } from '@keystatic/core/content-components'
 
-// --- Content components for MDX editor ---
-const mdxComponents = {
-  Tip: wrapper({ label: 'Tip', schema: {} }),
-  Warning: wrapper({ label: 'Warning', schema: {} }),
-  Verdict: wrapper({ label: 'Verdict', schema: {} }),
-  PullQuote: wrapper({ label: 'PullQuote', schema: {} }),
-  StatRow: wrapper({ label: 'StatRow', schema: {} }),
-  CompareBarGroup: wrapper({
-    label: 'CompareBarGroup',
-    schema: {
-      leftName: fields.text({ label: 'Nom gauche' }),
-      rightName: fields.text({ label: 'Nom droit' }),
-    },
-  }),
-  StatCard: block({
-    label: 'StatCard',
-    schema: {
-      value: fields.text({ label: 'Valeur', validation: { isRequired: true } }),
-      label: fields.text({ label: 'Label', validation: { isRequired: true } }),
-      accent: fields.select({
-        label: 'Accent',
-        options: [
-          { label: '1 (rouge)', value: '1' },
-          { label: '2 (bleu)', value: '2' },
-          { label: '3 (vert)', value: '3' },
-          { label: '4 (violet)', value: '4' },
-        ],
-        defaultValue: '1',
-      }),
-    },
-  }),
-  CompareBar: block({
-    label: 'CompareBar',
-    schema: {
-      label: fields.text({ label: 'Label', validation: { isRequired: true } }),
-      left: fields.text({ label: 'Score gauche', validation: { isRequired: true } }),
-      right: fields.text({ label: 'Score droit', validation: { isRequired: true } }),
-      leftName: fields.text({ label: 'Nom gauche' }),
-      rightName: fields.text({ label: 'Nom droit' }),
-    },
-  }),
-  ProductCTA: block({
-    label: 'ProductCTA',
-    schema: {
-      name: fields.text({ label: 'Nom produit', validation: { isRequired: true } }),
-      price: fields.text({ label: 'Prix', validation: { isRequired: true } }),
-      url: fields.text({ label: 'URL Amazon', validation: { isRequired: true } }),
-      badge: fields.text({ label: 'Badge' }),
-      hook: fields.text({ label: 'Accroche' }),
-    },
-  }),
-}
-
-// --- Config ---
 const CATEGORIES = [
   { label: 'iPhone', value: 'iphone' },
   { label: 'Mac', value: 'mac' },
@@ -148,9 +93,8 @@ export default config({
         stickyCtaMessage: fields.text({
           label: 'Message sticky CTA',
         }),
-        body: fields.mdx({
+        body: fields.markdoc({
           label: 'Contenu',
-          components: mdxComponents,
         }),
       },
     }),
@@ -196,9 +140,8 @@ export default config({
             itemLabel: (props) => props.fields.q.value || 'Nouvelle question',
           }
         ),
-        body: fields.mdx({
+        body: fields.markdoc({
           label: 'Contenu',
-          components: mdxComponents,
         }),
       },
     }),

@@ -1,23 +1,21 @@
-import { getSession, getGitHubToken } from '@/packages/cms/lib/get-session'
-import { listFiles } from '@/packages/cms/lib/github'
-import { cmsConfig } from '@/cms.config'
-import { MediaBrowser } from '@/packages/cms/components/MediaBrowser'
+import { getSession } from '@/packages/cms/lib/get-session'
 import { notFound } from 'next/navigation'
+import { list } from '@vercel/blob'
+import { MediaBrowser } from '@/packages/cms/components/MediaBrowser'
 
 export default async function MediaPage() {
   const session = await getSession()
   if (!session) notFound()
-  const token = await getGitHubToken()
-  if (!token) notFound()
 
-  const files = await listFiles(token, cmsConfig.repo, cmsConfig.media.path, cmsConfig.branch)
-  const items = files.map((f) => ({
-    name: f.name,
-    path: f.path,
-    type: f.type as 'file' | 'dir',
-    size: f.size,
-    sha: f.sha,
-    url: f.type === 'file' ? `/${f.path.replace(/^public\//, '')}` : null,
+  const { blobs } = await list({ prefix: 'images/', limit: 500 })
+
+  const items = blobs.map((blob) => ({
+    name: blob.pathname.split('/').pop() ?? blob.pathname,
+    path: blob.pathname,
+    type: 'file' as const,
+    size: blob.size,
+    sha: blob.url,
+    url: blob.url,
   }))
 
   return <MediaBrowser initialItems={items} />

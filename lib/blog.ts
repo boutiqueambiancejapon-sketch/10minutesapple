@@ -52,6 +52,7 @@ export type ArticleMeta = {
   faq?: { q: string; a: string }[]
   /** True pour les articles dans content/articles/ (URLs racine). */
   standalone?: boolean
+  draft?: boolean
 }
 
 /** Retourne le href correct pour un article (blog ou standalone). */
@@ -78,6 +79,7 @@ function parseMeta(data: Record<string, unknown>, slug: string, categorie: strin
     tags: data.tags as string[] | undefined,
     faq: data.faq as { q: string; a: string }[] | undefined,
     standalone,
+    draft: !!data.draft,
   }
 }
 
@@ -119,10 +121,12 @@ export function getAllArticles(): ArticleMeta[] {
     }
   }
 
-  return articles.sort(
-    (a, b) =>
-      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  )
+  return articles
+    .filter((a) => !a.draft)
+    .sort(
+      (a, b) =>
+        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    )
 }
 
 /** Retourne les catégories qui ont au moins un article, avec leur nombre. */

@@ -1,9 +1,43 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import type { FieldDef } from '../types'
 
+// --- Slugify ---
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove accents
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+// --- Toast ---
+function Toast({ message, type, onClose }: { message: string; type: 'success' | 'error'; onClose: () => void }) {
+  useEffect(() => {
+    const timer = setTimeout(onClose, 3500)
+    return () => clearTimeout(timer)
+  }, [onClose])
+
+  return (
+    <div style={{
+      position: 'fixed', bottom: 24, right: 24, zIndex: 9999,
+      padding: '12px 20px', borderRadius: 8,
+      background: type === 'success' ? '#0f2918' : '#2a1215',
+      border: `1px solid ${type === 'success' ? '#1a5c2e' : '#5c2328'}`,
+      color: type === 'success' ? '#6f6' : '#f88',
+      fontSize: 13, fontWeight: 500,
+      boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+      animation: 'cms-toast-in 200ms ease-out',
+    }}>
+      {message}
+      <style>{`@keyframes cms-toast-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+    </div>
+  )
+}
+
+// --- Props ---
 type Props = {
   collection: string
   slug: string
@@ -20,22 +54,29 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
   const [data, setData] = useState<Record<string, unknown>>(initialData)
   const [body, setBody] = useState(initialBody)
   const [entrySlug, setEntrySlug] = useState(slug)
+  const [slugManual, setSlugManual] = useState(!isNew) // user manually edited slug?
   const [saving, setSaving] = useState(false)
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+
+  const isDraft = !!data.draft
 
   function updateField(key: string, value: unknown) {
     setData((prev) => ({ ...prev, [key]: value }))
+    // Auto-slugify from title
+    if (key === 'title' && isNew && !slugManual && typeof value === 'string') {
+      setEntrySlug(slugify(value))
+    }
+  }
+
+  function toggleDraft() {
+    setData((prev) => ({ ...prev, draft: !prev.draft }))
   }
 
   async function handleSave() {
     const finalSlug = entrySlug || slug
-    if (!finalSlug) { setError('Le slug est requis'); return }
+    if (!finalSlug) { setToast({ message: 'Le slug est requis', type: 'error' }); return }
 
     setSaving(true)
-    setError('')
-    setSuccess('')
-
     try {
       const res = await fetch(`/api/cms/content/${collection}/${finalSlug}`, {
         method: 'PUT',
@@ -46,10 +87,10 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
         const err = await res.json()
         throw new Error(err.error ?? 'Save failed')
       }
-      setSuccess('Sauvegardé !')
+      setToast({ message: isDraft ? 'Brouillon sauvegardé' : 'Publié !', type: 'success' })
       if (isNew) router.push(`/admin/${collection}/${finalSlug}`)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Erreur')
+      setToast({ message: e instanceof Error ? e.message : 'Erreur', type: 'error' })
     } finally {
       setSaving(false)
     }
@@ -67,7 +108,7 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
       if (!res.ok) throw new Error('Delete failed')
       router.push(`/admin/${collection}`)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Erreur')
+      setToast({ message: e instanceof Error ? e.message : 'Erreur', type: 'error' })
       setSaving(false)
     }
   }
@@ -75,24 +116,32 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
   return (
     <div>
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 }}>
-        <h1 style={{ fontSize: 20, fontWeight: 700 }}>
-          {isNew ? 'Nouvelle entrée' : slug}
-        </h1>
-        <div style={{ display: 'flex', gap: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <h1 style={{ fontSize: 20, fontWeight: 700, margin: 0 }}>
+            {isNew ? 'Nouvelle entrée' : slug}
+          </h1>
+          {isDraft && (
+            <span style={{ fontSize: 11, fontWeight: 600, background: '#332800', color: '#fa0', padding: '2px 8px', borderRadius: 4 }}>
+              Brouillon
+            </span>
+          )}
+        </div>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {/* Draft toggle */}
+          <button onClick={toggleDraft} style={{ padding: '8px 12px', background: 'transparent', border: '1px solid #333', color: isDraft ? '#fa0' : '#888', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
+            {isDraft ? 'Passer en publié' : 'Brouillon'}
+          </button>
           {!isNew && (
-            <button onClick={handleDelete} disabled={saving} style={{ padding: '8px 16px', background: 'transparent', border: '1px solid #333', color: '#f44', borderRadius: 6, cursor: 'pointer', fontSize: 13 }}>
+            <button onClick={handleDelete} disabled={saving} style={{ padding: '8px 12px', background: 'transparent', border: '1px solid #333', color: '#f44', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}>
               Supprimer
             </button>
           )}
-          <button onClick={handleSave} disabled={saving} style={{ padding: '8px 16px', background: '#fff', color: '#000', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600, opacity: saving ? 0.5 : 1 }}>
-            {saving ? 'Enregistrement…' : 'Enregistrer'}
+          <button onClick={handleSave} disabled={saving} style={{ padding: '8px 14px', background: '#fff', color: '#000', border: 'none', borderRadius: 6, cursor: 'pointer', fontSize: 13, fontWeight: 600, opacity: saving ? 0.5 : 1 }}>
+            {saving ? 'Enregistrement…' : isDraft ? 'Sauvegarder le brouillon' : 'Publier'}
           </button>
         </div>
       </div>
-
-      {error && <div style={{ padding: 12, background: '#2a1215', border: '1px solid #5c2328', borderRadius: 6, color: '#f88', fontSize: 13, marginBottom: 16 }}>{error}</div>}
-      {success && <div style={{ padding: 12, background: '#0f2918', border: '1px solid #1a5c2e', borderRadius: 6, color: '#6f6', fontSize: 13, marginBottom: 16 }}>{success}</div>}
 
       {/* Slug field for new entries */}
       {isNew && (
@@ -101,10 +150,13 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
           <input
             type="text"
             value={entrySlug}
-            onChange={(e) => setEntrySlug(e.target.value)}
+            onChange={(e) => { setEntrySlug(e.target.value); setSlugManual(true) }}
             placeholder="mon-article"
             style={{ width: '100%', padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 14, boxSizing: 'border-box' }}
           />
+          {!slugManual && entrySlug && (
+            <div style={{ fontSize: 11, color: '#666', marginTop: 4 }}>Auto-généré depuis le titre</div>
+          )}
         </div>
       )}
 
@@ -119,6 +171,9 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
       {format === 'mdx' && (
         <RichBodyEditor value={body} onChange={setBody} />
       )}
+
+      {/* Toast */}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
     </div>
   )
 }
@@ -158,7 +213,6 @@ function RichBodyEditor({ value, onChange }: { value: string; onChange: (v: stri
     let cursorPos: number
 
     if (action.block && !selected) {
-      // Block action without selection: insert on new line
       const needsNewline = before.length > 0 && !before.endsWith('\n') ? '\n' : ''
       newText = before + needsNewline + action.prefix + action.suffix + after
       cursorPos = before.length + needsNewline.length + action.prefix.length
@@ -168,8 +222,6 @@ function RichBodyEditor({ value, onChange }: { value: string; onChange: (v: stri
     }
 
     onChange(newText)
-
-    // Restore cursor position
     requestAnimationFrame(() => {
       ta.focus()
       ta.setSelectionRange(cursorPos, cursorPos)
@@ -177,23 +229,14 @@ function RichBodyEditor({ value, onChange }: { value: string; onChange: (v: stri
   }, [value, onChange])
 
   const btnStyle = {
-    padding: '4px 8px',
-    background: 'transparent',
-    border: '1px solid #333',
-    borderRadius: 4,
-    color: '#ccc',
-    cursor: 'pointer',
-    fontSize: 12,
-    fontWeight: 600,
-    minWidth: 28,
-    lineHeight: '18px',
+    padding: '4px 8px', background: 'transparent', border: '1px solid #333',
+    borderRadius: 4, color: '#ccc', cursor: 'pointer', fontSize: 12,
+    fontWeight: 600, minWidth: 28, lineHeight: '18px',
   } as const
 
   return (
     <div style={{ marginTop: 24 }}>
       <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 8 }}>Contenu</label>
-
-      {/* Toolbar */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, padding: '8px 10px', background: '#111', border: '1px solid #333', borderBottom: 'none', borderRadius: '6px 6px 0 0' }}>
         {TOOLBAR_ACTIONS.map((action) => (
           <button
@@ -208,32 +251,22 @@ function RichBodyEditor({ value, onChange }: { value: string; onChange: (v: stri
           </button>
         ))}
       </div>
-
-      {/* Textarea */}
       <textarea
         ref={textareaRef}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         style={{
-          width: '100%',
-          minHeight: 500,
-          padding: 12,
-          background: '#161616',
-          border: '1px solid #333',
-          borderTop: 'none',
-          borderRadius: '0 0 6px 6px',
-          color: '#e5e5e5',
-          fontSize: 14,
-          fontFamily: 'system-ui, sans-serif',
-          lineHeight: 1.7,
-          resize: 'vertical',
-          boxSizing: 'border-box',
+          width: '100%', minHeight: 500, padding: 12, background: '#161616',
+          border: '1px solid #333', borderTop: 'none', borderRadius: '0 0 6px 6px',
+          color: '#e5e5e5', fontSize: 14, fontFamily: 'system-ui, sans-serif',
+          lineHeight: 1.7, resize: 'vertical', boxSizing: 'border-box',
         }}
       />
     </div>
   )
 }
 
+// --- Field Inputs ---
 function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; field: FieldDef; value: unknown; onChange: (v: unknown) => void }) {
   const inputStyle = { width: '100%', padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 14, boxSizing: 'border-box' as const }
   const labelStyle = { display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 4 }
@@ -248,7 +281,6 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
           <input type={field.type === 'date' ? 'date' : 'text'} value={(value as string) ?? ''} onChange={(e) => onChange(e.target.value)} style={inputStyle} />
         </div>
       )
-
     case 'textarea':
     case 'richtext':
       return (
@@ -257,7 +289,6 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
           <textarea value={(value as string) ?? ''} onChange={(e) => onChange(e.target.value)} rows={4} style={{ ...inputStyle, resize: 'vertical' }} />
         </div>
       )
-
     case 'number':
       return (
         <div>
@@ -265,7 +296,6 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
           <input type="number" value={(value as number) ?? field.default ?? ''} onChange={(e) => onChange(Number(e.target.value))} style={inputStyle} />
         </div>
       )
-
     case 'select':
       return (
         <div>
@@ -276,7 +306,6 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
           </select>
         </div>
       )
-
     case 'tags':
       return (
         <div>
@@ -290,13 +319,10 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
           />
         </div>
       )
-
     case 'list':
       return <ListField label={field.label} value={Array.isArray(value) ? value as string[] : []} onChange={onChange} />
-
     case 'repeater':
       return <RepeaterField label={field.label} fields={field.fields ?? {}} value={Array.isArray(value) ? value as Record<string, unknown>[] : []} onChange={onChange} />
-
     default:
       return (
         <div>
@@ -311,18 +337,12 @@ function ListField({ label, value, onChange }: { label: string; value: string[];
   function add() { onChange([...value, '']) }
   function update(i: number, v: string) { const arr = [...value]; arr[i] = v; onChange(arr) }
   function remove(i: number) { onChange(value.filter((_, idx) => idx !== i)) }
-
   return (
     <div>
       <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 4 }}>{label}</label>
       {value.map((item, i) => (
         <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
-          <textarea
-            value={item}
-            onChange={(e) => update(i, e.target.value)}
-            rows={2}
-            style={{ flex: 1, padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 13, resize: 'vertical' }}
-          />
+          <textarea value={item} onChange={(e) => update(i, e.target.value)} rows={2} style={{ flex: 1, padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 13, resize: 'vertical' }} />
           <button onClick={() => remove(i)} style={{ background: 'transparent', border: '1px solid #333', color: '#f44', borderRadius: 6, padding: '4px 8px', cursor: 'pointer', fontSize: 12 }}>✕</button>
         </div>
       ))}
@@ -335,7 +355,6 @@ function RepeaterField({ label, fields, value, onChange }: { label: string; fiel
   function add() { onChange([...value, {}]) }
   function update(i: number, key: string, v: unknown) { const arr = [...value]; arr[i] = { ...arr[i], [key]: v }; onChange(arr) }
   function remove(i: number) { onChange(value.filter((_, idx) => idx !== i)) }
-
   return (
     <div>
       <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 8 }}>{label}</label>

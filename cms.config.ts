@@ -12,6 +12,7 @@ export const cmsConfig: CmsConfig = {
       fields: {
         title: { type: 'text', label: 'Titre', required: true },
         description: { type: 'textarea', label: 'Description SEO', required: true },
+        featureImage: { type: 'image', label: 'Image principale' },
         publishedAt: { type: 'date', label: 'Date publication', required: true },
         updatedAt: { type: 'date', label: 'Date MAJ' },
         readingTimeMin: { type: 'number', label: 'Temps de lecture (min)', default: 5 },

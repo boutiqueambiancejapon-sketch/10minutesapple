@@ -340,6 +340,8 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
           />
         </div>
       )
+    case 'image':
+      return <ImageField label={field.label} value={(value as string) ?? ''} onChange={onChange} />
     case 'list':
       return <ListField label={field.label} value={Array.isArray(value) ? value as string[] : []} onChange={onChange} />
     case 'repeater':
@@ -352,6 +354,60 @@ function FieldInput({ fieldKey, field, value, onChange }: { fieldKey: string; fi
         </div>
       )
   }
+}
+
+function ImageField({ label, value, onChange }: { label: string; value: string; onChange: (v: unknown) => void }) {
+  const fileRef = useRef<HTMLInputElement>(null)
+  const [uploading, setUploading] = useState(false)
+
+  async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/cms/media/upload', { method: 'POST', body: formData })
+      if (!res.ok) { const err = await res.json(); alert(err.error ?? 'Upload failed'); return }
+      const data = await res.json()
+      onChange(data.url)
+    } finally {
+      setUploading(false)
+      if (fileRef.current) fileRef.current.value = ''
+    }
+  }
+
+  return (
+    <div>
+      <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 8 }}>{label}</label>
+      {value && (
+        <div style={{ marginBottom: 8, position: 'relative', display: 'inline-block' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={value} alt="Feature" style={{ maxWidth: '100%', maxHeight: 200, borderRadius: 8, border: '1px solid #333', display: 'block' }} />
+          <button
+            onClick={() => onChange('')}
+            style={{ position: 'absolute', top: 6, right: 6, background: 'rgba(0,0,0,0.7)', color: '#f44', border: 'none', borderRadius: 4, padding: '2px 8px', cursor: 'pointer', fontSize: 12 }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <label style={{ padding: '8px 14px', background: '#222', color: '#ccc', borderRadius: 6, cursor: 'pointer', fontSize: 12, border: '1px solid #333', opacity: uploading ? 0.5 : 1 }}>
+          {uploading ? 'Upload…' : value ? 'Changer l\'image' : 'Choisir une image'}
+          <input ref={fileRef} type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
+        </label>
+        <span style={{ fontSize: 11, color: '#555' }}>ou</span>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="/images/mon-image.webp"
+          style={{ flex: 1, padding: '8px 12px', background: '#161616', border: '1px solid #333', borderRadius: 6, color: '#e5e5e5', fontSize: 13, boxSizing: 'border-box' }}
+        />
+      </div>
+    </div>
+  )
 }
 
 function ListField({ label, value, onChange }: { label: string; value: string[]; onChange: (v: unknown) => void }) {

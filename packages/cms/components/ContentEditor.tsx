@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import type { FieldDef } from '../types'
+import { WysiwygEditor } from './WysiwygEditor'
+import { markdownToHtml, htmlToMarkdown } from '../lib/html-md'
 
 // --- Slugify ---
 function slugify(text: string): string {
@@ -52,7 +54,8 @@ type Props = {
 export function ContentEditor({ collection, slug, fields, format, initialData, initialBody, sha, isNew }: Props) {
   const router = useRouter()
   const [data, setData] = useState<Record<string, unknown>>(initialData)
-  const [body, setBody] = useState(initialBody)
+  const [bodyMd, setBodyMd] = useState(initialBody)
+  const [bodyHtml, setBodyHtml] = useState(() => markdownToHtml(initialBody))
   const [entrySlug, setEntrySlug] = useState(slug)
   const [slugManual, setSlugManual] = useState(!isNew) // user manually edited slug?
   const [saving, setSaving] = useState(false)
@@ -81,7 +84,7 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
       const res = await fetch(`/api/cms/content/${collection}/${finalSlug}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ data, body: format === 'mdx' ? body : undefined, sha: isNew ? undefined : sha }),
+        body: JSON.stringify({ data, body: format === 'mdx' ? bodyMd : undefined, sha: isNew ? undefined : sha }),
       })
       if (!res.ok) {
         const err = await res.json()
@@ -167,101 +170,19 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
         ))}
       </div>
 
-      {/* Body editor for MDX */}
+      {/* Body editor for MDX — WYSIWYG like WordPress */}
       {format === 'mdx' && (
-        <RichBodyEditor value={body} onChange={setBody} />
+        <WysiwygEditor
+          value={bodyHtml}
+          onChange={(html) => {
+            setBodyHtml(html)
+            setBodyMd(htmlToMarkdown(html))
+          }}
+        />
       )}
 
       {/* Toast */}
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
-    </div>
-  )
-}
-
-// --- Rich Body Editor with toolbar ---
-type ToolbarAction = { label: string; icon: string; prefix: string; suffix: string; block?: boolean }
-
-const TOOLBAR_ACTIONS: ToolbarAction[] = [
-  { label: 'Gras', icon: 'B', prefix: '**', suffix: '**' },
-  { label: 'Italique', icon: 'I', prefix: '*', suffix: '*' },
-  { label: 'Titre 2', icon: 'H2', prefix: '## ', suffix: '', block: true },
-  { label: 'Titre 3', icon: 'H3', prefix: '### ', suffix: '', block: true },
-  { label: 'Lien', icon: '🔗', prefix: '[', suffix: '](url)' },
-  { label: 'Image', icon: '🖼', prefix: '![alt](', suffix: ')' },
-  { label: 'Liste', icon: '•', prefix: '- ', suffix: '', block: true },
-  { label: 'Liste num.', icon: '1.', prefix: '1. ', suffix: '', block: true },
-  { label: 'Citation', icon: '❝', prefix: '> ', suffix: '', block: true },
-  { label: 'Code', icon: '`', prefix: '`', suffix: '`' },
-  { label: 'Bloc code', icon: '```', prefix: '```\n', suffix: '\n```', block: true },
-  { label: 'Séparateur', icon: '—', prefix: '\n---\n', suffix: '', block: true },
-]
-
-function RichBodyEditor({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-
-  const applyAction = useCallback((action: ToolbarAction) => {
-    const ta = textareaRef.current
-    if (!ta) return
-
-    const start = ta.selectionStart
-    const end = ta.selectionEnd
-    const selected = value.substring(start, end)
-    const before = value.substring(0, start)
-    const after = value.substring(end)
-
-    let newText: string
-    let cursorPos: number
-
-    if (action.block && !selected) {
-      const needsNewline = before.length > 0 && !before.endsWith('\n') ? '\n' : ''
-      newText = before + needsNewline + action.prefix + action.suffix + after
-      cursorPos = before.length + needsNewline.length + action.prefix.length
-    } else {
-      newText = before + action.prefix + (selected || action.label) + action.suffix + after
-      cursorPos = before.length + action.prefix.length + (selected || action.label).length
-    }
-
-    onChange(newText)
-    requestAnimationFrame(() => {
-      ta.focus()
-      ta.setSelectionRange(cursorPos, cursorPos)
-    })
-  }, [value, onChange])
-
-  const btnStyle = {
-    padding: '4px 8px', background: 'transparent', border: '1px solid #333',
-    borderRadius: 4, color: '#ccc', cursor: 'pointer', fontSize: 12,
-    fontWeight: 600, minWidth: 28, lineHeight: '18px',
-  } as const
-
-  return (
-    <div style={{ marginTop: 24 }}>
-      <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 8 }}>Contenu</label>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, padding: '8px 10px', background: '#111', border: '1px solid #333', borderBottom: 'none', borderRadius: '6px 6px 0 0' }}>
-        {TOOLBAR_ACTIONS.map((action) => (
-          <button
-            key={action.label}
-            onClick={() => applyAction(action)}
-            title={action.label}
-            style={btnStyle}
-            onMouseOver={(e) => { e.currentTarget.style.background = '#222' }}
-            onMouseOut={(e) => { e.currentTarget.style.background = 'transparent' }}
-          >
-            {action.icon}
-          </button>
-        ))}
-      </div>
-      <textarea
-        ref={textareaRef}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          width: '100%', minHeight: 500, padding: 12, background: '#161616',
-          border: '1px solid #333', borderTop: 'none', borderRadius: '0 0 6px 6px',
-          color: '#e5e5e5', fontSize: 14, fontFamily: 'system-ui, sans-serif',
-          lineHeight: 1.7, resize: 'vertical', boxSizing: 'border-box',
-        }}
-      />
     </div>
   )
 }

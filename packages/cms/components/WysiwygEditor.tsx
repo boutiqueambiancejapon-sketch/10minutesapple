@@ -6,7 +6,9 @@ import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import Underline from '@tiptap/extension-underline'
 import Placeholder from '@tiptap/extension-placeholder'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+
+type MediaItem = { name: string; url: string; sha: string }
 
 type Props = {
   value: string
@@ -14,20 +16,22 @@ type Props = {
 }
 
 export function WysiwygEditor({ value, onChange }: Props) {
+  const [showMediaPicker, setShowMediaPicker] = useState(false)
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([])
+  const [mediaLoading, setMediaLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+  const uploadRef = useRef<HTMLInputElement>(null)
+
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        heading: { levels: [2, 3, 4] },
-      }),
+      StarterKit.configure({ heading: { levels: [2, 3, 4] } }),
       Underline,
       Link.configure({ openOnClick: false, HTMLAttributes: { style: 'color: #6af; text-decoration: underline;' } }),
       Image.configure({ HTMLAttributes: { style: 'max-width: 100%; height: auto; border-radius: 6px; margin: 12px 0;' } }),
       Placeholder.configure({ placeholder: 'Commencez à écrire…' }),
     ],
     content: value,
-    onUpdate: ({ editor: e }) => {
-      onChange(e.getHTML())
-    },
+    onUpdate: ({ editor: e }) => onChange(e.getHTML()),
     editorProps: {
       attributes: {
         style: 'outline: none; min-height: 500px; padding: 16px; color: #e5e5e5; font-size: 15px; font-family: system-ui, sans-serif; line-height: 1.8;',
@@ -35,7 +39,6 @@ export function WysiwygEditor({ value, onChange }: Props) {
     },
   })
 
-  // Update editor content when value changes externally (e.g. import)
   const lastExternalValue = useRef(value)
   useEffect(() => {
     if (editor && value !== lastExternalValue.current) {
@@ -44,41 +47,71 @@ export function WysiwygEditor({ value, onChange }: Props) {
     }
   }, [editor, value])
 
+  // Load media library
+  async function loadMedia() {
+    setMediaLoading(true)
+    try {
+      const res = await fetch('/api/cms/media/list')
+      if (res.ok) {
+        const data = await res.json()
+        setMediaItems(data.items ?? [])
+      }
+    } finally {
+      setMediaLoading(false)
+    }
+  }
+
+  function openMediaPicker() {
+    setShowMediaPicker(true)
+    loadMedia()
+  }
+
+  function insertImage(url: string) {
+    if (editor) {
+      editor.chain().focus().setImage({ src: url }).run()
+    }
+    setShowMediaPicker(false)
+  }
+
+  async function handleUploadInPicker(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+      const res = await fetch('/api/cms/media/upload', { method: 'POST', body: formData })
+      if (res.ok) {
+        const data = await res.json()
+        insertImage(data.url)
+      } else {
+        const err = await res.json()
+        alert(err.error ?? 'Upload failed')
+      }
+    } finally {
+      setUploading(false)
+      if (uploadRef.current) uploadRef.current.value = ''
+    }
+  }
+
   const addLink = useCallback(() => {
     if (!editor) return
     const url = prompt('URL du lien :')
-    if (url) {
-      editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
-    }
-  }, [editor])
-
-  const addImage = useCallback(() => {
-    if (!editor) return
-    const url = prompt('URL de l\'image (ex: /images/mon-image.webp) :')
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run()
-    }
+    if (url) editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run()
   }, [editor])
 
   if (!editor) return null
 
   const btn = (active: boolean) => ({
-    padding: '4px 8px',
-    background: active ? '#333' : 'transparent',
-    border: '1px solid #333',
-    borderRadius: 4,
-    color: active ? '#fff' : '#ccc',
-    cursor: 'pointer',
-    fontSize: 12,
-    fontWeight: 600 as const,
-    minWidth: 28,
-    lineHeight: '18px',
+    padding: '4px 8px', background: active ? '#333' : 'transparent',
+    border: '1px solid #333', borderRadius: 4, color: active ? '#fff' : '#ccc',
+    cursor: 'pointer', fontSize: 12, fontWeight: 600 as const, minWidth: 28, lineHeight: '18px',
   })
 
   const sep = { width: 1, height: 20, background: '#333', margin: '0 4px', flexShrink: 0 }
 
   return (
-    <div style={{ marginTop: 24 }}>
+    <div style={{ marginTop: 24, position: 'relative' }}>
       <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#888', marginBottom: 8 }}>
         Contenu
       </label>
@@ -110,7 +143,7 @@ export function WysiwygEditor({ value, onChange }: Props) {
 
         <button onClick={addLink} style={btn(editor.isActive('link'))} title="Lien">🔗</button>
         <button onClick={() => editor.chain().focus().unsetLink().run()} style={btn(false)} title="Retirer lien">✂</button>
-        <button onClick={addImage} style={btn(false)} title="Image">🖼</button>
+        <button onClick={openMediaPicker} style={btn(false)} title="Insérer une image">🖼</button>
 
         <div style={sep} />
 
@@ -124,12 +157,57 @@ export function WysiwygEditor({ value, onChange }: Props) {
       </div>
 
       {/* Editor */}
-      <div style={{
-        background: '#161616', border: '1px solid #333', borderTop: 'none',
-        borderRadius: '0 0 6px 6px', overflow: 'hidden',
-      }}>
+      <div style={{ background: '#161616', border: '1px solid #333', borderTop: 'none', borderRadius: '0 0 6px 6px', overflow: 'hidden' }}>
         <EditorContent editor={editor} />
       </div>
+
+      {/* Media Picker Modal */}
+      {showMediaPicker && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 10000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.7)' }} onClick={() => setShowMediaPicker(false)}>
+          <div onClick={(e) => e.stopPropagation()} style={{ width: '90%', maxWidth: 700, maxHeight: '80vh', background: '#111', border: '1px solid #222', borderRadius: 12, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            {/* Header */}
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #222', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700 }}>Insérer une image</h3>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <label style={{ padding: '6px 14px', background: 'linear-gradient(135deg, #ff3d57, #ff6b3d)', color: '#fff', borderRadius: 6, cursor: 'pointer', fontSize: 12, fontWeight: 600, opacity: uploading ? 0.5 : 1 }}>
+                  {uploading ? 'Upload…' : '+ Uploader'}
+                  <input ref={uploadRef} type="file" accept="image/*" onChange={handleUploadInPicker} style={{ display: 'none' }} disabled={uploading} />
+                </label>
+                <button onClick={() => setShowMediaPicker(false)} style={{ background: 'transparent', border: '1px solid #333', color: '#888', borderRadius: 6, padding: '6px 12px', cursor: 'pointer', fontSize: 12 }}>
+                  Fermer
+                </button>
+              </div>
+            </div>
+
+            {/* Grid */}
+            <div style={{ padding: 16, overflowY: 'auto', flex: 1 }}>
+              {mediaLoading ? (
+                <div style={{ textAlign: 'center', padding: 40, color: '#666' }}>Chargement…</div>
+              ) : mediaItems.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: 40, color: '#666' }}>Aucune image. Uploadez votre premier fichier.</div>
+              ) : (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10 }}>
+                  {mediaItems.map((item) => (
+                    <button
+                      key={item.sha}
+                      onClick={() => insertImage(item.url)}
+                      style={{ background: '#1a1a1a', border: '2px solid transparent', borderRadius: 8, padding: 0, cursor: 'pointer', overflow: 'hidden', textAlign: 'left', transition: 'border-color 150ms' }}
+                      onMouseOver={(e) => { e.currentTarget.style.borderColor = '#ff3d57' }}
+                      onMouseOut={(e) => { e.currentTarget.style.borderColor = 'transparent' }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={item.url} alt={item.name} style={{ width: '100%', height: 100, objectFit: 'cover', display: 'block' }} />
+                      <div style={{ padding: '6px 8px', fontSize: 10, color: '#888', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {item.name}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Editor styles */}
       <style>{`

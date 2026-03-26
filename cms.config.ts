@@ -70,8 +70,16 @@ export const cmsConfig: CmsConfig = {
       path: 'content/pages',
       format: 'yaml',
       fields: {
-        title: { type: 'text', label: 'Titre', required: true },
-        description: { type: 'textarea', label: 'Description SEO' },
+        title: { type: 'text', label: 'Titre principal' },
+        subtitle: { type: 'textarea', label: 'Sous-titre' },
+        eyebrow: { type: 'text', label: 'Sur-titre' },
+        cta_primary: { type: 'text', label: 'Bouton principal' },
+        cta_primary_url: { type: 'text', label: 'URL bouton principal' },
+        cta_secondary: { type: 'text', label: 'Bouton secondaire' },
+        cta_secondary_url: { type: 'text', label: 'URL bouton secondaire' },
+        marquee: { type: 'list', label: 'Bandeau défilant', itemType: 'text' },
+        faq_title: { type: 'text', label: 'Titre section FAQ' },
+        affiliate_disclaimer: { type: 'textarea', label: 'Disclaimer affiliation' },
       },
     },
     settings: {
@@ -84,6 +92,14 @@ export const cmsConfig: CmsConfig = {
         siteName: { type: 'text', label: 'Nom du site', required: true },
         siteDescription: { type: 'textarea', label: 'Description' },
         siteUrl: { type: 'text', label: 'URL du site' },
+        nav: {
+          type: 'repeater',
+          label: 'Navigation',
+          fields: {
+            label: { type: 'text', label: 'Libellé', required: true },
+            url: { type: 'text', label: 'URL (vide si menu déroulant)' },
+          },
+        },
       },
     },
   },

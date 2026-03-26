@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
-    "audit": "npm audit --audit-level=high --omit=dev"
+    "audit": "npm audit --audit-level=high --omit=dev",
+    "upload-image": "tsx scripts/upload-blob.ts"
   },
   "dependencies": {
     "@tiptap/extension-image": "^3.20.5",
@@ -45,6 +46,7 @@
     "eslint-config-next": "~16.2.1",
     "jsdom": "^25",
     "tailwindcss": "^4.2.2",
+    "tsx": "^4.21.0",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5",
     "vitest": "^2"

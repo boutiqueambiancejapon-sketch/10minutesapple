@@ -8,9 +8,7 @@ const GITHUB_USER = 'https://api.github.com/user'
 function getOAuthConfig() {
   const clientId = process.env.GITHUB_CMS_CLIENT_ID
   const clientSecret = process.env.GITHUB_CMS_CLIENT_SECRET
-  if (!clientId || !clientSecret) {
-    throw new Error('Missing GITHUB_CMS_CLIENT_ID or GITHUB_CMS_CLIENT_SECRET')
-  }
+  if (!clientId || !clientSecret) return null
   return { clientId, clientSecret }
 }
 
@@ -19,32 +17,38 @@ function getAllowedUsers(): string[] {
   return raw.split(',').map((u) => u.trim().toLowerCase()).filter(Boolean)
 }
 
+/** Check if GitHub OAuth is configured */
+export function isGitHubOAuthEnabled(): boolean {
+  return !!getOAuthConfig()
+}
+
 /** Redirect to GitHub OAuth authorize */
 export function loginRedirectUrl(origin: string): string {
-  const { clientId } = getOAuthConfig()
+  const config = getOAuthConfig()
+  if (!config) throw new Error('GitHub OAuth not configured')
   const callbackUrl = `${origin}/api/cms/auth/callback`
   const params = new URLSearchParams({
-    client_id: clientId,
+    client_id: config.clientId,
     redirect_uri: callbackUrl,
     scope: 'repo',
   })
   return `${GITHUB_AUTHORIZE}?${params}`
 }
 
-/** Exchange OAuth code for session, returns Set-Cookie header value */
+/** Exchange OAuth code for session */
 export async function handleCallback(code: string): Promise<{
   cookie: string
   user: string
 } | { error: string }> {
-  const { clientId, clientSecret } = getOAuthConfig()
+  const config = getOAuthConfig()
+  if (!config) return { error: 'GitHub OAuth not configured' }
 
-  // Exchange code for token
   const tokenRes = await fetch(GITHUB_TOKEN, {
     method: 'POST',
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      client_id: clientId,
-      client_secret: clientSecret,
+      client_id: config.clientId,
+      client_secret: config.clientSecret,
       code,
     }),
     cache: 'no-store',
@@ -55,7 +59,6 @@ export async function handleCallback(code: string): Promise<{
     return { error: tokenData.error_description ?? tokenData.error ?? 'Token exchange failed' }
   }
 
-  // Get GitHub username
   const userRes = await fetch(GITHUB_USER, {
     headers: { Authorization: `Bearer ${tokenData.access_token}` },
     cache: 'no-store',
@@ -63,20 +66,18 @@ export async function handleCallback(code: string): Promise<{
   const userData = await userRes.json()
   const username = (userData.login as string)?.toLowerCase()
 
-  if (!username) {
-    return { error: 'Could not get GitHub username' }
-  }
+  if (!username) return { error: 'Could not get GitHub username' }
 
-  // Check allowlist
   const allowed = getAllowedUsers()
   if (allowed.length > 0 && !allowed.includes(username)) {
     return { error: `User "${username}" is not authorized` }
   }
 
-  // Create session (30 days)
   const session: CmsSession = {
     githubToken: tokenData.access_token,
-    githubUser: username,
+    user: username,
+    role: 'admin', // GitHub OAuth users are always admin
+    authMethod: 'github',
     expiresAt: Date.now() + 30 * 24 * 60 * 60 * 1000,
   }
 

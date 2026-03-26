@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { getSession } from '@/packages/cms/lib/get-session'
+import { getSession, getGitHubToken } from '@/packages/cms/lib/get-session'
 import { getFile } from '@/packages/cms/lib/github'
 import { parseContent, parseYaml } from '@/packages/cms/lib/parser'
 import { cmsConfig } from '@/cms.config'
@@ -14,6 +14,8 @@ export default async function EntryEditorPage({ params }: { params: Params }) {
 
   const session = await getSession()
   if (!session) notFound()
+  const token = await getGitHubToken()
+  if (!token) notFound()
 
   const isNew = slug === 'new'
   let data: Record<string, unknown> = {}
@@ -23,7 +25,7 @@ export default async function EntryEditorPage({ params }: { params: Params }) {
   if (!isNew) {
     const ext = collDef.format === 'mdx' ? 'mdx' : 'yaml'
     const filePath = `${collDef.path}/${slug}.${ext}`
-    const file = await getFile(session.githubToken, cmsConfig.repo, filePath, cmsConfig.branch)
+    const file = await getFile(token, cmsConfig.repo, filePath, cmsConfig.branch)
     if (!file) notFound()
 
     if (collDef.format === 'mdx') {

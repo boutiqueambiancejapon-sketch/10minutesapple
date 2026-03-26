@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getSession } from '@/packages/cms/lib/get-session'
+import { getSession, getGitHubToken } from '@/packages/cms/lib/get-session'
 import { listFiles, getFile, putFile, deleteFile } from '@/packages/cms/lib/github'
 import { parseContent, serializeContent, parseYaml } from '@/packages/cms/lib/parser'
 import { cmsConfig } from '@/cms.config'
@@ -8,11 +8,17 @@ export const dynamic = 'force-dynamic'
 
 type Params = Promise<{ path: string[] }>
 
-/** GET /api/cms/content/articles → list */
-/** GET /api/cms/content/articles/my-slug → single entry */
-export async function GET(_request: Request, { params }: { params: Params }) {
+async function requireAuth(): Promise<{ token: string; role: string } | NextResponse> {
   const session = await getSession()
   if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const token = await getGitHubToken()
+  if (!token) return NextResponse.json({ error: 'No GitHub token' }, { status: 401 })
+  return { token, role: session.role }
+}
+
+export async function GET(_request: Request, { params }: { params: Params }) {
+  const auth = await requireAuth()
+  if (auth instanceof NextResponse) return auth
 
   const { path } = await params
   const [collection, ...rest] = path
@@ -24,8 +30,7 @@ export async function GET(_request: Request, { params }: { params: Params }) {
   const { repo, branch } = cmsConfig
 
   if (!slug) {
-    // List entries
-    const files = await listFiles(session.githubToken, repo, collDef.path, branch)
+    const files = await listFiles(auth.token, repo, collDef.path, branch)
     const entries = files
       .filter((f) => f.type === 'file' && (f.name.endsWith('.mdx') || f.name.endsWith('.yaml')))
       .map((f) => ({
@@ -37,10 +42,9 @@ export async function GET(_request: Request, { params }: { params: Params }) {
     return NextResponse.json({ entries })
   }
 
-  // Get single entry
   const ext = collDef.format === 'mdx' ? 'mdx' : 'yaml'
   const filePath = `${collDef.path}/${slug}.${ext}`
-  const file = await getFile(session.githubToken, repo, filePath, branch)
+  const file = await getFile(auth.token, repo, filePath, branch)
 
   if (!file) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
@@ -53,10 +57,9 @@ export async function GET(_request: Request, { params }: { params: Params }) {
   return NextResponse.json({ slug, data, sha: file.sha })
 }
 
-/** PUT /api/cms/content/articles/my-slug → create/update */
 export async function PUT(request: Request, { params }: { params: Params }) {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const auth = await requireAuth()
+  if (auth instanceof NextResponse) return auth
 
   const { path } = await params
   const [collection, ...rest] = path
@@ -64,6 +67,11 @@ export async function PUT(request: Request, { params }: { params: Params }) {
 
   const collDef = cmsConfig.collections[collection]
   if (!collDef || !slug) return NextResponse.json({ error: 'Invalid path' }, { status: 400 })
+
+  // Editors can't modify settings
+  if (auth.role === 'editor' && collDef.singleton) {
+    return NextResponse.json({ error: 'Permission denied' }, { status: 403 })
+  }
 
   const { data, body, sha } = (await request.json()) as {
     data: Record<string, unknown>
@@ -81,23 +89,19 @@ export async function PUT(request: Request, { params }: { params: Params }) {
     ? `content: update ${collection}/${slug}`
     : `content: create ${collection}/${slug}`
 
-  const result = await putFile(
-    session.githubToken,
-    cmsConfig.repo,
-    filePath,
-    content,
-    message,
-    cmsConfig.branch,
-    sha
-  )
+  const result = await putFile(auth.token, cmsConfig.repo, filePath, content, message, cmsConfig.branch, sha)
 
   return NextResponse.json({ sha: result.sha })
 }
 
-/** DELETE /api/cms/content/articles/my-slug */
 export async function DELETE(request: Request, { params }: { params: Params }) {
-  const session = await getSession()
-  if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  const auth = await requireAuth()
+  if (auth instanceof NextResponse) return auth
+
+  // Only admins can delete
+  if (auth.role === 'editor') {
+    return NextResponse.json({ error: 'Permission denied' }, { status: 403 })
+  }
 
   const { path } = await params
   const [collection, ...rest] = path
@@ -110,14 +114,7 @@ export async function DELETE(request: Request, { params }: { params: Params }) {
   const ext = collDef.format === 'mdx' ? 'mdx' : 'yaml'
   const filePath = `${collDef.path}/${slug}.${ext}`
 
-  await deleteFile(
-    session.githubToken,
-    cmsConfig.repo,
-    filePath,
-    sha,
-    `content: delete ${collection}/${slug}`,
-    cmsConfig.branch
-  )
+  await deleteFile(auth.token, cmsConfig.repo, filePath, sha, `content: delete ${collection}/${slug}`, cmsConfig.branch)
 
   return NextResponse.json({ ok: true })
 }

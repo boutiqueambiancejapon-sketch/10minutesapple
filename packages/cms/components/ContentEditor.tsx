@@ -115,9 +115,14 @@ export function ContentEditor({ collection, slug, fields, format, initialData, i
         // Fill fields from frontmatter
         setData((prev) => ({ ...prev, ...parsed }))
 
-        // Auto-generate slug from title
-        if (parsed.title && isNew) {
-          setEntrySlug(slugify(parsed.title as string))
+        // Use slug from frontmatter, or auto-generate from title
+        if (isNew) {
+          if (parsed.slug) {
+            setEntrySlug(parsed.slug as string)
+            setSlugManual(true)
+          } else if (parsed.title) {
+            setEntrySlug(slugify(parsed.title as string))
+          }
         }
 
         // Fill body

@@ -68,6 +68,7 @@ export const cmsConfig: CmsConfig = {
           { label: 'iPad', value: 'ipad' },
           { label: 'Apple Watch', value: 'watch' },
           { label: 'Accessoires', value: 'accessoires' },
+          { label: 'Concurrent', value: 'concurrent' },
         ]},
         prix: { type: 'text', label: 'Prix', required: true },
         url: { type: 'text', label: 'Lien affilié Amazon', required: true },

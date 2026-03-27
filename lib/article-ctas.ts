@@ -7,6 +7,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import { addAffiliateTag } from '@/lib/utils/affiliate'
 
 export type ArticleCTA = {
   name: string
@@ -46,7 +47,7 @@ function toArticleCTA(product: ProductData): ArticleCTA {
   return {
     name: product.name,
     price: product.prix,
-    url: product.url,
+    url: addAffiliateTag(product.url),
     badge: product.badge,
     hook: product.hook,
   }

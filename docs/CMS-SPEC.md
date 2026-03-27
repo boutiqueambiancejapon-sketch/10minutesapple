@@ -266,6 +266,55 @@ Les fichiers YAML existent (`content/pages/home.yaml`, etc.) et le helper `lib/c
 - **Confirmation de sortie** : avertir si modifications non sauvegardées
 - **Export CMS** : bouton pour télécharger le package CMS en .zip
 
+### Publish flow — Save Draft / Publish (prioritaire)
+
+Actuellement chaque sauvegarde commit directement sur la branche principale → redéploiement Vercel immédiat. Il faut implémenter un flow WordPress-like :
+
+**Architecture :**
+- Une branche unique `cms/draft` sert de buffer
+- "Sauvegarder" = commit sur `cms/draft` (pas de redéploiement)
+- "Publier" = merge `cms/draft` → branche principale (redéploiement)
+- Après merge, la branche `cms/draft` est reset pour le prochain cycle
+
+**UI — Sticky CTA en bas du CMS :**
+```
+┌─────────────────────────────────────────────────┐
+│  X modification(s) en attente                    │
+│  [Sauvegarder]          [Publier maintenant →]  │
+└─────────────────────────────────────────────────┘
+```
+
+**Implémentation :**
+
+1. **Modifier `packages/cms/lib/github.ts`** : `putFile()` prend un paramètre `branch` optionnel. Par défaut = `cms/draft`.
+
+2. **Créer `packages/cms/lib/publish.ts`** :
+   - `getDraftCommits(repo, baseBranch)` → nombre de commits en avance sur `cms/draft` vs branche principale
+   - `publishDrafts(repo, baseBranch)` → merge `cms/draft` dans la branche principale via GitHub API (POST /repos/{repo}/merges)
+   - `resetDraftBranch(repo, baseBranch)` → reset `cms/draft` au HEAD de la branche principale
+
+3. **Créer `app/api/cms/publish/route.ts`** :
+   - GET → retourne `{ pendingCount: number }` (nombre de commits en attente)
+   - POST → merge + reset → retourne `{ ok: true }`
+
+4. **Modifier `packages/cms/components/ContentEditor.tsx`** : le bouton "Enregistrer" commit sur `cms/draft` au lieu de la branche principale.
+
+5. **Créer `packages/cms/components/PublishBar.tsx`** : sticky bar en bas avec compteur + boutons. Visible sur toutes les pages `/admin/*`.
+
+6. **Modifier `app/admin/layout.tsx`** : intégrer `<PublishBar />` en bas du layout.
+
+7. **Modifier `cms.config.ts`** : ajouter `draftBranch: 'cms/draft'` à la config.
+
+**Logique de la branche :**
+- Au premier "Sauvegarder", si `cms/draft` n'existe pas → la créer depuis la branche principale via GitHub API
+- Chaque "Sauvegarder" → commit sur `cms/draft`
+- "Publier" → merge `cms/draft` → branche principale, puis reset `cms/draft` au nouveau HEAD
+- La branche `cms/draft` n'est jamais supprimée, juste reset
+
+**Cas limites :**
+- Si la branche principale avance (commit Claude Code) pendant que `cms/draft` a des modifications → merge avec résolution auto (les fichiers ne se chevauchent normalement pas)
+- Si conflit → afficher un message d'erreur "Conflit détecté, contactez le développeur"
+
 ---
 
 ## Portabilité — Dupliquer sur un nouveau site

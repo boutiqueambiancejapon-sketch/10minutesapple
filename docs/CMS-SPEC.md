@@ -182,12 +182,53 @@ Seul fichier à modifier pour un nouveau site. Définit les collections, champs,
 - Message de bienvenue personnalisé
 
 ### DA/Branding
-- Logo gradient rouge/orange ⚡
-- Sidebar avec icônes emoji, sticky, collapse responsive
-- Login page avec card + ombre
-- Avatar avec initiale, rôle affiché
-- Lien "Voir le site" dans la sidebar
-- Dark theme cohérent (#0a0a0a, #111, #161616, accent #ff3d57)
+
+Le CMS **doit** respecter la DA du site. Toute modification du design admin ou du contenu éditorial doit suivre ces règles.
+
+#### Palette (obligatoire)
+```
+Backgrounds:   #0A0A0F (primary) · #13131A (surface) · #1C1C26 (surface-2)
+Accents:        #FF3D57 (rouge) · #7B61FF (violet) · #3DFFC0 (cyan) · #FFD23F (ambre) · #3D9BFF (bleu)
+Texte:          #F0F0F5 (primary) · #9090A8 (secondary) · #55556A (muted)
+Borders:        rgba(255, 255, 255, 0.07) (normal) · rgba(255, 255, 255, 0.15) (strong)
+Shadows:        0 4px 16px rgba(0,0,0,0.5) (md) · 0 8px 32px rgba(0,0,0,0.6) (lg)
+Success:        #3DFFC0
+Warning:        #FFD23F
+Error:          #FF3D57
+```
+
+#### Typographie
+- **Display** (titres, logo) : Unbounded (via `--next-font-display`), weight 700-800
+- **Primary** (body, inputs, labels) : Space Grotesk (via `--next-font-primary`), weight 400-700
+- **Mono** (code, badges techniques) : JetBrains Mono (via `--next-font-mono`)
+
+#### Effets visuels
+- Aurora : gradient animé `#FF3D57 → #7B61FF → #3DFFC0` sur la sidebar (8s linear infinite)
+- Glass : `backdrop-filter: blur(16px)` + semi-transparent backgrounds
+- Transitions : `200ms cubic-bezier(0.16, 1, 0.3, 1)` pour les interactions
+- Radius : 4px (sm), 8px (md), 12px (lg), 9999px (full)
+- Spacing : base 8px (--space-1=4px, --space-2=8px, --space-4=16px, etc.)
+
+#### CSS classes réutilisables (définies dans layout.tsx)
+- `cms-input` : inputs avec focus rouge accent
+- `cms-btn-primary` : gradient rouge→orange
+- `cms-btn-secondary` : ghost avec bordure subtile
+- `cms-card` : surface #13131A avec bordure et hover
+- `cms-row` : ligne de tableau avec hover
+- `cms-badge-live` : badge cyan transparent
+- `cms-badge-draft` : badge ambre transparent
+- `cms-toast` : notification animée bottom-right
+- `cms-nav-link` : lien sidebar avec hover et icône
+
+#### Règles pour les développeurs et rédacteurs
+1. **Jamais** de couleurs hardcodées hors de la palette ci-dessus
+2. **Jamais** de `#fff` pur pour les boutons — utiliser le gradient accent ou `#F0F0F5`
+3. **Toujours** des bordures subtiles (opacity 0.07) et non des gris solides (#333, #222)
+4. Les badges utilisent un fond semi-transparent de la couleur d'accent (opacity 0.1)
+5. Les hover effects utilisent `rgba(255,255,255,0.04)` en background
+6. Le responsive collapse la sidebar à 60px avec icônes seules à 768px
+7. Les inline styles dans `packages/cms/` (pas de Tailwind) pour la portabilité
+8. Le site public utilise les CSS custom properties (`--accent-1`, `--bg-surface`, etc.) via `globals.css`
 
 ---
 

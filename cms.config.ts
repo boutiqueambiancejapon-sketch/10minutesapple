@@ -56,6 +56,30 @@ export const cmsConfig: CmsConfig = {
         jobTitle: { type: 'text', label: 'Titre' },
       },
     },
+    produits: {
+      label: 'Produits',
+      path: 'content/produits',
+      format: 'yaml',
+      fields: {
+        name: { type: 'text', label: 'Nom du produit', required: true },
+        categorie: { type: 'select', label: 'Catégorie', options: [
+          { label: 'iPhone', value: 'iphone' },
+          { label: 'Mac', value: 'mac' },
+          { label: 'iPad', value: 'ipad' },
+          { label: 'Apple Watch', value: 'watch' },
+          { label: 'Accessoires', value: 'accessoires' },
+        ]},
+        prix: { type: 'text', label: 'Prix', required: true },
+        url: { type: 'text', label: 'Lien affilié Amazon', required: true },
+        badge: { type: 'text', label: 'Badge (ex: Nouveau, Promo)' },
+        hook: { type: 'text', label: 'Accroche (1 ligne)' },
+        image: { type: 'image', label: 'Photo produit' },
+        active: { type: 'select', label: 'Statut', options: [
+          { label: 'Actif', value: 'true' },
+          { label: 'Inactif', value: 'false' },
+        ]},
+      },
+    },
     categories: {
       label: 'Catégories',
       path: 'content/categories',

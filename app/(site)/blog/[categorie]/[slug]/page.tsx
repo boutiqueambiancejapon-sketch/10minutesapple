@@ -28,6 +28,7 @@ import { FaqAccordion } from '@/components/blog/FaqAccordion'
 import { getCTAsForCategory } from '@/lib/article-ctas'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
+import { StickyCTA } from '@/components/blog/StickyCTA'
 import type { ReactNode } from 'react'
 
 export const revalidate = 86400
@@ -384,6 +385,14 @@ export default async function ArticlePage({ params }: { params: Params }) {
           </div>
         </article>
       </main>
+
+      {/* Sticky CTA */}
+      {meta.stickyCta && meta.stickyCta.length > 0 && (
+        <StickyCTA
+          items={meta.stickyCta}
+          message={meta.stickyCtaMessage}
+        />
+      )}
     </>
   )
 }

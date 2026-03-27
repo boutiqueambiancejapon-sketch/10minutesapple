@@ -53,6 +53,8 @@ export type ArticleMeta = {
   /** True pour les articles dans content/articles/ (URLs racine). */
   standalone?: boolean
   draft?: boolean
+  stickyCta?: { label: string; url: string }[]
+  stickyCtaMessage?: string
 }
 
 /** Retourne le href correct pour un article (blog ou standalone). */
@@ -80,6 +82,8 @@ function parseMeta(data: Record<string, unknown>, slug: string, categorie: strin
     faq: data.faq as { q: string; a: string }[] | undefined,
     standalone,
     draft: !!data.draft,
+    stickyCta: data.stickyCta as { label: string; url: string }[] | undefined,
+    stickyCtaMessage: data.stickyCtaMessage as string | undefined,
   }
 }
 

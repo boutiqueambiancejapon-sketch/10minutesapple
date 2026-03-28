@@ -1,7 +1,7 @@
 /**
  * article-ctas.ts — CTA produit à injecter dans les articles.
  * Lit les produits depuis content/produits/*.yaml (géré via CMS).
- * Fallback sur les données hardcodées si les fichiers n'existent pas.
+ * Supporte le format multi-liens (links[]) et l'ancien format (url).
  */
 
 import fs from 'fs'
@@ -9,19 +9,30 @@ import path from 'path'
 import matter from 'gray-matter'
 import { addAffiliateTag } from '@/lib/utils/affiliate'
 
+export type ProductLink = {
+  store: string
+  url: string
+}
+
 export type ArticleCTA = {
   name: string
   price: string
   url: string
   badge?: string
   hook: string
+  allLinks?: ProductLink[]
 }
 
 type ProductData = {
   name: string
   categorie: string
   prix: string
-  url: string
+  /** Ancien format — un seul lien */
+  url?: string
+  /** Nouveau format — multi-liens */
+  links?: ProductLink[]
+  /** Nom du store pour le sticky CTA (ex: "Amazon") */
+  stickyCta?: string
   badge?: string
   hook: string
   active?: boolean
@@ -42,14 +53,46 @@ function loadProducts(): ProductData[] {
     .filter((p) => p.active !== false)
 }
 
+/** Résout l'URL prioritaire d'un produit (sticky CTA ou premier lien ou fallback url) */
+function getPrimaryUrl(product: ProductData): string {
+  // Nouveau format: chercher le lien du store prioritaire
+  if (product.links && product.links.length > 0) {
+    if (product.stickyCta) {
+      const priority = product.links.find(
+        (l) => l.store.toLowerCase() === product.stickyCta!.toLowerCase()
+      )
+      if (priority) return priority.url
+    }
+    // Fallback: premier lien
+    return product.links[0].url
+  }
+  // Ancien format
+  return product.url ?? ''
+}
+
+/** Résout tous les liens d'un produit avec tags affiliés */
+function getAllLinks(product: ProductData): ProductLink[] {
+  if (product.links && product.links.length > 0) {
+    return product.links.map((l) => ({
+      store: l.store,
+      url: addAffiliateTag(l.url),
+    }))
+  }
+  if (product.url) {
+    return [{ store: 'Amazon', url: addAffiliateTag(product.url) }]
+  }
+  return []
+}
+
 /** Convertit un produit YAML en ArticleCTA */
 function toArticleCTA(product: ProductData): ArticleCTA {
   return {
     name: product.name,
     price: product.prix,
-    url: addAffiliateTag(product.url),
+    url: addAffiliateTag(getPrimaryUrl(product)),
     badge: product.badge,
     hook: product.hook,
+    allLinks: getAllLinks(product),
   }
 }
 

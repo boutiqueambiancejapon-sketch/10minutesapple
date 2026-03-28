@@ -71,7 +71,16 @@ export const cmsConfig: CmsConfig = {
           { label: 'Concurrent', value: 'concurrent' },
         ]},
         prix: { type: 'text', label: 'Prix', required: true },
-        url: { type: 'text', label: 'Lien affilié Amazon', required: true },
+        url: { type: 'text', label: 'Lien principal (rétrocompat)' },
+        links: {
+          type: 'repeater',
+          label: 'Liens affiliés',
+          fields: {
+            store: { type: 'text', label: 'Boutique (ex: Amazon, Fnac, Darty)', required: true },
+            url: { type: 'text', label: 'URL affilié', required: true },
+          },
+        },
+        stickyCta: { type: 'text', label: 'Sticky CTA — nom de la boutique prioritaire (ex: Amazon)' },
         badge: { type: 'text', label: 'Badge (ex: Nouveau, Promo)' },
         hook: { type: 'text', label: 'Accroche (1 ligne)' },
         image: { type: 'image', label: 'Photo produit' },

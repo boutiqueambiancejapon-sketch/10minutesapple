@@ -1,7 +1,8 @@
-name: "AirPods 4 ANC"
+name: "AirPods 4"
 categorie: "accessoires"
 prix: "199 €"
-url: "https://www.amazon.fr/dp/B0FQF32239"
+url: "https://www.amazon.fr/dp/B0DGHYDYJL"
 badge: "Sans embouts"
 hook: "ANC active sans embouts intra. Le compromis confort + isolation."
 active: true
+stickyCta: "Amazon"

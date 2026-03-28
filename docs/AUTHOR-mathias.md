@@ -34,6 +34,7 @@ Constat direct → données concrètes → verdict → FAQ
 
 ### No-go
 - Jamais "révolutionnaire", "incroyable", "game-changer", "impressionnant", "à découvrir absolument"
+- Jamais "notre avis honnête", "notre verdict", "on vous dit tout" — tics de rédaction IA
 - Jamais d'affirmation sans source ou expérience personnelle datée
 - Jamais de conditionnel sur un verdict (trancher ou ne pas trancher)
 

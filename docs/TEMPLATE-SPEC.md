@@ -219,7 +219,64 @@ content/
 
 Les fichiers `_example.*` sont des modèles avec des commentaires expliquant chaque champ. Ils sont supprimés lors de l'init d'un nouveau site.
 
-## Étape 5 — Créer le prompt interactif
+## Étape 5 — Implémenter le 2FA (TOTP / Google Authenticator)
+
+Tous les sites issus du template doivent inclure le 2FA pour les rédacteurs email/mdp.
+
+**Flow utilisateur :**
+1. L'admin crée un rédacteur dans `/admin/users`
+2. Premier login du rédacteur → le CMS affiche un QR code TOTP à scanner avec Google Authenticator / Authy
+3. Le rédacteur scanne → le secret TOTP est stocké dans `content/users.yaml` (champ `totpSecret`)
+4. À chaque login suivant : email + mot de passe + code à 6 chiffres
+
+**Implémentation :**
+
+1. **Créer `packages/cms/lib/totp.ts`** (~80 lignes, zéro dépendance) :
+   - `generateTotpSecret()` → chaîne base32 aléatoire (20 bytes)
+   - `generateTotpQrUrl(secret, email, siteName)` → URL `otpauth://totp/...` pour QR code
+   - `verifyTotp(secret, code)` → boolean (HMAC-SHA1 via Web Crypto API, fenêtre ±1 période de 30s)
+   - Utiliser uniquement Web Crypto API (pas de lib externe)
+
+2. **Modifier `packages/cms/types.ts`** :
+   ```ts
+   export type CmsUser = {
+     email: string
+     name: string
+     role: CmsRole
+     hash: string
+     salt: string
+     totpSecret?: string    // base32, ajouté au premier setup
+     totpEnabled?: boolean  // true après scan du QR
+   }
+   ```
+
+3. **Modifier `packages/cms/lib/users.ts`** :
+   - `createUser()` → génère `totpSecret`, `totpEnabled: false`
+   - `enableTotp(email)` → met `totpEnabled: true` après vérification du premier code
+   - `verifyUserTotp(email, code)` → vérifie le code TOTP
+
+4. **Modifier `app/api/cms/auth/[...action]/route.ts`** :
+   - Login POST : si `totpEnabled`, exiger le champ `totpCode` dans le body
+   - Si `!totpEnabled` et premier login → retourner `{ requireSetup: true, qrUrl: "..." }`
+
+5. **Modifier `packages/cms/components/LoginForm.tsx`** :
+   - Si `requireSetup` → afficher QR code (via `<img src="https://api.qrserver.com/v1/create-qr-code/?data={qrUrl}" />`)
+   - Champ "Code à 6 chiffres" sous email/mdp
+   - Après scan + premier code valide → `totpEnabled: true`
+
+6. **Modifier `app/api/cms/users/route.ts`** :
+   - Action `resetTotp` → regénère le secret, remet `totpEnabled: false`
+   - Accessible dans `/admin/users` via bouton "Reset 2FA"
+
+**Sécurité :**
+- Le secret TOTP est stocké en clair dans `content/users.yaml` (nécessaire pour vérification). Acceptable car le fichier est dans un repo privé, accessible uniquement via GitHub token.
+- Fenêtre de vérification : ±1 période (accepte le code précédent et suivant pour compenser le décalage d'horloge)
+- Les admins GitHub OAuth ne sont pas concernés (GitHub a son propre 2FA)
+
+**QR code sans dépendance externe :**
+Alternative au service qrserver.com : générer le QR en SVG côté serveur avec une lib légère (`qrcode` npm, ~15kb) ou afficher le secret en texte pour saisie manuelle.
+
+## Étape 6 — Créer le prompt interactif
 
 Le fichier `docs/PROMPT-INIT.md` contient le prompt que l'utilisateur donne à Claude Code pour initialiser un nouveau site :
 

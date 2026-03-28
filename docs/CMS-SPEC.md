@@ -315,6 +315,76 @@ Actuellement chaque sauvegarde commit directement sur la branche principale → 
 - Si la branche principale avance (commit Claude Code) pendant que `cms/draft` a des modifications → merge avec résolution auto (les fichiers ne se chevauchent normalement pas)
 - Si conflit → afficher un message d'erreur "Conflit détecté, contactez le développeur"
 
+### Produits multi-liens affiliés (prioritaire)
+
+Actuellement chaque produit a un seul champ `url`. Il faut supporter **plusieurs liens affiliés** par produit (Amazon, Fnac, Darty, Boulanger...) avec un lien prioritaire pour le sticky CTA.
+
+**Format YAML cible :**
+```yaml
+name: "iPhone 17 Pro Max"
+categorie: "iphone"
+prix: "1 479 €"
+badge: "Le plus puissant"
+hook: "A19 Pro, 48MP, écran 6.9 pouces"
+active: true
+stickyCta: "Amazon"
+links:
+  - store: "Amazon"
+    url: "https://www.amazon.fr/dp/B0FQH9R2VG"
+  - store: "Fnac"
+    url: "https://www.fnac.com/..."
+  - store: "Darty"
+    url: "https://www.darty.com/..."
+```
+
+**UI CMS — édition produit :**
+```
+┌──────────────────────────────────────────────────┐
+│ LIENS AFFILIÉS                                    │
+│ ┌──────────────────────────────────────────────┐  │
+│ │ ⭐ Amazon  [https://amazon.fr/dp/XXX    ]    │  │
+│ │    Fnac    [https://fnac.com/...         ]    │  │
+│ │    Darty   [https://darty.com/...        ]    │  │
+│ │    [+ Ajouter un lien]                        │  │
+│ └──────────────────────────────────────────────┘  │
+│                                                    │
+│ Lien Sticky CTA : [Amazon ▼]                       │
+└──────────────────────────────────────────────────┘
+```
+
+L'étoile ⭐ = le lien sélectionné comme sticky CTA. Modifiable via un select.
+
+**Implémentation :**
+
+1. **Modifier `cms.config.ts`** : remplacer le champ `url` par un champ `links` de type `repeater` avec sous-champs `store` (text) et `url` (text), plus un champ `stickyCta` (text = nom du store prioritaire).
+
+2. **Migrer les 30 produits YAML** : transformer `url: "..."` en `links: [{ store: "Amazon", url: "..." }]` + `stickyCta: "Amazon"`.
+
+3. **Modifier `lib/article-ctas.ts`** :
+   - `toArticleCTA()` : lire le lien dont `store` = `stickyCta` (ou le premier lien si pas défini)
+   - `getAllProducts()` : exposer tous les liens pour le comparateur
+   - `addAffiliateTag()` : appliquer le tag affilié Amazon uniquement sur les URLs Amazon
+
+4. **Modifier `components/blog/ProductCTA.tsx`** : afficher tous les liens du produit sous forme de boutons ("Voir sur Amazon · Fnac · Darty"). Le bouton principal = le lien sticky CTA.
+
+5. **Modifier `components/blog/StickyCTA.tsx`** : utiliser uniquement le lien prioritaire (pas de changement majeur, juste la source des données).
+
+6. **Modifier `packages/cms/components/ContentEditor.tsx`** : le champ `links` dans l'éditeur de produits utilise un repeater avec `store` + `url`, plus un select pour choisir le sticky CTA parmi les stores ajoutés.
+
+**Rétrocompatibilité :**
+- Si un produit a encore l'ancien format (`url: "..."` sans `links`), `article-ctas.ts` doit fallback sur `url` directement. Ça permet une migration progressive.
+
+**Tags affiliés :**
+- Amazon : `?tag=ambiancejap0a-21` (via `addAffiliateTag()`)
+- Fnac : paramètre affilié Fnac si existant
+- Autres : URL brute
+
+**Base produits complète :**
+- Tous les produits Apple actuels ET anciens (encore vendus)
+- Anciens modèles avec `active: true` tant qu'ils sont disponibles à l'achat
+- Produits concurrents (Samsung, Xiaomi, etc.) avec liens Amazon si existants
+- L'utilisateur fournit les ASINs/URLs, Claude Code les intègre
+
 ---
 
 ## Portabilité — Dupliquer sur un nouveau site

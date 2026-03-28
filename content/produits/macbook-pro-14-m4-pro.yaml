@@ -2,6 +2,6 @@ name: "MacBook Pro 14 M4 Pro"
 categorie: "mac"
 prix: "2 399 €"
 url: "https://www.amazon.fr/dp/B0DJHJ44KT"
-badge: "Ancienne gen"
-hook: "M4 Pro, 24 Go RAM, écran XDR. Remplacé par le M5 Pro."
-active: false
+badge: "Ancien modèle — prix réduit"
+hook: "M4 Pro, 24 Go RAM, écran XDR. Encore vendu en déstockage."
+active: true

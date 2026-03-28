@@ -2,6 +2,6 @@ name: "MacBook Pro 16 M4 Max"
 categorie: "mac"
 prix: "4 099 €"
 url: "https://www.amazon.fr/dp/B0DJHGP65G"
-badge: "Ancienne gen"
-hook: "M4 Max, 48 Go RAM, écran 16 pouces XDR. Remplacé par le M5 Max."
-active: false
+badge: "Ancien modèle — prix réduit"
+hook: "M4 Max, 48 Go RAM, écran 16 pouces XDR. Encore vendu en déstockage."
+active: true

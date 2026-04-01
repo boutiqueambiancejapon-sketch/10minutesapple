@@ -65,8 +65,12 @@
 - [x] app/(site)/simulateur/page.tsx (cycles de prix · watermark € · 4 modèles)
 - [x] app/(site)/deals/page.tsx (MarqueeStrip · watermark % · 4 deals · badge HOT)
 
-## En attente — Étape 5
-- Blog : 4 articles supplémentaires (objectif 5 total)
+## En cours — Étape 5
+- [x] Blog : 4 articles supplémentaires (11 blog articles total)
+  - [x] blog/iphone/test-iphone-air — Test iPhone Air après 6 mois
+  - [x] blog/iphone/iphone-17-pro-vs-iphone-17-pro-max — Comparatif Pro vs Pro Max
+  - [x] blog/ipad/quel-ipad-etudiant — Guide iPad étudiant par filière et budget
+  - [x] blog/iphone/wwdc-2026-ios-27-nouveautes — WWDC 2026, iOS 27, nouveau Siri (news/rumeurs)
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

@@ -110,3 +110,19 @@
 - Nav hardcodes éliminés : --nav-bg-scrolled + --nav-mobile-bg variables CSS
 - opengraph-image.tsx garde #0A0A0F (OG toujours dark, indépendant du mode)
 - Les rgba() inline dans pages (quiz, simulateur, blog) restent fonctionnels : tints à <12% visibles sur blanc
+
+## Contenu — Batch articles SERP (2026-04-01)
+
+### Méthodologie de sélection
+- Analyse du content gap vs articles existants (51 standalone + 7 blog)
+- Recherche SERP concurrentielle sur chaque sujet (iphon.fr, clubic.com, mobile.club, quelbonplan.fr, consomac.fr)
+- Identification de 3 articles + 1 news/rumeur couvrant des gaps SEO réels
+
+### Articles rédigés
+1. **test-iphone-air** (blog/iphone) — Gap : aucun contenu iPhone Air sur le site. Concurrents : iphon.fr, clubic, igen.fr. Angle : test après 6 mois, verdict honnête avec comparaison Pro, voix Mathias.
+2. **iphone-17-pro-vs-iphone-17-pro-max** (blog/iphone) — Gap : pas de comparatif Pro vs Pro Max. Concurrents : mobile.club, land-pc.com, zeerawireless. Angle : par profil d'usage plutôt que pure spec.
+3. **quel-ipad-etudiant** (blog/ipad) — Gap : guides spécifiques (archi, médecine) mais pas de guide étudiant généraliste. Concurrents : quelbonplan.fr, buzzarena, futura-sciences. Angle : par filière et budget.
+4. **wwdc-2026-ios-27-nouveautes** (blog/iphone) — News/rumeur. Gap : sujet brûlant (8 juin), traitement léger dans apple-50-ans. Sources : Bloomberg/Gurman, MacRumors, consomac.fr. Angle : ce que ça change pour l'acheteur.
+
+### Catégorie blog/ipad créée
+- Nouveau dossier `content/blog/ipad/` pour accueillir les articles blog iPad (premier : quel-ipad-etudiant)

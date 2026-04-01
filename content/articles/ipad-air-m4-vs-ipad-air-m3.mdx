@@ -67,10 +67,10 @@ Trois vrais changements, tout le reste est copié-collé. Le chassis, les dimens
 
 Apple annonce "jusqu'à 30 % plus rapide que le M3". Les benchmarks Geekbench 6 racontent une histoire plus nuancée :
 
-<CompareBarGroup>
-  <CompareBar label="Single-core" valueA={3043} valueB={3710} labelA="M3" labelB="M4" unit="pts" />
-  <CompareBar label="Multi-core" valueA={11778} valueB={12580} labelA="M3" labelB="M4" unit="pts" />
-  <CompareBar label="GPU Metal" valueA={45122} valueB={52747} labelA="M3" labelB="M4" unit="pts" />
+<CompareBarGroup leftName="M3" rightName="M4">
+  <CompareBar label="Single-core (Geekbench 6)" left="82" right="100" leftName="M3 — 3 043 pts" rightName="M4 — 3 710 pts" />
+  <CompareBar label="Multi-core (Geekbench 6)" left="94" right="100" leftName="M3 — 11 778 pts" rightName="M4 — 12 580 pts" />
+  <CompareBar label="GPU Metal" left="86" right="100" leftName="M3 — 45 122 pts" rightName="M4 — 52 747 pts" />
 </CompareBarGroup>
 
 Le single-core gagne **22 %** — c'est le chiffre qui compte pour la réactivité au quotidien (ouverture d'apps, chargement de pages). Le multi-core ne progresse que de **7 %**, ce qui est presque invisible en usage réel. Le GPU avance de **17 %**, un gain perceptible sur des apps comme Procreate avec des dizaines de calques ou du montage vidéo sur LumaFusion.

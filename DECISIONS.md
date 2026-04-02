@@ -126,3 +126,25 @@
 
 ### Catégorie blog/ipad créée
 - Nouveau dossier `content/blog/ipad/` pour accueillir les articles blog iPad (premier : quel-ipad-etudiant)
+
+## Contenu — Batch articles SERP #2 (2026-04-02)
+
+### Méthodologie de sélection
+- Analyse du content gap : 0 article accessoires, 0 article Apple Watch, pas de guide upgrade iPhone, iPhone Fold mentionné brièvement dans apple-50-ans
+- Recherche SERP concurrentielle + web scraping sur chaque sujet (iphon.fr, clubic, radins.com, the5krunner, buzzarena, lesmobiles, consomac, phonandroid, macrumors)
+- Identification de 3 articles + 1 news/rumeur couvrant des gaps SEO réels dans des catégories vides
+
+### Articles rédigés
+1. **airpods-pro-3-vs-airpods-pro-2** (blog/accessoires) — Gap : 0 contenu accessoires. Concurrents : iphon.fr, clubic, radins.com, SoundGuys. Angle : verdict par profil (voyageur, sportif, budget), chiffres autonomie réels (8h42 vs 5h43), capteurs santé détaillés.
+2. **apple-watch-pour-courir** (blog/watch) — Gap : 0 contenu Apple Watch. Concurrents : the5krunner, athleexplique, buzzarena, ezstrap. Angle : par profil de coureur (5K → ultra-trail), métriques détaillées, précision GPS comparée Garmin.
+3. **iphone-16-vs-iphone-17-faut-il-upgrader** (blog/iphone) — Gap : pas de guide upgrade. Concurrents : lesmobiles, consomac, boulanger, tomshardware.fr. Angle : verdict segmenté (si tu as un 16, un 14/15, ou achat neuf), iPhone 17e mentionné.
+4. **iphone-fold-prix-date-rumeurs** (blog/iphone) — News/rumeur. Gap : iPhone Fold dédié. Concurrents : phonandroid, macrumors, ploonk, worldissmall. Sources : Bloomberg/Gurman, Ming-Chi Kuo, UBS, Fubon Research. Angle : synthèse fiable avec prix estimés France.
+
+### Catégories blog/accessoires et blog/watch créées
+- Nouveau dossier `content/blog/accessoires/` (premier : airpods-pro-3-vs-airpods-pro-2)
+- Nouveau dossier `content/blog/watch/` (premier : apple-watch-pour-courir)
+
+### DA — sections articles batch 2
+- effect-articles appliqué : grille asymétrique + cards border-top 3px --accent-1 (identique batch 1)
+- Composants utilisés : StatRow/StatCard, Tip, Warning, Verdict, tableaux comparatifs avec verdict
+- Catégorie accessoires → --accent-2 (ambre), catégorie watch → --accent-5 (existant dans CATEGORY_ACCENT)

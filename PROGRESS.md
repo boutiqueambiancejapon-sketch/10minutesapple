@@ -71,6 +71,12 @@
   - [x] blog/iphone/iphone-17-pro-vs-iphone-17-pro-max — Comparatif Pro vs Pro Max
   - [x] blog/ipad/quel-ipad-etudiant — Guide iPad étudiant par filière et budget
   - [x] blog/iphone/wwdc-2026-ios-27-nouveautes — WWDC 2026, iOS 27, nouveau Siri (news/rumeurs)
+- [x] Blog : 4 articles batch 2 (15 blog articles total)
+  - [x] blog/accessoires/airpods-pro-3-vs-airpods-pro-2 — Comparatif AirPods Pro 3 vs Pro 2
+  - [x] blog/watch/apple-watch-pour-courir — Guide Apple Watch running (Series 11 vs Ultra 3 vs SE 3)
+  - [x] blog/iphone/iphone-16-vs-iphone-17-faut-il-upgrader — Comparatif upgrade iPhone 16 vs 17
+  - [x] blog/iphone/iphone-fold-prix-date-rumeurs — News/rumeurs iPhone Fold (prix, date, specs)
+- [x] Catégories blog/accessoires et blog/watch créées
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

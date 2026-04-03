@@ -77,6 +77,12 @@
   - [x] blog/iphone/iphone-16-vs-iphone-17-faut-il-upgrader — Comparatif upgrade iPhone 16 vs 17
   - [x] blog/iphone/iphone-fold-prix-date-rumeurs — News/rumeurs iPhone Fold (prix, date, specs)
 - [x] Catégories blog/accessoires et blog/watch créées
+- [x] Blog : 4 articles batch 3 (19 blog articles total)
+  - [x] blog/ipad/ipad-pro-m5-vs-macbook-air-m5 — Comparatif cross-catégorie pour travailler
+  - [x] blog/astuces/economiser-batterie-iphone — 12 réglages iOS 26 testés avec gains mesurés
+  - [x] blog/mac/mac-mini-m4-pro-pour-qui — Guide d'achat Mac Mini par profil
+  - [x] blog/iphone/iphone-18-pro-rumeurs-prix-date — News/rumeurs iPhone 18 Pro sept 2026
+- [x] Catégorie blog/astuces créée
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

@@ -77,6 +77,11 @@
   - [x] blog/iphone/iphone-16-vs-iphone-17-faut-il-upgrader — Comparatif upgrade iPhone 16 vs 17
   - [x] blog/iphone/iphone-fold-prix-date-rumeurs — News/rumeurs iPhone Fold (prix, date, specs)
 - [x] Catégories blog/accessoires et blog/watch créées
+- [x] Blog : 4 articles batch 4 (23 blog articles total)
+  - [x] blog/accessoires/accessoires-magsafe-iphone — Guide 8 accessoires MagSafe testés
+  - [x] blog/astuces/configurer-nouvel-iphone-transfert — Tutoriel transfert données nouvel iPhone
+  - [x] blog/watch/apple-watch-ultra-3-vs-garmin — Comparatif Ultra 3 vs Garmin Forerunner 970
+  - [x] blog/iphone/apple-intelligence-france-bilan-2026 — News/bilan Apple Intelligence France
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

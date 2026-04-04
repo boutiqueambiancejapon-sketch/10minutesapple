@@ -5,10 +5,11 @@ import { parseContent, parseYaml } from '@/packages/cms/lib/parser'
 import { cmsConfig } from '@/cms.config'
 import { ContentEditor } from '@/packages/cms/components/ContentEditor'
 
-type Params = Promise<{ collection: string; slug: string }>
+type Params = Promise<{ collection: string; slug: string[] }>
 
 export default async function EntryEditorPage({ params }: { params: Params }) {
-  const { collection, slug } = await params
+  const { collection, slug: slugParts } = await params
+  const slug = slugParts.join('/')
   const collDef = cmsConfig.collections[collection]
   if (!collDef) notFound()
 

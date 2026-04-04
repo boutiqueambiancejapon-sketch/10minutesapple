@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { getSession, getGitHubToken } from '@/packages/cms/lib/get-session'
-import { listFiles, getFile, putFile, deleteFile } from '@/packages/cms/lib/github'
+import { listFiles, listFilesRecursive, getFile, putFile, deleteFile } from '@/packages/cms/lib/github'
 import { parseContent, serializeContent, parseYaml } from '@/packages/cms/lib/parser'
 import { cmsConfig } from '@/cms.config'
 
@@ -30,11 +30,12 @@ export async function GET(_request: Request, { params }: { params: Params }) {
   const { repo, branch } = cmsConfig
 
   if (!slug) {
-    const files = await listFiles(auth.token, repo, collDef.path, branch)
+    const listFn = collDef.categorized ? listFilesRecursive : listFiles
+    const files = await listFn(auth.token, repo, collDef.path, branch)
     const entries = files
       .filter((f) => f.type === 'file' && (f.name.endsWith('.mdx') || f.name.endsWith('.yaml')))
       .map((f) => ({
-        slug: f.name.replace(/\.(mdx|yaml)$/, ''),
+        slug: f.path.replace(`${collDef.path}/`, '').replace(/\.(mdx|yaml)$/, ''),
         name: f.name,
         path: f.path,
         sha: f.sha,

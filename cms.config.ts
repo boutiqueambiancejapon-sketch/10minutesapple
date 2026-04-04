@@ -46,6 +46,48 @@ export const cmsConfig: CmsConfig = {
         stickyCtaMessage: { type: 'text', label: 'Message CTA' },
       },
     },
+    blog: {
+      label: 'Blog',
+      path: 'content/blog',
+      format: 'mdx',
+      categorized: true,
+      fields: {
+        title: { type: 'text', label: 'Titre', required: true },
+        description: { type: 'textarea', label: 'Description SEO', required: true },
+        featureImage: { type: 'image', label: 'Image principale' },
+        publishedAt: { type: 'date', label: 'Date publication', required: true },
+        updatedAt: { type: 'date', label: 'Date MAJ' },
+        readingTimeMin: { type: 'number', label: 'Temps de lecture (min)', default: 5 },
+        categorie: { type: 'select', label: 'Catégorie', options: [
+          { label: 'iPhone', value: 'iphone' },
+          { label: 'Mac', value: 'mac' },
+          { label: 'iPad', value: 'ipad' },
+          { label: 'Apple Watch', value: 'watch' },
+          { label: 'Accessoires', value: 'accessoires' },
+          { label: 'Astuces', value: 'astuces' },
+          { label: 'Deals', value: 'deals' },
+        ]},
+        tags: { type: 'tags', label: 'Tags' },
+        aiSummary: { type: 'list', label: 'En bref', itemType: 'textarea' },
+        faq: {
+          type: 'repeater',
+          label: 'FAQ',
+          fields: {
+            q: { type: 'text', label: 'Question', required: true },
+            a: { type: 'textarea', label: 'Réponse', required: true },
+          },
+        },
+        stickyCta: {
+          type: 'repeater',
+          label: 'Sticky CTA',
+          fields: {
+            label: { type: 'text', label: 'Label bouton', required: true },
+            url: { type: 'text', label: 'URL Amazon', required: true },
+          },
+        },
+        stickyCtaMessage: { type: 'text', label: 'Message CTA' },
+      },
+    },
     authors: {
       label: 'Auteurs',
       path: 'content/authors',

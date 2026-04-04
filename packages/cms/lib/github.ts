@@ -48,6 +48,28 @@ export async function listFiles(
   return Array.isArray(data) ? data : []
 }
 
+/** List files recursively (for collections with subdirectories like blog/) */
+export async function listFilesRecursive(
+  token: string,
+  repo: string,
+  path: string,
+  branch: string
+): Promise<GHFile[]> {
+  const entries = await listFiles(token, repo, path, branch)
+  const results: GHFile[] = []
+
+  for (const entry of entries) {
+    if (entry.type === 'file') {
+      results.push(entry)
+    } else if (entry.type === 'dir') {
+      const sub = await listFilesRecursive(token, repo, entry.path, branch)
+      results.push(...sub)
+    }
+  }
+
+  return results
+}
+
 /** Get a single file's content (base64 decoded) */
 export async function getFile(
   token: string,

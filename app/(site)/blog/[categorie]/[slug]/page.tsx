@@ -37,7 +37,9 @@ type Params = Promise<{ categorie: string; slug: string }>
 
 export async function generateStaticParams() {
   const articles = getAllArticles()
-  return articles.map(({ categorie, slug }) => ({ categorie, slug }))
+  return articles
+    .filter((a) => !a.standalone)
+    .map(({ categorie, slug }) => ({ categorie, slug }))
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {

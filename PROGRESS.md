@@ -88,6 +88,11 @@
   - [x] blog/astuces/configurer-nouvel-iphone-transfert — Tutoriel transfert données nouvel iPhone
   - [x] blog/watch/apple-watch-ultra-3-vs-garmin — Comparatif Ultra 3 vs Garmin Forerunner 970
   - [x] blog/iphone/apple-intelligence-france-bilan-2026 — News/bilan Apple Intelligence France
+- [x] Blog : 4 articles batch 5 (27 blog articles total)
+  - [x] blog/astuces/nettoyer-stockage-iphone — Tutoriel 10 méthodes pour libérer du stockage iPhone
+  - [x] blog/ipad/quel-ipad-pour-dessiner — Guide d'achat iPad pour dessin/Procreate par profil
+  - [x] blog/watch/apple-watch-suivi-sante — Guide capteurs santé Apple Watch, fiabilité, certifications
+  - [x] blog/accessoires/homepod-ecran-prix-date-rumeurs — News/rumeurs HomePod avec écran (HomePad)
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

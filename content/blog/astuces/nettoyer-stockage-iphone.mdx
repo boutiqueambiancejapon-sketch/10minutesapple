@@ -1,0 +1,115 @@
+---
+title: "Comment libérer du stockage sur iPhone : 10 méthodes qui marchent vraiment"
+description: "iPhone stockage plein ? 10 méthodes testées sous iOS 26 pour récupérer 10 à 30 Go sans perdre tes photos. Données système, apps, cache — tout y passe."
+publishedAt: "2026-04-05"
+updatedAt: "2026-04-05"
+readingTimeMin: 8
+categorie: "astuces"
+tags: ["stockage", "iphone", "ios-26", "nettoyage", "donnees-systeme", "astuces"]
+aiSummary:
+  - "Réglages > Général > Stockage de l'iPhone affiche la consommation par app et propose des recommandations automatiques — c'est le point de départ avant tout nettoyage."
+  - "Les 'Données système' gonflent souvent à 15-20 Go après une mise à jour iOS 26 : un redémarrage forcé ou un backup-restore via Finder règle le problème."
+  - "Apple Intelligence réserve 7 Go de stockage permanent sur les iPhone compatibles — désactiver la fonction dans Réglages > Apple Intelligence et Siri libère cet espace."
+  - "iOS 26 introduit le Dynamic Storage Reserve qui pré-réserve de l'espace pour les mises à jour automatiques — c'est normal si ton stockage 'libre' semble plus bas qu'avant."
+  - "Les téléchargements hors ligne (Netflix, Spotify, YouTube) pèsent souvent 5 à 15 Go sans qu'on le réalise — chaque app a son propre menu pour les supprimer."
+  - "Décharger automatiquement les apps inutilisées (Réglages > App Store) supprime le binaire mais garde tes données — récupération transparente de 2 à 6 Go par app."
+stickyCta:
+  - label: "iPhone 17 256 Go sur Amazon"
+    url: "https://www.amazon.fr/Apple-iPhone-17-256-Go/dp/B0FQH32F7H"
+stickyCtaMessage: "Marre du stockage plein ? Passe à 256 Go :"
+faq:
+  - q: "Pourquoi mon iPhone affiche 'Stockage plein' alors qu'il reste de l'espace ?"
+    a: "iOS réserve entre 2 et 5 Go pour le fonctionnement du système (mises à jour, cache, logs). Depuis iOS 26, le Dynamic Storage Reserve pré-alloue aussi de l'espace pour les futures mises à jour automatiques. L'espace 'disponible' affiché dans Réglages > Général > Stockage est l'espace réellement utilisable après ces réservations."
+  - q: "Fermer les apps en arrière-plan libère-t-il du stockage ?"
+    a: "Non. C'est un mythe tenace. Fermer une app en swipant vide la RAM (mémoire vive), pas le stockage (mémoire flash). Le stockage d'une app reste identique qu'elle soit ouverte ou fermée. Pour libérer du stockage, il faut supprimer des données : cache, documents, téléchargements hors ligne."
+  - q: "Les 'Données système' de 20 Go, c'est normal ?"
+    a: "Non. Entre 5 et 10 Go est normal. Au-delà de 15 Go, c'est souvent un gonflement après une mise à jour iOS. Trois solutions : redémarrage forcé, effacement du cache Safari, ou en dernier recours backup complet via Finder puis restauration. Ce dernier ramène systématiquement les données système sous 8 Go."
+  - q: "Décharger une app supprime-t-il mes données ?"
+    a: "Non. 'Décharger l'app' supprime le binaire (l'application elle-même) mais conserve tous les documents et données associés. Quand tu retélécharges l'app depuis l'App Store, elle retrouve son état exact. Seule la suppression complète efface tout."
+  - q: "Apple Intelligence prend-il vraiment 7 Go de stockage ?"
+    a: "Oui. Apple Intelligence télécharge des modèles IA locaux qui occupent environ 7 Go sur iPhone. Si tu n'utilises pas les fonctions IA (résumés, retouche photo IA, Siri contextuel), tu peux désactiver Apple Intelligence dans Réglages > Apple Intelligence et Siri pour récupérer ces 7 Go."
+  - q: "Comment savoir ce qui prend le plus de place sur mon iPhone ?"
+    a: "Va dans Réglages > Général > Stockage de l'iPhone. La barre colorée en haut montre la répartition globale (apps, photos, messages, système). En dessous, chaque app est listée par taille décroissante avec le détail 'Taille de l'app' vs 'Documents et données'. C'est l'outil natif le plus fiable — aucune app tierce ne fait mieux."
+  - q: "Vaut-il mieux payer iCloud ou acheter un iPhone avec plus de stockage ?"
+    a: "Les deux se complètent. iCloud+ à 0,99 €/mois (50 Go) ou 2,99 €/mois (200 Go) déplace tes photos dans le cloud et libère de l'espace local. Mais si tu filmes beaucoup en 4K ou installes des jeux lourds, un iPhone 256 Go évite le problème à la source. Sur 4 ans, 256 Go coûte ~100 € de plus qu'un 128 Go — iCloud 200 Go coûte 144 € sur la même période."
+---
+
+## Pourquoi ton iPhone affiche-t-il "Stockage presque plein" ?
+
+Le **stockage de l'iPhone** se remplit sans prévenir. Entre les photos en 48 MP, les vidéos 4K, les caches d'apps et les modèles Apple Intelligence, un iPhone 128 Go arrive à saturation en 18 à 24 mois d'usage normal. Et un iPhone plein, c'est un iPhone qui rame : iOS ralentit les écritures, les apps crashent, et les mises à jour refusent de s'installer.
+
+Voici 10 méthodes testées sous **iOS 26** pour récupérer **10 à 30 Go** sans perdre tes photos ni réinitialiser ton iPhone. Temps total : moins de 10 minutes.
+
+<StatRow>
+<StatCard value="10-30 Go" label="Espace récupérable en moyenne" accent="1" />
+<StatCard value="10 min" label="Temps de nettoyage" />
+<StatCard value="0 €" label="Aucune app tierce nécessaire" accent="3" />
+</StatRow>
+
+## Comment auditer le stockage de ton iPhone ?
+
+**Méthode 1 : l'outil natif.** Réglages > Général > Stockage de l'iPhone. Cette page affiche la répartition exacte par catégorie (apps, photos, messages, système) et liste chaque app par taille décroissante. Apple y ajoute des **recommandations automatiques** : optimiser les photos, vider la corbeille, décharger les apps inutilisées.
+
+C'est le seul outil fiable. Les apps "nettoyeur iPhone" du type PhoneClean ou iMyFone ne peuvent pas accéder aux données des autres apps — elles n'ont aucun avantage sur l'outil natif et certaines ajoutent du bloatware.
+
+Repère les trois coupables habituels : **Photos** (souvent 20-50 Go), **Messages** (pièces jointes accumulées), et **Données système** (le fourre-tout mystérieux d'iOS).
+
+## Comment réduire les Données système qui explosent ?
+
+Les **Données système** (anciennement "Autre") gonflent silencieusement. Entre 5 et 10 Go, c'est normal. Au-dessus de 15 Go, c'est un problème documenté — surtout après une mise à jour iOS 26.
+
+**Méthode 2 : vider le cache Safari.** Réglages > Apps > Safari > Effacer historique, données de site. Le cache de navigation accumule entre 500 Mo et 3 Go selon ton usage. C'est la première chose à faire.
+
+**Méthode 3 : raccourcir l'historique Messages.** Réglages > Apps > Messages > Conserver les messages > 30 jours. Par défaut, iOS garde tous les messages indéfiniment. Les pièces jointes (photos, vidéos, GIF) dans Messages pèsent souvent **3 à 10 Go** sur un iPhone de 2+ ans.
+
+**Méthode 4 : le backup-restore.** Si les données système dépassent 20 Go et résistent aux nettoyages, la solution radicale fonctionne à chaque fois : backup complet via Finder (Mac) ou iCloud, puis Réglages > Général > Transférer ou réinitialiser > Effacer contenu et réglages > Restaurer depuis la sauvegarde. Les données système retombent systématiquement sous 8 Go.
+
+<Warning>Attention : vérifie que ta sauvegarde est complète et récente avant toute réinitialisation. Réglages > [ton nom] > iCloud > Sauvegarde iCloud pour vérifier la date de dernière sauvegarde.</Warning>
+
+## Apple Intelligence réserve-t-il vraiment 7 Go sur ton iPhone ?
+
+Oui. Depuis iOS 18.2, **Apple Intelligence** télécharge des modèles d'IA en local pour le traitement des résumés, la retouche photo et Siri contextuel. Ces modèles occupent environ **7 Go** de stockage permanent. Sur un iPhone 128 Go, c'est 5,5 % de la capacité totale.
+
+**Méthode 5 : désactiver Apple Intelligence.** Réglages > Apple Intelligence et Siri > Désactiver Apple Intelligence. Si tu n'utilises pas les résumés de notifications, les outils d'écriture IA ou le nouveau Siri, ces 7 Go sont récupérables immédiatement. Selon MacRumors, les utilisateurs qui désactivent la fonction sur iPhone + iPad + Mac récupèrent jusqu'à 21 Go au total.
+
+## Quelles apps invisibles dévorent ton stockage ?
+
+**Méthode 6 : supprimer les téléchargements hors ligne.** C'est le coupable le plus sous-estimé. Une saison Netflix en HD pèse **3 à 7 Go**. Les playlists Spotify hors ligne : 1 à 5 Go. YouTube Premium, Apple Music, Podcasts — chaque app stocke ses téléchargements séparément.
+
+Va dans chaque app > Paramètres > Téléchargements > Tout supprimer. Ce nettoyage récupère souvent **5 à 15 Go** que l'écran Stockage de l'iPhone attribue simplement à la taille de l'app.
+
+**Méthode 7 : décharger les apps inutilisées.** Réglages > App Store > Décharger les apps inutilisées. Cette option supprime automatiquement le binaire des apps non ouvertes depuis 30+ jours, mais conserve les données. Un jeu inutilisé pèse entre **2 et 6 Go** — déchargé, il ne pèse que quelques Mo de données sauvegardées.
+
+<Tip>Le vrai tip : les apps de réseaux sociaux (Instagram, TikTok, Snapchat) accumulent des caches de plusieurs Go. La seule façon de vider leur cache sur iOS : supprimer l'app puis la réinstaller. C'est radical mais ça fonctionne — ton compte est lié à ton identifiant, pas à l'app locale.</Tip>
+
+## Comment optimiser les photos sans les perdre ?
+
+**Méthode 8 : activer "Optimiser le stockage".** Réglages > Apps > Photos > Optimiser le stockage de l'iPhone. Cette option conserve les originaux en pleine résolution dans iCloud et stocke des miniatures légères sur l'iPhone. Le gain est massif : une photothèque de 30 Go peut descendre à 2-3 Go en local.
+
+Prérequis : un abonnement iCloud+ avec assez d'espace (50 Go à 0,99 €/mois ou 200 Go à 2,99 €/mois). La synchronisation initiale prend 24 à 72 heures en Wi-Fi.
+
+**Méthode 9 : vider "Supprimées récemment".** Photos > Albums > Supprimées récemment > Tout supprimer. Les photos supprimées restent stockées 30 jours avant d'être effacées. Ce dossier contient souvent 1 à 5 Go de photos que tu croyais déjà supprimées.
+
+## Qu'est-ce que le Dynamic Storage Reserve d'iOS 26 ?
+
+**Méthode 10 : comprendre (et ne pas combattre) la réservation.** iOS 26 introduit le **Dynamic Storage Reserve** : quand les mises à jour automatiques sont activées, iOS pré-réserve de l'espace pour les futures mises à jour OTA. Tu n'as plus besoin de libérer 20 Go manuellement avant une mise à jour.
+
+Le compromis : l'espace "disponible" affiché peut sembler plus bas qu'avant. C'est normal et voulu. Si tu veux récupérer cet espace temporairement, désactive les mises à jour automatiques dans Réglages > Général > Mise à jour logicielle > Mises à jour automatiques — mais tu devras gérer les mises à jour manuellement.
+
+## Le récapitulatif des gains par méthode
+
+| Méthode | Gain estimé | Temps |
+|---|---|---|
+| **Cache Safari** | 0,5-3 Go | 10 sec |
+| **Messages (30 jours)** | 3-10 Go | 30 sec |
+| **Backup-restore données système** | 5-15 Go | 1 h |
+| **Désactiver Apple Intelligence** | 7 Go | 10 sec |
+| **Téléchargements hors ligne** | 5-15 Go | 3 min |
+| **Décharger apps inutilisées** | 2-10 Go | 1 min |
+| **Supprimer/réinstaller apps sociales** | 2-5 Go | 5 min |
+| **Optimiser photos iCloud** | 10-40 Go | 24-72 h |
+| **Vider Supprimées récemment** | 1-5 Go | 10 sec |
+
+Honnêtement, les trois réglages les plus rentables sont l'optimisation photos iCloud, le nettoyage des téléchargements hors ligne et le passage des Messages à 30 jours. À eux seuls, ils libèrent 15 à 40 Go sur un iPhone saturé.
+
+Si ton iPhone 128 Go reste insuffisant malgré tout, utilise le [simulateur de prix Apple](/simulateur) pour trouver le bon moment d'acheter un modèle 256 Go — la différence de prix se rentabilise en tranquillité sur 3-4 ans.

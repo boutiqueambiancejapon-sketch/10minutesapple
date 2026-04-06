@@ -93,6 +93,11 @@
   - [x] blog/ipad/quel-ipad-pour-dessiner — Guide d'achat iPad pour dessin/Procreate par profil
   - [x] blog/watch/apple-watch-suivi-sante — Guide capteurs santé Apple Watch, fiabilité, certifications
   - [x] blog/accessoires/homepod-ecran-prix-date-rumeurs — News/rumeurs HomePod avec écran (HomePad)
+- [x] Blog : 4 articles batch 6 (31 blog articles total)
+  - [x] blog/accessoires/meilleures-coques-iphone-17-pro — Guide 8 coques testées avec comparatif et liens affiliés
+  - [x] blog/astuces/reglages-photo-iphone-17-pro — 10 réglages photo iPhone 17 Pro (ProRAW, Camera Control, zoom 8x)
+  - [x] blog/iphone/iphone-16e-bilan-un-an — Bilan iPhone 16e après 12 mois d'usage quotidien
+  - [x] blog/accessoires/vision-pro-2-rumeurs-prix-date — News/rumeurs Vision Pro 2 (prix, date, specs M6)
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

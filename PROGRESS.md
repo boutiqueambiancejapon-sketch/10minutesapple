@@ -98,6 +98,11 @@
   - [x] blog/astuces/reglages-photo-iphone-17-pro — 10 réglages photo iPhone 17 Pro (ProRAW, Camera Control, zoom 8x)
   - [x] blog/iphone/iphone-16e-bilan-un-an — Bilan iPhone 16e après 12 mois d'usage quotidien
   - [x] blog/accessoires/vision-pro-2-rumeurs-prix-date — News/rumeurs Vision Pro 2 (prix, date, specs M6)
+- [x] Blog : 4 articles batch 7 (35 blog articles total)
+  - [x] blog/mac/imac-m4-pour-qui — Guide d'achat iMac M4 tout-en-un par profil
+  - [x] blog/accessoires/airpods-max-2-test-avis — Test AirPods Max 2 vs Sony XM6 vs Bose QC Ultra
+  - [x] blog/iphone/quel-iphone-pour-photo — Comparatif quel iPhone pour la photo par profil
+  - [x] blog/ipad/ipad-air-m5-rumeurs-prix-date — News/rumeurs iPad Air M5 (prix, date, OLED)
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

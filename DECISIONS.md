@@ -148,3 +148,17 @@
 - effect-articles appliqué : grille asymétrique + cards border-top 3px --accent-1 (identique batch 1)
 - Composants utilisés : StatRow/StatCard, Tip, Warning, Verdict, tableaux comparatifs avec verdict
 - Catégorie accessoires → --accent-2 (ambre), catégorie watch → --accent-5 (existant dans CATEGORY_ACCENT)
+
+## Contenu — Batch articles SERP #7 (2026-04-07)
+
+### Méthodologie de sélection
+- Analyse du content gap vs 31 articles blog existants et 51 articles standalone
+- Gaps identifiés : 0 contenu iMac, 0 contenu AirPods Max, 0 guide photo dédié, 0 rumeur iPad Air M5
+- Recherche SERP concurrentielle + web research sur chaque sujet
+- ASINs vérifiés dans content/produits/ (imac-24-m4, airpods-max-2, iphone-17-pro, iphone-17-pro-max, ipad-air-11-m4, ipad-air-13-m4, sony-wh-1000xm6, bose-qc-ultra)
+
+### Articles rédigés
+1. **imac-m4-pour-qui** (blog/mac) — Guide d'achat iMac M4 tout-en-un. Gap : aucun contenu iMac sur le site. Angle : par profil (famille, créatif, étudiant) + comparatif vs Mac Mini M4.
+2. **airpods-max-2-test-avis** (blog/accessoires) — Test AirPods Max 2 après plusieurs mois. Gap : aucun contenu casque audio. Angle : comparatif trilateral Max 2 vs Sony XM6 vs Bose QC Ultra, verdict écosystème.
+3. **quel-iphone-pour-photo** (blog/iphone) — Guide comparatif photo iPhone. Gap : aucun guide dédié photo. Angle : par profil (quotidien, voyage, portrait, vidéo) avec tableau comparatif 5 modèles + iPhone 16 Pro reconditionné.
+4. **ipad-air-m5-rumeurs-prix-date** (blog/ipad) — News/rumeurs iPad Air M5. Gap : aucun contenu rumeurs iPad Air. Sources : 9to5Mac, MacRumors, Bloomberg/Gurman. Angle : OLED sur 13 pouces, 12 Go RAM, prix estimés FR.

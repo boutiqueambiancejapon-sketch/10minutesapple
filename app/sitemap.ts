@@ -1,10 +1,14 @@
 import type { MetadataRoute } from 'next'
+import { getAllArticles, articleHref, getCategories } from '@/lib/blog'
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://10minutesapple.com'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const articles = getAllArticles()
+  const categories = getCategories()
+
+  const staticPages: MetadataRoute.Sitemap = [
     {
       url: SITE_URL,
       lastModified: new Date(),
@@ -48,4 +52,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     },
   ]
+
+  const categoryPages: MetadataRoute.Sitemap = categories.map((cat) => ({
+    url: `${SITE_URL}/blog/${cat.slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.7,
+  }))
+
+  const articlePages: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${SITE_URL}${articleHref(article)}`,
+    lastModified: new Date(article.updatedAt ?? article.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.6,
+  }))
+
+  return [...staticPages, ...categoryPages, ...articlePages]
 }

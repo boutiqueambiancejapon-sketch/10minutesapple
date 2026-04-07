@@ -102,7 +102,7 @@
   - [x] blog/mac/imac-m4-pour-qui — Guide d'achat iMac M4 tout-en-un par profil
   - [x] blog/accessoires/airpods-max-2-test-avis — Test AirPods Max 2 vs Sony XM6 vs Bose QC Ultra
   - [x] blog/iphone/quel-iphone-pour-photo — Comparatif quel iPhone pour la photo par profil
-  - [x] blog/ipad/ipad-air-m5-rumeurs-prix-date — News/rumeurs iPad Air M5 (prix, date, OLED)
+  - [x] blog/ipad/ipad-air-m4-test-premiers-jours — News/test iPad Air M4 (M4, 12 Go RAM, Wi-Fi 7)
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

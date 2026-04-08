@@ -109,6 +109,11 @@
   - [x] blog/watch/test-apple-watch-ultra-3 — Test complet Apple Watch Ultra 3 après 4 mois
   - [x] blog/iphone/apple-vision-pro-2-prix-date-rumeurs — News/rumeurs Apple Vision Pro 2 (prix, date, Vision Air)
 - [x] Produits : 3 fiches accessoires ajoutées (coque TechWoven, chargeur Anker MagGo, protection Spigen)
+- [x] Sidebar article : sommaire sticky (TOC) + "Deals du moment" avec prix barrés et liens affiliés Amazon
+  - [x] TableOfContents client component (IntersectionObserver scroll tracking)
+  - [x] SidebarDealCard server component (prix barré + badge -X% + CTA)
+  - [x] ArticleSidebar combinant TOC + deals
+  - [x] Layout article grid 2 colonnes (760px + 260px sidebar, collapse < 1080px)
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

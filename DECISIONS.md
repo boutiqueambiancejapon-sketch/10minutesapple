@@ -170,3 +170,11 @@
 2. **ipad-air-m4-vs-ipad-pro-m5** (blog/ipad) — Comparatif. Gap : aucun comparatif FR iPad Air M4 vs Pro M5 (contenus EN uniquement sur MacRumors, Mark Ellis, PhoneArena). Angle : verdict par profil (étudiant, créatif, pro), tableaux specs + prix FR, lien vers guide étudiant existant.
 3. **test-apple-watch-ultra-3** (blog/watch) — Test/review. Gap : aucun test FR de référence sur le site (article existant = guide running). Concurrents : lheurepassion.com (avis), combak.co (avis), fitfitzone.com (test). Angle : test terrain 4 mois (running + rando + quotidien), comparaison GPS vs Garmin Fenix 8, capteur tension artérielle analysé.
 4. **apple-vision-pro-2-prix-date-rumeurs** (blog/iphone) — News/rumeur. Gap : 0 contenu AR/VR sur le site. Concurrents : realite-virtuelle.com, cyber-jay.fr, mac4ever.com. Sources : Ming-Chi Kuo (TF Int.), Mark Gurman (Bloomberg), Consomac. Angle : synthèse fiable Vision Pro 2 + Vision Air, distinction refresh M5 vs vrai redesign.
+
+## DA — sidebar articles (2026-04-08)
+- Sidebar sticky (top: 90px) visible à partir de 1080px — collapse complète en dessous
+- Grille article : `760px + 260px` avec gap `var(--space-8)`
+- **Sommaire** : numérotation JetBrains Mono `01-06`, IntersectionObserver pour highlight de la section visible, fond subtil `rgba(255,255,255,0.06)` sur l'item actif
+- **Deals du moment** : cards avec prix barré via PriceTag (sm) + badge -X%, CTA gradient aurora-1→aurora-2. Dot pulsante rouge devant le titre. Hover : border accent-1
+- Faux prix original calculé server-side : +8% (>1000€), +12% (>200€), +15% (<200€), arrondi par paliers
+- Données deals : `getCTAsForCategory(categorie)` — 3 produits max, liens Amazon avec tag affilié

@@ -787,6 +787,49 @@ body {
   }
 }
 
+/* ── Article sidebar layout ─────────────────────────────── */
+.article-body-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+  padding: 0 var(--space-6) var(--space-12);
+}
+@media (min-width: 1080px) {
+  .article-body-grid {
+    grid-template-columns: minmax(0, 760px) 260px;
+    gap: var(--space-8);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+}
+.article-sidebar {
+  display: none;
+}
+@media (min-width: 1080px) {
+  .article-sidebar {
+    display: block;
+  }
+}
+.article-sidebar-inner {
+  position: sticky;
+  top: 90px; /* sous la nav sticky */
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding: var(--space-4) 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+/* Deal card hover */
+.sidebar-deal-card:hover {
+  border-color: var(--accent-1) !important;
+  background: var(--bg-surface-2) !important;
+}
+/* Pulse dot animation pour "Deals du moment" */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
 /* Carousel horizontal scroll-snap */
 .article-grid {
   display: grid;

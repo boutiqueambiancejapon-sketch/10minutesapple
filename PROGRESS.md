@@ -103,6 +103,12 @@
   - [x] blog/accessoires/airpods-max-2-test-avis — Test AirPods Max 2 vs Sony XM6 vs Bose QC Ultra
   - [x] blog/iphone/quel-iphone-pour-photo — Comparatif quel iPhone pour la photo par profil
   - [x] blog/ipad/ipad-air-m4-test-premiers-jours — News/test iPad Air M4 (M4, 12 Go RAM, Wi-Fi 7)
+- [x] Blog : 4 articles batch 8 (39 blog articles total)
+  - [x] blog/accessoires/meilleurs-accessoires-iphone-17-pro — Guide d'achat accessoires iPhone 17 Pro (coques, chargeurs, protections)
+  - [x] blog/ipad/ipad-air-m4-vs-ipad-pro-m5 — Comparatif iPad Air M4 vs iPad Pro M5
+  - [x] blog/watch/test-apple-watch-ultra-3 — Test complet Apple Watch Ultra 3 après 4 mois
+  - [x] blog/iphone/apple-vision-pro-2-prix-date-rumeurs — News/rumeurs Apple Vision Pro 2 (prix, date, Vision Air)
+- [x] Produits : 3 fiches accessoires ajoutées (coque TechWoven, chargeur Anker MagGo, protection Spigen)
 - Comparateur : filtres interactifs ('use client' isolé)
 - Quiz : moteur de recommandation interactif V2
 - Simulateur : sélecteur modèle interactif

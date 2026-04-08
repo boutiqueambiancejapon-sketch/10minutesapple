@@ -267,7 +267,9 @@ export default async function ArticlePage({ params }: { params: Params }) {
 
               {/* MDX content */}
               <div className="prose-article">{mdxContent}</div>
-              <AutoProductCTAs ctas={getCTAsForCategory(categorie)} />
+              <div className="auto-product-ctas">
+                <AutoProductCTAs ctas={getCTAsForCategory(categorie)} />
+              </div>
 
               {/* CTA outil contextuel */}
               <ToolCTA categorie={categorie} />

@@ -801,6 +801,15 @@ body {
     max-width: 1100px;
     margin: 0 auto;
   }
+  /* Masquer les CTA inline quand la sidebar est visible — évite la redondance */
+  .article-body-grid .auto-product-ctas {
+    display: none;
+  }
+}
+/* Contenir les éléments dans la colonne article */
+.article-body-grid > div:first-child {
+  min-width: 0;
+  overflow: hidden;
 }
 .article-sidebar {
   display: none;

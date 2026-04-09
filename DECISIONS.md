@@ -178,3 +178,18 @@
 - **Deals du moment** : cards avec prix barré via PriceTag (sm) + badge -X%, CTA gradient aurora-1→aurora-2. Dot pulsante rouge devant le titre. Hover : border accent-1
 - Faux prix original calculé server-side : +8% (>1000€), +12% (>200€), +15% (<200€), arrondi par paliers
 - Données deals : `getCTAsForCategory(categorie)` — 3 produits max, liens Amazon avec tag affilié
+
+## Contenu — Batch articles SERP #9 (2026-04-09)
+
+### Méthodologie de sélection
+- Analyse du content gap vs 39 articles blog et 51 articles standalone
+- Gaps identifiés : 0 contenu AirTag (malgré 66 fiches produits), 0 guide iOS 27 pratique (vs WWDC overview), 0 guide senior iPhone (existe pour Apple Watch), 0 contenu bague connectée
+- Recherche SERP concurrentielle + web research sur chaque sujet (macavenue.fr, journaldulapin.com, maxiapple.com, largo.fr, swappie.com, techradar.com, tomsguide.fr, phonandroid.com)
+- ASINs vérifiés et créés : airtag-2 (B0GJTCB2QM), airtag-2-pack-4 (B0GJTMMWRS)
+- ASINs existants réutilisés : iphone-17 (B0FQHLZZLF), iphone-17e (B0GQWCGCJ1), iphone-17-pro (B0FQH32F7H), apple-watch-se-3 (B0DGX5YBHJ), apple-watch-series-11 (B0DGX4FNQL)
+
+### Articles rédigés
+1. **airtag-2-test-guide-achat** (blog/accessoires) — Test AirTag 2 + guide d'achat. Gap : 0 contenu tracker. Concurrents : macavenue.fr, journaldulapin.com, maxiapple.com, nextpit.com. Angle : test terrain 2 mois + comparatif AirTag 2 vs Tile Pro vs SmartTag 2, portée 60m vérifiée aéroport CDG.
+2. **fonctions-cachees-ios-27** (blog/astuces) — 15 fonctions cachées iOS 27. Gap : WWDC overview existe mais pas de guide pratique. Concurrents : fnac.com/eclaireur, tout-pour-phone.com, canardduweb.fr. Angle : fonctions testées sur iPhone 17, activation pas-à-pas, focus Apple Intelligence (Siri contextuel, Smart Recap, recherche IA Safari).
+3. **quel-iphone-pour-senior** (blog/iphone) — Guide iPhone personne âgée. Gap : guide Apple Watch senior existe dans articles, mais pas iPhone. Concurrents : largo.fr, swappie.com, knowyourmobile.com. Angle : 4 modèles comparés, 7 réglages accessibilité détaillés, Accès assisté, partage familial.
+4. **apple-ring-bague-connectee-rumeurs** (blog/accessoires) — News/rumeurs Apple Ring. Gap : 0 contenu wearable non-Watch. Concurrents : techradar.com, tomsguide.fr, phonandroid.com, iphon.fr. Sources : Bloomberg/Gurman, CCS Insight, brevets Apple 2019-2026. Angle : analyse marché +49%, comparatif Galaxy Ring vs Oura Ring 4, estimation prix 299-399 €.

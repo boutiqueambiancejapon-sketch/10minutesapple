@@ -108,6 +108,12 @@
   - [x] blog/ipad/ipad-air-m4-vs-ipad-pro-m5 — Comparatif iPad Air M4 vs iPad Pro M5
   - [x] blog/watch/test-apple-watch-ultra-3 — Test complet Apple Watch Ultra 3 après 4 mois
   - [x] blog/iphone/apple-vision-pro-2-prix-date-rumeurs — News/rumeurs Apple Vision Pro 2 (prix, date, Vision Air)
+- [x] Blog : 4 articles batch 9 (43 blog articles total)
+  - [x] blog/accessoires/airtag-2-test-guide-achat — Test AirTag 2 + guide d'achat + comparatif trackers
+  - [x] blog/astuces/fonctions-cachees-ios-27 — 15 fonctions cachées iOS 27 (Siri contextuel, Smart Recap, satellite)
+  - [x] blog/iphone/quel-iphone-pour-senior — Guide iPhone pour personnes âgées + réglages accessibilité
+  - [x] blog/accessoires/apple-ring-bague-connectee-rumeurs — News/rumeurs Apple Ring (brevets, concurrence, analyse marché)
+- [x] Produits : fiches AirTag 2 (unité + pack 4) avec ASINs Amazon FR
 - [x] Produits : 3 fiches accessoires ajoutées (coque TechWoven, chargeur Anker MagGo, protection Spigen)
 - [x] Sidebar article : sommaire sticky (TOC) + "Deals du moment" avec prix barrés et liens affiliés Amazon
   - [x] TableOfContents client component (IntersectionObserver scroll tracking)

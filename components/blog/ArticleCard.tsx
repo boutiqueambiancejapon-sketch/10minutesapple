@@ -1,85 +1,86 @@
 /**
- * ArticleCard V2 — carte article avec image + titre + meta.
- * featured : grande image 16/9 + titre XXL.
- * default  : image 16/10 + titre medium.
- * L'image est tirée du slot "editorial-featured" (fallback placeholder).
+ * ArticleCard — carte article avec cover typographique procédurale (zéro image).
+ * featured : pleine largeur, cover XXL en haut + lead + meta.
+ * default  : grille, cover compacte + titre + meta + barre accent qui s'étend.
  * Server Component.
  */
 import Link from 'next/link'
 import type { ArticleMeta } from '@/lib/blog'
 import { CATEGORY_LABELS, CATEGORY_ACCENT, formatDate, articleHref } from '@/lib/blog'
-import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder'
+import { ArticleCover } from './ArticleCover'
 
 type Props = {
   article: ArticleMeta
   featured?: boolean
   showCategory?: boolean
-  index?: number
 }
 
 export function ArticleCard({ article, featured = false, showCategory = true }: Props) {
   const accent = CATEGORY_ACCENT[article.categorie] ?? 'var(--accent-1)'
   const label = CATEGORY_LABELS[article.categorie] ?? article.categorie
 
+  if (featured) {
+    return (
+      <Link
+        href={articleHref(article)}
+        className="article-card-feat"
+        style={{ '--cat-accent': accent } as React.CSSProperties}
+      >
+        <div className="article-card-feat-cover">
+          <ArticleCover article={article} ratio="21/9" size="featured" />
+        </div>
+        <div className="article-card-feat-body">
+          {showCategory && (
+            <p className="article-card-feat-eyebrow">
+              <span aria-hidden="true" className="bar" />
+              {label}
+              <span aria-hidden="true" className="dot">·</span>
+              Featured
+            </p>
+          )}
+          <h2 className="article-card-feat-title">{article.title}</h2>
+          {article.description && (
+            <p className="article-card-feat-lead">{article.description}</p>
+          )}
+          <div className="article-card-feat-meta">
+            <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+            <span aria-hidden="true" className="sep">·</span>
+            <span>{article.readingTimeMin} min de lecture</span>
+            <span aria-hidden="true" className="sep">·</span>
+            <span className="cta-inline">
+              Lire l&rsquo;article <span aria-hidden="true">→</span>
+            </span>
+          </div>
+        </div>
+      </Link>
+    )
+  }
+
   return (
     <Link
       href={articleHref(article)}
-      className={`article-card-v2 ${featured ? 'featured' : ''}`}
+      className="article-card-typo"
+      style={{ '--cat-accent': accent } as React.CSSProperties}
     >
-      <div className="article-card-v2-image">
-        <ImagePlaceholder
-          slotId="editorial-featured"
-          ratio={featured ? '16/9' : '16/10'}
-        />
-        {/* Overlay badge category */}
-        {showCategory && (
-          <span
-            style={{
-              position: 'absolute',
-              top: 'var(--space-4)',
-              left: 'var(--space-4)',
-              padding: '6px 12px',
-              background: 'rgba(10,10,15,0.7)',
-              backdropFilter: 'blur(12px)',
-              border: `1px solid ${accent}`,
-              color: accent,
-              fontFamily: 'var(--next-font-mono), monospace',
-              fontSize: '10px',
-              fontWeight: 600,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              borderRadius: 'var(--radius-full)',
-              zIndex: 2,
-            }}
-          >
-            {label}
-          </span>
-        )}
+      <div className="article-card-typo-cover">
+        <ArticleCover article={article} ratio="16/10" />
       </div>
 
-      <h3 className="article-card-v2-title">{article.title}</h3>
+      <div className="article-card-typo-body">
+        {showCategory && (
+          <p className="article-card-typo-cat">
+            <span aria-hidden="true" className="dot" />
+            {label}
+          </p>
+        )}
 
-      {article.description && featured && (
-        <p
-          style={{
-            fontSize: 'clamp(15px, 1.5vw, 17px)',
-            color: 'var(--text-secondary)',
-            lineHeight: 1.65,
-            margin: '0 0 var(--space-4)',
-            maxWidth: '68ch',
-            textWrap: 'pretty',
-          }}
-        >
-          {article.description}
-        </p>
-      )}
+        <h3 className="article-card-typo-title">{article.title}</h3>
 
-      <div className="article-card-v2-meta">
-        <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
-        <span aria-hidden="true" style={{ opacity: 0.5 }}>
-          ·
-        </span>
-        <span>{article.readingTimeMin} min</span>
+        <div className="article-card-typo-meta">
+          <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{article.readingTimeMin} min</span>
+        </div>
       </div>
     </Link>
   )

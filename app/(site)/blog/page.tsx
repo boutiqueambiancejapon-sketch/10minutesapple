@@ -63,7 +63,7 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
 
       <main id="main-content">
         {/* ── Hero ── */}
-        <section style={{ maxWidth: '1280px', margin: '0 auto', padding: 'var(--space-16) var(--space-6) var(--space-10)' }} className="blog-hero-inner">
+        <section style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: 'var(--space-16) var(--page-pad) var(--space-10)' }} className="blog-hero-inner">
           <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
             <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
               <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Accueil</Link></li>
@@ -81,7 +81,7 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
 
         {/* ── Onglets catégories ── */}
         <nav aria-label="Filtrer par catégorie" style={{ borderBottom: '1px solid var(--border)', marginBottom: 'var(--space-10)' }}>
-          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)', display: 'flex', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad)', display: 'flex', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
             <Link
               href="/blog"
               aria-current="page"
@@ -104,7 +104,7 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
           </div>
         </nav>
 
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6) var(--space-24)' }}>
+        <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad) var(--space-24)' }}>
           {allArticles.length === 0 ? (
             <p style={{ color: 'var(--text-muted)', fontSize: '15px' }}>Premiers articles en cours de rédaction.</p>
           ) : (

@@ -101,9 +101,9 @@ export default async function AuthorPage(
       {/* Hero auteur avec watermark */}
       <div
         style={{
-          maxWidth: '1280px',
+          maxWidth: 'var(--page-max)',
           margin: '0 auto',
-          padding: 'var(--space-20) var(--space-6) var(--space-16)',
+          padding: 'var(--space-20) var(--page-pad) var(--space-16)',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -179,7 +179,7 @@ export default async function AuthorPage(
         style={{
           maxWidth: '720px',
           margin: '0 auto',
-          padding: '0 var(--space-6) var(--space-20)',
+          padding: '0 var(--page-pad) var(--space-20)',
         }}
       >
         <h2

@@ -59,9 +59,9 @@ export default function ComparateurHubPage() {
       <main id="main-content">
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: 'var(--page-max)',
             margin: '0 auto',
-            padding: 'var(--space-16) var(--space-6) var(--space-12)',
+            padding: 'var(--space-16) var(--page-pad) var(--space-12)',
             position: 'relative',
           }}
         >
@@ -101,9 +101,9 @@ export default function ComparateurHubPage() {
         {/* Bento grid familles */}
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: 'var(--page-max)',
             margin: '0 auto',
-            padding: '0 var(--space-6) var(--space-24)',
+            padding: '0 var(--page-pad) var(--space-24)',
           }}
         >
           <ul

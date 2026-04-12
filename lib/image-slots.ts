@@ -33,17 +33,6 @@ export const IMAGE_SLOTS = {
       'Ultra-premium editorial product photography of the latest iPhone Pro in deep titanium, held in hand at 3/4 angle, dramatic single-source rim lighting, pitch black void background, extreme macro detail on camera bump, cinematic volumetric haze, shot on Hasselblad, 8k, photorealistic, color accents #FF3D57 reflecting subtly on edges',
     accent: 'var(--accent-1)',
   },
-  'home-hero-aura': {
-    id: 'home-hero-aura',
-    file: 'home-hero-aura.png',
-    width: 1400,
-    height: 1400,
-    alt: 'Halo coloré derrière l\'iPhone hero',
-    label: 'Hero · halo décoratif',
-    prompt:
-      'Abstract glowing orb, radial gradient from magenta #FF3D57 through violet #7B61FF to teal #3DFFC0, soft blur, transparent background, decorative light aura',
-    accent: 'var(--accent-4)',
-  },
   'iphone-section': {
     id: 'iphone-section',
     file: 'iphone-section.jpg',
@@ -109,28 +98,6 @@ export const IMAGE_SLOTS = {
     prompt:
       'Editorial portrait of a 30s man with short dark hair, neutral expression, looking slightly off-camera, natural window light from the left, plain dark grey background, shot on 85mm, shallow depth of field, magazine style',
     accent: 'var(--accent-1)',
-  },
-  'editorial-featured': {
-    id: 'editorial-featured',
-    file: 'editorial-featured.jpg',
-    width: 1600,
-    height: 900,
-    alt: 'Produit Apple mis en avant',
-    label: 'Featured éditorial',
-    prompt:
-      'Hero editorial shot featuring latest Apple product, dark cinematic environment, volumetric light, strong brand colors, magazine cover composition, photorealistic',
-    accent: 'var(--accent-1)',
-  },
-  'deals-banner': {
-    id: 'deals-banner',
-    file: 'deals-banner.jpg',
-    width: 1600,
-    height: 600,
-    alt: 'Bannière deals Apple',
-    label: 'Deals · bannière',
-    prompt:
-      'Abstract composition with price tags, Apple devices silhouettes, energetic red and yellow accents, dark background, magazine sale banner style, photorealistic render',
-    accent: 'var(--accent-2)',
   },
 } as const satisfies Record<string, ImageSlot>
 

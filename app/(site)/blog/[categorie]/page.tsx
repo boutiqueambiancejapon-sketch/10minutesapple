@@ -79,7 +79,7 @@ export default async function CategoryPage({
             borderBottom: '1px solid var(--border)',
           }}
         >
-          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: 'var(--space-14) var(--space-6) var(--space-10)' }} className="blog-hero-inner">
+          <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: 'var(--space-14) var(--page-pad) var(--space-10)' }} className="blog-hero-inner">
             {/* Breadcrumb */}
             <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
               <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
@@ -109,7 +109,7 @@ export default async function CategoryPage({
 
         {/* Onglets — liens vers les autres catégories */}
         <nav aria-label="Autres catégories" style={{ borderBottom: '1px solid var(--border)', marginBottom: 'var(--space-10)' }}>
-          <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)', display: 'flex', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+          <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad)', display: 'flex', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
             <Link href="/blog" style={{ display: 'inline-flex', alignItems: 'center', padding: 'var(--space-3) var(--space-4)', fontSize: '13px', fontWeight: 500, color: 'var(--text-muted)', borderBottom: '2px solid transparent', textDecoration: 'none', whiteSpace: 'nowrap' }}>
               Tous
             </Link>
@@ -131,7 +131,7 @@ export default async function CategoryPage({
         </nav>
 
         {/* Grille */}
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6) var(--space-24)' }}>
+        <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad) var(--space-24)' }}>
           <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 'var(--space-6)', listStyle: 'none', margin: 0, padding: 0 }}>
             {paged.map((article) => (
               <li key={article.slug}>

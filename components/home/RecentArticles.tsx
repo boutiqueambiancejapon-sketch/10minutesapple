@@ -57,10 +57,10 @@ export function RecentArticles() {
                 padding: 0,
               }}
             >
-              {rest.slice(0, 6).map((article, i) => (
+              {rest.slice(0, 6).map((article) => (
                 <StaggerItem key={`${article.categorie}/${article.slug}`}>
                   <li>
-                    <ArticleCard article={article} index={i} />
+                    <ArticleCard article={article} />
                   </li>
                 </StaggerItem>
               ))}

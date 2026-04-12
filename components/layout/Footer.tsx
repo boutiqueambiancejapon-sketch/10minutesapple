@@ -114,9 +114,9 @@ export function Footer() {
       {/* Bas de page disclaimer */}
       <div
         style={{
-          maxWidth: '1280px',
+          maxWidth: 'var(--page-max)',
           margin: 'var(--space-16) auto 0',
-          padding: 'var(--space-12) var(--space-6) 0',
+          padding: 'var(--space-12) var(--page-pad) 0',
           borderTop: '1px solid var(--border)',
           display: 'flex',
           justifyContent: 'space-between',

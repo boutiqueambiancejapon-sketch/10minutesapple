@@ -109,9 +109,9 @@ export default function SimulateurPage() {
         {/* Hero */}
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: 'var(--page-max)',
             margin: '0 auto',
-            padding: 'var(--space-16) var(--space-6) var(--space-12)',
+            padding: 'var(--space-16) var(--page-pad) var(--space-12)',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -200,9 +200,9 @@ export default function SimulateurPage() {
         {/* Tableau des cycles */}
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: 'var(--page-max)',
             margin: '0 auto',
-            padding: '0 var(--space-6) var(--space-24)',
+            padding: '0 var(--page-pad) var(--space-24)',
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>

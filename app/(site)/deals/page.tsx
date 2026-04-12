@@ -376,9 +376,9 @@ export default function DealsPage() {
         {/* Hero */}
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: 'var(--page-max)',
             margin: '0 auto',
-            padding: 'var(--space-12) var(--space-6) var(--space-10)',
+            padding: 'var(--space-12) var(--page-pad) var(--space-10)',
             position: 'relative',
             overflow: 'hidden',
           }}
@@ -453,9 +453,9 @@ export default function DealsPage() {
         {/* Liste deals */}
         <section
           style={{
-            maxWidth: '1280px',
+            maxWidth: 'var(--page-max)',
             margin: '0 auto',
-            padding: '0 var(--space-6) var(--space-24)',
+            padding: '0 var(--page-pad) var(--space-24)',
           }}
         >
           <DealsGrid deals={DEALS} />

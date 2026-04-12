@@ -50,10 +50,10 @@ export function ArticleCover({ article, ratio = '16/10', size = 'default' }: Pro
   const titleLen = article.title.length
   const titleSizeClamp =
     titleLen < 30
-      ? 'clamp(28px, 5.5vw, 56px)'
+      ? 'clamp(22px, 3.4vw, 36px)'
       : titleLen < 55
-        ? 'clamp(22px, 4vw, 42px)'
-        : 'clamp(18px, 3.2vw, 32px)'
+        ? 'clamp(18px, 2.6vw, 28px)'
+        : 'clamp(15px, 2vw, 22px)'
 
   return (
     <div

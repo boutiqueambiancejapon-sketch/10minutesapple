@@ -81,12 +81,10 @@ export function HeroSection() {
           <FadeIn delay={100} duration={900} y={24}>
             <h1 className="hero-h1">
               Choisir{' '}
-              <span className="hero-h1-accent">l&rsquo;Apple</span>
-              <br />
-              qui vous va.
-              <br />
+              <span className="hero-h1-accent">l&rsquo;Apple</span>{' '}
+              qui vous va.{' '}
               <span style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontWeight: 400 }}>
-                En 10 minutes.
+                En 10&nbsp;minutes.
               </span>
             </h1>
           </FadeIn>
@@ -94,17 +92,17 @@ export function HeroSection() {
           <FadeIn delay={240} duration={700}>
             <p
               style={{
-                fontSize: 'clamp(16px, 1.7vw, 20px)',
+                fontSize: 'clamp(14.5px, 1.4vw, 17px)',
                 color: 'var(--text-secondary)',
-                lineHeight: 1.65,
-                maxWidth: '52ch',
-                marginTop: 'var(--space-8)',
+                lineHeight: 1.6,
+                maxWidth: '46ch',
+                marginTop: 'var(--space-7)',
                 textWrap: 'pretty',
               }}
             >
-              Tests terrain, comparateurs interactifs, quiz «&nbsp;quel Apple me
-              convient&nbsp;?&nbsp;» et simulateur de budget. Tout ce qu&rsquo;il faut
-              pour trancher — sans jargon, sans pression commerciale.
+              Tests terrain, comparateurs, quiz «&nbsp;quel Apple me
+              convient&nbsp;?&nbsp;» et simulateur de budget. Tout ce qu&rsquo;il
+              faut pour trancher, sans jargon ni pression commerciale.
             </p>
           </FadeIn>
 
@@ -114,9 +112,9 @@ export function HeroSection() {
             style={{
               display: 'flex',
               flexWrap: 'wrap',
-              gap: 'var(--space-4)',
+              gap: 'var(--space-3)',
               alignItems: 'center',
-              marginTop: 'var(--space-10)',
+              marginTop: 'var(--space-8)',
             }}
           >
             <StaggerItem>
@@ -155,7 +153,10 @@ export function HeroSection() {
         {/* ── Colonne droite : visuel produit + stat strip ── */}
         <ScrollReveal parallax={30}>
           <FadeIn delay={240} duration={900} y={32}>
-            <div className="hero-visual-wrap">
+            <div
+              className="hero-visual-wrap"
+              style={{ maxWidth: '440px', margin: '0 auto' }}
+            >
               <ImagePlaceholder
                 slotId="home-hero"
                 priority

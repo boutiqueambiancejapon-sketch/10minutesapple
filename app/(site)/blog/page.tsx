@@ -118,7 +118,7 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
 
               {/* Grille */}
               {paged.length > 0 && (
-                <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 'var(--space-6)', listStyle: 'none', margin: 0, padding: 0 }}>
+                <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 'clamp(var(--space-8), 3vw, var(--space-12))', listStyle: 'none', margin: 'var(--space-10) 0 0', padding: 0 }}>
                   {paged.map((article) => (
                     <li key={`${article.categorie}/${article.slug}`}>
                       <ArticleCard article={article} />

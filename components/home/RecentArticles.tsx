@@ -48,12 +48,13 @@ export function RecentArticles() {
           <Stagger delay={200} staggerDelay={90}>
             <ul
               role="list"
+              className="article-grid-recent"
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                gap: 'var(--space-8)',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))',
+                gap: 'clamp(var(--space-8), 3vw, var(--space-12))',
                 listStyle: 'none',
-                margin: 'var(--space-12) 0 0',
+                margin: 'clamp(var(--space-10), 5vw, var(--space-16)) 0 0',
                 padding: 0,
               }}
             >

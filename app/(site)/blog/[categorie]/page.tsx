@@ -132,7 +132,7 @@ export default async function CategoryPage({
 
         {/* Grille */}
         <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad) var(--space-24)' }}>
-          <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 'var(--space-6)', listStyle: 'none', margin: 0, padding: 0 }}>
+          <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 'clamp(var(--space-8), 3vw, var(--space-12))', listStyle: 'none', margin: 0, padding: 0 }}>
             {paged.map((article) => (
               <li key={article.slug}>
                 <ArticleCard article={article} showCategory={false} />

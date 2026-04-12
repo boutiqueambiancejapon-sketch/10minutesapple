@@ -1,7 +1,7 @@
 /**
- * DealsStrip — bandeau de deals en défilement continu (MarqueeStrip).
- * Données statiques pour le lancement — remplacées par ISR + API deals ensuite.
- * Server Component.
+ * DealsStrip V2 — bandeau deals en défilement continu.
+ * Chips plus premium, badge pastille, hover magnétique.
+ * Server Component (MarqueeStrip client inline).
  */
 
 import { MarqueeStrip } from '@/components/effects/MarqueeStrip'
@@ -31,49 +31,92 @@ function DealChip({ label, badge, href, badgeColor = 'var(--accent-1)' }: Deal) 
       href={addAffiliateTag(href)}
       rel="nofollow noopener sponsored"
       target="_blank"
+      className="deal-chip"
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: 'var(--space-3)',
-        padding: 'var(--space-2) var(--space-5)',
-        backgroundColor: 'var(--bg-surface)',
+        padding: '10px 18px 10px 10px',
+        background: 'var(--bg-surface)',
         border: '1px solid var(--border)',
-        borderRadius: '999px',
+        borderRadius: 'var(--radius-full)',
         textDecoration: 'none',
         color: 'var(--text-primary)',
         fontSize: '13px',
         fontWeight: 500,
         whiteSpace: 'nowrap',
         flexShrink: 0,
-        transition: 'border-color 150ms ease',
+        transition: 'border-color 180ms ease, transform 180ms ease',
       }}
     >
       <span
         style={{
-          padding: '2px 8px',
-          backgroundColor: badgeColor,
+          padding: '4px 10px',
+          background: badgeColor,
           color: '#fff',
-          borderRadius: '999px',
-          fontSize: '11px',
+          borderRadius: 'var(--radius-full)',
+          fontFamily: 'var(--next-font-mono), monospace',
+          fontSize: '10px',
           fontWeight: 700,
-          letterSpacing: '0.04em',
+          letterSpacing: '0.06em',
+          textTransform: 'uppercase',
+          boxShadow: `0 0 16px ${badgeColor}60`,
         }}
       >
         {badge}
       </span>
       {label}
+      <span aria-hidden="true" style={{ opacity: 0.5, marginLeft: 'var(--space-1)' }}>
+        ↗
+      </span>
     </a>
   )
 }
 
 export function DealsStrip() {
   return (
-    <section aria-label="Bons plans du moment" style={{ paddingBlock: 'var(--space-4)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', overflow: 'hidden' }}>
-      <MarqueeStrip speed="slow" gap="var(--space-3)">
-        {DEALS.map((deal) => (
-          <DealChip key={deal.label} {...deal} />
-        ))}
-      </MarqueeStrip>
+    <section
+      aria-label="Bons plans du moment"
+      style={{
+        position: 'relative',
+        padding: 'var(--space-5) 0',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
+        overflow: 'hidden',
+        background: 'linear-gradient(180deg, transparent, rgba(255,61,87,0.02) 50%, transparent)',
+      }}
+    >
+      {/* Corner label */}
+      <span
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: 'var(--space-6)',
+          transform: 'translateY(-50%)',
+          fontFamily: 'var(--next-font-mono), monospace',
+          fontSize: '10px',
+          letterSpacing: '0.14em',
+          textTransform: 'uppercase',
+          color: 'var(--accent-1)',
+          background: 'var(--bg-primary)',
+          padding: '4px 10px',
+          borderRadius: 'var(--radius-full)',
+          border: '1px solid var(--accent-1)',
+          zIndex: 2,
+          pointerEvents: 'none',
+        }}
+        className="deals-pill"
+      >
+        ● Live deals
+      </span>
+      <div style={{ paddingLeft: '130px' }}>
+        <MarqueeStrip speed="slow" gap="var(--space-4)">
+          {DEALS.map((deal) => (
+            <DealChip key={deal.label} {...deal} />
+          ))}
+        </MarqueeStrip>
+      </div>
     </section>
   )
 }

@@ -1,68 +1,72 @@
 /**
- * RecentArticles — section éditoriale home : featured post + grille 4 derniers.
- * Layout magazine : grand featured (2 cols) + 4 cartes en dessous.
+ * RecentArticles — section éditoriale : featured post + grille récents.
+ * Layout magazine avec image featured + 3 cards image.
  * Server Component.
  */
 import Link from 'next/link'
 import { getAllArticles } from '@/lib/blog'
 import { ArticleCard } from '@/components/blog/ArticleCard'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 
 export function RecentArticles() {
-  const articles = getAllArticles().slice(0, 5)
+  const articles = getAllArticles().slice(0, 7)
   if (articles.length === 0) return null
 
   const [featured, ...rest] = articles
 
   return (
-    <section style={{ borderTop: '1px solid var(--border)', padding: 'var(--space-16) 0' }}>
-      <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)' }}>
+    <section className="section-shell section-shell--bordered">
+      <div className="section-inner">
+        <span className="section-index" style={{ top: '-20px', right: '-20px' }}>
+          01
+        </span>
 
-        {/* En-tête */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'var(--space-8)', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
-          <div>
-            <span style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', display: 'block', marginBottom: 'var(--space-1)' }}>
-              Éditorial
-            </span>
-            <h2 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(22px, 3vw, 36px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1, margin: 0 }}>
-              Derniers articles
-            </h2>
+        <FadeIn>
+          <div className="section-label-row">
+            <div>
+              <span className="section-eyebrow">Éditorial · Derniers articles</span>
+              <h2 className="section-title">
+                Tests, guides, <em>décryptages</em>.
+              </h2>
+              <p className="section-lead">
+                On teste, on compare, on tranche. Pas de copier-coller de communiqué
+                presse — du terrain, du détail, et des recommandations claires.
+              </p>
+            </div>
+            <Link href="/blog" className="cta-secondary" style={{ whiteSpace: 'nowrap' }}>
+              Tout le blog <span aria-hidden="true">→</span>
+            </Link>
           </div>
-          <Link href="/blog" style={{ fontSize: '13px', fontWeight: 600, color: 'var(--accent-1)', textDecoration: 'none', borderBottom: '1px solid rgba(255,61,87,0.35)', paddingBottom: '2px', whiteSpace: 'nowrap' }}>
-            Tout le blog →
-          </Link>
-        </div>
+        </FadeIn>
 
-        {/* Magazine layout : featured large + grille petits */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateRows: 'auto auto',
-            gap: 'var(--space-5)',
-          }}
-        >
-          {/* Featured — pleine largeur */}
+        <FadeIn delay={100}>
           <ArticleCard article={featured} featured />
+        </FadeIn>
 
-          {/* Grille 4 articles */}
-          {rest.length > 0 && (
+        {rest.length > 0 && (
+          <Stagger delay={200} staggerDelay={90}>
             <ul
               role="list"
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
-                gap: 'var(--space-5)',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                gap: 'var(--space-8)',
                 listStyle: 'none',
-                margin: 0, padding: 0,
+                margin: 'var(--space-12) 0 0',
+                padding: 0,
               }}
             >
-              {rest.map((article) => (
-                <li key={`${article.categorie}/${article.slug}`}>
-                  <ArticleCard article={article} />
-                </li>
+              {rest.slice(0, 6).map((article, i) => (
+                <StaggerItem key={`${article.categorie}/${article.slug}`}>
+                  <li>
+                    <ArticleCard article={article} index={i} />
+                  </li>
+                </StaggerItem>
               ))}
             </ul>
-          )}
-        </div>
+          </Stagger>
+        )}
       </div>
     </section>
   )

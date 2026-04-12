@@ -1,5 +1,27 @@
 # Décisions — 10minutesapple.com
 
+## Refonte DA Étape 6 (2026-04-12) — Branche claude/improve-website-design-9YrYw
+- [x] Ajout `framer-motion` ^12 + `react-wrap-balancer` ^1 (~50 KB gz client)
+- [x] Primitives motion : `FadeIn`, `Stagger`/`StaggerItem`, `ScrollReveal`, `MagneticButton`, `PageTransition` dans `components/motion/`
+- [x] `BalancerProvider` SSR-safe wrappant le route group `(site)`
+- [x] `PageTransition` global appliqué dans `app/(site)/layout.tsx`
+- [x] Système d'image slots `lib/image-slots.ts` (10 slots avec prompts IA Midjourney/Flux)
+- [x] `ImagePlaceholder` Server Component : rend `<img>` si fichier existe dans `public/images/`, sinon fallback éditorial gradient + grid + corner markers + label slot
+- [x] Hero V2 : layout split éditorial, H1 clamp(2.8rem, 8vw, 6.5rem), gradient animé, image slot 4/5, stat strip glass, corner labels, parallax visuel
+- [x] CategoryShowcase réutilisable : visuel sticky 4/5 + gros titre italique + lead + CTAs + liste articles avec hover slide-in
+- [x] FeaturedTools V2 : bento 12-col (large 7 + 3 mid 5), `glow-card` avec conic gradient hover
+- [x] DealsStrip V2 : pill "Live deals" + chips avec badge glow box-shadow
+- [x] MarqueeBanner XXL : alternance mots pleins + outline, anim 50s
+- [x] ArticleCard V2 : image cover + overlay badge category + hover scale + title color shift
+- [x] Footer V2 : big word XXL outline + 4 colonnes + gradient line top
+- [x] Nav V2 : 72px height, CTA premium "Quiz Apple" intégré, gradient line tricolore, brand-dot pulse
+- [x] AuthorTeaser V2 : portrait slot + monogramme M overlay glow
+- [x] Suppression composants legacy : `HeroVisual`, `ArticleTicker`, `ArticleCarousel`, `ArticleMasonry`, `ProductAffiliate`
+- [x] Grain SVG `body::before` global (mix-blend-mode: overlay)
+- [x] Section chrome utilities globales : `.section-shell`, `.section-eyebrow`, `.section-title em`, `.section-index` (numéro outline 14vw), `.cta-primary`, `.cta-secondary`, `.glow-card`, `.grid-backdrop`
+
+Le tout sans réduction des fonctionnalités existantes (TOC sidebar, AuthorByline, prose-article, JSON-LD intacts). Build sandbox OK sur tsc + vitest (34/34) ; build Next bloqué uniquement par fetch fonts.googleapis (offline sandbox) — passera sur Vercel.
+
 ## Tranchées
 - [x] Next.js ~16.2.1 patch auto (latest stable au 2026-03-23) · Vercel fra1 · GitHub Actions CI
 - [x] Tailwind v4.2.2 + variables CSS · dark-only (pas de next-themes)

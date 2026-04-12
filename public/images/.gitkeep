@@ -1,0 +1,3 @@
+# Slots d'images structurelles
+# Voir lib/image-slots.ts pour la liste, les dimensions et les prompts IA.
+# Tant qu'un fichier n'est pas présent, ImagePlaceholder rend un fallback éditorial.

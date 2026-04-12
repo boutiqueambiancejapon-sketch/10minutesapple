@@ -1,11 +1,13 @@
 /**
- * FeaturedTools — bento grid asymétrique.
- * Grande cellule Comparateur (2/3) + 2 petites (Quiz + Simulateur) en 1/3.
- * Chaque cellule a une icône SVG, un titre et un CTA.
- * Server Component.
+ * FeaturedTools V2 — bento grid avec cards glow.
+ * Grande cellule Comparateur (2/3) + Quiz + Simulateur + Deals en petites cards.
+ * Scroll reveals + magnetic CTAs.
+ * Server Component (motion primitives client inline).
  */
 
 import Link from 'next/link'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 
 type ToolCardProps = {
   href: string
@@ -14,114 +16,124 @@ type ToolCardProps = {
   description: string
   cta: string
   accent: string
-  large?: boolean
   icon: React.ReactNode
+  large?: boolean
 }
 
-function ToolCard({ href, eyebrow, title, description, cta, accent, large = false, icon }: ToolCardProps) {
+function ToolCard({ href, eyebrow, title, description, cta, accent, icon, large = false }: ToolCardProps) {
   return (
     <Link
       href={href}
+      className="glow-card tool-card"
       style={{
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: large ? 'var(--space-10)' : 'var(--space-7)',
-        backgroundColor: 'var(--bg-surface)',
-        border: '1px solid var(--border)',
-        borderRadius: '16px',
         textDecoration: 'none',
         color: 'inherit',
+        minHeight: large ? '100%' : '100%',
         overflow: 'hidden',
-        position: 'relative',
-        minHeight: large ? '320px' : '220px',
-        transition: 'border-color 200ms ease, transform 200ms ease',
+        height: '100%',
       }}
-      className="tool-card"
     >
       {/* Accent glow */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '-60px',
-          right: '-60px',
-          width: '200px',
-          height: '200px',
+          top: '-80px',
+          right: '-80px',
+          width: large ? '360px' : '260px',
+          height: large ? '360px' : '260px',
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${accent}30 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${accent}35 0%, transparent 60%)`,
           pointerEvents: 'none',
+          zIndex: 0,
         }}
       />
 
       {/* Icône */}
       <div
         style={{
-          width: large ? '48px' : '36px',
-          height: large ? '48px' : '36px',
+          width: large ? '56px' : '42px',
+          height: large ? '56px' : '42px',
           color: accent,
-          marginBottom: 'var(--space-5)',
-          flexShrink: 0,
+          marginBottom: 'var(--space-6)',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {icon}
       </div>
 
-      <div>
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <p
           style={{
-            fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.12em',
+            fontFamily: 'var(--next-font-mono), monospace',
+            fontSize: '10px',
+            fontWeight: 500,
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
             color: accent,
-            marginBottom: 'var(--space-2)',
+            marginBottom: 'var(--space-3)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 'var(--space-2)',
           }}
         >
+          <span style={{ display: 'inline-block', width: 14, height: 1, background: accent }} />
           {eyebrow}
         </p>
         <h3
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: large ? 'clamp(1.3rem, 2.2vw, 1.8rem)' : '1rem',
-            fontWeight: 700,
-            letterSpacing: '0',
+            fontSize: large ? 'clamp(28px, 3.2vw, 44px)' : 'clamp(18px, 1.8vw, 24px)',
+            fontWeight: 800,
+            letterSpacing: '-0.02em',
+            lineHeight: 1.05,
             color: 'var(--text-primary)',
-            marginBottom: 'var(--space-3)',
-            lineHeight: 1.25,
+            margin: '0 0 var(--space-4)',
+            textWrap: 'balance',
           }}
         >
           {title}
         </h3>
         <p
           style={{
-            fontSize: '14px',
+            fontSize: large ? '16px' : '13px',
             color: 'var(--text-secondary)',
             lineHeight: 1.6,
-            marginBottom: 'var(--space-5)',
-            maxWidth: large ? '400px' : 'none',
+            margin: '0 0 var(--space-6)',
+            maxWidth: large ? '42ch' : 'none',
           }}
         >
           {description}
         </p>
         <span
           style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 'var(--space-2)',
             fontSize: '14px',
             fontWeight: 600,
             color: accent,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'var(--space-1)',
+            padding: '8px 0',
+            borderTop: `1px solid ${accent}40`,
+            width: '100%',
           }}
         >
-          {cta} →
+          {cta}
+          <span aria-hidden="true" style={{ marginLeft: 'auto' }}>
+            →
+          </span>
         </span>
       </div>
     </Link>
   )
 }
 
-/* SVG icons — inline, zero raster */
+/* ── Icons inline (stroke current) ── */
 const IconCompare = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width="100%" height="100%">
     <rect x="2" y="3" width="8" height="18" rx="2" />
@@ -129,7 +141,6 @@ const IconCompare = () => (
     <path d="M10 8h4M10 12h4M10 16h4" />
   </svg>
 )
-
 const IconQuiz = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width="100%" height="100%">
     <circle cx="12" cy="12" r="10" />
@@ -137,95 +148,97 @@ const IconQuiz = () => (
     <circle cx="12" cy="17" r="0.5" fill="currentColor" />
   </svg>
 )
-
 const IconSimulator = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width="100%" height="100%">
-    <path d="M12 2v20M2 12h20" />
-    <circle cx="12" cy="12" r="4" />
-    <path d="M4.93 4.93l14.14 14.14M19.07 4.93 4.93 19.07" />
+    <path d="M3 3v18h18" />
+    <path d="M7 14l4-4 4 4 5-5" />
+    <circle cx="20" cy="9" r="1" />
+  </svg>
+)
+const IconDeals = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" width="100%" height="100%">
+    <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82Z" />
+    <circle cx="7" cy="7" r="1.5" fill="currentColor" />
   </svg>
 )
 
 export function FeaturedTools() {
   return (
-    <section
-      style={{
-        maxWidth: '1280px',
-        margin: '0 auto',
-        padding: 'var(--space-20) var(--space-6)',
-      }}
-    >
-      {/* En-tête de section */}
-      <div style={{ marginBottom: 'var(--space-10)', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
-        <div>
-          <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent-1)', marginBottom: 'var(--space-2)' }}>
-            Outils interactifs
-          </p>
-          <h2
-            style={{
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
-              fontWeight: 700,
-              letterSpacing: '0',
-              color: 'var(--text-primary)',
-              lineHeight: 1.2,
-            }}
-          >
-            Décidez en connaissance<br />de cause
-          </h2>
-        </div>
-        <Link
-          href="/blog"
-          style={{ fontSize: '14px', color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, whiteSpace: 'nowrap' }}
-        >
-          Voir tous les guides →
-        </Link>
-      </div>
+    <section className="section-shell section-shell--bordered">
+      <div className="section-inner">
+        <span className="section-index" style={{ top: '-30px', left: '0' }}>
+          07
+        </span>
 
-      {/* Grille bento asymétrique */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 'var(--space-4)',
-        }}
-        className="bento-grid"
-      >
-        {/* Grande cellule Comparateur — 2 colonnes sur 2 rangées (CSS class pour responsive) */}
-        <div className="bento-featured">
-          <ToolCard
-            href="/comparer"
-            eyebrow="Comparateur"
-            title="Quel iPhone, Mac ou iPad pour vous ?"
-            description="Comparez côte à côte les specs, prix et usages. Filtres par budget, besoin professionnel ou gaming."
-            cta="Lancer le comparateur"
-            accent="var(--accent-1)"
-            large
-            icon={<IconCompare />}
-          />
-        </div>
+        <FadeIn>
+          <div className="section-label-row">
+            <div>
+              <span className="section-eyebrow">Outils · interactifs</span>
+              <h2 className="section-title">
+                Décidez en <em>connaissance</em>
+                <br />
+                de cause.
+              </h2>
+              <p className="section-lead">
+                Quatre outils pour trancher vite : comparer, tester, simuler, saisir le
+                bon plan. Pas d&rsquo;inscription, pas de tracking tiers.
+              </p>
+            </div>
+          </div>
+        </FadeIn>
 
-        {/* Quiz */}
-        <ToolCard
-          href="/quiz"
-          eyebrow="Quiz"
-          title="Trouvez votre Apple idéal"
-          description="6 questions pour identifier le produit fait pour vous."
-          cta="Démarrer le quiz"
-          accent="var(--accent-2)"
-          icon={<IconQuiz />}
-        />
+        <Stagger staggerDelay={90}>
+          <div className="bento-v2">
+            <StaggerItem className="bento-large">
+              <ToolCard
+                href="/comparer"
+                eyebrow="Comparateur"
+                title="Quel modèle pour vous ?"
+                description="Comparez côte à côte specs, prix et usages réels. Filtres par budget, profil pro, gaming ou créatif."
+                cta="Lancer le comparateur"
+                accent="var(--accent-1)"
+                large
+                icon={<IconCompare />}
+              />
+            </StaggerItem>
 
-        {/* Simulateur */}
-        <ToolCard
-          href="/simulateur"
-          eyebrow="Simulateur"
-          title="Calculez votre budget Apple"
-          description="Abonnements, accessoires, reprise — simulez le coût réel."
-          cta="Simuler mon budget"
-          accent="var(--accent-3)"
-          icon={<IconSimulator />}
-        />
+            <StaggerItem className="bento-mid">
+              <ToolCard
+                href="/quiz"
+                eyebrow="Quiz"
+                title="Trouvez votre Apple idéal"
+                description="6 questions, un résultat. 2 minutes top chrono."
+                cta="Démarrer le quiz"
+                accent="var(--accent-2)"
+                icon={<IconQuiz />}
+              />
+            </StaggerItem>
+
+            <StaggerItem className="bento-mid">
+              <ToolCard
+                href="/simulateur"
+                eyebrow="Simulateur"
+                title="Budget Apple réel"
+                description="Appareil + abo + reprise. Le coût total sur 24 mois."
+                cta="Simuler"
+                accent="var(--accent-3)"
+                icon={<IconSimulator />}
+              />
+            </StaggerItem>
+
+            <StaggerItem className="bento-mid">
+              <ToolCard
+                href="/deals"
+                eyebrow="Deals"
+                title="Les bons plans du moment"
+                description="Prix barrés vérifiés, stock réel, liens affiliés transparents."
+                cta="Voir les deals"
+                accent="var(--accent-4)"
+                icon={<IconDeals />}
+              />
+            </StaggerItem>
+          </div>
+        </Stagger>
       </div>
     </section>
   )

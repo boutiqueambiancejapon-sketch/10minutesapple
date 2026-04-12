@@ -132,6 +132,25 @@
 - Pages légales (/mentions-legales · /confidentialite)
 - sitemap.ts mis à jour avec les nouvelles routes
 
+## Étape 6 — Refonte DA pro (2026-04-12)
+- [x] Ajout framer-motion + react-wrap-balancer
+- [x] Primitives motion : FadeIn / Stagger / StaggerItem / ScrollReveal / MagneticButton / PageTransition
+- [x] BalancerProvider SSR-safe + PageTransition wrappant le route group (site)
+- [x] Système image slots lib/image-slots.ts (10 slots avec prompts IA)
+- [x] ImagePlaceholder Server Component (fallback éditorial gradient + grid + corner markers)
+- [x] HeroSection V2 — layout éditorial split + image hero + stat strip glass + corner labels
+- [x] CategoryShowcase réutilisable + 5 sections home (iphone/mac/ipad/watch/accessoires)
+- [x] FeaturedTools V2 bento 12-col + glow cards conic
+- [x] DealsStrip V2 + pill Live + chips badge glow
+- [x] MarqueeBanner XXL alternance plein/outline
+- [x] ArticleCard V2 image cover + badge overlay
+- [x] Footer V2 big word + 4 cols
+- [x] Nav V2 + CTA premium quiz
+- [x] AuthorTeaser V2 portrait slot + monogramme glow
+- [x] Suppression composants legacy non utilisés (HeroVisual, ArticleTicker, ArticleCarousel, ArticleMasonry, ProductAffiliate)
+- [x] Grain SVG body::before global + section chrome utilities globals.css
+- [x] tsc clean · vitest 34/34 · lint passé sur fichiers nouveaux/modifiés
+
 ## Bloqué
 - Nom de famille Mathias requis pour mentions légales [DÉCISION À VALIDER]
 - LinkedIn Mathias requis pour schema Person EEAT [DÉCISION À VALIDER]

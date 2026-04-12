@@ -1,126 +1,96 @@
 /**
- * AuthorTeaser — encart éditorial asymétrique.
- * Monogramme "M" géant + bio + lien auteur.
+ * AuthorTeaser V2 — section "qui écrit ce site".
+ * Portrait + bio + CTA vers la page auteur.
  * Server Component.
  */
 
 import Link from 'next/link'
+import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder'
+import { FadeIn } from '@/components/motion/FadeIn'
 
 export function AuthorTeaser() {
   return (
-    <section
-      style={{
-        maxWidth: '1280px',
-        margin: '0 auto',
-        padding: 'var(--space-20) var(--space-6)',
-      }}
-    >
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'auto 1fr',
-          gap: 'var(--space-12)',
-          alignItems: 'center',
-        }}
-        className="author-teaser-grid"
-      >
-        {/* Monogramme */}
-        <div
-          aria-hidden="true"
-          style={{
-            width: 'clamp(120px, 18vw, 200px)',
-            height: 'clamp(120px, 18vw, 200px)',
-            borderRadius: '50%',
-            border: '2px solid var(--border)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'relative',
-            flexShrink: 0,
-            background: 'var(--bg-surface)',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Watermark accent */}
-          <span
-            style={{
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: '45%',
-              fontWeight: 800,
-              color: 'var(--text-primary)',
-              letterSpacing: '0',
-              lineHeight: 1,
-              userSelect: 'none',
-            }}
-          >
-            M
-          </span>
-          {/* Anneau d'accent */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: '-1px',
-              borderRadius: '50%',
-              background: `conic-gradient(var(--accent-1) 0deg, transparent 60deg, transparent 360deg)`,
-              opacity: 0.6,
-              mixBlendMode: 'screen',
-              zIndex: -1,
-            }}
-          />
-        </div>
+    <section className="section-shell section-shell--bordered">
+      <div className="section-inner">
+        <span className="section-index" style={{ top: '-20px', right: '20px' }}>
+          08
+        </span>
 
-        {/* Texte */}
-        <div>
-          <p
-            style={{
-              fontSize: '11px',
-              fontWeight: 700,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
-              color: 'var(--accent-1)',
-              marginBottom: 'var(--space-3)',
-            }}
-          >
-            L&rsquo;auteur
-          </p>
-          <h2
-            style={{
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(1.2rem, 2.2vw, 1.7rem)',
-              fontWeight: 700,
-              letterSpacing: '0',
-              color: 'var(--text-primary)',
-              marginBottom: 'var(--space-4)',
-              lineHeight: 1.15,
-            }}
-          >
-            Mathias — utilisateur Apple depuis 2009
-          </h2>
-          <p
-            style={{
-              fontSize: '15px',
-              color: 'var(--text-secondary)',
-              lineHeight: 1.7,
-              maxWidth: '520px',
-              marginBottom: 'var(--space-6)',
-            }}
-          >
-            Ni journaliste payé par Apple, ni influenceur sponsorisé. Juste quelqu&rsquo;un qui achète, teste et compare vraiment les produits &mdash; et partage ce qu&rsquo;il en pense en clair.
-          </p>
-          <Link
-            href="/auteurs/mathias"
-            style={{
-              fontSize: '14px',
-              fontWeight: 600,
-              color: 'var(--accent-1)',
-              textDecoration: 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 'var(--space-1)',
-            }}
-          >
-            En savoir plus →
-          </Link>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: 'var(--space-12)',
+            alignItems: 'center',
+            maxWidth: '1040px',
+            margin: '0 auto',
+          }}
+          className="author-teaser-v2"
+        >
+          <FadeIn y={32}>
+            <div
+              style={{
+                position: 'relative',
+                maxWidth: '320px',
+                margin: '0 auto',
+              }}
+            >
+              <ImagePlaceholder slotId="author-mathias" ratio="1/1" />
+              {/* Monogramme overlay */}
+              <span
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  top: '-16px',
+                  right: '-16px',
+                  width: '72px',
+                  height: '72px',
+                  borderRadius: '50%',
+                  background: 'var(--bg-primary)',
+                  border: '1px solid var(--accent-1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                  fontSize: '32px',
+                  fontWeight: 800,
+                  color: 'var(--accent-1)',
+                  boxShadow: '0 0 30px rgba(255,61,87,0.4)',
+                }}
+              >
+                M
+              </span>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={120} y={24}>
+            <div>
+              <p className="section-eyebrow">Auteur · L&rsquo;équipe</p>
+              <h2 className="section-title" style={{ fontSize: 'clamp(32px, 4.5vw, 56px)' }}>
+                Un seul <em>journaliste</em>.
+                <br />
+                Zéro angle mort.
+              </h2>
+              <p
+                style={{
+                  fontSize: 'clamp(15px, 1.5vw, 17px)',
+                  color: 'var(--text-secondary)',
+                  lineHeight: 1.7,
+                  margin: 'var(--space-6) 0',
+                  maxWidth: '58ch',
+                  textWrap: 'pretty',
+                }}
+              >
+                Mathias écrit 10minutesapple seul. Ancien journaliste tech, indépendant,
+                sans partenariat rémunéré Apple. Tous les tests sont faits en conditions
+                réelles — pas en salle de démo.
+              </p>
+              <Link href="/auteurs/mathias" className="cta-secondary">
+                Voir la fiche auteur
+                <span aria-hidden="true">→</span>
+              </Link>
+            </div>
+          </FadeIn>
         </div>
       </div>
     </section>

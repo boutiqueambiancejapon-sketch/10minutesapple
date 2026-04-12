@@ -1,173 +1,184 @@
 /**
- * HeroSection — above-fold.
- * Aurora + bruit + heading wipe + mots qui tournent + 2 CTAs.
- * Server Component (les enfants clients sont importés inline).
+ * HeroSection — hero éditorial split.
+ * Colonne gauche : eyebrow, H1 massif, lead, stats, CTAs magnétiques.
+ * Colonne droite : image product (slot "home-hero") + corner labels.
+ * Arrière-plan : Aurora + grid mesh + grain SVG + halo radial.
+ * Server Component (enfants 'use client' inline).
  */
 
-import { AuroraBackground } from '@/components/effects/AuroraBackground'
-import { NoiseOverlay } from '@/components/effects/NoiseOverlay'
-import { AnimatedHeading } from '@/components/effects/AnimatedHeading'
-import { RotatingWords } from '@/components/effects/RotatingWords'
-import { HeroVisual } from './HeroVisual'
 import Link from 'next/link'
-
-const ROTATING = ['iPhone', 'Mac', 'iPad', 'Apple Watch', 'AirPods']
+import { AuroraBackground } from '@/components/effects/AuroraBackground'
+import { ImagePlaceholder } from '@/components/ui/ImagePlaceholder'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
+import { MagneticButton } from '@/components/motion/MagneticButton'
+import { ScrollReveal } from '@/components/motion/ScrollReveal'
+import { HeroStatStrip } from './HeroStatStrip'
 
 export function HeroSection() {
+  const nowYear = new Date().getFullYear()
   return (
-    <AuroraBackground
-      className="hero-aurora"
-    >
-      <NoiseOverlay opacity={0.035} />
+    <AuroraBackground className="hero-editorial">
+      {/* Mesh backdrop */}
+      <div className="grid-backdrop" aria-hidden="true" />
 
-      <div
-        style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: 'var(--space-20) var(--space-6)',
-          width: '100%',
-          position: 'relative',
-          zIndex: 3,
-        }}
+      {/* Corner labels */}
+      <span
+        className="hero-corner-label"
+        style={{ top: 'var(--space-12)', left: 'var(--space-8)' }}
+        aria-hidden="true"
       >
-        <div className="hero-grid">
-        {/* ── Colonne gauche — texte ── */}
-        <div>
-        {/* Eyebrow */}
-        <AnimatedHeading
-          as="p"
-          delay={0}
-          duration={600}
-          style={{
-            fontSize: '12px',
-            fontWeight: 600,
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: 'var(--accent-1)',
-            marginBottom: 'var(--space-5)',
-          }}
-        >
-          Guides indépendants · Comparatifs honnêtes
-        </AnimatedHeading>
+        10min · Apple guide
+      </span>
+      <span
+        className="hero-corner-label"
+        style={{ top: 'var(--space-12)', right: 'var(--space-8)' }}
+        aria-hidden="true"
+      >
+        Édition {nowYear}
+      </span>
+      <span
+        className="hero-corner-label"
+        style={{ bottom: 'var(--space-10)', left: 'var(--space-8)' }}
+        aria-hidden="true"
+      >
+        Scroll · ↓
+      </span>
 
-        {/* H1 — ligne 1 */}
-        <AnimatedHeading
-          as="h1"
-          delay={120}
-          duration={900}
-          style={{
-            fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: 'clamp(2rem, 5.5vw, 4.5rem)',
-            fontWeight: 800,
-            lineHeight: 1.1,
-            letterSpacing: '0',
-            color: 'var(--text-primary)',
-            marginBottom: '0.15em',
-          }}
-        >
-          Choisir votre
-        </AnimatedHeading>
+      <div className="hero-editorial-grid">
+        {/* ── Colonne gauche ── */}
+        <div style={{ position: 'relative' }}>
+          <FadeIn delay={0} duration={600}>
+            <p
+              style={{
+                fontFamily: 'var(--next-font-mono), monospace',
+                fontSize: '11px',
+                fontWeight: 500,
+                letterSpacing: '0.22em',
+                textTransform: 'uppercase',
+                color: 'var(--accent-1)',
+                marginBottom: 'var(--space-8)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 'var(--space-3)',
+              }}
+            >
+              <span
+                aria-hidden="true"
+                style={{
+                  display: 'inline-block',
+                  width: 8,
+                  height: 8,
+                  borderRadius: 999,
+                  background: 'var(--accent-1)',
+                  boxShadow: '0 0 14px var(--accent-1)',
+                }}
+              />
+              Guide indépendant · FR
+            </p>
+          </FadeIn>
 
-        {/* H1 — ligne 2 avec mot rotatif */}
-        <AnimatedHeading
-          as="h1"
-          delay={280}
-          duration={900}
-          style={{
-            fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: 'clamp(2rem, 5.5vw, 4.5rem)',
-            fontWeight: 800,
-            lineHeight: 1.1,
-            letterSpacing: '0',
-            marginBottom: 'var(--space-8)',
-            display: 'flex',
-            alignItems: 'baseline',
-            flexWrap: 'wrap',
-            gap: '0.25em',
-          }}
-        >
-          <RotatingWords
-            words={ROTATING}
-            interval={2600}
-            style={{ color: 'var(--accent-1)' }}
-          />
-          <span className="text-gradient-hero">en&nbsp;10&nbsp;minutes</span>
-        </AnimatedHeading>
+          <FadeIn delay={100} duration={900} y={24}>
+            <h1 className="hero-h1">
+              Choisir{' '}
+              <span className="hero-h1-accent">l&rsquo;Apple</span>
+              <br />
+              qui vous va.
+              <br />
+              <span style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontWeight: 400 }}>
+                En 10 minutes.
+              </span>
+            </h1>
+          </FadeIn>
 
-        {/* Sous-titre */}
-        <AnimatedHeading
-          as="p"
-          delay={440}
-          duration={700}
-          style={{
-            fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-            color: 'var(--text-secondary)',
-            maxWidth: '520px',
-            lineHeight: 1.65,
-            marginBottom: 'var(--space-10)',
-          }}
-        >
-          Tests terrain, comparateur interactif, quiz &laquo;&thinsp;quel Apple te convient&thinsp;?&raquo; et simulateur de budget &mdash; tout ce qu&rsquo;il faut pour décider vite et bien.
-        </AnimatedHeading>
+          <FadeIn delay={240} duration={700}>
+            <p
+              style={{
+                fontSize: 'clamp(16px, 1.7vw, 20px)',
+                color: 'var(--text-secondary)',
+                lineHeight: 1.65,
+                maxWidth: '52ch',
+                marginTop: 'var(--space-8)',
+                textWrap: 'pretty',
+              }}
+            >
+              Tests terrain, comparateurs interactifs, quiz «&nbsp;quel Apple me
+              convient&nbsp;?&nbsp;» et simulateur de budget. Tout ce qu&rsquo;il faut
+              pour trancher — sans jargon, sans pression commerciale.
+            </p>
+          </FadeIn>
 
-        {/* CTAs */}
-        <AnimatedHeading
-          as="p"
-          delay={580}
-          duration={600}
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 'var(--space-4)',
-            alignItems: 'center',
-          }}
-        >
-          <Link
-            href="/comparer"
+          <Stagger
+            delay={380}
+            staggerDelay={90}
             style={{
-              display: 'inline-flex',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: 'var(--space-4)',
               alignItems: 'center',
-              gap: 'var(--space-2)',
-              padding: 'var(--space-3) var(--space-6)',
-              backgroundColor: 'var(--accent-1)',
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: '15px',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              letterSpacing: '-0.01em',
-              transition: 'opacity 150ms ease, transform 150ms ease',
-            }}
-            className="btn-primary"
-          >
-            Comparer les modèles →
-          </Link>
-          <Link
-            href="/quiz"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 'var(--space-2)',
-              padding: 'var(--space-3) var(--space-6)',
-              border: '1px solid var(--border)',
-              color: 'var(--text-primary)',
-              fontWeight: 500,
-              fontSize: '15px',
-              borderRadius: '8px',
-              textDecoration: 'none',
-              letterSpacing: '-0.01em',
-              transition: 'border-color 150ms ease',
+              marginTop: 'var(--space-10)',
             }}
           >
-            Quel Apple me convient ?
-          </Link>
-        </AnimatedHeading>
-        </div>{/* /colonne gauche */}
+            <StaggerItem>
+              <MagneticButton strength={0.22}>
+                <Link href="/comparer" className="cta-primary">
+                  Comparer les modèles
+                  <span className="cta-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </Link>
+              </MagneticButton>
+            </StaggerItem>
+            <StaggerItem>
+              <Link href="/quiz" className="cta-secondary">
+                Quel Apple me convient ?
+              </Link>
+            </StaggerItem>
+          </Stagger>
 
-        {/* ── Colonne droite — navigation familles ── */}
-        <HeroVisual />
+          <FadeIn delay={640} duration={600}>
+            <div className="hero-meta">
+              <span className="hero-meta-dot" aria-hidden="true" />
+              Mis à jour cette semaine
+              <span aria-hidden="true" style={{ opacity: 0.3 }}>
+                ·
+              </span>
+              47 guides publiés
+              <span aria-hidden="true" style={{ opacity: 0.3 }}>
+                ·
+              </span>
+              100% indépendant
+            </div>
+          </FadeIn>
+        </div>
 
-        </div>{/* /hero-grid */}
+        {/* ── Colonne droite : visuel produit + stat strip ── */}
+        <ScrollReveal parallax={30}>
+          <FadeIn delay={240} duration={900} y={32}>
+            <div className="hero-visual-wrap">
+              <ImagePlaceholder
+                slotId="home-hero"
+                priority
+                ratio="4/5"
+                style={{
+                  boxShadow: '0 60px 120px rgba(0,0,0,0.5), 0 0 0 1px var(--border-strong)',
+                }}
+              />
+              {/* Petit badge absolu */}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 'var(--space-4)',
+                  left: 'var(--space-4)',
+                  right: 'var(--space-4)',
+                  zIndex: 2,
+                }}
+              >
+                <HeroStatStrip />
+              </div>
+            </div>
+          </FadeIn>
+        </ScrollReveal>
       </div>
     </AuroraBackground>
   )

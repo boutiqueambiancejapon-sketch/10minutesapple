@@ -80,10 +80,18 @@ export function HeroSection() {
 
           <FadeIn delay={100} duration={900} y={24}>
             <h1 className="hero-h1">
-              Choisir{' '}
-              <span className="hero-h1-accent">l&rsquo;Apple</span>{' '}
-              qui vous va.{' '}
-              <span style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontWeight: 400 }}>
+              <span className="hero-h1-line">
+                Choisir <span className="hero-h1-accent">l&rsquo;Apple</span>
+              </span>
+              <span className="hero-h1-line">qui vous va.</span>
+              <span
+                className="hero-h1-line"
+                style={{
+                  color: 'var(--text-muted)',
+                  fontStyle: 'italic',
+                  fontWeight: 400,
+                }}
+              >
                 En 10&nbsp;minutes.
               </span>
             </h1>

@@ -33,6 +33,7 @@ export function AuroraBackground({
   ) => (
     <div
       aria-hidden="true"
+      className="aurora-beam"
       style={{
         position: 'absolute',
         width: w,
@@ -40,7 +41,6 @@ export function AuroraBackground({
         borderRadius: '50%',
         background: `radial-gradient(ellipse, ${color}60 0%, ${color}20 35%, transparent 70%)`,
         filter: 'blur(90px)',
-        mixBlendMode: 'screen',
         willChange: 'transform',
         animation: `${keyframe} ${dur} ease-in-out ${delay} infinite`,
         pointerEvents: 'none',

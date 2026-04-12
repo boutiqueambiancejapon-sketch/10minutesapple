@@ -111,25 +111,13 @@ export function Footer() {
         ))}
       </div>
 
-      {/* Bas de page disclaimer */}
-      <div
-        style={{
-          maxWidth: 'var(--page-max)',
-          margin: 'var(--space-16) auto 0',
-          padding: 'var(--space-12) var(--page-pad) 0',
-          borderTop: '1px solid var(--border)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: 'var(--space-6)',
-          flexWrap: 'wrap',
-          alignItems: 'flex-start',
-        }}
-        className="footer-disclaimer"
-      >
+      {/* Bas de page disclaimer — même wrapper que footer-grid */}
+      <div className="footer-disclaimer-wrap">
+      <div className="footer-disclaimer">
         <p
           style={{
-            fontSize: '11px',
-            color: 'var(--text-muted)',
+            fontSize: '12px',
+            color: 'var(--text-secondary)',
             maxWidth: '58ch',
             lineHeight: 1.6,
           }}
@@ -142,8 +130,8 @@ export function Footer() {
           style={{
             display: 'flex',
             gap: 'var(--space-5)',
-            fontSize: '11px',
-            color: 'var(--text-muted)',
+            fontSize: '12px',
+            color: 'var(--text-secondary)',
             fontFamily: 'var(--next-font-mono), monospace',
             letterSpacing: '0.04em',
           }}
@@ -162,6 +150,7 @@ export function Footer() {
           </Link>
           <span>© {currentYear()}</span>
         </div>
+      </div>
       </div>
     </footer>
   )

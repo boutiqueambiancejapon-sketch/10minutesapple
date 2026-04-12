@@ -93,7 +93,7 @@ export function Nav() {
           backdropFilter: scrolled || open ? 'blur(40px) saturate(1.8)' : 'none',
           WebkitBackdropFilter: scrolled || open ? 'blur(40px) saturate(1.8)' : 'none',
           borderBottom:
-            scrolled || open ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+            scrolled || open ? '1px solid var(--border-strong)' : '1px solid transparent',
         }}
       >
         <nav aria-label="Navigation principale" className="nav-v2-inner">

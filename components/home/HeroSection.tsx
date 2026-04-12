@@ -24,22 +24,19 @@ export function HeroSection() {
 
       {/* Corner labels */}
       <span
-        className="hero-corner-label"
-        style={{ top: 'var(--space-12)', left: 'var(--space-8)' }}
+        className="hero-corner-label hero-corner-label--tl"
         aria-hidden="true"
       >
         10min · Apple guide
       </span>
       <span
-        className="hero-corner-label"
-        style={{ top: 'var(--space-12)', right: 'var(--space-8)' }}
+        className="hero-corner-label hero-corner-label--tr"
         aria-hidden="true"
       >
         Édition {nowYear}
       </span>
       <span
-        className="hero-corner-label"
-        style={{ bottom: 'var(--space-10)', left: 'var(--space-8)' }}
+        className="hero-corner-label hero-corner-label--bl"
         aria-hidden="true"
       >
         Scroll · ↓

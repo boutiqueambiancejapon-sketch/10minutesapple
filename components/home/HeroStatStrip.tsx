@@ -53,11 +53,11 @@ export function HeroStatStrip() {
           <span
             style={{
               fontFamily: 'var(--next-font-mono), monospace',
-              fontSize: '9px',
+              fontSize: '11px',
               fontWeight: 500,
-              letterSpacing: '0.1em',
+              letterSpacing: '0.08em',
               textTransform: 'uppercase',
-              color: 'var(--text-muted)',
+              color: 'var(--text-secondary)',
             }}
           >
             {stat.label}

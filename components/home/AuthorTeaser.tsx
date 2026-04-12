@@ -22,8 +22,6 @@ export function AuthorTeaser() {
             gridTemplateColumns: '1fr',
             gap: 'var(--space-12)',
             alignItems: 'center',
-            maxWidth: '1040px',
-            margin: '0 auto',
           }}
           className="author-teaser-v2"
         >

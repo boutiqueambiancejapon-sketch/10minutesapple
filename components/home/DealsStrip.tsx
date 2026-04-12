@@ -26,47 +26,28 @@ const DEALS: Deal[] = [
 ]
 
 function DealChip({ label, badge, href, badgeColor = 'var(--accent-1)' }: Deal) {
+  // Couleurs claires (ambre/mint) → texte foncé pour contraste WCAG AA
+  const lightBadges = ['var(--accent-2)', 'var(--accent-3)']
+  const badgeText = lightBadges.includes(badgeColor) ? 'var(--bg-primary)' : '#fff'
   return (
     <a
       href={addAffiliateTag(href)}
       rel="nofollow noopener sponsored"
       target="_blank"
       className="deal-chip"
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 'var(--space-3)',
-        padding: '10px 18px 10px 10px',
-        background: 'var(--bg-surface)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--radius-full)',
-        textDecoration: 'none',
-        color: 'var(--text-primary)',
-        fontSize: '13px',
-        fontWeight: 500,
-        whiteSpace: 'nowrap',
-        flexShrink: 0,
-        transition: 'border-color 180ms ease, transform 180ms ease',
-      }}
     >
       <span
+        className="deal-chip-badge"
         style={{
-          padding: '4px 10px',
           background: badgeColor,
-          color: '#fff',
-          borderRadius: 'var(--radius-full)',
-          fontFamily: 'var(--next-font-mono), monospace',
-          fontSize: '10px',
-          fontWeight: 700,
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase',
+          color: badgeText,
           boxShadow: `0 0 16px ${badgeColor}60`,
         }}
       >
         {badge}
       </span>
       {label}
-      <span aria-hidden="true" style={{ opacity: 0.5, marginLeft: 'var(--space-1)' }}>
+      <span aria-hidden="true" className="deal-chip-arrow">
         ↗
       </span>
     </a>
@@ -75,47 +56,18 @@ function DealChip({ label, badge, href, badgeColor = 'var(--accent-1)' }: Deal) 
 
 export function DealsStrip() {
   return (
-    <section
-      aria-label="Bons plans du moment"
-      style={{
-        position: 'relative',
-        padding: 'var(--space-5) 0',
-        borderTop: '1px solid var(--border)',
-        borderBottom: '1px solid var(--border)',
-        overflow: 'hidden',
-        background: 'linear-gradient(180deg, transparent, rgba(255,61,87,0.02) 50%, transparent)',
-      }}
-    >
-      {/* Corner label */}
-      <span
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: 'var(--space-6)',
-          transform: 'translateY(-50%)',
-          fontFamily: 'var(--next-font-mono), monospace',
-          fontSize: '10px',
-          letterSpacing: '0.14em',
-          textTransform: 'uppercase',
-          color: 'var(--accent-1)',
-          background: 'var(--bg-primary)',
-          padding: '4px 10px',
-          borderRadius: 'var(--radius-full)',
-          border: '1px solid var(--accent-1)',
-          zIndex: 2,
-          pointerEvents: 'none',
-        }}
-        className="deals-pill"
-      >
-        ● Live deals
-      </span>
-      <div style={{ paddingLeft: '130px' }}>
-        <MarqueeStrip speed="slow" gap="var(--space-4)">
-          {DEALS.map((deal) => (
-            <DealChip key={deal.label} {...deal} />
-          ))}
-        </MarqueeStrip>
+    <section aria-label="Bons plans du moment" className="deals-strip">
+      <div className="deals-strip-grid">
+        <span aria-hidden="true" className="deals-pill">
+          ● Live deals
+        </span>
+        <div className="deals-strip-marquee">
+          <MarqueeStrip speed="slow" gap="var(--space-4)">
+            {DEALS.map((deal) => (
+              <DealChip key={deal.label} {...deal} />
+            ))}
+          </MarqueeStrip>
+        </div>
       </div>
     </section>
   )

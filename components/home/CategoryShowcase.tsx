@@ -58,22 +58,10 @@ export function CategoryShowcase({
             <ImagePlaceholder slotId={slotId} ratio="4/5" />
             {/* Badge accent */}
             <span
+              className="category-section-badge"
               style={{
-                position: 'absolute',
-                top: 'var(--space-4)',
-                left: 'var(--space-4)',
-                padding: '6px 14px',
-                background: 'rgba(10,10,15,0.7)',
-                backdropFilter: 'blur(14px)',
-                border: `1px solid ${accent}`,
+                borderColor: accent,
                 color: accent,
-                fontFamily: 'var(--next-font-mono), monospace',
-                fontSize: '10px',
-                fontWeight: 600,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                borderRadius: 'var(--radius-full)',
-                zIndex: 2,
               }}
             >
               Section {index}

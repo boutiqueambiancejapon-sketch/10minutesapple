@@ -113,6 +113,11 @@
   - [x] blog/astuces/fonctions-cachees-ios-27 — 15 fonctions cachées iOS 27 (Siri contextuel, Smart Recap, satellite)
   - [x] blog/iphone/quel-iphone-pour-senior — Guide iPhone pour personnes âgées + réglages accessibilité
   - [x] blog/accessoires/apple-ring-bague-connectee-rumeurs — News/rumeurs Apple Ring (brevets, concurrence, analyse marché)
+- [x] Blog : 4 articles batch 10 (47 blog articles total)
+  - [x] blog/mac/quel-macbook-air-choisir — Guide d'achat MacBook Air M5 (13 vs 15 vs 24 Go)
+  - [x] blog/astuces/transferer-whatsapp-nouvel-iphone — Tutoriel transfert WhatsApp iCloud + QR code + Android
+  - [x] blog/watch/apple-watch-series-11-vs-se-3 — Comparatif Apple Watch Series 11 vs SE 3 par profil
+  - [x] blog/mac/mac-studio-m5-ultra-rumeurs — News/rumeurs Mac Studio M5 Ultra WWDC 2026
 - [x] Produits : fiches AirTag 2 (unité + pack 4) avec ASINs Amazon FR
 - [x] Produits : 3 fiches accessoires ajoutées (coque TechWoven, chargeur Anker MagGo, protection Spigen)
 - [x] Sidebar article : sommaire sticky (TOC) + "Deals du moment" avec prix barrés et liens affiliés Amazon

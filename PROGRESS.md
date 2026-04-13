@@ -118,6 +118,11 @@
   - [x] blog/astuces/transferer-whatsapp-nouvel-iphone — Tutoriel transfert WhatsApp iCloud + QR code + Android
   - [x] blog/watch/apple-watch-series-11-vs-se-3 — Comparatif Apple Watch Series 11 vs SE 3 par profil
   - [x] blog/mac/mac-studio-m5-ultra-rumeurs — News/rumeurs Mac Studio M5 Ultra WWDC 2026
+- [x] Blog : 4 articles batch 11 (59 blog articles total)
+  - [x] blog/astuces/apple-one-quelle-formule-choisir — Guide d'achat Apple One Individuel/Famille/Premium tarifs FR 2026
+  - [x] blog/mac/studio-display-vs-studio-display-xdr — Comparatif Studio Display vs Studio Display XDR (replacement Pro Display XDR)
+  - [x] blog/ipad/ipad-cellulaire-ou-wifi — Guide d'achat iPad Wi-Fi vs Cellular eSIM 5G + alternatives
+  - [x] blog/ipad/ipad-pro-m6-rumeurs-2027 — News/rumeurs iPad Pro M6 2027 (vapor chamber, modem C2, 2 nm TSMC)
 - [x] Produits : fiches AirTag 2 (unité + pack 4) avec ASINs Amazon FR
 - [x] Produits : 3 fiches accessoires ajoutées (coque TechWoven, chargeur Anker MagGo, protection Spigen)
 - [x] Sidebar article : sommaire sticky (TOC) + "Deals du moment" avec prix barrés et liens affiliés Amazon

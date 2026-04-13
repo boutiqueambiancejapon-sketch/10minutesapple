@@ -1,6 +1,6 @@
 /**
  * /blog/[categorie] — hub catégorie.
- * Grille complète des articles de la catégorie + breadcrumb + pagination.
+ * Hero éditorial avec accent catégorie + big-display nom + chips + grille.
  * Server Component · ISR 3600s.
  */
 
@@ -11,6 +11,8 @@ import { getAllArticles, getCategories, CATEGORY_LABELS, CATEGORY_ACCENT } from 
 import { currentYear } from '@/lib/utils/year'
 import { ArticleCard } from '@/components/blog/ArticleCard'
 import { Pagination } from '@/components/blog/Pagination'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 
 export const revalidate = 3600
 
@@ -72,45 +74,46 @@ export default async function CategoryPage({
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <main id="main-content">
-        {/* Hero avec accent catégorie */}
+        {/* ── Hero éditorial catégorie ── */}
         <section
-          style={{
-            background: `radial-gradient(ellipse 100% 80% at 0% 0%, color-mix(in srgb, ${accent} 10%, transparent) 0%, transparent 65%)`,
-            borderBottom: '1px solid var(--border)',
-          }}
+          className="section-shell category-hub-hero"
+          style={{ '--cat-accent': accent } as React.CSSProperties}
         >
-          <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: 'var(--space-14) var(--page-pad) var(--space-10)' }} className="blog-hero-inner">
-            {/* Breadcrumb */}
-            <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
-              <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
-                <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Accueil</Link></li>
-                <li aria-hidden="true">›</li>
-                <li><Link href="/blog" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Blog</Link></li>
-                <li aria-hidden="true">›</li>
-                <li aria-current="page" style={{ color: 'var(--text-secondary)' }}>{label}</li>
-              </ol>
-            </nav>
+          <div className="section-inner">
+            <span className="big-display-number" aria-hidden="true">
+              {label}
+            </span>
 
-            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 'var(--space-6)', flexWrap: 'wrap' }}>
-              <div>
-                <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: accent, marginBottom: 'var(--space-3)' }}>
-                  Catégorie
-                </span>
-                <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1 }}>
-                  {label}
-                </h1>
-              </div>
-              <p style={{ fontSize: '14px', color: 'var(--text-muted)', flexShrink: 0 }}>
-                {all.length} article{all.length > 1 ? 's' : ''}
+            <FadeIn>
+              <nav aria-label="Fil d'Ariane" className="breadcrumb-v2">
+                <Link href="/">Accueil</Link>
+                <span aria-hidden="true">/</span>
+                <Link href="/blog">Blog</Link>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">{label}</span>
+              </nav>
+            </FadeIn>
+
+            <FadeIn delay={100}>
+              <p className="section-eyebrow" style={{ color: accent }}>
+                <span style={{ background: accent, width: 24, height: 1, display: 'inline-block' }} />
+                Catégorie · {all.length} article{all.length > 1 ? 's' : ''}
               </p>
-            </div>
+              <h1 className="section-title">
+                Tous les guides <em>{label}</em>.
+              </h1>
+              <p className="section-lead">
+                Tests, comparatifs et conseils d&rsquo;achat {label}. Classé par date, on
+                remet en avant les guides à jour en premier.
+              </p>
+            </FadeIn>
           </div>
         </section>
 
-        {/* Onglets — liens vers les autres catégories */}
-        <nav aria-label="Autres catégories" style={{ borderBottom: '1px solid var(--border)', marginBottom: 'var(--space-10)' }}>
-          <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad)', display: 'flex', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-            <Link href="/blog" style={{ display: 'inline-flex', alignItems: 'center', padding: 'var(--space-3) var(--space-4)', fontSize: '13px', fontWeight: 500, color: 'var(--text-muted)', borderBottom: '2px solid transparent', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+        {/* ── Chips catégories ── */}
+        <nav aria-label="Autres catégories" className="blog-tabs-v2">
+          <div className="blog-tabs-v2-inner">
+            <Link href="/blog" className="blog-chip">
               Tous
             </Link>
             {Object.entries(CATEGORY_LABELS).map(([slug, lbl]) => {
@@ -121,8 +124,10 @@ export default async function CategoryPage({
                   key={slug}
                   href={`/blog/${slug}`}
                   aria-current={isActive ? 'page' : undefined}
-                  style={{ display: 'inline-flex', alignItems: 'center', padding: 'var(--space-3) var(--space-4)', fontSize: '13px', fontWeight: isActive ? 700 : 500, color: isActive ? a : 'var(--text-secondary)', borderBottom: isActive ? `2px solid ${a}` : '2px solid transparent', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                  className={`blog-chip${isActive ? ' blog-chip--active' : ''}`}
+                  style={{ '--chip-accent': a } as React.CSSProperties}
                 >
+                  {isActive && <span className="dot" aria-hidden="true" style={{ background: a, boxShadow: `0 0 10px ${a}` }} />}
                   {lbl}
                 </Link>
               )
@@ -130,17 +135,38 @@ export default async function CategoryPage({
           </div>
         </nav>
 
-        {/* Grille */}
-        <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad) var(--space-24)' }}>
-          <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 'clamp(var(--space-8), 3vw, var(--space-12))', listStyle: 'none', margin: 0, padding: 0 }}>
-            {paged.map((article) => (
-              <li key={article.slug}>
-                <ArticleCard article={article} showCategory={false} />
-              </li>
-            ))}
-          </ul>
-          <Pagination currentPage={currentPage} totalPages={totalPages} basePath={`/blog/${categorie}`} />
-        </div>
+        {/* ── Grille ── */}
+        <section className="section-shell" style={{ paddingTop: 0 }}>
+          <div className="section-inner">
+            <Stagger delay={100} staggerDelay={80}>
+              <ul
+                role="list"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))',
+                  gap: 'clamp(var(--space-8), 3vw, var(--space-12))',
+                  listStyle: 'none',
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                {paged.map((article) => (
+                  <StaggerItem key={article.slug}>
+                    <li>
+                      <ArticleCard article={article} showCategory={false} />
+                    </li>
+                  </StaggerItem>
+                ))}
+              </ul>
+            </Stagger>
+
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              basePath={`/blog/${categorie}`}
+            />
+          </div>
+        </section>
       </main>
     </>
   )

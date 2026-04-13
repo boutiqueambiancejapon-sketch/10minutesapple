@@ -7,9 +7,10 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { currentYear } from '@/lib/utils/year'
-import { MarqueeStrip } from '@/components/effects/MarqueeStrip'
 import { DealsGrid } from '@/components/deals/DealsGrid'
 import { FaqAccordion } from '@/components/blog/FaqAccordion'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { MarqueeBanner } from '@/components/home/MarqueeBanner'
 import type { Deal } from '@/components/deals/DealsGrid'
 
 export const revalidate = 900
@@ -279,16 +280,7 @@ const DEALS: Deal[] = [
   },
 ]
 
-const MARQUEE_ITEMS = [
-  'iPhone 17 à 949 €',
-  'iPhone 16 à 819 €',
-  'iPhone 15 à 729 €',
-  'AirPods Pro 2 à 219 €',
-  'MacBook Neo à 669 €',
-  'Apple Watch SE 2 à 239 €',
-  'iPad 11e gen à 349 €',
-  'Sélection mise à jour chaque semaine',
-]
+const MARQUEE_WORDS = ['Promo', 'Deals', 'Baisses', 'Bons plans', 'Live', 'Vérifié', 'Sélection']
 
 const FAQ_ITEMS = [
   {
@@ -353,148 +345,99 @@ export default function DealsPage() {
       />
 
       <main id="main-content">
-        {/* Marquee strip — animation CSS */}
-        <MarqueeStrip direction="left" speed="slow">
-          {MARQUEE_ITEMS.map((item) => (
-            <span
-              key={item}
-              style={{
-                fontSize: '13px',
-                fontWeight: 600,
-                color: 'var(--text-secondary)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-6)',
-              }}
-            >
-              <span style={{ color: 'var(--accent-2)', fontWeight: 800 }}>✦</span>
-              {item}
+        {/* ── Hero éditorial ── */}
+        <section className="section-shell deals-hero">
+          <div className="section-inner">
+            <span className="big-display-number" aria-hidden="true" style={{ color: 'var(--accent-2)', opacity: 0.08 }}>
+              %
             </span>
-          ))}
-        </MarqueeStrip>
 
-        {/* Hero */}
-        <section
-          style={{
-            maxWidth: 'var(--page-max)',
-            margin: '0 auto',
-            padding: 'var(--space-12) var(--page-pad) var(--space-10)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Watermark DA */}
-          <span
-            aria-hidden="true"
-            style={{
-              position: 'absolute',
-              top: '0',
-              right: 'var(--space-4)',
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(120px, 18vw, 240px)',
-              fontWeight: 800,
-              color: 'var(--accent-2)',
-              opacity: 0.05,
-              lineHeight: 1,
-              pointerEvents: 'none',
-              userSelect: 'none',
-            }}
-          >
-            %
-          </span>
+            <FadeIn>
+              <nav aria-label="Fil d'Ariane" className="breadcrumb-v2">
+                <Link href="/">Accueil</Link>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">Deals</span>
+              </nav>
+            </FadeIn>
 
-          <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
-            <ol
-              style={{
-                display: 'flex',
-                gap: 'var(--space-2)',
-                listStyle: 'none',
-                fontSize: '13px',
-                color: 'var(--text-muted)',
-              }}
-            >
-              <li>
-                <Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>
-                  Accueil
-                </Link>
-              </li>
-              <li aria-hidden="true">›</li>
-              <li aria-current="page" style={{ color: 'var(--text-secondary)' }}>
-                Deals
-              </li>
-            </ol>
-          </nav>
-
-          <h1
-            style={{
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(32px, 5vw, 60px)',
-              fontWeight: 800,
-              color: 'var(--text-primary)',
-              lineHeight: 1.1,
-              marginBottom: 'var(--space-4)',
-            }}
-          >
-            Deals Apple
-          </h1>
-          <p
-            style={{
-              fontSize: 'clamp(15px, 2vw, 18px)',
-              color: 'var(--text-secondary)',
-              maxWidth: '520px',
-              lineHeight: 1.6,
-            }}
-          >
-            Sélection manuelle. Pas de deals sponsorisés, pas de prix gonflés avant promo.
-            Que des vraies réductions vérifiées.
-          </p>
+            <FadeIn delay={100}>
+              <p className="section-eyebrow" style={{ color: 'var(--accent-2)' }}>
+                <span style={{ background: 'var(--accent-2)', width: 24, height: 1, display: 'inline-block' }} />
+                Live · {DEALS.filter((d) => d.chaud).length} deals chauds
+              </p>
+              <h1 className="section-title">
+                Les vrais <em>bons plans</em>
+                <br />
+                Apple, sans bullshit.
+              </h1>
+              <p className="section-lead">
+                Sélection manuelle hebdomadaire. Zéro prix gonflé avant promo, zéro
+                deal sponsorisé. On compare chaque réduction avec l&rsquo;historique
+                Amazon et le prix Apple Store officiel.
+              </p>
+            </FadeIn>
+          </div>
         </section>
 
-        {/* Liste deals */}
-        <section
-          style={{
-            maxWidth: 'var(--page-max)',
-            margin: '0 auto',
-            padding: '0 var(--page-pad) var(--space-24)',
-          }}
-        >
-          <DealsGrid deals={DEALS} />
+        <MarqueeBanner words={MARQUEE_WORDS} />
 
-          {/* FAQ — bons plans Apple, code promo, réductions */}
-          <section aria-labelledby="faq-deals" style={{ marginTop: 'var(--space-12)' }}>
-            <h2
-              id="faq-deals"
+        {/* ── Grille deals ── */}
+        <section className="section-shell" style={{ paddingTop: 'clamp(var(--space-10), 5vw, var(--space-16))' }}>
+          <div className="section-inner">
+            <FadeIn>
+              <DealsGrid deals={DEALS} />
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* ── FAQ ── */}
+        <section className="section-shell section-shell--bordered" aria-labelledby="faq-deals">
+          <div className="section-inner">
+            <span className="section-index" style={{ top: '-20px', right: '0' }}>
+              FAQ
+            </span>
+            <FadeIn>
+              <p className="section-eyebrow">FAQ · Deals Apple</p>
+              <h2 id="faq-deals" className="section-title" style={{ fontSize: 'clamp(26px, 3.6vw, 44px)' }}>
+                On répond aux <em>vraies</em> questions.
+              </h2>
+            </FadeIn>
+            <FadeIn delay={120}>
+              <div style={{ marginTop: 'var(--space-10)' }}>
+                <FaqAccordion items={FAQ_ITEMS} />
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
+        {/* ── Disclosure affiliés ── */}
+        <section className="section-shell" style={{ paddingTop: 0 }}>
+          <div className="section-inner">
+            <div
               style={{
-                fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                fontSize: 'clamp(20px, 3vw, 28px)',
-                fontWeight: 800,
-                color: 'var(--text-primary)',
-                marginBottom: 'var(--space-6)',
+                padding: 'var(--space-6) var(--space-7)',
+                background: 'var(--bg-surface)',
+                border: '1px solid var(--border)',
+                borderRadius: 'var(--radius-lg)',
+                fontSize: '13px',
+                color: 'var(--text-secondary)',
+                maxWidth: '66ch',
+                lineHeight: 1.6,
               }}
             >
-              Questions fréquentes — bons plans Apple
-            </h2>
-            <FaqAccordion items={FAQ_ITEMS} />
-          </section>
-
-          <div
-            style={{
-              marginTop: 'var(--space-10)',
-              padding: 'var(--space-5) var(--space-6)',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-md)',
-              fontSize: '13px',
-              color: 'var(--text-muted)',
-            }}
-          >
-            <strong style={{ color: 'var(--text-secondary)' }}>Liens affiliés :</strong> certains
-            liens vers Amazon.fr intègrent le tag affilié{' '}
-            <code style={{ fontSize: '12px' }}>ambiancejap0a-21</code>. Le prix que tu paies reste
-            identique.{' '}
-            <Link href="/mentions-legales" style={{ color: 'var(--accent-1)', textDecoration: 'none' }}>
-              Mentions légales →
-            </Link>
+              <strong style={{ color: 'var(--text-primary)' }}>Liens affiliés :</strong> certains
+              liens vers Amazon.fr intègrent le tag affilié{' '}
+              <code style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '12px', color: 'var(--accent-1)' }}>
+                ambiancejap0a-21
+              </code>
+              . Le prix que tu paies reste identique.{' '}
+              <Link
+                href="/mentions-legales"
+                style={{ color: 'var(--accent-1)', textDecoration: 'underline', textUnderlineOffset: '3px' }}
+              >
+                Mentions légales →
+              </Link>
+            </div>
           </div>
         </section>
       </main>

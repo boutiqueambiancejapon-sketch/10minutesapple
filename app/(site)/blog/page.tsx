@@ -1,6 +1,6 @@
 /**
  * /blog — hub éditorial principal.
- * Article featured + grille paginée + onglets catégories.
+ * Hero section-shell + article featured + chips catégories + grille + pagination.
  * Server Component · ISR 3600s · searchParams: page
  */
 
@@ -10,6 +10,8 @@ import { getAllArticles, getCategories, CATEGORY_ACCENT } from '@/lib/blog'
 import { currentYear } from '@/lib/utils/year'
 import { ArticleCard } from '@/components/blog/ArticleCard'
 import { Pagination } from '@/components/blog/Pagination'
+import { FadeIn } from '@/components/motion/FadeIn'
+import { Stagger, StaggerItem } from '@/components/motion/Stagger'
 
 export const revalidate = 3600
 
@@ -62,75 +64,115 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
 
       <main id="main-content">
-        {/* ── Hero ── */}
-        <section style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: 'var(--space-16) var(--page-pad) var(--space-10)' }} className="blog-hero-inner">
-          <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
-            <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
-              <li><Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Accueil</Link></li>
-              <li aria-hidden="true">›</li>
-              <li aria-current="page" style={{ color: 'var(--text-secondary)' }}>Blog</li>
-            </ol>
-          </nav>
-          <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(32px, 5vw, 60px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1, marginBottom: 'var(--space-3)' }}>
-            Blog Apple
-          </h1>
-          <p style={{ fontSize: 'clamp(15px, 2vw, 17px)', color: 'var(--text-secondary)', maxWidth: '520px', lineHeight: 1.6 }}>
-            Tests, guides et analyses. Direct, honnête — par Mathias, fan depuis le 3G.
-          </p>
+        {/* ── Hero éditorial ── */}
+        <section className="section-shell">
+          <div className="section-inner">
+            <span className="big-display-number" aria-hidden="true">
+              BLOG
+            </span>
+
+            <FadeIn>
+              <nav aria-label="Fil d'Ariane" className="breadcrumb-v2">
+                <Link href="/">Accueil</Link>
+                <span aria-hidden="true">/</span>
+                <span aria-current="page">Blog</span>
+              </nav>
+            </FadeIn>
+
+            <FadeIn delay={100}>
+              <p className="section-eyebrow">
+                {allArticles.length} guides publiés · mise à jour hebdo
+              </p>
+              <h1 className="section-title">
+                Tests, guides,
+                <br />
+                <em>décryptages</em>.
+              </h1>
+              <p className="section-lead">
+                Toute la rédaction d&rsquo;10minutesapple. Pas de communiqués recopiés,
+                pas de sponsoring Apple — du terrain, des chiffres, des recommandations
+                honnêtes.
+              </p>
+            </FadeIn>
+          </div>
         </section>
 
-        {/* ── Onglets catégories ── */}
-        <nav aria-label="Filtrer par catégorie" style={{ borderBottom: '1px solid var(--border)', marginBottom: 'var(--space-10)' }}>
-          <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad)', display: 'flex', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-            <Link
-              href="/blog"
-              aria-current="page"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', padding: 'var(--space-3) var(--space-4)', fontSize: '13px', fontWeight: 700, color: 'var(--accent-1)', borderBottom: '2px solid var(--accent-1)', textDecoration: 'none', whiteSpace: 'nowrap' }}
-            >
+        {/* ── Chips catégories ── */}
+        <nav aria-label="Filtrer par catégorie" className="blog-tabs-v2">
+          <div className="blog-tabs-v2-inner">
+            <Link href="/blog" aria-current="page" className="blog-chip blog-chip--active">
+              <span className="dot" aria-hidden="true" />
               Tous
-              <span style={{ fontSize: '11px', background: 'rgba(255,61,87,0.10)', borderRadius: 'var(--radius-full)', padding: '1px 6px' }}>
-                {allArticles.length}
-              </span>
+              <span className="blog-chip-count">{allArticles.length}</span>
             </Link>
             {categories.map(({ slug, label, count }) => {
               const accent = CATEGORY_ACCENT[slug] ?? 'var(--accent-1)'
               return (
-                <Link key={slug} href={`/blog/${slug}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', padding: 'var(--space-3) var(--space-4)', fontSize: '13px', fontWeight: 500, color: 'var(--text-secondary)', borderBottom: '2px solid transparent', textDecoration: 'none', whiteSpace: 'nowrap' }}>
+                <Link
+                  key={slug}
+                  href={`/blog/${slug}`}
+                  className="blog-chip"
+                  style={{ '--chip-accent': accent } as React.CSSProperties}
+                >
                   {label}
-                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{count}</span>
+                  <span className="blog-chip-count">{count}</span>
                 </Link>
               )
             })}
           </div>
         </nav>
 
-        <div style={{ maxWidth: 'var(--page-max)', margin: '0 auto', padding: '0 var(--page-pad) var(--space-24)' }}>
-          {allArticles.length === 0 ? (
-            <p style={{ color: 'var(--text-muted)', fontSize: '15px' }}>Premiers articles en cours de rédaction.</p>
-          ) : (
-            <>
-              {/* Article featured — page 1 uniquement */}
-              {featured && currentPage === 1 && (
-                <div style={{ marginBottom: 'var(--space-10)' }}>
-                  <ArticleCard article={featured} featured />
-                </div>
-              )}
+        {/* ── Contenu ── */}
+        <section className="section-shell" style={{ paddingTop: 0 }}>
+          <div className="section-inner">
+            {allArticles.length === 0 ? (
+              <p style={{ color: 'var(--text-secondary)', fontSize: '15px' }}>
+                Premiers articles en cours de rédaction.
+              </p>
+            ) : (
+              <>
+                {featured && currentPage === 1 && (
+                  <FadeIn delay={150}>
+                    <div style={{ marginBottom: 'clamp(var(--space-10), 5vw, var(--space-16))' }}>
+                      <ArticleCard article={featured} featured />
+                    </div>
+                  </FadeIn>
+                )}
 
-              {/* Grille */}
-              {paged.length > 0 && (
-                <ul role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 'clamp(var(--space-8), 3vw, var(--space-12))', listStyle: 'none', margin: 'var(--space-10) 0 0', padding: 0 }}>
-                  {paged.map((article) => (
-                    <li key={`${article.categorie}/${article.slug}`}>
-                      <ArticleCard article={article} />
-                    </li>
-                  ))}
-                </ul>
-              )}
+                {paged.length > 0 && (
+                  <Stagger delay={200} staggerDelay={80}>
+                    <ul
+                      role="list"
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns:
+                          'repeat(auto-fill, minmax(min(100%, 320px), 1fr))',
+                        gap: 'clamp(var(--space-8), 3vw, var(--space-12))',
+                        listStyle: 'none',
+                        margin: 0,
+                        padding: 0,
+                      }}
+                    >
+                      {paged.map((article) => (
+                        <StaggerItem key={`${article.categorie}/${article.slug}`}>
+                          <li>
+                            <ArticleCard article={article} />
+                          </li>
+                        </StaggerItem>
+                      ))}
+                    </ul>
+                  </Stagger>
+                )}
 
-              <Pagination currentPage={currentPage} totalPages={totalPages} basePath="/blog" />
-            </>
-          )}
-        </div>
+                <Pagination
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  basePath="/blog"
+                />
+              </>
+            )}
+          </div>
+        </section>
       </main>
     </>
   )

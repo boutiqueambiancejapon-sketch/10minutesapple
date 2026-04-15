@@ -126,6 +126,9 @@
 - [x] Blog : 2 articles batch 12 (61 blog articles total)
   - [x] blog/mac/macbook-pro-14-vs-16-m5-pro — Guide d'achat MacBook Pro 14 vs 16 pouces M5 Pro + M5 Max
   - [x] blog/accessoires/apple-tv-4k-2026-rumeurs-prix-date — News/rumeurs Apple TV 4K 2026 (A17 Pro, Wi-Fi 7, nouveau Siri)
+- [x] Blog : 2 articles batch 13 (63 blog articles total)
+  - [x] blog/astuces/passer-android-a-iphone — Tutoriel migration Android → iPhone avec Move to iOS (WhatsApp inclus)
+  - [x] blog/ipad/ipad-mini-8-rumeurs-oled-2026 — News/rumeurs iPad mini 8 OLED A19 Pro (septembre 2026)
 - [x] Produits : fiches MacBook Pro 16 M5 Pro + M5 Max avec ASINs Amazon FR
 - [x] Produits : fiches Apple TV 4K 64 Go et 128 Go avec ASINs Amazon FR
 - [x] Produits : fiches AirTag 2 (unité + pack 4) avec ASINs Amazon FR

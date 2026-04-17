@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>10 Minutes Apple — Redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  html,body { margin:0; padding:0; background:#1a1a1f; min-height:100vh; font-family:'Inter Tight', system-ui, sans-serif; color:#F0F0F5; }
+  #app { min-height:100vh; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="app.jsx"></script>
+<script type="text/babel" src="home.jsx"></script>
+<script type="text/babel" src="article.jsx"></script>
+
+<script type="text/babel" data-presets="react">
+const __tma = window.__tma;
+const T_useTweaks = __tma.useTweaks;
+const T_GlobalStyles = __tma.GlobalStyles;
+const T_ACCENTS = __tma.ACCENTS;
+const T_ArticleScreen = __tma.ArticleScreen;
+const T_HomeScreen = __tma.HomeScreen;
+
+// ──────────────────────────────────────────────────────────────────
+// IPHONE FRAME WRAPPER — simplified, scroll inside
+// ──────────────────────────────────────────────────────────────────
+function PhoneFrame({ children, scrollRef, label }) {
+  return (
+    <div style={{
+      width:390, height:780, borderRadius:44, overflow:'hidden',
+      position:'relative', background:'var(--bg)',
+      boxShadow:'0 40px 80px rgba(0,0,0,0.45), 0 0 0 8px #1c1c22, 0 0 0 9px #3a3a45',
+    }}>
+      {/* dynamic island */}
+      <div style={{
+        position:'absolute', top:10, left:'50%', transform:'translateX(-50%)',
+        width:108, height:30, borderRadius:20, background:'#000', zIndex:50,
+      }}/>
+      {/* status bar */}
+      <div style={{
+        position:'absolute', top:0, left:0, right:0, zIndex:40,
+        display:'flex', alignItems:'center', justifyContent:'space-between',
+        padding:'14px 26px 0', fontSize:13, fontWeight:600, color:'var(--fg)',
+        pointerEvents:'none',
+      }}>
+        <span className="mono">9:41</span>
+        <div style={{display:'flex', gap:5, alignItems:'center'}}>
+          <svg width="15" height="10" viewBox="0 0 15 10"><rect x="0" y="6" width="2.5" height="4" rx=".5" fill="currentColor"/><rect x="4" y="4" width="2.5" height="6" rx=".5" fill="currentColor"/><rect x="8" y="2" width="2.5" height="8" rx=".5" fill="currentColor"/><rect x="12" y="0" width="2.5" height="10" rx=".5" fill="currentColor"/></svg>
+          <svg width="22" height="11" viewBox="0 0 22 11"><rect x="0.5" y="0.5" width="19" height="10" rx="2.5" stroke="currentColor" fill="none" opacity=".4"/><rect x="2" y="2" width="16" height="7" rx="1.5" fill="currentColor"/></svg>
+        </div>
+      </div>
+      {/* scroll area */}
+      <div ref={scrollRef} className="scroll-area" style={{
+        height:'100%', overflowY:'auto', overflowX:'hidden', paddingTop:44,
+        position:'relative',
+      }}>
+        {children}
+      </div>
+      {/* home indicator */}
+      <div style={{
+        position:'absolute', bottom:8, left:'50%', transform:'translateX(-50%)',
+        width:130, height:4, borderRadius:99, background:'rgba(255,255,255,.4)', zIndex:60,
+      }}/>
+      {/* tab bar */}
+      <div style={{
+        position:'absolute', bottom:22, left:0, right:0, zIndex:35,
+        display:'flex', justifyContent:'space-around', padding:'0 20px',
+        pointerEvents:'none',
+      }}>
+        {['home','search','bookmark','profile'].map((x,i) => (
+          <div key={i} style={{
+            width:6, height:6, borderRadius:'50%',
+            background: i === 0 ? 'var(--a1)' : 'var(--fg3)', opacity: i === 0 ? 1 : .4,
+          }}/>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────
+// DESKTOP VIEWPORT — scaled-down magazine layout for the article
+// ──────────────────────────────────────────────────────────────────
+function DesktopArticle({ tweaks }) {
+  return (
+    <div style={{
+      width:880, background:'var(--bg)', borderRadius:16, overflow:'hidden',
+      boxShadow:'0 40px 80px rgba(0,0,0,0.45)',
+      border:'1px solid rgba(255,255,255,.08)',
+    }}>
+      {/* browser chrome */}
+      <div style={{
+        display:'flex', alignItems:'center', gap:8, padding:'10px 14px',
+        background:'var(--bg2)', borderBottom:'1px solid var(--border)',
+      }}>
+        <div style={{display:'flex', gap:6}}>
+          {['#FF5F57','#FEBC2E','#28C840'].map((c,i) => <div key={i} style={{width:10, height:10, borderRadius:'50%', background:c}}/>)}
+        </div>
+        <div style={{
+          flex:1, background:'var(--bg3)', borderRadius:6, padding:'4px 12px',
+          fontSize:11, color:'var(--fg2)', textAlign:'center',
+        }}>
+          <span style={{color:'var(--a3)'}}>🔒</span> 10minutesapple.com/iphone-17-vs-iphone-16
+        </div>
+      </div>
+      {/* nav */}
+      <div style={{
+        padding:'14px 32px', background:'var(--bg)',
+        borderBottom:'1px solid var(--border)',
+        display:'flex', alignItems:'center', gap:24,
+      }}>
+        <div style={{display:'flex', alignItems:'center', gap:8}}>
+          <div style={{
+            width:24, height:24, borderRadius:6,
+            background:'linear-gradient(135deg, var(--a1), var(--a4))',
+            display:'flex', alignItems:'center', justifyContent:'center',
+            fontFamily:'var(--font-display)', fontSize:12, color:'#fff', fontWeight:600,
+          }}>10</div>
+          <div style={{fontSize:13, fontWeight:700}}>Minutes Apple</div>
+        </div>
+        <nav style={{display:'flex', gap:18, fontSize:12, color:'var(--fg2)'}}>
+          <span>iPhone</span><span>Mac</span><span>iPad</span><span>Watch</span><span style={{color:'var(--a1)', fontWeight:600}}>Deals</span>
+        </nav>
+        <div style={{flex:1}}/>
+        <div className="mono" style={{fontSize:10, color:'var(--fg3)'}}>
+          ◉ 42 articles · 66 produits
+        </div>
+      </div>
+      {/* article content in grid */}
+      <div style={{padding:'32px 40px', display:'grid', gridTemplateColumns:'1fr 220px', gap:24, maxHeight:620, overflowY:'auto'}} className="scroll-area">
+        <div>
+          <div style={{fontSize:10, color:'var(--fg2)', marginBottom:12, display:'flex', gap:6}}>
+            <span style={{color:'var(--a1)'}}>Blog</span> › <span>iPhone</span> › <span>Comparatif</span>
+          </div>
+          <span className="mono" style={{
+            display:'inline-block',
+            fontSize:10, letterSpacing:'.14em', textTransform:'uppercase',
+            color:'#fff', fontWeight:700,
+            background:'linear-gradient(135deg, var(--a1), var(--a4))',
+            padding:'3px 8px', borderRadius:3, marginBottom:12,
+          }}>COMPARATIF</span>
+          <h1 className="serif" style={{
+            fontSize:52, lineHeight:1.02, fontWeight:400, letterSpacing:'-.02em',
+            color:'var(--fg)', marginBottom:16, textWrap:'balance',
+          }}>
+            iPhone 17 <em style={{color:'var(--fg3)'}}>vs.</em> iPhone 16 :<br/>
+            <span style={{color:'var(--a1)'}}>faut-il vraiment</span> changer ?
+          </h1>
+          <p style={{fontSize:17, color:'var(--fg2)', lineHeight:1.5, marginBottom:20, fontFamily:'var(--font-display)', fontStyle:'italic'}}>
+            120 Hz, 256 Go, ultra-grand-angle 48 MP. Les vraies différences — et un verdict honnête selon votre iPhone actuel.
+          </p>
+          <div style={{display:'flex', alignItems:'center', gap:14, paddingBottom:20, borderBottom:'1px solid var(--border)', marginBottom:24}}>
+            <div style={{
+              width:36, height:36, borderRadius:'50%',
+              background:'linear-gradient(135deg, var(--a1), var(--a4))',
+              display:'flex', alignItems:'center', justifyContent:'center',
+              fontFamily:'var(--font-display)', fontSize:18, color:'#fff',
+            }}>M</div>
+            <div>
+              <div style={{fontSize:13, fontWeight:600}}>Mathias</div>
+              <div style={{fontSize:11, color:'var(--fg3)'}}>30 mars · 7 min · Mis à jour aujourd'hui</div>
+            </div>
+          </div>
+          <p style={{fontSize:15, color:'var(--fg2)', lineHeight:1.7, marginBottom:16}}>
+            <span style={{fontFamily:'var(--font-display)', fontSize:60, float:'left', lineHeight:.8, marginRight:8, marginTop:6, color:'var(--a1)'}}>L</span>
+            'iPhone 17 apporte trois améliorations concrètes par rapport à l'iPhone 16 : le ProMotion 120 Hz, le stockage doublé à 256 Go et un ultra-grand-angle 48 MP. Sur le papier, c'est séduisant. En pratique, ça dépend entièrement de ce que vous avez dans la poche.
+          </p>
+          <p style={{fontSize:15, color:'var(--fg2)', lineHeight:1.7}}>
+            En clair : si vous venez d'un iPhone 16, gardez-le. Si vous avez un iPhone 14 ou plus ancien, l'iPhone 17 est un excellent point d'entrée.
+          </p>
+        </div>
+        {/* sidebar sticky */}
+        <div>
+          <div style={{
+            background:'var(--bg2)', borderRadius:12, padding:14,
+            border:'1px solid var(--border)', marginBottom:14, position:'sticky', top:0,
+          }}>
+            <div style={{fontSize:9, color:'var(--fg3)', letterSpacing:'.12em', textTransform:'uppercase', fontWeight:700, marginBottom:10}}>
+              Sommaire
+            </div>
+            {[
+              'Réponse rapide','Specs face à face','Le 120 Hz change la vie ?',
+              '48 MP ultra-grand-angle','Stockage 256 Go','Verdict',
+            ].map((t, i) => (
+              <div key={i} style={{
+                display:'flex', gap:8, fontSize:11, padding:'4px 0',
+                color: i === 0 ? 'var(--a1)' : 'var(--fg2)',
+                fontWeight: i === 0 ? 600 : 400,
+              }}>
+                <span className="mono" style={{color:'var(--fg3)'}}>{String(i+1).padStart(2,'0')}</span>
+                {t}
+              </div>
+            ))}
+          </div>
+          <div style={{background:'var(--bg2)', borderRadius:12, padding:14, border:'1px solid var(--border)'}}>
+            <div style={{fontSize:9, color:'var(--a1)', letterSpacing:'.12em', textTransform:'uppercase', fontWeight:700, marginBottom:10, display:'flex', alignItems:'center', gap:6}}>
+              <span style={{width:6, height:6, borderRadius:'50%', background:'var(--a1)'}}/>
+              Deals du moment
+            </div>
+            {[
+              {n:'iPhone 17 · 256', p:'979', was:'1029', c:'var(--a1)'},
+              {n:'iPhone 16 · 128', p:'749', was:'899', c:'var(--a4)'},
+            ].map((p, i) => (
+              <div key={i} style={{display:'flex', alignItems:'center', gap:8, padding:'8px 0', borderTop: i > 0 ? '1px dashed var(--border)' : 'none'}}>
+                <div style={{width:24, height:24, borderRadius:4, background:p.c, opacity:.7, flexShrink:0}}/>
+                <div style={{flex:1, minWidth:0}}>
+                  <div style={{fontSize:11, fontWeight:600, color:'var(--fg)', marginBottom:2}}>{p.n}</div>
+                  <div style={{display:'flex', gap:4, alignItems:'baseline'}}>
+                    <span className="mono" style={{fontSize:12, fontWeight:700, color:p.c}}>{p.p} €</span>
+                    <span className="mono" style={{fontSize:9, color:'var(--fg3)', textDecoration:'line-through'}}>{p.was}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────
+// TWEAKS PANEL
+// ──────────────────────────────────────────────────────────────────
+function TweaksPanel({ state, set, open, setOpen }) {
+  if (!open) return null;
+  return (
+    <div style={{
+      position:'fixed', bottom:20, right:20, zIndex:1000,
+      width:280, background:'#0A0A0F', color:'#F0F0F5',
+      border:'1px solid rgba(255,255,255,.15)',
+      borderRadius:14, padding:14,
+      boxShadow:'0 20px 60px rgba(0,0,0,0.5)',
+      fontFamily:'Inter Tight, system-ui, sans-serif',
+      fontSize:12,
+    }}>
+      <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:12}}>
+        <div style={{fontSize:11, fontWeight:700, letterSpacing:'.12em', textTransform:'uppercase', color:'#FF3D57'}}>
+          Tweaks
+        </div>
+        <button onClick={() => setOpen(false)} style={{color:'#9090A8', fontSize:16}}>×</button>
+      </div>
+      <Row label="Écran">
+        <SegGroup value={state.screen} onChange={v => set('screen', v)} opts={[['home','Homepage'],['article','Article']]}/>
+      </Row>
+      <Row label="Mode">
+        <SegGroup value={state.mode} onChange={v => set('mode', v)} opts={[['dark','Sombre'],['light','Clair']]}/>
+      </Row>
+      <Row label="Accent">
+        <div style={{display:'flex', gap:6}}>
+          {Object.entries(T_ACCENTS).map(([k, a]) => (
+            <button key={k} onClick={() => set('accent', k)} style={{
+              width:30, height:30, borderRadius:6,
+              background:`linear-gradient(135deg, ${a.a1}, ${a.a4})`,
+              border: state.accent === k ? '2px solid #fff' : '2px solid transparent',
+              outline: state.accent === k ? '1px solid #FF3D57' : 'none',
+            }} title={a.name}/>
+          ))}
+        </div>
+      </Row>
+      <Row label="Style sticky">
+        <SegGroup value={state.ctaStyle} onChange={v => set('ctaStyle', v)} opts={[['liquid','Liquid'],['solid','Solide']]}/>
+      </Row>
+      <Row label="Bundle off">
+        <input type="range" min={5} max={40} step={5} value={state.bundleOff ?? 25} onChange={e => set('bundleOff', +e.target.value)} style={{width:'100%'}}/>
+        <span className="mono" style={{fontSize:10, color:'#9090A8'}}>−{state.bundleOff ?? 25}%</span>
+      </Row>
+    </div>
+  );
+}
+function Row({ label, children }) {
+  return (
+    <div style={{marginBottom:10}}>
+      <div style={{fontSize:10, color:'#9090A8', marginBottom:5, letterSpacing:'.08em', textTransform:'uppercase'}}>{label}</div>
+      {children}
+    </div>
+  );
+}
+function SegGroup({ value, onChange, opts }) {
+  return (
+    <div style={{display:'flex', background:'#13131A', borderRadius:6, padding:2}}>
+      {opts.map(([v, l]) => (
+        <button key={v} onClick={() => onChange(v)} style={{
+          flex:1, padding:'5px 8px', borderRadius:4,
+          background: value === v ? '#FF3D57' : 'transparent',
+          color: value === v ? '#fff' : '#9090A8',
+          fontSize:11, fontWeight:600,
+        }}>{l}</button>
+      ))}
+    </div>
+  );
+}
+
+// ──────────────────────────────────────────────────────────────────
+// APP
+// ──────────────────────────────────────────────────────────────────
+function App() {
+  const tw = T_useTweaks();
+  const scrollRef = React.useRef(null);
+  const scrollRef2 = React.useRef(null);
+
+  React.useEffect(() => {
+    const saved = localStorage.getItem('tma-screen');
+    if (saved && saved !== tw.state.screen) tw.set('screen', saved);
+  }, []);
+  React.useEffect(() => { localStorage.setItem('tma-screen', tw.state.screen); }, [tw.state.screen]);
+
+  const screen = tw.state.screen;
+
+  return (
+    <>
+      <T_GlobalStyles tweaks={tw.state}/>
+      <div style={{
+        minHeight:'100vh', padding:'40px 20px', display:'flex', flexDirection:'column', alignItems:'center',
+        background:'radial-gradient(ellipse at top, #1a1a24 0%, #0a0a0f 70%)',
+      }}>
+        {/* Header caption */}
+        <div style={{maxWidth:1200, width:'100%', marginBottom:30, display:'flex', alignItems:'flex-end', justifyContent:'space-between', flexWrap:'wrap', gap:20}}>
+          <div>
+            <div style={{fontSize:10, letterSpacing:'.18em', textTransform:'uppercase', color:'#FF3D57', fontWeight:700, marginBottom:8}}>
+              Designed by Neko · V1
+            </div>
+            <h1 className="serif" style={{fontSize:36, fontWeight:400, letterSpacing:'-.02em', color:'#F0F0F5', lineHeight:1, marginBottom:8}}>
+              10 Minutes Apple — redesign CRO
+            </h1>
+            <p style={{fontSize:13, color:'#9090A8', maxWidth:640, lineHeight:1.5}}>
+              Proposition mobile-first axée conversion Amazon — tracker de prix animé, sticky liquid glass, comparatifs interactifs, barres de progression, countdown deals. Cliquez "Tweaks" pour explorer les variantes.
+            </p>
+          </div>
+          <div style={{display:'flex', gap:8}}>
+            <button onClick={() => tw.set('screen','home')} style={{
+              padding:'8px 14px', borderRadius:8,
+              background: screen === 'home' ? '#FF3D57' : 'transparent',
+              color: screen === 'home' ? '#fff' : '#F0F0F5',
+              border:'1px solid rgba(255,255,255,.15)', fontSize:12, fontWeight:600,
+            }}>Homepage</button>
+            <button onClick={() => tw.set('screen','article')} style={{
+              padding:'8px 14px', borderRadius:8,
+              background: screen === 'article' ? '#FF3D57' : 'transparent',
+              color: screen === 'article' ? '#fff' : '#F0F0F5',
+              border:'1px solid rgba(255,255,255,.15)', fontSize:12, fontWeight:600,
+            }}>Article</button>
+          </div>
+        </div>
+
+        {/* Screens — mobile + desktop side by side */}
+        <div style={{display:'flex', gap:48, alignItems:'flex-start', flexWrap:'wrap', justifyContent:'center'}}>
+          <div data-screen-label={screen === 'article' ? '01 Article comparatif' : '02 Homepage'}>
+            <div style={{fontSize:10, letterSpacing:'.18em', textTransform:'uppercase', color:'#55556A', textAlign:'center', marginBottom:14, fontWeight:700}}>
+              Mobile · iPhone · 390×780
+            </div>
+            <PhoneFrame scrollRef={scrollRef}>
+              {screen === 'article' ? <T_ArticleScreen tweaks={tw.state} scrollRef={scrollRef}/> : <T_HomeScreen/>}
+            </PhoneFrame>
+          </div>
+
+          {screen === 'article' && (
+            <div>
+              <div style={{fontSize:10, letterSpacing:'.18em', textTransform:'uppercase', color:'#55556A', textAlign:'center', marginBottom:14, fontWeight:700}}>
+                Desktop · 880px — éditorial avec sidebar
+              </div>
+              <DesktopArticle tweaks={tw.state}/>
+            </div>
+          )}
+        </div>
+
+        {/* Notes panel */}
+        <div style={{maxWidth:1000, marginTop:40, padding:'24px 28px', background:'#13131A', borderRadius:14, border:'1px solid rgba(255,255,255,.08)'}}>
+          <div style={{fontSize:10, letterSpacing:'.14em', textTransform:'uppercase', color:'#FFD23F', fontWeight:700, marginBottom:10}}>
+            Notes de design
+          </div>
+          <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px, 1fr))', gap:20, fontSize:12, color:'#9090A8', lineHeight:1.55}}>
+            <div>
+              <div style={{color:'#F0F0F5', fontWeight:600, marginBottom:4}}>↑ CRO hierarchy</div>
+              Deal Hero juste après l'intro + résumé IA + sommaire. Le lecteur voit les deux produits + prix avant même de lire le comparatif.
+            </div>
+            <div>
+              <div style={{color:'#F0F0F5', fontWeight:600, marginBottom:4}}>◐ Liquid sticky</div>
+              Barre flottante en liquid glass avec pulse "en stock" + prix compacts. Toggleable en solide via Tweaks.
+            </div>
+            <div>
+              <div style={{color:'#F0F0F5', fontWeight:600, marginBottom:4}}>⟰ Animations</div>
+              Aurora breathing, sparkline du tracker prix, barres comparatives animées, countdown live, shimmer sur le titre home.
+            </div>
+            <div>
+              <div style={{color:'#F0F0F5', fontWeight:600, marginBottom:4}}>✦ À suivre</div>
+              Ajouter : quiz interactif en 4Q, simulateur de budget, page catégorie iPhone avec masonry, mode d'affichage "fiches produits reconditionné".
+            </div>
+          </div>
+        </div>
+      </div>
+      <TweaksPanel {...tw}/>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('app')).render(<App/>);
+</script>
+</body>
+</html>

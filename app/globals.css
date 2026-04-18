@@ -1007,7 +1007,7 @@ body {
   min-height: 100svh;
 }
 .home-section-wrap {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
 }
@@ -1020,7 +1020,7 @@ body {
   padding: 16px 20px 6px;
   position: relative;
   z-index: 5;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
 }
@@ -1036,7 +1036,7 @@ body {
 }
 @media (min-width: 900px) {
   .home-header {
-    padding: 20px 40px 8px;
+    padding: 20px 24px 8px;
     gap: 24px;
   }
   .home-header-nav { display: flex; }
@@ -1056,8 +1056,8 @@ body {
 .home-hero-visual { display: none; }
 @media (min-width: 900px) {
   .home-hero-inner {
-    max-width: 1200px;
-    padding: 60px 40px 80px;
+    max-width: 1280px;
+    padding: 60px 24px 80px;
     display: grid;
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: 64px;
@@ -1084,19 +1084,19 @@ body {
 /* ── CategoryPills — scroll mobile, wrap centré desktop ── */
 @media (min-width: 900px) {
   .home-pills-scroll {
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
     overflow-x: visible !important;
     flex-wrap: wrap !important;
     justify-content: center;
-    padding: 10px 40px 24px !important;
+    padding: 10px 24px 24px !important;
   }
 }
 
 /* ── DealsOfTheDay — stack mobile, 3-col desktop ── */
 .home-deals-section {
   padding: 8px 0 32px;
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
 }
@@ -1110,23 +1110,23 @@ body {
   padding: 0 20px;
 }
 @media (min-width: 900px) {
-  .home-deals-header { padding: 0 40px 20px; }
+  .home-deals-header { padding: 0 24px 20px; }
   .home-deals-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    padding: 0 40px;
+    padding: 0 24px;
   }
 }
 
 /* ── FeaturedArticle — carte desktop plus large ── */
 .home-featured {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto 24px;
   padding: 0 20px;
 }
 @media (min-width: 900px) {
-  .home-featured { padding: 0 40px; margin-bottom: 32px; }
+  .home-featured { padding: 0 24px; margin-bottom: 32px; }
   .home-featured-card {
     padding: 40px 44px !important;
     display: grid;
@@ -1145,7 +1145,7 @@ body {
 
 /* ── HomeArticleGrid — liste mobile, grille 2-col desktop ── */
 .home-articles {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0;
   width: 100%;
@@ -1160,12 +1160,12 @@ body {
   padding: 0;
 }
 @media (min-width: 900px) {
-  .home-articles-header { padding: 16px 40px 20px; }
+  .home-articles-header { padding: 16px 24px 20px; }
   .home-articles-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0 32px;
-    margin: 0 40px;
+    margin: 0 24px;
   }
 }
 @media (min-width: 1200px) {
@@ -1192,7 +1192,7 @@ body {
   overflow: hidden;
 }
 @media (min-width: 900px) {
-  .home-newsletter { padding: 0 40px; }
+  .home-newsletter { padding: 0 24px; }
   .home-newsletter-inner { padding: 40px 44px !important; }
   .home-newsletter-title { font-size: 30px !important; }
 }

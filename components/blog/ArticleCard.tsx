@@ -81,73 +81,110 @@ export function ArticleCard({ article, featured = false, showCategory = true, in
           background: 'var(--bg-surface)',
           border: '1px solid var(--border)',
           borderRadius: 14,
-          padding: '14px 14px 12px',
+          padding: '16px 16px 14px',
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          gap: 8,
+          gap: 10,
           transition: 'border-color 180ms ease, transform 180ms ease',
         }}
       >
-        <header style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {showCategory && (
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 6,
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: accent,
-              }}
-            >
-              <span
-                aria-hidden="true"
-                style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: '50%',
-                  background: accent,
-                  flexShrink: 0,
-                }}
-              />
-              {label}
-            </span>
-          )}
-          {num && (
-            <span
-              aria-hidden="true"
-              style={{
-                marginLeft: 'auto',
-                fontFamily: 'var(--next-font-mono), monospace',
-                fontSize: 10,
-                color: 'var(--text-muted)',
-                fontVariantNumeric: 'tabular-nums',
-              }}
-            >
-              {num}
-            </span>
-          )}
-        </header>
-        <h2
-          className="article-card-title"
+        {/* Aura gradient dans le coin haut-droit pour casser la platitude */}
+        <div
+          aria-hidden="true"
           style={{
-            fontFamily: 'var(--next-font-display), serif',
-            fontSize: 'clamp(16px, 1.6vw, 19px)',
-            fontWeight: 400,
-            color: 'var(--text-primary)',
-            lineHeight: 1.2,
-            textWrap: 'balance',
-            letterSpacing: '-0.01em',
-            flex: 1,
-            margin: 0,
-            transition: 'color 180ms ease',
+            position: 'absolute',
+            top: -50,
+            right: -50,
+            width: 140,
+            height: 140,
+            background: `radial-gradient(circle, ${accent} 0%, transparent 60%)`,
+            opacity: 0.18,
+            pointerEvents: 'none',
+            filter: 'blur(10px)',
+          }}
+        />
+
+        <header
+          style={{
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 12,
+            position: 'relative',
           }}
         >
-          {article.title}
-        </h2>
+          {/* Tuile num\u00e9rot\u00e9e en gradient accent cat\u00e9gorie */}
+          <div
+            aria-hidden="true"
+            style={{
+              width: 52,
+              height: 52,
+              flexShrink: 0,
+              borderRadius: 10,
+              background: `linear-gradient(145deg, color-mix(in oklch, ${accent}, transparent 65%), var(--bg-surface-2))`,
+              border: '1px solid var(--border)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontFamily: 'var(--next-font-display), serif',
+              fontSize: 22,
+              color: accent,
+              fontWeight: 400,
+              letterSpacing: '-0.02em',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            <span style={{ opacity: 0.85 }}>
+              {num ?? label.charAt(0).toUpperCase()}
+            </span>
+            <span
+              style={{
+                position: 'absolute',
+                bottom: 5,
+                right: 5,
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                background: accent,
+              }}
+            />
+          </div>
+
+          <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+            {showCategory && (
+              <span
+                style={{
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  color: accent,
+                  lineHeight: 1,
+                }}
+              >
+                {label}
+              </span>
+            )}
+            <h2
+              className="article-card-title"
+              style={{
+                fontFamily: 'var(--next-font-display), serif',
+                fontSize: 'clamp(16px, 1.6vw, 19px)',
+                fontWeight: 400,
+                color: 'var(--text-primary)',
+                lineHeight: 1.2,
+                textWrap: 'balance',
+                letterSpacing: '-0.01em',
+                margin: 0,
+                transition: 'color 180ms ease',
+              }}
+            >
+              {article.title}
+            </h2>
+          </div>
+        </header>
+
         <div
           style={{
             display: 'flex',
@@ -156,11 +193,16 @@ export function ArticleCard({ article, featured = false, showCategory = true, in
             color: 'var(--text-muted)',
             marginTop: 'auto',
             alignItems: 'center',
+            position: 'relative',
+            paddingTop: 2,
           }}
         >
           <time dateTime={article.publishedAt}>{formatDate(article.publishedAt)}</time>
           <span aria-hidden="true">·</span>
           <span>{article.readingTimeMin} min</span>
+          <span aria-hidden="true" style={{ marginLeft: 'auto', color: accent, fontWeight: 700 }}>
+            Lire <span>→</span>
+          </span>
         </div>
       </article>
     </Link>

@@ -3,7 +3,9 @@
  * Crée un "visuel" typographique au milieu du texte.
  * Usage MDX : <StatCard value="48 MP" label="Capteur principal" />
  * Variante avec 2-3 stats côte à côte :
- *   <StatCard value="37h" label="Autonomie" accent="2" />
+ *   <StatRow>
+ *     <StatCard value="37h" label="Autonomie" accent="2" />
+ *   </StatRow>
  * Server Component.
  */
 
@@ -26,17 +28,20 @@ export function StatCard({ value, label, accent = '1' }: StatCardProps) {
   return (
     <div
       style={{
-        margin: 'var(--space-8) 0',
-        padding: 'var(--space-6) 0',
+        margin: 'var(--space-4) 0',
+        padding: '12px 0 10px',
         borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)',
         textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 4,
       }}
     >
       <div
         style={{
           fontFamily: 'var(--next-font-display), serif',
-          fontSize: 'clamp(24px, 4.5vw, 44px)',
+          fontSize: 'clamp(22px, 3.6vw, 36px)',
           fontWeight: 400,
           color,
           lineHeight: 1.05,
@@ -51,12 +56,12 @@ export function StatCard({ value, label, accent = '1' }: StatCardProps) {
       <div
         style={{
           fontFamily: 'var(--next-font-mono), monospace',
-          fontSize: '10px',
+          fontSize: '9.5px',
           color: 'var(--text-muted)',
-          marginTop: 'var(--space-2)',
-          letterSpacing: '0.12em',
+          letterSpacing: '0.1em',
           textTransform: 'uppercase',
           fontWeight: 600,
+          lineHeight: 1.3,
         }}
       >
         {label}
@@ -65,24 +70,16 @@ export function StatCard({ value, label, accent = '1' }: StatCardProps) {
   )
 }
 
-/**
- * StatRow — 2-3 stats côte à côte.
- * Usage MDX :
- *   <StatRow>
- *     <StatCard value="48 MP" label="Photo" />
- *     <StatCard value="37h" label="Autonomie" accent="2" />
- *     <StatCard value="999 €" label="Prix" accent="3" />
- *   </StatRow>
- */
 export function StatRow({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-        gap: 'var(--space-3)',
-        margin: 'var(--space-8) 0',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+        gap: 12,
+        margin: 'var(--space-5) 0',
       }}
+      className="stat-row"
     >
       {children}
     </div>

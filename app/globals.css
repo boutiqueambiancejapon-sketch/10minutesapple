@@ -912,6 +912,12 @@ body {
   border-color: var(--accent-1) !important;
   background: var(--bg-surface-2) !important;
 }
+/* StatCard standalone garde un peu d'air ; en StatRow on l'enlève
+   pour qu'il n'y ait pas de double espacement avec le gap de la grille. */
+.stat-row > * {
+  margin: 0 !important;
+}
+
 /* StickyCTA "En stock" — visible seulement quand il reste de la place */
 .sticky-cta-stock { display: none; }
 @media (min-width: 560px) {

@@ -35,25 +35,28 @@ export function StatCard({ value, label, accent = '1' }: StatCardProps) {
     >
       <div
         style={{
-          fontFamily: 'var(--next-font-mono), monospace',
-          fontSize: 'clamp(48px, 10vw, 72px)',
-          fontWeight: 700,
+          fontFamily: 'var(--next-font-display), serif',
+          fontSize: 'clamp(24px, 4.5vw, 44px)',
+          fontWeight: 400,
           color,
-          lineHeight: 1,
-          letterSpacing: '-0.03em',
+          lineHeight: 1.05,
+          letterSpacing: '-0.025em',
           fontVariantNumeric: 'tabular-nums',
+          textWrap: 'balance',
+          overflowWrap: 'break-word',
         }}
       >
         {value}
       </div>
       <div
         style={{
-          fontFamily: 'var(--next-font-primary), system-ui, sans-serif',
-          fontSize: '13px',
+          fontFamily: 'var(--next-font-mono), monospace',
+          fontSize: '10px',
           color: 'var(--text-muted)',
           marginTop: 'var(--space-2)',
-          letterSpacing: '0.04em',
+          letterSpacing: '0.12em',
           textTransform: 'uppercase',
+          fontWeight: 600,
         }}
       >
         {label}
@@ -76,8 +79,8 @@ export function StatRow({ children }: { children: React.ReactNode }) {
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-        gap: 'var(--space-4)',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+        gap: 'var(--space-3)',
         margin: 'var(--space-8) 0',
       }}
     >

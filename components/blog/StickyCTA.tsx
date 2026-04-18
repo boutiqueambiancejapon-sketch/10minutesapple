@@ -103,12 +103,11 @@ export function StickyCTA({ items, message }: Props) {
             alignItems: 'center',
           }}
         >
-          {/* En stock — caché sous 360px si ça prend trop la place */}
+          {/* En stock — caché sur mobile pour libérer la place des CTAs */}
           <div
             aria-hidden="true"
             className="sticky-cta-stock"
             style={{
-              display: 'inline-flex',
               alignItems: 'center',
               gap: 5,
               paddingLeft: 4,

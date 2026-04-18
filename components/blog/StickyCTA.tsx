@@ -95,12 +95,13 @@ export function StickyCTA({ items, message }: Props) {
         )}
 
         <div
+          className="sticky-cta-row"
           style={{
             position: 'relative',
             zIndex: 1,
             display: 'flex',
             gap: 6,
-            alignItems: 'center',
+            alignItems: 'stretch',
           }}
         >
           {/* En stock — caché sur mobile pour libérer la place des CTAs */}
@@ -168,13 +169,13 @@ function CTA({ item, primary = false }: { item: StickyCTAItem; primary?: boolean
       href={href}
       rel={isAmazon ? 'nofollow sponsored noopener' : 'noopener'}
       target="_blank"
+      className={primary ? 'sticky-cta-item sticky-cta-primary' : 'sticky-cta-item'}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 6,
-        padding: '9px 12px',
-        flex: primary ? '1 1 60%' : '1 1 40%',
+        padding: '10px 12px',
         minWidth: 0,
         background: primary
           ? 'linear-gradient(135deg, var(--accent-1), var(--accent-4))'
@@ -191,8 +192,8 @@ function CTA({ item, primary = false }: { item: StickyCTAItem; primary?: boolean
         boxShadow: primary ? '0 4px 14px color-mix(in oklch, var(--accent-1), transparent 60%)' : 'none',
       }}
     >
-      {item.label}
-      {primary && <span aria-hidden="true">→</span>}
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</span>
+      {primary && <span aria-hidden="true" style={{ flexShrink: 0 }}>→</span>}
     </a>
   )
 }

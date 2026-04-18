@@ -918,6 +918,26 @@ body {
   .sticky-cta-stock { display: inline-flex; }
 }
 
+/* StickyCTA row — stack vertical sur mobile, cote à cote desktop */
+.sticky-cta-row {
+  flex-direction: column;
+}
+.sticky-cta-item {
+  width: 100%;
+  flex: none;
+}
+@media (min-width: 560px) {
+  .sticky-cta-row {
+    flex-direction: row;
+    align-items: center !important;
+  }
+  .sticky-cta-item {
+    width: auto;
+    flex: 1 1 40%;
+  }
+  .sticky-cta-primary { flex-basis: 60% !important; }
+}
+
 /* StickyCTA — anim show/hide + offset desktop pour éviter la sidebar article */
 .article-sticky-cta {
   transform: translateX(-50%) translateY(calc(100% + 32px));

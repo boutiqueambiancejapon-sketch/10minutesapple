@@ -95,9 +95,40 @@ export function StickyCTA({ items, message }: Props) {
 
         <div style={{
           position: 'relative', zIndex: 1,
-          display: 'flex', gap: 'var(--space-2)',
+          display: 'flex', gap: 'var(--space-2)', alignItems: 'center',
           width: '100%', flexWrap: 'wrap',
         }}>
+          <div
+            aria-hidden="true"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              paddingLeft: 4,
+              paddingRight: 6,
+              flexShrink: 0,
+            }}
+          >
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: '50%',
+                background: 'var(--accent-3)',
+                animation: 'pulse-dot 1.6s ease-in-out infinite',
+              }}
+            />
+            <span
+              style={{
+                fontSize: 11,
+                color: 'var(--text-secondary)',
+                fontWeight: 600,
+                letterSpacing: '0.02em',
+              }}
+            >
+              En stock
+            </span>
+          </div>
           {items.map((item, i) => {
             const isAmazon = item.url.includes('amazon.fr') || item.url.includes('amzn.to')
             const href = isAmazon ? addAffiliateTag(item.url) : item.url

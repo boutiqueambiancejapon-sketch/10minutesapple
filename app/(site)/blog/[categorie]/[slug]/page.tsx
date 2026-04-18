@@ -174,77 +174,37 @@ export default async function ArticlePage({ params }: { params: Params }) {
       <ReadingProgress />
       <main id="main-content">
         <article>
-          {/* Header — bande gradient accent-4 pleine largeur */}
+          {/* Header — gradient aurora léger + breadcrumb + H1 serif */}
           <div className="article-hero-band">
-          <header
-            style={{
-              maxWidth: '760px',
-              margin: '0 auto',
-              padding: 'var(--space-12) var(--space-6) var(--space-8)',
-            }}
-          >
+          <header className="article-header-inner">
             {/* Breadcrumb */}
-            <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
-              <ol
-                style={{
-                  display: 'flex',
-                  gap: 'var(--space-2)',
-                  listStyle: 'none',
-                  fontSize: '13px',
-                  color: 'var(--text-muted)',
-                  flexWrap: 'wrap',
-                }}
-              >
+            <nav aria-label="Fil d'Ariane" className="article-breadcrumb">
+              <ol>
                 <li>
-                  <Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>
-                    Accueil
-                  </Link>
-                </li>
-                <li aria-hidden="true">›</li>
-                <li>
-                  <Link
-                    href="/blog"
-                    style={{ color: 'var(--text-muted)', textDecoration: 'none' }}
-                  >
+                  <Link href="/blog" className="article-breadcrumb-accent">
                     Blog
                   </Link>
                 </li>
                 <li aria-hidden="true">›</li>
-                <li style={{ color: 'var(--text-secondary)' }}>{catLabel}</li>
+                <li>
+                  <Link href={`/blog/${categorie}`}>{catLabel}</Link>
+                </li>
+                <li aria-hidden="true">›</li>
+                <li className="article-breadcrumb-muted">Comparatifs</li>
               </ol>
             </nav>
 
-            {/* Category chip */}
-            <span
-              style={{
-                display: 'inline-block',
-                fontSize: '11px',
-                fontWeight: 700,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: 'var(--accent-1)',
-                background: 'rgba(255,61,87,0.1)',
-                padding: '3px 10px',
-                borderRadius: 'var(--radius-full)',
-                marginBottom: 'var(--space-4)',
-              }}
-            >
-              {catLabel}
-            </span>
+            {/* Eyebrow — pill gradient + reading time */}
+            <div className="article-eyebrow">
+              <span className="article-pill">{catLabel.toUpperCase()}</span>
+              <span className="article-reading-time">· {meta.readingTimeMin} min de lecture</span>
+            </div>
 
-            <h1
-              style={{
-                fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                fontSize: 'clamp(28px, 5vw, 48px)',
-                fontWeight: 800,
-                color: 'var(--text-primary)',
-                lineHeight: 1.15,
-                marginBottom: 'var(--space-5)',
-                textWrap: 'balance',
-              }}
-            >
-              {meta.title}
-            </h1>
+            <h1 className="article-hero-h1">{meta.title}</h1>
+
+            {meta.description && (
+              <p className="article-hero-sub">{meta.description}</p>
+            )}
 
             <AuthorByline
               authorSlug="mathias"

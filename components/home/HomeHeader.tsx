@@ -1,27 +1,34 @@
 'use client'
 
 /**
- * HomeHeader — en-t\u00eate interne de la homepage.
- * Logo carr\u00e9 gradient "10" + "Minutes Apple / LE GUIDE HONN\u00caTE" + hamburger.
- * Ouvre un overlay mobile simple avec les liens principaux.
+ * HomeHeader \u2014 en-t\u00eate de la homepage.
+ * Mobile : logo gradient + hamburger + overlay plein-\u00e9cran.
+ * Desktop : logo gradient + liens inline + bouton th\u00e8me (hamburger cach\u00e9).
  */
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Menu, X, ChevronRight } from 'lucide-react'
+import { ThemeToggle } from '@/components/layout/ThemeToggle'
 
-const LINKS = [
-  { href: '/choisir/iphone',  label: 'Quel iPhone choisir\u00a0?' },
-  { href: '/choisir/mac',     label: 'Quel Mac choisir\u00a0?' },
-  { href: '/choisir/ipad',    label: 'Quel iPad choisir\u00a0?' },
-  { href: '/choisir/watch',   label: 'Quelle Apple Watch choisir\u00a0?' },
-  { href: '/comparer',        label: 'Comparer' },
-  { href: '/blog',            label: 'Blog' },
-  { href: '/deals',           label: 'Deals' },
-  { href: '/simulateur',      label: 'Simulateur' },
+const NAV = [
+  { href: '/comparer',   label: 'Comparer' },
+  { href: '/quiz',       label: 'Quiz' },
+  { href: '/blog',       label: 'Blog' },
+  { href: '/deals',      label: 'Deals' },
+  { href: '/simulateur', label: 'Simulateur' },
+]
+
+const MOBILE_EXTRA = [
+  { href: '/choisir/iphone', label: 'Quel iPhone choisir\u00a0?' },
+  { href: '/choisir/mac',    label: 'Quel Mac choisir\u00a0?' },
+  { href: '/choisir/ipad',   label: 'Quel iPad choisir\u00a0?' },
+  { href: '/choisir/watch',  label: 'Quelle Apple Watch choisir\u00a0?' },
 ]
 
 export function HomeHeader() {
+  const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -31,18 +38,11 @@ export function HomeHeader() {
     return () => document.removeEventListener('keydown', onKey)
   }, [open])
 
+  useEffect(() => { setOpen(false) }, [pathname])
+
   return (
     <>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 10,
-          padding: '16px 20px 6px',
-          position: 'relative',
-          zIndex: 5,
-        }}
-      >
+      <div className="home-header">
         <Link
           href="/"
           aria-label="10minutesapple \u2014 accueil"
@@ -93,13 +93,35 @@ export function HomeHeader() {
           </span>
         </Link>
 
-        <div style={{ flex: 1 }} />
+        <nav aria-label="Navigation" className="home-header-nav">
+          {NAV.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              style={{
+                color: 'var(--text-secondary)',
+                fontSize: 14,
+                fontWeight: 500,
+                textDecoration: 'none',
+                padding: '6px 2px',
+                borderBottom: '2px solid transparent',
+                transition: 'color 150ms ease, border-color 150ms ease',
+              }}
+              className="home-nav-link"
+            >
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+
+        <ThemeToggle />
 
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
           aria-expanded={open}
+          className="home-header-hamburger"
           style={{
             padding: 10,
             borderRadius: 10,
@@ -112,7 +134,7 @@ export function HomeHeader() {
             justifyContent: 'center',
           }}
         >
-          {open ? <Menu size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
+          <Menu size={16} aria-hidden="true" />
         </button>
       </div>
 
@@ -125,10 +147,10 @@ export function HomeHeader() {
             inset: 0,
             zIndex: 60,
             background: 'var(--bg-primary)',
-            padding: '20px',
+            padding: 20,
             display: 'flex',
             flexDirection: 'column',
-            gap: 8,
+            gap: 6,
             overflowY: 'auto',
           }}
         >
@@ -168,7 +190,7 @@ export function HomeHeader() {
             </button>
           </div>
 
-          {LINKS.map(({ href, label }) => (
+          {[...MOBILE_EXTRA, ...NAV].map(({ href, label }) => (
             <Link
               key={href}
               href={href}

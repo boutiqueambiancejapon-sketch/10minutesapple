@@ -1,13 +1,15 @@
 /**
- * HomeHero \u2014 hero mobile-first inspir\u00e9 du mockup "Designed by Neko".
- * Eyebrow + H1 serif avec iPhone italique et shimmer "10 minutes".
- * Sous-titre + 2 CTAs + trust strip (articles/produits/sponsoris\u00e9).
+ * HomeHero \u2014 hero responsive.
+ * Mobile : colonne unique, H1 serif ~43px, trust strip, CTAs empil\u00e9s.
+ * Desktop (\u2265 900px) : grille 2 colonnes, H1 clamp jusqu'\u00e0 112px, visuel \u00e0 droite
+ * (PhonePlaceholder + mini card prix vivant).
  * Server Component.
  */
 
 import Link from 'next/link'
 import { AuroraBackground } from '@/components/effects/AuroraBackground'
 import { NoiseOverlay } from '@/components/effects/NoiseOverlay'
+import { PhonePlaceholder } from '@/components/effects/PhonePlaceholder'
 import { getAllArticles } from '@/lib/blog'
 import { getAllProducts } from '@/lib/article-ctas'
 
@@ -19,133 +21,257 @@ export function HomeHero() {
     <AuroraBackground className="home-hero-aurora">
       <NoiseOverlay opacity={0.05} />
 
-      <div
-        style={{
-          position: 'relative',
-          zIndex: 2,
-          padding: '20px 20px 28px',
-          maxWidth: 640,
-          margin: '0 auto',
-          width: '100%',
-        }}
-      >
-        {/* Eyebrow */}
-        <div
-          style={{
-            fontSize: 11,
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: 'var(--accent-1)',
-            fontWeight: 700,
-            marginBottom: 14,
-          }}
-        >
-          Guides · Comparatifs · Deals
-        </div>
-
-        {/* H1 */}
-        <h1
-          style={{
-            fontFamily: 'var(--next-font-display), serif',
-            fontSize: 'clamp(40px, 11vw, 64px)',
-            lineHeight: 0.98,
-            color: 'var(--text-primary)',
-            fontWeight: 400,
-            letterSpacing: '-0.025em',
-            marginBottom: 14,
-            textWrap: 'balance',
-          }}
-        >
-          Choisir votre{' '}
-          <em
+      <div className="home-hero-inner">
+        <div className="home-hero-text">
+          {/* Eyebrow */}
+          <div
             style={{
+              fontSize: 11,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
               color: 'var(--accent-1)',
-              fontStyle: 'italic',
-            }}
-          >
-            iPhone
-          </em>
-          <br />
-          en <span className="shimmer-text">10&nbsp;minutes</span>.
-        </h1>
-
-        {/* Sous-titre */}
-        <p
-          style={{
-            fontSize: 14,
-            color: 'var(--text-secondary)',
-            lineHeight: 1.55,
-            marginBottom: 18,
-            maxWidth: 440,
-          }}
-        >
-          Tests terrain, comparatifs et deals Amazon tri\u00e9s \u00e0 la main. Z\u00e9ro bullshit marketing.
-        </p>
-
-        {/* CTAs */}
-        <div style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
-          <Link
-            href="/comparer"
-            className="home-cta-primary"
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 6,
-              padding: '14px 18px',
-              background: 'var(--text-primary)',
-              color: 'var(--bg-primary)',
-              fontSize: 14,
               fontWeight: 700,
-              borderRadius: 12,
-              textDecoration: 'none',
-              letterSpacing: '-0.01em',
-              transition: 'opacity 150ms ease, transform 150ms ease',
+              marginBottom: 14,
             }}
           >
-            Comparer <span aria-hidden="true">\u2192</span>
-          </Link>
-          <Link
-            href="/quiz"
+            Guides · Comparatifs · Deals
+          </div>
+
+          {/* H1 */}
+          <h1
+            className="home-hero-h1"
             style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '14px 18px',
-              background: 'var(--bg-surface)',
+              fontFamily: 'var(--next-font-display), serif',
+              fontSize: 'clamp(40px, 11vw, 64px)',
+              lineHeight: 0.98,
               color: 'var(--text-primary)',
-              fontSize: 14,
-              fontWeight: 600,
-              borderRadius: 12,
-              textDecoration: 'none',
-              border: '1px solid var(--border)',
-              letterSpacing: '-0.01em',
+              fontWeight: 400,
+              letterSpacing: '-0.025em',
+              marginBottom: 14,
+              textWrap: 'balance',
             }}
           >
-            Quiz · 4&nbsp;Q.
-          </Link>
+            Choisir votre{' '}
+            <em style={{ color: 'var(--accent-1)', fontStyle: 'italic' }}>iPhone</em>
+            <br />
+            en <span className="shimmer-text">10&nbsp;minutes</span>.
+          </h1>
+
+          <p
+            className="home-hero-sub"
+            style={{
+              fontSize: 14,
+              color: 'var(--text-secondary)',
+              lineHeight: 1.55,
+              marginBottom: 18,
+              maxWidth: 440,
+            }}
+          >
+            Tests terrain, comparatifs et deals Amazon tri\u00e9s \u00e0 la main. Z\u00e9ro bullshit marketing.
+          </p>
+
+          <div className="home-hero-ctas" style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
+            <Link
+              href="/comparer"
+              className="home-cta-primary"
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 6,
+                padding: '14px 18px',
+                background: 'var(--text-primary)',
+                color: 'var(--bg-primary)',
+                fontSize: 14,
+                fontWeight: 700,
+                borderRadius: 12,
+                textDecoration: 'none',
+                letterSpacing: '-0.01em',
+                transition: 'opacity 150ms ease, transform 150ms ease',
+              }}
+            >
+              Comparer <span aria-hidden="true">\u2192</span>
+            </Link>
+            <Link
+              href="/quiz"
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '14px 18px',
+                background: 'var(--bg-surface)',
+                color: 'var(--text-primary)',
+                fontSize: 14,
+                fontWeight: 600,
+                borderRadius: 12,
+                textDecoration: 'none',
+                border: '1px solid var(--border)',
+                letterSpacing: '-0.01em',
+              }}
+            >
+              Quiz · 4&nbsp;Q.
+            </Link>
+          </div>
+
+          {/* Trust strip */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr 1fr',
+              alignItems: 'center',
+              padding: '14px 16px',
+              background: 'var(--bg-surface)',
+              borderRadius: 14,
+              border: '1px solid var(--border)',
+              maxWidth: 520,
+            }}
+          >
+            <TrustStat value={String(articleCount)} label="articles" color="var(--text-primary)" />
+            <TrustStat value={String(productCount)} label="produits" color="var(--accent-1)" divider />
+            <TrustStat value="0\u00a0\u20ac" label="sponsoris\u00e9" color="var(--accent-3)" divider />
+          </div>
         </div>
 
-        {/* Trust strip */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr 1fr',
-            alignItems: 'center',
-            padding: '14px 16px',
-            background: 'var(--bg-surface)',
-            borderRadius: 14,
-            border: '1px solid var(--border)',
-          }}
-        >
-          <TrustStat value={String(articleCount)} label="articles" color="var(--text-primary)" />
-          <TrustStat value={String(productCount)} label="produits" color="var(--accent-1)" divider />
-          <TrustStat value="0\u00a0\u20ac" label="sponsoris\u00e9" color="var(--accent-3)" divider />
+        {/* Visuel desktop \u2014 PhonePlaceholder rotating + mini carte prix */}
+        <div className="home-hero-visual">
+          <HeroVisual />
         </div>
       </div>
     </AuroraBackground>
+  )
+}
+
+function HeroVisual() {
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: 420,
+        aspectRatio: '1 / 1.1',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      {/* Phone hero */}
+      <div
+        style={{
+          position: 'absolute',
+          left: '10%',
+          top: '5%',
+          zIndex: 2,
+        }}
+      >
+        <PhonePlaceholder color="var(--accent-1)" label="iPhone" size={220} tilt={-6} />
+      </div>
+
+      {/* Mini carte prix flottante */}
+      <div
+        style={{
+          position: 'absolute',
+          right: 0,
+          bottom: '8%',
+          zIndex: 3,
+          background: 'var(--bg-surface)',
+          border: '1px solid var(--border-strong)',
+          borderRadius: 16,
+          padding: '14px 16px',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.45)',
+          minWidth: 200,
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+        }}
+      >
+        <div
+          style={{
+            fontSize: 10,
+            letterSpacing: '0.12em',
+            textTransform: 'uppercase',
+            color: 'var(--text-muted)',
+            fontWeight: 700,
+            marginBottom: 8,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+          }}
+        >
+          <span
+            aria-hidden="true"
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: 'var(--accent-1)',
+              animation: 'pulse-dot 1.4s ease-in-out infinite',
+            }}
+          />
+          Deal en live
+        </div>
+        <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>
+          iPhone\u00a016 · 128\u00a0Go
+        </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+          <span
+            style={{
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: 24,
+              fontWeight: 700,
+              color: 'var(--accent-1)',
+              letterSpacing: '-0.02em',
+              fontVariantNumeric: 'tabular-nums',
+            }}
+          >
+            749\u00a0\u20ac
+          </span>
+          <span
+            style={{
+              fontFamily: 'var(--next-font-mono), monospace',
+              fontSize: 12,
+              color: 'var(--text-muted)',
+              textDecoration: 'line-through',
+              fontVariantNumeric: 'tabular-nums',
+            }}
+          >
+            899\u00a0\u20ac
+          </span>
+          <span
+            style={{
+              fontSize: 10,
+              fontWeight: 700,
+              color: '#fff',
+              background: 'var(--accent-1)',
+              padding: '2px 6px',
+              borderRadius: 4,
+            }}
+          >
+            \u221217%
+          </span>
+        </div>
+      </div>
+
+      {/* Badge "42 articles" flottant */}
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: '30%',
+          zIndex: 3,
+          background: 'linear-gradient(135deg, var(--accent-3), var(--accent-4))',
+          padding: '10px 14px',
+          borderRadius: 12,
+          color: '#0A0A0F',
+          fontWeight: 700,
+          fontSize: 12,
+          boxShadow: '0 20px 40px rgba(0,0,0,0.35)',
+          transform: 'rotate(-4deg)',
+        }}
+      >
+        <span aria-hidden="true">\u2605</span> Tri\u00e9s \u00e0 la main
+      </div>
+    </div>
   )
 }
 

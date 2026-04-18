@@ -14,10 +14,10 @@ export function HomeArticleGrid() {
   if (articles.length === 0) return null
 
   return (
-    <section style={{ margin: '0 0 24px' }}>
+    <section className="home-articles" style={{ margin: '0 0 24px' }}>
       <header
+        className="home-articles-header"
         style={{
-          padding: '0 20px 14px',
           display: 'flex',
           alignItems: 'baseline',
           justifyContent: 'space-between',
@@ -57,16 +57,7 @@ export function HomeArticleGrid() {
         </Link>
       </header>
 
-      <ul
-        style={{
-          listStyle: 'none',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 0,
-          margin: '0 20px',
-          padding: 0,
-        }}
-      >
+      <ul className="home-articles-list">
         {articles.map((a, i) => {
           const color = CATEGORY_ACCENT[a.categorie] ?? 'var(--accent-1)'
           const label = CATEGORY_LABELS[a.categorie] ?? a.categorie

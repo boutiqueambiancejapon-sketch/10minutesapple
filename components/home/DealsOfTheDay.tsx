@@ -64,12 +64,12 @@ export function DealsOfTheDay() {
   return (
     <section
       aria-labelledby="deals-du-jour-title"
-      style={{ padding: '8px 0 24px' }}
+      className="home-deals-section"
     >
       {/* Header */}
       <header
+        className="home-deals-header"
         style={{
-          padding: '0 20px 14px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -120,14 +120,7 @@ export function DealsOfTheDay() {
       </header>
 
       {/* Cards */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 10,
-          padding: '0 20px',
-        }}
-      >
+      <div className="home-deals-grid">
         {DEALS.map((d) => {
           const pct = Math.round((1 - d.price / d.was) * 100)
           return (

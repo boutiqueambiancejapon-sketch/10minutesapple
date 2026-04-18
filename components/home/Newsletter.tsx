@@ -24,8 +24,9 @@ export function Newsletter() {
   }
 
   return (
-    <section style={{ margin: '16px 20px 32px', position: 'relative', overflow: 'hidden' }}>
+    <section className="home-newsletter">
       <div
+        className="home-newsletter-inner"
         style={{
           background: 'linear-gradient(135deg, var(--accent-1), var(--accent-4))',
           borderRadius: 18,
@@ -65,6 +66,7 @@ export function Newsletter() {
           Newsletter · le dimanche
         </div>
         <h3
+          className="home-newsletter-title"
           style={{
             fontFamily: 'var(--next-font-display), serif',
             fontSize: 24,

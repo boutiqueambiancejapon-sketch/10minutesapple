@@ -18,7 +18,7 @@ export function FeaturedArticle() {
     : `/blog/${featured.categorie}/${featured.slug}`
 
   return (
-    <section style={{ margin: '0 20px 24px' }}>
+    <section className="home-featured">
       <div
         style={{
           fontSize: 11,
@@ -33,6 +33,7 @@ export function FeaturedArticle() {
       </div>
       <Link
         href={href}
+        className="home-featured-card"
         style={{
           display: 'block',
           position: 'relative',
@@ -47,6 +48,7 @@ export function FeaturedArticle() {
       >
         <div
           aria-hidden="true"
+          className="home-featured-blob"
           style={{
             position: 'absolute',
             top: -40,
@@ -73,6 +75,7 @@ export function FeaturedArticle() {
             Comparatif · {label}
           </div>
           <h3
+            className="home-featured-title"
             style={{
               fontFamily: 'var(--next-font-display), serif',
               fontSize: 24,

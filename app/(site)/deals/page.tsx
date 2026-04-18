@@ -7,6 +7,9 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { currentYear } from '@/lib/utils/year'
+import { AnnouncementBar } from '@/components/effects/AnnouncementBar'
+import { AuroraBackground } from '@/components/effects/AuroraBackground'
+import { NoiseOverlay } from '@/components/effects/NoiseOverlay'
 import { MarqueeStrip } from '@/components/effects/MarqueeStrip'
 import { DealsGrid } from '@/components/deals/DealsGrid'
 import { FaqAccordion } from '@/components/blog/FaqAccordion'
@@ -341,6 +344,15 @@ const jsonLdFaq = {
 }
 
 export default function DealsPage() {
+  const hotCount = DEALS.filter((d) => d.chaud).length
+  const avgDrop = Math.round(
+    DEALS.reduce((acc, d) => acc + ((d.prixAvant - d.prixApres) / d.prixAvant) * 100, 0) /
+      DEALS.length
+  )
+  const maxDrop = Math.max(
+    ...DEALS.map((d) => Math.round(((d.prixAvant - d.prixApres) / d.prixAvant) * 100))
+  )
+
   return (
     <>
       <script
@@ -353,6 +365,11 @@ export default function DealsPage() {
       />
 
       <main id="main-content">
+        <AnnouncementBar
+          message={`Sélection mise à jour ce matin — jusqu'à −${maxDrop}% vérifiés Amazon`}
+          href="#deals-grid"
+        />
+
         {/* Marquee strip — animation CSS */}
         <MarqueeStrip direction="left" speed="slow">
           {MARQUEE_ITEMS.map((item) => (
@@ -373,85 +390,131 @@ export default function DealsPage() {
           ))}
         </MarqueeStrip>
 
-        {/* Hero */}
-        <section
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            padding: 'var(--space-12) var(--space-6) var(--space-10)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Watermark DA */}
-          <span
-            aria-hidden="true"
+        {/* Hero — aurora + H1 serif italique + trust strip */}
+        <AuroraBackground>
+          <NoiseOverlay opacity={0.04} />
+          <section
             style={{
-              position: 'absolute',
-              top: '0',
-              right: 'var(--space-4)',
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(120px, 18vw, 240px)',
-              fontWeight: 400,
-              color: 'var(--accent-2)',
-              opacity: 0.05,
-              lineHeight: 1,
-              pointerEvents: 'none',
-              userSelect: 'none',
+              position: 'relative',
+              zIndex: 2,
+              maxWidth: '1280px',
+              margin: '0 auto',
+              padding: 'var(--space-12) var(--space-6) var(--space-10)',
             }}
           >
-            %
-          </span>
+            <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
+              <ol
+                style={{
+                  display: 'flex',
+                  gap: 6,
+                  listStyle: 'none',
+                  fontSize: 12,
+                  color: 'var(--text-muted)',
+                  alignItems: 'center',
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                <li>
+                  <Link
+                    href="/"
+                    style={{
+                      color: 'var(--accent-1)',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Accueil
+                  </Link>
+                </li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page" style={{ color: 'var(--text-muted)' }}>
+                  Deals
+                </li>
+              </ol>
+            </nav>
 
-          <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
-            <ol
+            {/* Eyebrow */}
+            <div
               style={{
-                display: 'flex',
-                gap: 'var(--space-2)',
-                listStyle: 'none',
-                fontSize: '13px',
-                color: 'var(--text-muted)',
+                fontSize: 11,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'var(--accent-1)',
+                fontWeight: 700,
+                marginBottom: 14,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
               }}
             >
-              <li>
-                <Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>
-                  Accueil
-                </Link>
-              </li>
-              <li aria-hidden="true">›</li>
-              <li aria-current="page" style={{ color: 'var(--text-secondary)' }}>
-                Deals
-              </li>
-            </ol>
-          </nav>
+              <span
+                aria-hidden="true"
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: 'var(--accent-1)',
+                  animation: 'pulse-dot 1.4s ease-in-out infinite',
+                }}
+              />
+              Prix vérifiés ce matin
+            </div>
 
-          <h1
-            style={{
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(32px, 5vw, 60px)',
-              fontWeight: 400,
-              color: 'var(--text-primary)',
-              lineHeight: 1.1,
-              marginBottom: 'var(--space-4)',
-            }}
-          >
-            Deals Apple
-          </h1>
-          <p
-            style={{
-              fontSize: 'clamp(15px, 2vw, 18px)',
-              color: 'var(--text-secondary)',
-              maxWidth: '520px',
-              lineHeight: 1.6,
-            }}
-          >
-            Sélection manuelle. Pas de deals sponsorisés, pas de prix gonflés avant promo.
-            Que des vraies réductions vérifiées.
-          </p>
-        </section>
+            <h1
+              style={{
+                fontFamily: 'var(--next-font-display), serif',
+                fontSize: 'clamp(40px, 7vw, 88px)',
+                fontWeight: 400,
+                color: 'var(--text-primary)',
+                lineHeight: 0.98,
+                letterSpacing: '-0.025em',
+                marginBottom: 18,
+                textWrap: 'balance',
+                maxWidth: 820,
+              }}
+            >
+              Deals{' '}
+              <em style={{ color: 'var(--accent-1)', fontStyle: 'italic' }}>Apple</em>{' '}
+              <span className="shimmer-text">triés à la main</span>.
+            </h1>
+
+            <p
+              style={{
+                fontSize: 'clamp(15px, 1.7vw, 17px)',
+                color: 'var(--text-secondary)',
+                maxWidth: 560,
+                lineHeight: 1.6,
+                marginBottom: 22,
+              }}
+            >
+              Sélection manuelle, chaque semaine. Pas de deals sponsorisés, pas de prix gonflés
+              avant promo — que des vraies réductions vérifiées.
+            </p>
+
+            {/* Trust strip */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                alignItems: 'center',
+                padding: '16px 18px',
+                background: 'var(--bg-surface)',
+                borderRadius: 14,
+                border: '1px solid var(--border)',
+                maxWidth: 520,
+              }}
+            >
+              <TrustStat value={String(DEALS.length)} label="offres" />
+              <TrustStat value={String(hotCount)} label="HOT" color="var(--accent-1)" divider />
+              <TrustStat value={`−${avgDrop}%`} label="éco. moy." color="var(--accent-3)" divider />
+            </div>
+          </section>
+        </AuroraBackground>
 
         {/* Liste deals */}
         <section
+          id="deals-grid"
           style={{
             maxWidth: '1280px',
             margin: '0 auto',
@@ -499,5 +562,44 @@ export default function DealsPage() {
         </section>
       </main>
     </>
+  )
+}
+
+function TrustStat({
+  value,
+  label,
+  color = 'var(--text-primary)',
+  divider,
+}: {
+  value: string
+  label: string
+  color?: string
+  divider?: boolean
+}) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        paddingLeft: divider ? 14 : 0,
+        borderLeft: divider ? '1px solid var(--border)' : 'none',
+      }}
+    >
+      <span
+        style={{
+          fontFamily: 'var(--next-font-mono), monospace',
+          fontSize: 22,
+          fontWeight: 700,
+          color,
+          lineHeight: 1,
+          letterSpacing: '-0.02em',
+          fontVariantNumeric: 'tabular-nums',
+        }}
+      >
+        {value}
+      </span>
+      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{label}</span>
+    </div>
   )
 }

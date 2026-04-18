@@ -279,7 +279,7 @@ function HeroVisual() {
               fontVariantNumeric: 'tabular-nums',
             }}
           >
-            749 €
+            949 €
           </span>
           <span
             style={{
@@ -290,7 +290,7 @@ function HeroVisual() {
               fontVariantNumeric: 'tabular-nums',
             }}
           >
-            899 €
+            999 €
           </span>
           <span
             style={{
@@ -302,7 +302,7 @@ function HeroVisual() {
               borderRadius: 4,
             }}
           >
-            −17%
+            −5%
           </span>
         </div>
       </div>

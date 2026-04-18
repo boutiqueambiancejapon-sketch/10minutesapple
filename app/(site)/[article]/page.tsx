@@ -22,6 +22,9 @@ import { ProConTable } from '@/components/blog/ProConTable'
 import { PullQuote } from '@/components/blog/PullQuote'
 import { StatCard, StatRow } from '@/components/blog/StatCard'
 import { CompareBar, CompareBarGroup } from '@/components/blog/CompareBar'
+import { DealHero } from '@/components/blog/DealHero'
+import { UpgradeMatrix } from '@/components/blog/UpgradeMatrix'
+import { UpSell } from '@/components/blog/UpSell'
 import { ProductCTA } from '@/components/blog/ProductCTA'
 import { AutoProductCTAs } from '@/components/blog/AutoProductCTAs'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
@@ -74,6 +77,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
     options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
     components: {
       Tip, Warning, Verdict, ProConTable, PullQuote, StatCard, StatRow, CompareBar, CompareBarGroup, ProductCTA,
+      DealHero, UpgradeMatrix, UpSell,
       table: ({ children }: { children: ReactNode }) => (
         <div className="table-scroll-wrap"><table>{children}</table></div>
       ),
@@ -146,7 +150,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
                 {catLabel}
               </span>
 
-              <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: 'var(--space-5)', textWrap: 'balance' }}>
+              <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: 'var(--space-5)', textWrap: 'balance' }}>
                 {meta.title}
               </h1>
 
@@ -189,7 +193,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
             {/* FAQ */}
             {meta.faq && meta.faq.length > 0 && (
               <section aria-labelledby="faq-titre" style={{ marginTop: 'var(--space-12)' }}>
-                <h2 id="faq-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 'var(--space-6)' }}>
+                <h2 id="faq-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-6)' }}>
                   Questions fréquentes
                 </h2>
                 <FaqAccordion items={meta.faq} />
@@ -199,7 +203,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
             {/* Continuer votre lecture */}
             {related.length > 0 && (
               <section aria-labelledby="related-titre" style={{ marginTop: 'var(--space-12)' }}>
-                <h2 id="related-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 800, color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
+                <h2 id="related-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
                   Continuer votre lecture
                 </h2>
                 <ul role="list" style={{ display: 'flex', flexDirection: 'column', gap: 0, listStyle: 'none', borderTop: '1px solid var(--border)' }}>

@@ -108,8 +108,8 @@ export function Footer() {
               aria-label="10minutesapple — accueil"
               style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'baseline', gap: '1px', marginBottom: 'var(--space-4)' }}
             >
-              <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 800, fontSize: '15px', color: 'var(--text-primary)', letterSpacing: '0' }}>10min</span>
-              <span style={{ color: 'var(--accent-1)', fontWeight: 800, fontSize: '15px' }}>·</span>
+              <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 400, fontSize: '15px', color: 'var(--text-primary)', letterSpacing: '0' }}>10min</span>
+              <span style={{ color: 'var(--accent-1)', fontWeight: 400, fontSize: '15px' }}>·</span>
               <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 400, fontSize: '15px', color: 'var(--text-secondary)', letterSpacing: '0' }}>Apple</span>
             </Link>
             <p style={{ fontSize: '13px', color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: '220px' }}>

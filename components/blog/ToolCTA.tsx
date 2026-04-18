@@ -90,7 +90,7 @@ export function ToolCTA({ categorie }: Props) {
         <p
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontWeight: 800,
+            fontWeight: 400,
             fontSize: '13px',
             letterSpacing: '0.07em',
             textTransform: 'uppercase',

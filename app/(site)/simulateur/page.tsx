@@ -125,7 +125,7 @@ export default function SimulateurPage() {
               right: 'var(--space-6)',
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: 'clamp(120px, 20vw, 280px)',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--accent-2)',
               opacity: 0.05,
               lineHeight: 1,
@@ -162,7 +162,7 @@ export default function SimulateurPage() {
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: 'clamp(32px, 5vw, 60px)',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--text-primary)',
               lineHeight: 1.1,
               marginBottom: 'var(--space-4)',
@@ -228,7 +228,7 @@ export default function SimulateurPage() {
                       style={{
                         fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                         fontSize: '18px',
-                        fontWeight: 800,
+                        fontWeight: 400,
                         color: 'var(--text-primary)',
                         marginBottom: 'var(--space-1)',
                       }}

@@ -101,7 +101,7 @@ export default function QuizPage() {
               style={{
                 fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                 fontSize: 'clamp(30px, 5vw, 52px)',
-                fontWeight: 800,
+                fontWeight: 400,
                 color: 'var(--text-primary)',
                 lineHeight: 1.1,
                 marginBottom: 'var(--space-4)',

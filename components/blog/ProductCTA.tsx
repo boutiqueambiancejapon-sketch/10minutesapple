@@ -47,7 +47,7 @@ export function ProductCTA({ name, price, url, badge, hook }: ProductCTAProps) {
                 {badge}
               </span>
             )}
-            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.2, display: 'block' }}>
+            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.2, display: 'block' }}>
               {name}
             </span>
           </div>

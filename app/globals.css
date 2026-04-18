@@ -573,9 +573,9 @@ body {
   counter-reset: section-counter;
 }
 .prose-article h2 {
-  font-family: var(--next-font-display), system-ui, sans-serif;
-  font-size: clamp(20px, 3vw, 26px);
-  font-weight: 800;
+  font-family: var(--next-font-display), serif;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 400;
   color: var(--text-primary);
   margin-top: var(--space-12);
   margin-bottom: var(--space-4);
@@ -586,6 +586,8 @@ body {
   position: relative;
   padding-top: var(--space-6);
   border-top: 1px solid var(--border);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
 }
 .prose-article > h2:first-of-type {
   border-top: none;
@@ -604,13 +606,14 @@ body {
   opacity: 0.6;
 }
 .prose-article h3 {
-  font-family: var(--next-font-display), system-ui, sans-serif;
-  font-size: clamp(17px, 2.5vw, 20px);
+  font-family: var(--next-font-primary), system-ui, sans-serif;
+  font-size: clamp(17px, 2.3vw, 20px);
   font-weight: 700;
   color: var(--text-primary);
   margin-top: var(--space-8);
   margin-bottom: var(--space-3);
   text-wrap: balance;
+  letter-spacing: -0.01em;
 }
 .prose-article p {
   margin-bottom: var(--space-5);
@@ -676,10 +679,10 @@ body {
 .prose-article th {
   padding: var(--space-3) var(--space-4);
   text-align: left;
-  font-family: var(--next-font-display), system-ui, sans-serif;
+  font-family: var(--next-font-primary), system-ui, sans-serif;
   font-weight: 700;
-  font-size: 11px;
-  letter-spacing: 0.07em;
+  font-size: 12px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #FFFFFF;
   white-space: nowrap;
@@ -763,13 +766,89 @@ body {
   font-weight: 600;
 }
 
-/* --- Hero article — gradient header --- */
+/* --- Hero article — lumière chaude + cadre éditorial --- */
 .article-hero-band {
-  background: radial-gradient(
-    ellipse 130% 100% at 50% 0%,
-    rgba(91, 63, 223, 0.10) 0%,
-    transparent 70%
-  );
+  background:
+    radial-gradient(ellipse 130% 100% at 50% 0%, rgba(255, 61, 87, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 70% at 80% 10%, rgba(123, 97, 255, 0.10) 0%, transparent 60%);
+  border-bottom: 1px solid var(--border);
+}
+.article-header-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6) var(--space-8);
+}
+@media (min-width: 1080px) {
+  .article-header-inner {
+    padding: var(--space-12) var(--space-8) var(--space-10);
+  }
+}
+
+/* Breadcrumb */
+.article-breadcrumb { margin-bottom: 14px; }
+.article-breadcrumb ol {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.article-breadcrumb a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+.article-breadcrumb a:hover { color: var(--text-primary); }
+.article-breadcrumb-accent { color: var(--accent-1) !important; font-weight: 600; }
+.article-breadcrumb-muted { color: var(--text-muted); }
+
+/* Eyebrow — pill gradient + reading time */
+.article-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.article-pill {
+  font-family: var(--next-font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+  padding: 4px 10px;
+  border-radius: 4px;
+  display: inline-block;
+}
+.article-reading-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* H1 hero article — Instrument Serif 400, grande taille */
+.article-hero-h1 {
+  font-family: var(--next-font-display), serif;
+  font-size: clamp(32px, 5.6vw, 56px);
+  font-weight: 400;
+  color: var(--text-primary);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  margin-bottom: 16px;
+  text-wrap: balance;
+}
+.article-hero-sub {
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 22px;
+  max-width: 640px;
+  text-wrap: pretty;
 }
 
 /* ── Home sections — layouts responsives ─────────────────── */
@@ -833,11 +912,313 @@ body {
   border-color: var(--accent-1) !important;
   background: var(--bg-surface-2) !important;
 }
+/* StatCard standalone garde un peu d'air ; en StatRow on l'enlève
+   pour qu'il n'y ait pas de double espacement avec le gap de la grille. */
+.stat-row > * {
+  margin: 0 !important;
+}
+
+/* StickyCTA "En stock" — visible seulement quand il reste de la place */
+.sticky-cta-stock { display: none; }
+@media (min-width: 560px) {
+  .sticky-cta-stock { display: inline-flex; }
+}
+
+/* StickyCTA row — stack vertical sur mobile, cote à cote desktop */
+.sticky-cta-row {
+  flex-direction: column;
+}
+.sticky-cta-item {
+  width: 100%;
+  flex: none;
+}
+@media (min-width: 560px) {
+  .sticky-cta-row {
+    flex-direction: row;
+    align-items: center !important;
+  }
+  .sticky-cta-item {
+    width: auto;
+    flex: 1 1 40%;
+  }
+  .sticky-cta-primary { flex-basis: 60% !important; }
+}
+
+/* StickyCTA — anim show/hide + offset desktop pour éviter la sidebar article */
+.article-sticky-cta {
+  transform: translateX(-50%) translateY(calc(100% + 32px));
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.article-sticky-cta[data-visible="true"] {
+  transform: translateX(-50%) translateY(0);
+}
+/* ≥ 1080px : la sidebar article occupe la droite. On décale le sticky à gauche
+   pour qu'il reste centré sur la colonne d'article (main 760 + gap 32 + sidebar 260 = 1052). */
+@media (min-width: 1080px) {
+  .article-sticky-cta {
+    transform: translateX(calc(-50% - 146px)) translateY(calc(100% + 32px));
+  }
+  .article-sticky-cta[data-visible="true"] {
+    transform: translateX(calc(-50% - 146px)) translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .article-sticky-cta { transition: none; }
+}
+
 /* Pulse dot animation pour "Deals du moment" */
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.85); }
 }
+@media (prefers-reduced-motion: reduce) {
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: none; }
+  }
+}
+
+/* Shimmer text — anime un gradient sur "10 minutes" dans le H1 hero */
+@keyframes shimmer-sweep {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 40%,
+    var(--accent-1) 50%,
+    var(--text-primary) 60%,
+    var(--text-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer-sweep 3.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-text { animation: none; background: none; -webkit-text-fill-color: currentColor; color: var(--text-primary); }
+}
+
+/* Home shell — mobile-first centré. Desktop : grande surface avec
+   un subtil glow radial. La DA est la même, le layout des sections
+   bascule en multi-colonnes via .home-grid-* ci-dessous. */
+.home-shell {
+  position: relative;
+  background:
+    radial-gradient(ellipse at top, rgba(255, 61, 87, 0.08) 0%, transparent 55%),
+    var(--bg-primary);
+  min-height: 100svh;
+}
+.home-section-wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── HomeHeader — nav inline desktop, hamburger mobile ── */
+.home-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 6px;
+  position: relative;
+  z-index: 5;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+.home-header-nav {
+  display: none;
+  gap: 24px;
+  margin-left: auto;
+  margin-right: 8px;
+  font-size: 14px;
+}
+.home-header-hamburger {
+  margin-left: auto;
+}
+@media (min-width: 900px) {
+  .home-header {
+    padding: 20px 24px 8px;
+    gap: 24px;
+  }
+  .home-header-nav { display: flex; }
+  .home-header-hamburger { display: none; }
+}
+
+/* ── HomeHero — mobile centré, desktop 2-col avec visuel ── */
+.home-hero-inner {
+  position: relative;
+  z-index: 2;
+  padding: 20px 20px 28px;
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+}
+.home-hero-text { display: contents; }
+.home-hero-visual { display: none; }
+@media (min-width: 900px) {
+  .home-hero-inner {
+    max-width: 1280px;
+    padding: 60px 24px 80px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 64px;
+    align-items: center;
+  }
+  .home-hero-text { display: block; }
+  .home-hero-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .home-hero-h1 {
+    font-size: clamp(64px, 7.5vw, 112px) !important;
+    margin-bottom: 20px !important;
+  }
+  .home-hero-sub {
+    font-size: 17px !important;
+    max-width: 520px !important;
+  }
+  .home-hero-ctas { max-width: 520px; }
+}
+
+/* ── CategoryPills — scroll mobile, wrap centré desktop ── */
+@media (min-width: 900px) {
+  .home-pills-scroll {
+    max-width: 1280px;
+    margin: 0 auto;
+    overflow-x: visible !important;
+    flex-wrap: wrap !important;
+    justify-content: center;
+    padding: 10px 24px 24px !important;
+  }
+}
+
+/* ── DealsOfTheDay — stack mobile, 3-col desktop ── */
+.home-deals-section {
+  padding: 8px 0 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+.home-deals-header {
+  padding: 0 20px 14px;
+}
+.home-deals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 20px;
+}
+@media (min-width: 900px) {
+  .home-deals-header { padding: 0 24px 20px; }
+  .home-deals-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 0 24px;
+  }
+}
+
+/* ── FeaturedArticle — carte desktop plus large ── */
+.home-featured {
+  max-width: 1280px;
+  margin: 0 auto 24px;
+  padding: 0 20px;
+}
+@media (min-width: 900px) {
+  .home-featured { padding: 0 24px; margin-bottom: 32px; }
+  .home-featured-card {
+    padding: 40px 44px !important;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 280px);
+    gap: 32px;
+    align-items: center;
+  }
+  .home-featured-title { font-size: clamp(28px, 3.2vw, 40px) !important; }
+  .home-featured-blob {
+    width: 320px !important;
+    height: 320px !important;
+    top: -80px !important;
+    right: -80px !important;
+  }
+}
+
+/* ── HomeArticleGrid — liste mobile, grille 2-col desktop ── */
+.home-articles {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+.home-articles-header { padding: 0 20px 14px; }
+.home-articles-list {
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 1fr);
+  gap: 14px;
+  padding: 4px 20px 16px;
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 3%, black 97%, transparent 100%);
+}
+.home-articles-list::-webkit-scrollbar { display: none; }
+.home-articles-list > li {
+  scroll-snap-align: start;
+  min-width: 0;
+  border-bottom: none !important;
+}
+@media (min-width: 900px) {
+  .home-articles-header { padding: 16px 24px 20px; }
+  .home-articles-list {
+    grid-auto-columns: minmax(300px, 340px);
+    gap: 16px;
+    padding: 4px 24px 20px;
+    scroll-padding-left: 24px;
+  }
+}
+@media (min-width: 1280px) {
+  .home-articles-list {
+    grid-auto-columns: minmax(290px, 320px);
+  }
+}
+
+/* ── Newsletter — centré desktop, max 720 ── */
+.home-newsletter {
+  max-width: 820px;
+  margin: 24px auto 40px;
+  padding: 0 20px;
+  position: relative;
+  overflow: hidden;
+}
+@media (min-width: 900px) {
+  .home-newsletter { padding: 0 24px; }
+  .home-newsletter-inner { padding: 40px 44px !important; }
+  .home-newsletter-title { font-size: 30px !important; }
+}
+
+/* Home pills scroll — masque la scrollbar tout en gardant le scroll horizontal */
+.home-pills-scroll::-webkit-scrollbar { display: none; }
+.home-pills-scroll { -ms-overflow-style: none; }
+
+/* Home hero aurora — padding-top géré par le HomeHeader au-dessus */
+.home-hero-aurora {
+  min-height: auto;
+}
+.home-cta-primary:hover { opacity: 0.92; transform: translateY(-1px); }
+.home-nav-link:hover { color: var(--text-primary) !important; border-bottom-color: var(--accent-1) !important; }
 
 /* Carousel horizontal scroll-snap */
 .article-grid {

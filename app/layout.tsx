@@ -1,23 +1,33 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, Unbounded } from 'next/font/google'
+import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const fontPrimary = Space_Grotesk({
+const fontPrimary = Inter_Tight({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--next-font-primary',
   adjustFontFallback: true,
   preload: true,
   display: 'swap',
 })
 
-const fontDisplay = Unbounded({
+const fontDisplay = Instrument_Serif({
   subsets: ['latin'],
-  weight: ['400', '700', '800'],
+  weight: ['400'],
+  style: ['normal', 'italic'],
   variable: '--next-font-display',
   adjustFontFallback: true,
   preload: true,
+  display: 'swap',
+})
+
+const fontMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+  variable: '--next-font-mono',
+  adjustFontFallback: true,
+  preload: false,
   display: 'swap',
 })
 
@@ -49,7 +59,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${fontPrimary.variable} ${fontDisplay.variable}`}
+      className={`${fontPrimary.variable} ${fontDisplay.variable} ${fontMono.variable}`}
     >
       {/* Script inline : applique data-theme avant tout rendu pour éviter le flash */}
       <head>

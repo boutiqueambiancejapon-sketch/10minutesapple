@@ -144,7 +144,7 @@ export default async function AuthorPage(
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
             fontSize: 'clamp(1.6rem, 4vw, 2.8rem)',
-            fontWeight: 800,
+            fontWeight: 400,
             letterSpacing: '0',
             color: 'var(--text-primary)',
             lineHeight: 1.1,

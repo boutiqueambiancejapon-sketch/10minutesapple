@@ -4,6 +4,11 @@ import nextTypescript from 'eslint-config-next/typescript'
 
 /** @type {import('eslint').Linter.Config[]} */
 const eslintConfig = [
+  {
+    ignores: [
+      'tasks/mockups/**',
+    ],
+  },
   ...nextConfig,
   ...nextCoreWebVitals,
   ...nextTypescript,

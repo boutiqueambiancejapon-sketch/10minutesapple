@@ -96,7 +96,7 @@ export default async function ChoisirPage({ params }: { params: Params }) {
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: 'clamp(28px, 5vw, 52px)',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--text-primary)',
               lineHeight: 1.1,
               marginBottom: 'var(--space-4)',
@@ -133,7 +133,7 @@ export default async function ChoisirPage({ params }: { params: Params }) {
           style={{
             fontFamily: 'var(--next-font-display), system-ui, sans-serif',
             fontSize: 'clamp(18px, 2.5vw, 22px)',
-            fontWeight: 800,
+            fontWeight: 400,
             color: 'var(--text-primary)',
             marginBottom: 'var(--space-6)',
             textAlign: 'center',

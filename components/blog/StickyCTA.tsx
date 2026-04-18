@@ -33,19 +33,24 @@ export function StickyCTA({ items, message }: Props) {
 
   if (items.length === 0) return null
 
+  // Plafonne à 2 CTAs visibles : le premier en primary gradient, le second
+  // en ghost. Les éventuels items suivants sont accessibles via le lien "+N".
+  const primary = items[0]
+  const secondary = items[1]
+  const extraCount = Math.max(0, items.length - 2)
+
   return (
     <div
       role="complementary"
       aria-label="Offre produit"
+      className="article-sticky-cta"
+      data-visible={visible ? 'true' : 'false'}
       style={{
         position: 'fixed',
         bottom: 'var(--space-4)',
         left: '50%',
-        transform: visible ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(calc(100% + 32px))',
-        transition: 'transform 400ms cubic-bezier(0.16, 1, 0.3, 1)',
         zIndex: 35,
-        width: '92%',
-        maxWidth: '680px',
+        width: 'min(680px, calc(100% - 16px))',
       }}
     >
       <div
@@ -55,86 +60,140 @@ export function StickyCTA({ items, message }: Props) {
           backdropFilter: 'blur(40px) saturate(1.8)',
           WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
           background: 'var(--sticky-cta-glass)',
-          padding: 'var(--space-3) var(--space-5)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: 'var(--space-3)',
-          flexWrap: 'wrap',
-          border: '1px solid rgba(255,255,255,0.12)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
-          borderRadius: '16px',
+          padding: '8px 10px',
+          border: '1px solid rgba(255,255,255,0.14)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)',
+          borderRadius: '14px',
         }}
       >
-        {/* Specular highlight — light hitting glass from top */}
+        {/* reflet top */}
         <div
           aria-hidden="true"
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(175deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.03) 35%, transparent 55%)',
+            background: 'linear-gradient(175deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 35%, transparent 55%)',
             pointerEvents: 'none',
-            borderRadius: '16px',
+            borderRadius: '14px',
           }}
         />
 
         {message && (
-          <span
+          <div
             style={{
               position: 'relative',
               zIndex: 1,
-              width: '100%',
-              fontSize: '12px',
-              color: 'var(--text-primary)',
+              fontSize: 11,
+              color: 'var(--text-secondary)',
               lineHeight: 1.3,
               textAlign: 'center',
+              padding: '0 6px 6px',
             }}
           >
             {message}
-          </span>
+          </div>
         )}
 
-        <div style={{
-          position: 'relative', zIndex: 1,
-          display: 'flex', gap: 'var(--space-2)',
-          width: '100%', flexWrap: 'wrap',
-        }}>
-          {items.map((item, i) => {
-            const isAmazon = item.url.includes('amazon.fr') || item.url.includes('amzn.to')
-            const href = isAmazon ? addAffiliateTag(item.url) : item.url
-            return (
-              <a
-                key={i}
-                href={href}
-                rel={isAmazon ? 'nofollow sponsored noopener' : 'noopener'}
-                target="_blank"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 'var(--space-2)',
-                  padding: 'var(--space-2) var(--space-4)',
-                  flex: '1 1 auto',
-                  minWidth: 0,
-                  background: i === 0
-                    ? 'linear-gradient(135deg, var(--aurora-1), var(--aurora-2))'
-                    : 'rgba(255,255,255,0.08)',
-                  color: i === 0 ? '#fff' : 'var(--text-primary)',
-                  border: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.12)',
-                  borderRadius: '10px',
-                  fontSize: '12px',
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {item.label}
-              </a>
-            )
-          })}
+        <div
+          className="sticky-cta-row"
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            display: 'flex',
+            gap: 6,
+            alignItems: 'stretch',
+          }}
+        >
+          {/* En stock — caché sur mobile pour libérer la place des CTAs */}
+          <div
+            aria-hidden="true"
+            className="sticky-cta-stock"
+            style={{
+              alignItems: 'center',
+              gap: 5,
+              paddingLeft: 4,
+              paddingRight: 4,
+              flexShrink: 0,
+            }}
+          >
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: '50%',
+                background: 'var(--accent-3)',
+                animation: 'pulse-dot 1.6s ease-in-out infinite',
+                flexShrink: 0,
+              }}
+            />
+            <span
+              style={{
+                fontSize: 11,
+                color: 'var(--text-secondary)',
+                fontWeight: 600,
+              }}
+            >
+              En stock
+            </span>
+          </div>
+
+          <CTA item={primary} primary />
+          {secondary && <CTA item={secondary} />}
+
+          {extraCount > 0 && (
+            <span
+              aria-label={`${extraCount} autre${extraCount > 1 ? 's' : ''} offre${extraCount > 1 ? 's' : ''} dans l'article`}
+              style={{
+                fontFamily: 'var(--next-font-mono), monospace',
+                fontSize: 10,
+                color: 'var(--text-muted)',
+                fontWeight: 700,
+                padding: '4px 6px',
+                flexShrink: 0,
+              }}
+            >
+              +{extraCount}
+            </span>
+          )}
         </div>
       </div>
     </div>
+  )
+}
+
+function CTA({ item, primary = false }: { item: StickyCTAItem; primary?: boolean }) {
+  const isAmazon = item.url.includes('amazon.fr') || item.url.includes('amzn.to')
+  const href = isAmazon ? addAffiliateTag(item.url) : item.url
+  return (
+    <a
+      href={href}
+      rel={isAmazon ? 'nofollow sponsored noopener' : 'noopener'}
+      target="_blank"
+      className={primary ? 'sticky-cta-item sticky-cta-primary' : 'sticky-cta-item'}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 6,
+        padding: '10px 12px',
+        minWidth: 0,
+        background: primary
+          ? 'linear-gradient(135deg, var(--accent-1), var(--accent-4))'
+          : 'rgba(255,255,255,0.08)',
+        color: primary ? '#fff' : 'var(--text-primary)',
+        border: primary ? 'none' : '1px solid rgba(255,255,255,0.12)',
+        borderRadius: 10,
+        fontSize: 12,
+        fontWeight: 700,
+        textDecoration: 'none',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        boxShadow: primary ? '0 4px 14px color-mix(in oklch, var(--accent-1), transparent 60%)' : 'none',
+      }}
+    >
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.label}</span>
+      {primary && <span aria-hidden="true" style={{ flexShrink: 0 }}>→</span>}
+    </a>
   )
 }

@@ -1,19 +1,8 @@
 /**
  * PriceTag — affichage prix avec JetBrains Mono (tabular-nums).
  * Affiche : prix barré (optionnel) + prix actuel + badge % économie (optionnel).
- * JetBrains Mono chargé ici uniquement — pas dans layout global.
  * Server Component.
  */
-
-import { JetBrains_Mono } from 'next/font/google'
-
-const fontMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400'],
-  variable: '--next-font-mono',
-  display: 'swap',
-  preload: false,  // chargé à la demande, pas critique
-})
 
 type PriceTagProps = {
   price: number           // prix actuel en euros
@@ -47,7 +36,7 @@ export function PriceTag({
 
   return (
     <div
-      className={`${fontMono.variable} ${className ?? ''}`}
+      className={className ?? ''}
       style={{
         display: 'inline-flex',
         alignItems: 'baseline',

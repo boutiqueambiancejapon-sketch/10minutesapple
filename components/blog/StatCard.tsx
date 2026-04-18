@@ -3,7 +3,9 @@
  * Crée un "visuel" typographique au milieu du texte.
  * Usage MDX : <StatCard value="48 MP" label="Capteur principal" />
  * Variante avec 2-3 stats côte à côte :
- *   <StatCard value="37h" label="Autonomie" accent="2" />
+ *   <StatRow>
+ *     <StatCard value="37h" label="Autonomie" accent="2" />
+ *   </StatRow>
  * Server Component.
  */
 
@@ -26,34 +28,40 @@ export function StatCard({ value, label, accent = '1' }: StatCardProps) {
   return (
     <div
       style={{
-        margin: 'var(--space-8) 0',
-        padding: 'var(--space-6) 0',
+        margin: 'var(--space-4) 0',
+        padding: '12px 0 10px',
         borderTop: '1px solid var(--border)',
         borderBottom: '1px solid var(--border)',
         textAlign: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 4,
       }}
     >
       <div
         style={{
-          fontFamily: 'var(--next-font-mono), monospace',
-          fontSize: 'clamp(48px, 10vw, 72px)',
-          fontWeight: 700,
+          fontFamily: 'var(--next-font-display), serif',
+          fontSize: 'clamp(22px, 3.6vw, 36px)',
+          fontWeight: 400,
           color,
-          lineHeight: 1,
-          letterSpacing: '-0.03em',
+          lineHeight: 1.05,
+          letterSpacing: '-0.025em',
           fontVariantNumeric: 'tabular-nums',
+          textWrap: 'balance',
+          overflowWrap: 'break-word',
         }}
       >
         {value}
       </div>
       <div
         style={{
-          fontFamily: 'var(--next-font-primary), system-ui, sans-serif',
-          fontSize: '13px',
+          fontFamily: 'var(--next-font-mono), monospace',
+          fontSize: '9.5px',
           color: 'var(--text-muted)',
-          marginTop: 'var(--space-2)',
-          letterSpacing: '0.04em',
+          letterSpacing: '0.1em',
           textTransform: 'uppercase',
+          fontWeight: 600,
+          lineHeight: 1.3,
         }}
       >
         {label}
@@ -62,24 +70,16 @@ export function StatCard({ value, label, accent = '1' }: StatCardProps) {
   )
 }
 
-/**
- * StatRow — 2-3 stats côte à côte.
- * Usage MDX :
- *   <StatRow>
- *     <StatCard value="48 MP" label="Photo" />
- *     <StatCard value="37h" label="Autonomie" accent="2" />
- *     <StatCard value="999 €" label="Prix" accent="3" />
- *   </StatRow>
- */
 export function StatRow({ children }: { children: React.ReactNode }) {
   return (
     <div
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-        gap: 'var(--space-4)',
-        margin: 'var(--space-8) 0',
+        gap: 12,
+        margin: 'var(--space-5) 0',
       }}
+      className="stat-row"
     >
       {children}
     </div>

@@ -46,7 +46,7 @@ export function AuthorTeaser() {
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: '45%',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--text-primary)',
               letterSpacing: '0',
               lineHeight: 1,

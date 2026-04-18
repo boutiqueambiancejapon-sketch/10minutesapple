@@ -31,7 +31,7 @@ const sectionStyle: React.CSSProperties = {
 const h2Style: React.CSSProperties = {
   fontFamily: 'var(--next-font-display), system-ui, sans-serif',
   fontSize: 'clamp(20px, 3vw, 28px)',
-  fontWeight: 800,
+  fontWeight: 400,
   color: 'var(--text-primary)',
   lineHeight: 1.2,
   marginBottom: 'var(--space-4)',

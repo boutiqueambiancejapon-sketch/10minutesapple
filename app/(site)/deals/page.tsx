@@ -7,10 +7,13 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { currentYear } from '@/lib/utils/year'
+import { AnnouncementBar } from '@/components/effects/AnnouncementBar'
+import { AuroraBackground } from '@/components/effects/AuroraBackground'
+import { NoiseOverlay } from '@/components/effects/NoiseOverlay'
 import { MarqueeStrip } from '@/components/effects/MarqueeStrip'
 import { DealsGrid } from '@/components/deals/DealsGrid'
 import { FaqAccordion } from '@/components/blog/FaqAccordion'
-import type { Deal } from '@/components/deals/DealsGrid'
+import { DEALS, DEAL_CATEGORIES } from '@/lib/deals'
 
 export const revalidate = 900
 
@@ -31,253 +34,6 @@ export function generateMetadata(): Metadata {
   }
 }
 
-const DEALS: Deal[] = [
-  // iPhone
-  {
-    titre: 'iPhone 17 256 Go',
-    categorie: 'iPhone',
-    prixAvant: 999,
-    prixApres: 949,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/Apple-iPhone-17-256GB-black/dp/B0FQFJVJBQ',
-  },
-  {
-    titre: 'iPhone 17 Pro 256 Go',
-    categorie: 'iPhone',
-    prixAvant: 1229,
-    prixApres: 1169,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/Apple-iPhone-Pro-256-prodigieuse/dp/B0FQH32F7H',
-  },
-  {
-    titre: 'iPhone 16 256 Go',
-    categorie: 'iPhone',
-    prixAvant: 969,
-    prixApres: 819,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGHN3YNR',
-  },
-  {
-    titre: 'iPhone 16 Pro 256 Go',
-    categorie: 'iPhone',
-    prixAvant: 1299,
-    prixApres: 1159,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGHH9JY3',
-  },
-  {
-    titre: 'iPhone 16 Plus 256 Go',
-    categorie: 'iPhone',
-    prixAvant: 1119,
-    prixApres: 915,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGHQW185',
-  },
-  {
-    titre: 'iPhone 16 Pro Max 256 Go',
-    categorie: 'iPhone',
-    prixAvant: 1479,
-    prixApres: 1389,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGHYHG25',
-  },
-  {
-    titre: 'iPhone 15 128 Go',
-    categorie: 'iPhone',
-    prixAvant: 969,
-    prixApres: 729,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0CHX7Z69Z',
-  },
-  {
-    titre: 'iPhone 16e 128 Go',
-    categorie: 'iPhone',
-    prixAvant: 699,
-    prixApres: 669,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DXQQ65T2',
-  },
-  // Mac
-  {
-    titre: 'MacBook Neo 13" 256 Go',
-    categorie: 'Mac',
-    prixAvant: 699,
-    prixApres: 669,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/Apple-MacBook-2026-Portable-avec/dp/B0GR6MBRPB',
-  },
-  {
-    titre: 'MacBook Air 13" M5 256 Go',
-    categorie: 'Mac',
-    prixAvant: 1299,
-    prixApres: 1229,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0GR1W24CR',
-  },
-  {
-    titre: 'MacBook Air 15" M5 256 Go',
-    categorie: 'Mac',
-    prixAvant: 1599,
-    prixApres: 1519,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0GR1NRFZD',
-  },
-  {
-    titre: 'Mac mini M4 256 Go',
-    categorie: 'Mac',
-    prixAvant: 699,
-    prixApres: 659,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DLBW9GNQ',
-  },
-  {
-    titre: 'MacBook Pro 14" M5 512 Go',
-    categorie: 'Mac',
-    prixAvant: 1999,
-    prixApres: 1899,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0FWDCNPPZ',
-  },
-  {
-    titre: 'iMac 24" M4 256 Go',
-    categorie: 'Mac',
-    prixAvant: 1699,
-    prixApres: 1599,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DL6KQ5SP',
-  },
-  // iPad
-  {
-    titre: 'iPad Air 11" M3 128 Go Wi-Fi',
-    categorie: 'iPad',
-    prixAvant: 799,
-    prixApres: 749,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0GQVLW917',
-  },
-  {
-    titre: 'iPad 11e génération 128 Go',
-    categorie: 'iPad',
-    prixAvant: 369,
-    prixApres: 349,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DZ75RKZH',
-  },
-  {
-    titre: 'iPad mini 7 128 Go Wi-Fi',
-    categorie: 'iPad',
-    prixAvant: 599,
-    prixApres: 559,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DK3YHKBB',
-  },
-  {
-    titre: 'iPad Pro 11" M5 256 Go',
-    categorie: 'iPad',
-    prixAvant: 1199,
-    prixApres: 1139,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0FWD6KNY8',
-  },
-  // Apple Watch
-  {
-    titre: 'Apple Watch Series 11 GPS 42 mm',
-    categorie: 'Watch',
-    prixAvant: 449,
-    prixApres: 419,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0FQGHR6SY',
-  },
-  {
-    titre: 'Apple Watch SE 2 GPS 40 mm',
-    categorie: 'Watch',
-    prixAvant: 279,
-    prixApres: 239,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGHZ15PD',
-  },
-  {
-    titre: 'Apple Watch Ultra 2 GPS+Cell 49 mm',
-    categorie: 'Watch',
-    prixAvant: 899,
-    prixApres: 849,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGJ9M892',
-  },
-  // Accessoires
-  {
-    titre: 'AirPods Pro 2 USB-C',
-    categorie: 'Accessoires',
-    prixAvant: 279,
-    prixApres: 219,
-    source: 'Amazon',
-    chaud: true,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGHWD7CT',
-  },
-  {
-    titre: 'AirPods 4 ANC',
-    categorie: 'Accessoires',
-    prixAvant: 199,
-    prixApres: 179,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0FQF32239',
-  },
-  {
-    titre: 'AirPods Max USB-C',
-    categorie: 'Accessoires',
-    prixAvant: 579,
-    prixApres: 529,
-    source: 'Amazon',
-    chaud: false,
-    date: '2026-03-25',
-    amazonUrl: 'https://www.amazon.fr/dp/B0DGHQ1KVY',
-  },
-]
 
 const MARQUEE_ITEMS = [
   'iPhone 17 à 949 €',
@@ -341,6 +97,15 @@ const jsonLdFaq = {
 }
 
 export default function DealsPage() {
+  const hotCount = DEALS.filter((d) => d.chaud).length
+  const avgDrop = Math.round(
+    DEALS.reduce((acc, d) => acc + ((d.prixAvant - d.prixApres) / d.prixAvant) * 100, 0) /
+      DEALS.length
+  )
+  const maxDrop = Math.max(
+    ...DEALS.map((d) => Math.round(((d.prixAvant - d.prixApres) / d.prixAvant) * 100))
+  )
+
   return (
     <>
       <script
@@ -353,6 +118,11 @@ export default function DealsPage() {
       />
 
       <main id="main-content">
+        <AnnouncementBar
+          message={`Sélection mise à jour ce matin — jusqu'à −${maxDrop}% vérifiés Amazon`}
+          href="#deals-grid"
+        />
+
         {/* Marquee strip — animation CSS */}
         <MarqueeStrip direction="left" speed="slow">
           {MARQUEE_ITEMS.map((item) => (
@@ -367,91 +137,137 @@ export default function DealsPage() {
                 gap: 'var(--space-6)',
               }}
             >
-              <span style={{ color: 'var(--accent-2)', fontWeight: 800 }}>✦</span>
+              <span style={{ color: 'var(--accent-2)', fontWeight: 400 }}>✦</span>
               {item}
             </span>
           ))}
         </MarqueeStrip>
 
-        {/* Hero */}
-        <section
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            padding: 'var(--space-12) var(--space-6) var(--space-10)',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          {/* Watermark DA */}
-          <span
-            aria-hidden="true"
+        {/* Hero — aurora + H1 serif italique + trust strip */}
+        <AuroraBackground>
+          <NoiseOverlay opacity={0.04} />
+          <section
             style={{
-              position: 'absolute',
-              top: '0',
-              right: 'var(--space-4)',
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(120px, 18vw, 240px)',
-              fontWeight: 800,
-              color: 'var(--accent-2)',
-              opacity: 0.05,
-              lineHeight: 1,
-              pointerEvents: 'none',
-              userSelect: 'none',
+              position: 'relative',
+              zIndex: 2,
+              maxWidth: '1280px',
+              margin: '0 auto',
+              padding: 'var(--space-12) var(--space-6) var(--space-10)',
             }}
           >
-            %
-          </span>
+            <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
+              <ol
+                style={{
+                  display: 'flex',
+                  gap: 6,
+                  listStyle: 'none',
+                  fontSize: 12,
+                  color: 'var(--text-muted)',
+                  alignItems: 'center',
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                <li>
+                  <Link
+                    href="/"
+                    style={{
+                      color: 'var(--accent-1)',
+                      fontWeight: 600,
+                      textDecoration: 'none',
+                    }}
+                  >
+                    Accueil
+                  </Link>
+                </li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page" style={{ color: 'var(--text-muted)' }}>
+                  Deals
+                </li>
+              </ol>
+            </nav>
 
-          <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
-            <ol
+            {/* Eyebrow */}
+            <div
               style={{
-                display: 'flex',
-                gap: 'var(--space-2)',
-                listStyle: 'none',
-                fontSize: '13px',
-                color: 'var(--text-muted)',
+                fontSize: 11,
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'var(--accent-1)',
+                fontWeight: 700,
+                marginBottom: 14,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
               }}
             >
-              <li>
-                <Link href="/" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>
-                  Accueil
-                </Link>
-              </li>
-              <li aria-hidden="true">›</li>
-              <li aria-current="page" style={{ color: 'var(--text-secondary)' }}>
-                Deals
-              </li>
-            </ol>
-          </nav>
+              <span
+                aria-hidden="true"
+                style={{
+                  width: 7,
+                  height: 7,
+                  borderRadius: '50%',
+                  background: 'var(--accent-1)',
+                  animation: 'pulse-dot 1.4s ease-in-out infinite',
+                }}
+              />
+              Prix vérifiés ce matin
+            </div>
 
-          <h1
-            style={{
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(32px, 5vw, 60px)',
-              fontWeight: 800,
-              color: 'var(--text-primary)',
-              lineHeight: 1.1,
-              marginBottom: 'var(--space-4)',
-            }}
-          >
-            Deals Apple
-          </h1>
-          <p
-            style={{
-              fontSize: 'clamp(15px, 2vw, 18px)',
-              color: 'var(--text-secondary)',
-              maxWidth: '520px',
-              lineHeight: 1.6,
-            }}
-          >
-            Sélection manuelle. Pas de deals sponsorisés, pas de prix gonflés avant promo.
-            Que des vraies réductions vérifiées.
-          </p>
-        </section>
+            <h1
+              style={{
+                fontFamily: 'var(--next-font-display), serif',
+                fontSize: 'clamp(40px, 7vw, 88px)',
+                fontWeight: 400,
+                color: 'var(--text-primary)',
+                lineHeight: 0.98,
+                letterSpacing: '-0.025em',
+                marginBottom: 18,
+                textWrap: 'balance',
+                maxWidth: 820,
+              }}
+            >
+              Deals{' '}
+              <em style={{ color: 'var(--accent-1)', fontStyle: 'italic' }}>Apple</em>{' '}
+              <span className="shimmer-text">triés à la main</span>.
+            </h1>
+
+            <p
+              style={{
+                fontSize: 'clamp(15px, 1.7vw, 17px)',
+                color: 'var(--text-secondary)',
+                maxWidth: 560,
+                lineHeight: 1.6,
+                marginBottom: 22,
+              }}
+            >
+              Sélection manuelle, chaque semaine. Pas de deals sponsorisés, pas de prix gonflés
+              avant promo — que des vraies réductions vérifiées.
+            </p>
+
+            {/* Trust strip */}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                alignItems: 'center',
+                padding: '16px 18px',
+                background: 'var(--bg-surface)',
+                borderRadius: 14,
+                border: '1px solid var(--border)',
+                maxWidth: 520,
+              }}
+            >
+              <TrustStat value={String(DEALS.length)} label="offres" />
+              <TrustStat value={String(hotCount)} label="HOT" color="var(--accent-1)" divider />
+              <TrustStat value={`−${avgDrop}%`} label="éco. moy." color="var(--accent-3)" divider />
+            </div>
+          </section>
+        </AuroraBackground>
 
         {/* Liste deals */}
         <section
+          id="deals-grid"
           style={{
             maxWidth: '1280px',
             margin: '0 auto',
@@ -467,7 +283,7 @@ export default function DealsPage() {
               style={{
                 fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                 fontSize: 'clamp(20px, 3vw, 28px)',
-                fontWeight: 800,
+                fontWeight: 400,
                 color: 'var(--text-primary)',
                 marginBottom: 'var(--space-6)',
               }}
@@ -499,5 +315,44 @@ export default function DealsPage() {
         </section>
       </main>
     </>
+  )
+}
+
+function TrustStat({
+  value,
+  label,
+  color = 'var(--text-primary)',
+  divider,
+}: {
+  value: string
+  label: string
+  color?: string
+  divider?: boolean
+}) {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 2,
+        paddingLeft: divider ? 14 : 0,
+        borderLeft: divider ? '1px solid var(--border)' : 'none',
+      }}
+    >
+      <span
+        style={{
+          fontFamily: 'var(--next-font-mono), monospace',
+          fontSize: 22,
+          fontWeight: 700,
+          color,
+          lineHeight: 1,
+          letterSpacing: '-0.02em',
+          fontVariantNumeric: 'tabular-nums',
+        }}
+      >
+        {value}
+      </span>
+      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{label}</span>
+    </div>
   )
 }

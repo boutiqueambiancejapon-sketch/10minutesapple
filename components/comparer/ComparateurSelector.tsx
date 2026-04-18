@@ -166,7 +166,7 @@ export function ComparateurSelector({ modeles, specsLabels }: Props) {
               style={{
                 fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                 fontSize: 'clamp(16px, 2.5vw, 22px)',
-                fontWeight: 800,
+                fontWeight: 400,
                 color: 'var(--text-primary)',
                 lineHeight: 1.2,
                 marginBottom: 'var(--space-2)',

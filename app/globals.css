@@ -835,9 +835,49 @@ body {
 }
 /* Pulse dot animation pour "Deals du moment" */
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.85); }
 }
+@media (prefers-reduced-motion: reduce) {
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: none; }
+  }
+}
+
+/* Shimmer text — anime un gradient sur "10 minutes" dans le H1 hero */
+@keyframes shimmer-sweep {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 40%,
+    var(--accent-1) 50%,
+    var(--text-primary) 60%,
+    var(--text-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer-sweep 3.6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shimmer-text { animation: none; background: none; -webkit-text-fill-color: currentColor; color: var(--text-primary); }
+}
+
+/* Home pills scroll — masque la scrollbar tout en gardant le scroll horizontal */
+.home-pills-scroll::-webkit-scrollbar { display: none; }
+.home-pills-scroll { -ms-overflow-style: none; }
+
+/* Home hero aurora — padding-top g\u00e9r\u00e9 par le HomeHeader au-dessus */
+.home-hero-aurora {
+  min-height: auto;
+}
+.home-cta-primary:hover { opacity: 0.92; transform: translateY(-1px); }
 
 /* Carousel horizontal scroll-snap */
 .article-grid {

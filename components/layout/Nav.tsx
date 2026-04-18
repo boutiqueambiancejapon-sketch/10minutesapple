@@ -77,6 +77,9 @@ export function Nav() {
     return () => clearTimeout(id)
   }, [pathname])
 
+  // Homepage : le header est int\u00e9gr\u00e9 au hero (voir HomeHeader).
+  if (pathname === '/') return null
+
   const isActive = (href: string) =>
     pathname === href || (href !== '/' && pathname.startsWith(href))
 

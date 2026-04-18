@@ -1,6 +1,8 @@
-import { HeroSection } from '@/components/home/HeroSection'
-import { ArticleTicker } from '@/components/home/ArticleTicker'
-import { DealsStrip } from '@/components/home/DealsStrip'
+import { AnnouncementBar } from '@/components/effects/AnnouncementBar'
+import { HomeHeader } from '@/components/home/HomeHeader'
+import { HomeHero } from '@/components/home/HomeHero'
+import { CategoryPills } from '@/components/home/CategoryPills'
+import { DealsOfTheDay } from '@/components/home/DealsOfTheDay'
 import { RecentArticles } from '@/components/home/RecentArticles'
 import { IphoneSection } from '@/components/home/IphoneSection'
 import { MacSection } from '@/components/home/MacSection'
@@ -13,18 +15,20 @@ import { AuthorTeaser } from '@/components/home/AuthorTeaser'
 export default function HomePage() {
   return (
     <main id="main-content">
-      <HeroSection />
-      <ArticleTicker />
-      <DealsStrip />
-      {/* Éditorial — derniers articles featured + grille */}
+      <AnnouncementBar
+        message="Printemps Apple \u2014 jusqu'\u00e0 \u221232\u00a0% sur l'iPhone\u00a016"
+        href="/deals"
+      />
+      <HomeHeader />
+      <HomeHero />
+      <CategoryPills />
+      <DealsOfTheDay />
       <RecentArticles />
-      {/* Sections par catégorie — carousel / masonry / grid */}
       <IphoneSection />
       <MacSection />
       <IpadSection />
       <WatchSection />
       <AccessoiresSection />
-      {/* Outils interactifs */}
       <FeaturedTools />
       <AuthorTeaser />
     </main>

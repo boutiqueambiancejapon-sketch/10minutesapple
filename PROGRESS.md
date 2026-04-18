@@ -123,6 +123,9 @@
   - [x] blog/mac/studio-display-vs-studio-display-xdr — Comparatif Studio Display vs Studio Display XDR (replacement Pro Display XDR)
   - [x] blog/ipad/ipad-cellulaire-ou-wifi — Guide d'achat iPad Wi-Fi vs Cellular eSIM 5G + alternatives
   - [x] blog/ipad/ipad-pro-m6-rumeurs-2027 — News/rumeurs iPad Pro M6 2027 (vapor chamber, modem C2, 2 nm TSMC)
+- [x] Blog : 2 articles batch 12 (61 blog articles total)
+  - [x] blog/astuces/apple-music-vs-spotify — Comparatif fond Apple Music vs Spotify Premium (prix, Lossless, algos, écosystèmes)
+  - [x] blog/accessoires/airpods-5-prix-date-rumeurs — News/rumeurs AirPods 5 (puce H3, autonomie 8 h, Apple Intelligence local)
 - [x] Produits : fiches AirTag 2 (unité + pack 4) avec ASINs Amazon FR
 - [x] Produits : 3 fiches accessoires ajoutées (coque TechWoven, chargeur Anker MagGo, protection Spigen)
 - [x] Sidebar article : sommaire sticky (TOC) + "Deals du moment" avec prix barrés et liens affiliés Amazon

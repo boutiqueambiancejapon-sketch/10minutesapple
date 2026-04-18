@@ -185,6 +185,25 @@ export function ArticleCard({ article, featured = false, showCategory = true, in
           </div>
         </header>
 
+        {article.description && (
+          <p
+            style={{
+              fontSize: 13,
+              color: 'var(--text-secondary)',
+              lineHeight: 1.5,
+              margin: 0,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              position: 'relative',
+            }}
+          >
+            {article.description}
+          </p>
+        )}
+
         <div
           style={{
             display: 'flex',

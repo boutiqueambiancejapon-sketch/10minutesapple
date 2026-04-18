@@ -918,6 +918,28 @@ body {
   .sticky-cta-stock { display: inline-flex; }
 }
 
+/* StickyCTA — anim show/hide + offset desktop pour éviter la sidebar article */
+.article-sticky-cta {
+  transform: translateX(-50%) translateY(calc(100% + 32px));
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.article-sticky-cta[data-visible="true"] {
+  transform: translateX(-50%) translateY(0);
+}
+/* ≥ 1080px : la sidebar article occupe la droite. On décale le sticky à gauche
+   pour qu'il reste centré sur la colonne d'article (main 760 + gap 32 + sidebar 260 = 1052). */
+@media (min-width: 1080px) {
+  .article-sticky-cta {
+    transform: translateX(calc(-50% - 146px)) translateY(calc(100% + 32px));
+  }
+  .article-sticky-cta[data-visible="true"] {
+    transform: translateX(calc(-50% - 146px)) translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .article-sticky-cta { transition: none; }
+}
+
 /* Pulse dot animation pour "Deals du moment" */
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }

@@ -1,7 +1,7 @@
 /**
- * FeaturedTools — bento grid asymétrique.
- * Grande cellule Comparateur (2/3) + 2 petites (Quiz + Simulateur) en 1/3.
- * Chaque cellule a une icône SVG, un titre et un CTA.
+ * FeaturedTools — bento des outils interactifs.
+ * Grande cellule Comparateur (2/3) + 2 petites (Quiz + Simulateur).
+ * DA : glow gradient dans le coin, serif 400 éditorial, CTA en accent.
  * Server Component.
  */
 
@@ -26,95 +26,115 @@ function ToolCard({ href, eyebrow, title, description, cta, accent, large = fals
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: large ? 'var(--space-10)' : 'var(--space-7)',
-        backgroundColor: 'var(--bg-surface)',
+        padding: large ? 28 : 22,
+        background: 'var(--bg-surface)',
         border: '1px solid var(--border)',
-        borderRadius: '16px',
+        borderRadius: 18,
         textDecoration: 'none',
         color: 'inherit',
         overflow: 'hidden',
         position: 'relative',
-        minHeight: large ? '320px' : '220px',
+        minHeight: large ? 320 : 220,
         transition: 'border-color 200ms ease, transform 200ms ease',
       }}
       className="tool-card"
     >
-      {/* Accent glow */}
+      {/* Glow gradient dans le coin haut-droit — même signature que ArticleCard */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '-60px',
-          right: '-60px',
-          width: '200px',
-          height: '200px',
-          borderRadius: '50%',
-          background: `radial-gradient(circle, ${accent}30 0%, transparent 70%)`,
+          top: -80,
+          right: -80,
+          width: large ? 280 : 200,
+          height: large ? 280 : 200,
+          background: `radial-gradient(circle, ${accent} 0%, transparent 60%)`,
+          opacity: large ? 0.24 : 0.18,
           pointerEvents: 'none',
+          filter: 'blur(12px)',
         }}
       />
 
-      {/* Icône */}
+      {/* Icône dans une tuile gradient (catégorie) */}
       <div
         style={{
-          width: large ? '48px' : '36px',
-          height: large ? '48px' : '36px',
+          width: large ? 56 : 44,
+          height: large ? 56 : 44,
+          borderRadius: 12,
+          background: `linear-gradient(145deg, color-mix(in oklch, ${accent}, transparent 65%), var(--bg-surface-2))`,
+          border: '1px solid var(--border)',
           color: accent,
-          marginBottom: 'var(--space-5)',
+          padding: large ? 12 : 10,
+          marginBottom: 18,
           flexShrink: 0,
+          position: 'relative',
         }}
       >
         {icon}
       </div>
 
-      <div>
+      <div style={{ position: 'relative', zIndex: 1 }}>
         <p
           style={{
-            fontSize: '11px',
+            fontSize: 10,
             fontWeight: 700,
-            letterSpacing: '0.12em',
+            letterSpacing: '0.14em',
             textTransform: 'uppercase',
             color: accent,
-            marginBottom: 'var(--space-2)',
+            marginBottom: 10,
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
           }}
         >
+          <span
+            aria-hidden="true"
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: accent,
+              flexShrink: 0,
+            }}
+          />
           {eyebrow}
         </p>
         <h3
           style={{
-            fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-            fontSize: large ? 'clamp(1.3rem, 2.2vw, 1.8rem)' : '1rem',
-            fontWeight: 700,
-            letterSpacing: '0',
+            fontFamily: 'var(--next-font-display), serif',
+            fontSize: large ? 'clamp(24px, 2.8vw, 34px)' : 'clamp(18px, 1.8vw, 22px)',
+            fontWeight: 400,
+            letterSpacing: '-0.02em',
             color: 'var(--text-primary)',
-            marginBottom: 'var(--space-3)',
-            lineHeight: 1.25,
+            marginBottom: 10,
+            lineHeight: 1.15,
+            textWrap: 'balance',
           }}
         >
           {title}
         </h3>
         <p
           style={{
-            fontSize: '14px',
+            fontSize: 14,
             color: 'var(--text-secondary)',
-            lineHeight: 1.6,
-            marginBottom: 'var(--space-5)',
-            maxWidth: large ? '400px' : 'none',
+            lineHeight: 1.55,
+            marginBottom: 18,
+            maxWidth: large ? 440 : undefined,
           }}
         >
           {description}
         </p>
         <span
           style={{
-            fontSize: '14px',
-            fontWeight: 600,
+            fontSize: 13,
+            fontWeight: 700,
             color: accent,
-            display: 'flex',
+            display: 'inline-flex',
             alignItems: 'center',
-            gap: 'var(--space-1)',
+            gap: 6,
           }}
         >
-          {cta} →
+          {cta} <span aria-hidden="true">→</span>
         </span>
       </div>
     </Link>
@@ -150,48 +170,93 @@ export function FeaturedTools() {
   return (
     <section
       style={{
-        maxWidth: '1280px',
+        maxWidth: 1280,
         margin: '0 auto',
         padding: 'var(--space-20) var(--space-6)',
       }}
     >
-      {/* En-tête de section */}
-      <div style={{ marginBottom: 'var(--space-10)', display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 'var(--space-4)' }}>
+      {/* En-tête de section — DA home */}
+      <header
+        style={{
+          marginBottom: 32,
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 20,
+        }}
+      >
         <div>
-          <p style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent-1)', marginBottom: 'var(--space-2)' }}>
+          <p
+            style={{
+              fontSize: 11,
+              fontWeight: 700,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'var(--accent-1)',
+              marginBottom: 10,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+            }}
+          >
+            <span
+              aria-hidden="true"
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: '50%',
+                background: 'var(--accent-1)',
+              }}
+            />
             Outils interactifs
           </p>
           <h2
             style={{
-              fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-              fontSize: 'clamp(1.3rem, 2.5vw, 2rem)',
-              fontWeight: 700,
-              letterSpacing: '0',
+              fontFamily: 'var(--next-font-display), serif',
+              fontSize: 'clamp(30px, 5vw, 54px)',
+              fontWeight: 400,
+              letterSpacing: '-0.025em',
               color: 'var(--text-primary)',
-              lineHeight: 1.2,
+              lineHeight: 1.02,
+              textWrap: 'balance',
+              maxWidth: 560,
             }}
           >
-            Décidez en connaissance<br />de cause
+            Décidez en{' '}
+            <em style={{ color: 'var(--accent-1)', fontStyle: 'italic' }}>
+              connaissance
+            </em>{' '}
+            de cause.
           </h2>
         </div>
         <Link
           href="/blog"
-          style={{ fontSize: '14px', color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, whiteSpace: 'nowrap' }}
+          style={{
+            fontSize: 13,
+            color: 'var(--accent-1)',
+            textDecoration: 'none',
+            fontWeight: 700,
+            whiteSpace: 'nowrap',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 4,
+          }}
         >
-          Voir tous les guides →
+          Voir tous les guides <span aria-hidden="true">→</span>
         </Link>
-      </div>
+      </header>
 
       {/* Grille bento asymétrique */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: 'var(--space-4)',
+          gap: 16,
         }}
         className="bento-grid"
       >
-        {/* Grande cellule Comparateur — 2 colonnes sur 2 rangées (CSS class pour responsive) */}
+        {/* Grande cellule Comparateur — 2 colonnes sur 2 rangées */}
         <div className="bento-featured">
           <ToolCard
             href="/comparer"
@@ -205,7 +270,6 @@ export function FeaturedTools() {
           />
         </div>
 
-        {/* Quiz */}
         <ToolCard
           href="/quiz"
           eyebrow="Quiz"
@@ -216,7 +280,6 @@ export function FeaturedTools() {
           icon={<IconQuiz />}
         />
 
-        {/* Simulateur */}
         <ToolCard
           href="/simulateur"
           eyebrow="Simulateur"

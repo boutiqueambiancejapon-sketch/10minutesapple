@@ -43,12 +43,12 @@ export function StickyCTA({ items, message }: Props) {
     <div
       role="complementary"
       aria-label="Offre produit"
+      className="article-sticky-cta"
+      data-visible={visible ? 'true' : 'false'}
       style={{
         position: 'fixed',
         bottom: 'var(--space-4)',
         left: '50%',
-        transform: visible ? 'translateX(-50%) translateY(0)' : 'translateX(-50%) translateY(calc(100% + 32px))',
-        transition: 'transform 400ms cubic-bezier(0.16, 1, 0.3, 1)',
         zIndex: 35,
         width: 'min(680px, calc(100% - 16px))',
       }}

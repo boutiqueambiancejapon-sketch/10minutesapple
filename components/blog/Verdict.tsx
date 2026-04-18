@@ -1,6 +1,6 @@
 /**
- * Verdict \u2014 conclusion \u00e9ditoriale format magazine.
- * Guillemet italique g\u00e9ant en fond, note /10 serif, citation italique.
+ * Verdict — conclusion éditoriale format magazine.
+ * Guillemet italique géant en fond, note /10 serif, citation italique.
  * Usage MDX : <Verdict rating={8.4}>...</Verdict>
  */
 import type { ReactNode } from 'react'
@@ -8,10 +8,10 @@ import type { ReactNode } from 'react'
 type VerdictProps = {
   children: ReactNode
   rating?: number // ex. 8.4 (sur 10)
-  label?: string  // ex. "Note r\u00e9daction"
+  label?: string  // ex. "Note rédaction"
 }
 
-export function Verdict({ children, rating, label = 'Note r\u00e9daction' }: VerdictProps) {
+export function Verdict({ children, rating, label = 'Note rédaction' }: VerdictProps) {
   return (
     <aside
       style={{
@@ -24,7 +24,7 @@ export function Verdict({ children, rating, label = 'Note r\u00e9daction' }: Ver
         border: '1px solid var(--border)',
       }}
     >
-      {/* Guillemet d\u00e9coratif en fond */}
+      {/* Guillemet décoratif en fond */}
       <span
         aria-hidden="true"
         style={{

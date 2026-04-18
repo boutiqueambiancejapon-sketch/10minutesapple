@@ -1,7 +1,7 @@
 /**
- * HomeArticleGrid \u2014 liste "Les articles du moment" (4 articles r\u00e9cents).
- * Tuile num\u00e9rot\u00e9e gradient + titre + cat\u00e9gorie + date.
- * Tire les articles de getAllArticles() (tri\u00e9s par date).
+ * HomeArticleGrid — liste "Les articles du moment" (4 articles récents).
+ * Tuile numérotée gradient + titre + catégorie + date.
+ * Tire les articles de getAllArticles() (triés par date).
  * Server Component.
  */
 
@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { getAllArticles, CATEGORY_LABELS, CATEGORY_ACCENT, formatDate } from '@/lib/blog'
 
 export function HomeArticleGrid() {
-  // Skip le #1 (d\u00e9j\u00e0 dans FeaturedArticle), prendre les 4 suivants.
+  // Skip le #1 (déjà dans FeaturedArticle), prendre les 4 suivants.
   const articles = getAllArticles().slice(1, 5)
   if (articles.length === 0) return null
 
@@ -34,7 +34,7 @@ export function HomeArticleGrid() {
               marginBottom: 4,
             }}
           >
-            R\u00e9cents
+            Récents
           </div>
           <h2
             style={{
@@ -53,7 +53,7 @@ export function HomeArticleGrid() {
           href="/blog"
           style={{ fontSize: 12, color: 'var(--accent-1)', fontWeight: 600, textDecoration: 'none' }}
         >
-          Tous <span aria-hidden="true">\u2192</span>
+          Tous <span aria-hidden="true">→</span>
         </Link>
       </header>
 
@@ -141,7 +141,7 @@ export function HomeArticleGrid() {
                     {a.title}
                   </div>
                   <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>
-                    {formatDate(a.publishedAt)} · {a.readingTimeMin}\u00a0min
+                    {formatDate(a.publishedAt)} · {a.readingTimeMin} min
                   </div>
                 </div>
               </Link>

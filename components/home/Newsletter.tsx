@@ -1,8 +1,8 @@
 'use client'
 
 /**
- * Newsletter \u2014 carte gradient accent-1 \u2192 accent-4 avec input inline.
- * Motif @ d\u00e9coratif serif en haut \u00e0 droite.
+ * Newsletter — carte gradient accent-1 → accent-4 avec input inline.
+ * Motif @ décoratif serif en haut à droite.
  * 'use client' pour la soumission du form.
  */
 
@@ -18,7 +18,7 @@ export function Newsletter() {
     e.preventDefault()
     if (!email || state === 'submitting') return
     setState('submitting')
-    // Endpoint newsletter \u00e0 brancher plus tard \u2014 garder le visuel fonctionnel.
+    // Endpoint newsletter à brancher plus tard — garder le visuel fonctionnel.
     await new Promise((r) => setTimeout(r, 400))
     setState('ok')
   }
@@ -77,11 +77,11 @@ export function Newsletter() {
             textWrap: 'balance',
           }}
         >
-          10 minutes par semaine. Z\u00e9ro hype.
+          10 minutes par semaine. Zéro hype.
         </h3>
         <p style={{ fontSize: 12, opacity: 0.9, marginBottom: 14, lineHeight: 1.5 }}>
-          Les bons plans v\u00e9rifi\u00e9s, les tests en cours, l&apos;agenda Apple.{' '}
-          <strong>3\u00a0412 abonn\u00e9s</strong>.
+          Les bons plans vérifiés, les tests en cours, l&apos;agenda Apple.{' '}
+          <strong>3 412 abonnés</strong>.
         </p>
         {state === 'ok' ? (
           <div
@@ -95,7 +95,7 @@ export function Newsletter() {
               fontWeight: 700,
             }}
           >
-            Inscrit. V\u00e9rifiez votre bo\u00eete dimanche\u00a0\u2714
+            Inscrit. Vérifiez votre boîte dimanche ✔
           </div>
         ) : (
           <form
@@ -144,7 +144,7 @@ export function Newsletter() {
                 opacity: state === 'submitting' ? 0.6 : 1,
               }}
             >
-              S&apos;inscrire <span aria-hidden="true">\u2192</span>
+              S&apos;inscrire <span aria-hidden="true">→</span>
             </button>
           </form>
         )}

@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <main id="main-content" className="home-shell">
       <AnnouncementBar
-        message="Printemps Apple \u2014 jusqu'\u00e0 \u221232\u00a0% sur l'iPhone\u00a016"
+        message="Printemps Apple — jusqu'à −32 % sur l'iPhone 16"
         href="/deals"
       />
       <HomeHeader />

@@ -1,7 +1,7 @@
 /**
- * HomeHero \u2014 hero responsive.
- * Mobile : colonne unique, H1 serif ~43px, trust strip, CTAs empil\u00e9s.
- * Desktop (\u2265 900px) : grille 2 colonnes, H1 clamp jusqu'\u00e0 112px, visuel \u00e0 droite
+ * HomeHero — hero responsive.
+ * Mobile : colonne unique, H1 serif ~43px, trust strip, CTAs empilés.
+ * Desktop (≥ 900px) : grille 2 colonnes, H1 clamp jusqu'à 112px, visuel à droite
  * (PhonePlaceholder + mini card prix vivant).
  * Server Component.
  */
@@ -67,7 +67,7 @@ export function HomeHero() {
               maxWidth: 440,
             }}
           >
-            Tests terrain, comparatifs et deals Amazon tri\u00e9s \u00e0 la main. Z\u00e9ro bullshit marketing.
+            Tests terrain, comparatifs et deals Amazon triés à la main. Zéro bullshit marketing.
           </p>
 
           <div className="home-hero-ctas" style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
@@ -91,7 +91,7 @@ export function HomeHero() {
                 transition: 'opacity 150ms ease, transform 150ms ease',
               }}
             >
-              Comparer <span aria-hidden="true">\u2192</span>
+              Comparer <span aria-hidden="true">→</span>
             </Link>
             <Link
               href="/quiz"
@@ -130,11 +130,11 @@ export function HomeHero() {
           >
             <TrustStat value={String(articleCount)} label="articles" color="var(--text-primary)" />
             <TrustStat value={String(productCount)} label="produits" color="var(--accent-1)" divider />
-            <TrustStat value="0\u00a0\u20ac" label="sponsoris\u00e9" color="var(--accent-3)" divider />
+            <TrustStat value="0 €" label="sponsorisé" color="var(--accent-3)" divider />
           </div>
         </div>
 
-        {/* Visuel desktop \u2014 PhonePlaceholder rotating + mini carte prix */}
+        {/* Visuel desktop — PhonePlaceholder rotating + mini carte prix */}
         <div className="home-hero-visual">
           <HeroVisual />
         </div>
@@ -211,7 +211,7 @@ function HeroVisual() {
           Deal en live
         </div>
         <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 4 }}>
-          iPhone\u00a016 · 128\u00a0Go
+          iPhone 16 · 128 Go
         </div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
           <span
@@ -224,7 +224,7 @@ function HeroVisual() {
               fontVariantNumeric: 'tabular-nums',
             }}
           >
-            749\u00a0\u20ac
+            749 €
           </span>
           <span
             style={{
@@ -235,7 +235,7 @@ function HeroVisual() {
               fontVariantNumeric: 'tabular-nums',
             }}
           >
-            899\u00a0\u20ac
+            899 €
           </span>
           <span
             style={{
@@ -247,7 +247,7 @@ function HeroVisual() {
               borderRadius: 4,
             }}
           >
-            \u221217%
+            −17%
           </span>
         </div>
       </div>
@@ -269,7 +269,7 @@ function HeroVisual() {
           transform: 'rotate(-4deg)',
         }}
       >
-        <span aria-hidden="true">\u2605</span> Tri\u00e9s \u00e0 la main
+        <span aria-hidden="true">★</span> Triés à la main
       </div>
     </div>
   )

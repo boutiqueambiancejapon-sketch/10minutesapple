@@ -1,9 +1,9 @@
 'use client'
 
 /**
- * HomeHeader \u2014 en-t\u00eate de la homepage.
- * Mobile : logo gradient + hamburger + overlay plein-\u00e9cran.
- * Desktop : logo gradient + liens inline + bouton th\u00e8me (hamburger cach\u00e9).
+ * HomeHeader — en-tête de la homepage.
+ * Mobile : logo gradient + hamburger + overlay plein-écran.
+ * Desktop : logo gradient + liens inline + bouton thème (hamburger caché).
  */
 
 import Link from 'next/link'
@@ -21,10 +21,10 @@ const NAV = [
 ]
 
 const MOBILE_EXTRA = [
-  { href: '/choisir/iphone', label: 'Quel iPhone choisir\u00a0?' },
-  { href: '/choisir/mac',    label: 'Quel Mac choisir\u00a0?' },
-  { href: '/choisir/ipad',   label: 'Quel iPad choisir\u00a0?' },
-  { href: '/choisir/watch',  label: 'Quelle Apple Watch choisir\u00a0?' },
+  { href: '/choisir/iphone', label: 'Quel iPhone choisir ?' },
+  { href: '/choisir/mac',    label: 'Quel Mac choisir ?' },
+  { href: '/choisir/ipad',   label: 'Quel iPad choisir ?' },
+  { href: '/choisir/watch',  label: 'Quelle Apple Watch choisir ?' },
 ]
 
 export function HomeHeader() {
@@ -45,7 +45,7 @@ export function HomeHeader() {
       <div className="home-header">
         <Link
           href="/"
-          aria-label="10minutesapple \u2014 accueil"
+          aria-label="10minutesapple — accueil"
           style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}
         >
           <span
@@ -88,7 +88,7 @@ export function HomeHeader() {
                 fontWeight: 600,
               }}
             >
-              Le guide honn\u00eate
+              Le guide honnête
             </span>
           </span>
         </Link>

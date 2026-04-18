@@ -1,5 +1,5 @@
 /**
- * CategoryPills \u2014 scroll horizontal de pills cat\u00e9gorie.
+ * CategoryPills — scroll horizontal de pills catégorie.
  * Pill : dot couleur + label + compteur.
  * Server Component.
  */
@@ -24,7 +24,7 @@ export function CategoryPills() {
 
   return (
     <nav
-      aria-label="Cat\u00e9gories du blog"
+      aria-label="Catégories du blog"
       className="home-pills-scroll"
       style={{
         display: 'flex',

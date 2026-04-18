@@ -1,5 +1,5 @@
 /**
- * FeaturedArticle \u2014 card "\u00c0 LA UNE" avec gradient blob en arri\u00e8re-plan.
+ * FeaturedArticle — card "À LA UNE" avec gradient blob en arrière-plan.
  * Tire le premier article de getAllArticles() pour rester synchro du contenu.
  * Server Component.
  */
@@ -29,7 +29,7 @@ export function FeaturedArticle() {
           marginBottom: 10,
         }}
       >
-        \u00c0 la une
+        À la une
       </div>
       <Link
         href={href}
@@ -110,10 +110,10 @@ export function FeaturedArticle() {
           >
             <span>Mathias · {formatDate(featured.publishedAt)}</span>
             <span aria-hidden="true">·</span>
-            <span>{featured.readingTimeMin}\u00a0min</span>
+            <span>{featured.readingTimeMin} min</span>
             <div style={{ flex: 1 }} />
             <span style={{ color: 'var(--accent-1)', fontWeight: 700 }}>
-              Lire <span aria-hidden="true">\u2192</span>
+              Lire <span aria-hidden="true">→</span>
             </span>
           </div>
         </div>

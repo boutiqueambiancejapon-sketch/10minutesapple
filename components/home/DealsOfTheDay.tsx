@@ -1,5 +1,5 @@
 /**
- * DealsOfTheDay \u2014 section deals du jour avec countdown et cards.
+ * DealsOfTheDay — section deals du jour avec countdown et cards.
  * Header : pulse + "DEALS DU JOUR" + titre serif + countdown.
  * Cards : PhonePlaceholder + titre + stars + prix + badge % + stock.
  * Server Component.
@@ -25,7 +25,7 @@ type Deal = {
 
 const DEALS: Deal[] = [
   {
-    name: 'iPhone 16 · 128\u00a0Go',
+    name: 'iPhone 16 · 128 Go',
     price: 749,
     was: 899,
     url: 'https://www.amazon.fr/dp/B0DGHY5KG8',
@@ -48,7 +48,7 @@ const DEALS: Deal[] = [
     stock: 8,
   },
   {
-    name: 'iPad Air M4 · 128\u00a0Go',
+    name: 'iPad Air M4 · 128 Go',
     price: 649,
     was: 799,
     url: 'https://www.amazon.fr/dp/B0DZ7KM5R2',
@@ -112,7 +112,7 @@ export function DealsOfTheDay() {
                 letterSpacing: '-0.01em',
               }}
             >
-              Prix bas v\u00e9rifi\u00e9s ce matin
+              Prix bas vérifiés ce matin
             </h2>
           </div>
         </div>
@@ -157,7 +157,7 @@ export function DealsOfTheDay() {
                     letterSpacing: '0.06em',
                   }}
                 >
-                  <span aria-hidden="true">\u2605</span> Top\u00a01
+                  <span aria-hidden="true">★</span> Top 1
                 </div>
               )}
               {/* thumbnail */}
@@ -205,7 +205,7 @@ export function DealsOfTheDay() {
                       fontVariantNumeric: 'tabular-nums',
                     }}
                   >
-                    {d.price}\u00a0\u20ac
+                    {d.price} €
                   </span>
                   <span
                     style={{
@@ -216,7 +216,7 @@ export function DealsOfTheDay() {
                       fontVariantNumeric: 'tabular-nums',
                     }}
                   >
-                    {d.was}\u00a0\u20ac
+                    {d.was} €
                   </span>
                   <span
                     style={{
@@ -228,7 +228,7 @@ export function DealsOfTheDay() {
                       borderRadius: 5,
                     }}
                   >
-                    \u2212{pct}%
+                    −{pct}%
                   </span>
                 </div>
                 <div
@@ -249,11 +249,11 @@ export function DealsOfTheDay() {
                   >
                     {d.stock < 10 ? (
                       <>
-                        <span aria-hidden="true">\u26a1</span> Plus que {d.stock}
+                        <span aria-hidden="true">⚡</span> Plus que {d.stock}
                       </>
                     ) : (
                       <>
-                        <span aria-hidden="true">\u2713</span> En stock
+                        <span aria-hidden="true">✓</span> En stock
                       </>
                     )}
                   </span>

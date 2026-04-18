@@ -1,6 +1,6 @@
 /**
- * AuthorByline \u2014 byline \u00e9ditorial.
- * Monogramme rond gradient \u00e0 gauche + nom/date au milieu + actions \u00e0 droite.
+ * AuthorByline — byline éditorial.
+ * Monogramme rond gradient à gauche + nom/date au milieu + actions à droite.
  * Zero photo. Server Component, indexable.
  */
 

@@ -51,7 +51,7 @@ export default function OGImage() {
         <div
           style={{
             fontSize: 72,
-            fontWeight: 800,
+            fontWeight: 400,
             color: '#F0F0F5',
             lineHeight: 1.1,
             marginBottom: 24,
@@ -74,7 +74,7 @@ export default function OGImage() {
             right: '60px',
             bottom: '40px',
             fontSize: '280px',
-            fontWeight: 800,
+            fontWeight: 400,
             color: '#FFD23F',
             opacity: 0.05,
             lineHeight: 1,

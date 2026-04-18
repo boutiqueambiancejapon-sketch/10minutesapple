@@ -35,7 +35,7 @@ function Monogram({ size }: { size: number }) {
         style={{
           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
           fontSize: size * 0.4,
-          fontWeight: 800,
+          fontWeight: 400,
           color: 'var(--text-primary)',
           lineHeight: 1,
           opacity: 0.85,

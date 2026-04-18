@@ -116,7 +116,7 @@ export default async function ComparateurProduitPage({ params }: { params: Param
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: 'clamp(24px, 4vw, 44px)',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--text-primary)',
               lineHeight: 1.1,
               marginBottom: 'var(--space-3)',

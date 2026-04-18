@@ -367,7 +367,7 @@ export default function DealsPage() {
                 gap: 'var(--space-6)',
               }}
             >
-              <span style={{ color: 'var(--accent-2)', fontWeight: 800 }}>✦</span>
+              <span style={{ color: 'var(--accent-2)', fontWeight: 400 }}>✦</span>
               {item}
             </span>
           ))}
@@ -392,7 +392,7 @@ export default function DealsPage() {
               right: 'var(--space-4)',
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: 'clamp(120px, 18vw, 240px)',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--accent-2)',
               opacity: 0.05,
               lineHeight: 1,
@@ -429,7 +429,7 @@ export default function DealsPage() {
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: 'clamp(32px, 5vw, 60px)',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--text-primary)',
               lineHeight: 1.1,
               marginBottom: 'var(--space-4)',
@@ -467,7 +467,7 @@ export default function DealsPage() {
               style={{
                 fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                 fontSize: 'clamp(20px, 3vw, 28px)',
-                fontWeight: 800,
+                fontWeight: 400,
                 color: 'var(--text-primary)',
                 marginBottom: 'var(--space-6)',
               }}

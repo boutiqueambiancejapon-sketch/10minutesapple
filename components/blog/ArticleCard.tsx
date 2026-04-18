@@ -40,7 +40,7 @@ export function ArticleCard({ article, featured = false, showCategory = true, in
             style={{
               fontFamily: 'var(--next-font-display), system-ui, sans-serif',
               fontSize: 'clamp(24px, 3.5vw, 44px)',
-              fontWeight: 800,
+              fontWeight: 400,
               color: 'var(--text-primary)',
               lineHeight: 1.1,
               margin: '0 0 var(--space-4)',
@@ -94,7 +94,7 @@ export function ArticleCard({ article, featured = false, showCategory = true, in
               right: 'var(--space-2)',
               fontFamily: 'var(--next-font-mono), monospace',
               fontSize: '72px',
-              fontWeight: 800,
+              fontWeight: 400,
               color: accent,
               opacity: 0.06,
               lineHeight: 1,

@@ -96,7 +96,7 @@ export function HeroVisual() {
                 style={{
                   fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                   fontSize: 'clamp(18px, 2.2vw, 26px)',
-                  fontWeight: 800,
+                  fontWeight: 400,
                   color: 'var(--text-primary)',
                   margin: '0 0 2px',
                   lineHeight: 1.1,

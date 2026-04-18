@@ -20,6 +20,9 @@ import { ProConTable } from '@/components/blog/ProConTable'
 import { PullQuote } from '@/components/blog/PullQuote'
 import { StatCard, StatRow } from '@/components/blog/StatCard'
 import { CompareBar, CompareBarGroup } from '@/components/blog/CompareBar'
+import { DealHero } from '@/components/blog/DealHero'
+import { UpgradeMatrix } from '@/components/blog/UpgradeMatrix'
+import { UpSell } from '@/components/blog/UpSell'
 import { ToolCTA } from '@/components/blog/ToolCTA'
 import { ProductCTA } from '@/components/blog/ProductCTA'
 import { AutoProductCTAs } from '@/components/blog/AutoProductCTAs'
@@ -91,6 +94,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
       Verdict,
       ProConTable,
       PullQuote, StatCard, StatRow, CompareBar, CompareBarGroup, ProductCTA,
+      DealHero, UpgradeMatrix, UpSell,
       table: ({ children }: { children: ReactNode }) => (
         <div className="table-scroll-wrap">
           <table>{children}</table>
@@ -245,7 +249,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
                     style={{
                       fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                       fontSize: 'clamp(20px, 3vw, 28px)',
-                      fontWeight: 800,
+                      fontWeight: 400,
                       color: 'var(--text-primary)',
                       marginBottom: 'var(--space-6)',
                       textWrap: 'balance',
@@ -268,7 +272,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
                     style={{
                       fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                       fontSize: 'clamp(18px, 2.5vw, 22px)',
-                      fontWeight: 800,
+                      fontWeight: 400,
                       color: 'var(--text-primary)',
                       marginBottom: 'var(--space-5)',
                       letterSpacing: '-0.01em',

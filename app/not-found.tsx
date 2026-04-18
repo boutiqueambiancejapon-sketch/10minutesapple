@@ -27,7 +27,7 @@ export default function NotFound() {
         style={{
           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
           fontSize: 'clamp(160px, 25vw, 300px)',
-          fontWeight: 800,
+          fontWeight: 400,
           color: 'var(--accent-1)',
           opacity: 0.08,
           lineHeight: 1,

@@ -71,7 +71,7 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
               <li aria-current="page" style={{ color: 'var(--text-secondary)' }}>Blog</li>
             </ol>
           </nav>
-          <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(32px, 5vw, 60px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1, marginBottom: 'var(--space-3)' }}>
+          <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(32px, 5vw, 60px)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.1, marginBottom: 'var(--space-3)' }}>
             Blog Apple
           </h1>
           <p style={{ fontSize: 'clamp(15px, 2vw, 17px)', color: 'var(--text-secondary)', maxWidth: '520px', lineHeight: 1.6 }}>

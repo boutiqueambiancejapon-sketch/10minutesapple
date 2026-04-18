@@ -391,7 +391,7 @@ export function QuizEngine({ defaultProduit }: QuizEngineProps = {}) {
         style={{
           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
           fontSize: 'clamp(20px, 3vw, 28px)',
-          fontWeight: 800,
+          fontWeight: 400,
           color: 'var(--text-primary)',
           marginBottom: 'var(--space-6)',
           textWrap: 'balance',
@@ -515,7 +515,7 @@ function Result({
         style={{
           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
           fontSize: 'clamp(24px, 4vw, 36px)',
-          fontWeight: 800,
+          fontWeight: 400,
           color: 'var(--text-primary)',
           marginBottom: 'var(--space-2)',
           lineHeight: 1.1,

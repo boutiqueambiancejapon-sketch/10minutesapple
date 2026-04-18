@@ -96,7 +96,7 @@ export default async function CategoryPage({
                 <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: accent, marginBottom: 'var(--space-3)' }}>
                   Catégorie
                 </span>
-                <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.1 }}>
+                <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.1 }}>
                   {label}
                 </h1>
               </div>

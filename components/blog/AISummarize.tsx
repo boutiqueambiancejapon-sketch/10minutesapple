@@ -28,7 +28,7 @@ export function AISummarize({ points }: AISummarizeProps) {
         style={{
           fontFamily: 'var(--next-font-display), system-ui, sans-serif',
           fontSize: '10px',
-          fontWeight: 800,
+          fontWeight: 400,
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
           color: 'var(--accent-4)',

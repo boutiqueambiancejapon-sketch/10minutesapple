@@ -15,7 +15,7 @@ export function HomeArticleGrid() {
   if (articles.length === 0) return null
 
   return (
-    <section className="home-articles" style={{ margin: '0 0 32px' }}>
+    <section className="home-articles" style={{ marginBottom: 32 }}>
       <header
         className="home-articles-header"
         style={{

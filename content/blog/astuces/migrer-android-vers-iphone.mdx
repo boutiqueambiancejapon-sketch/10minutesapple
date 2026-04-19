@@ -93,3 +93,21 @@ Le transfert **USB-C à USB-C** arrivé officiellement avec **iOS 26.4** (<time 
 | **Batterie consommée** | 30–40 % de chaque côté | 10–15 % de chaque côté |
 
 En clair : si ton Android et ton iPhone ont tous les deux un port USB-C, passe par le câble. Pour un Samsung Galaxy S21 ou antérieur en USB-C lent (USB 2.0), le gain est moindre — compte 30 à 40 min pour 128 Go. Pour un iPhone 14 ou inférieur (Lightning), seul le Wi-Fi est possible.
+
+## Comment transférer WhatsApp d'Android vers iPhone ?
+
+WhatsApp fait partie de Move to iOS depuis **septembre 2022**, mais la procédure est spécifique. Tu dois cocher WhatsApp dans la liste des données à transférer, et ouvrir WhatsApp sur ton Android pour valider **Transférer vos discussions vers iPhone** quand l'app le demande. Les messages, photos, vidéos, notes vocales et statuts partent en clair vers l'iPhone.
+
+Côté iPhone, à la fin de la configuration, installe WhatsApp depuis l'App Store et connecte-toi avec **le même numéro de téléphone**. L'app détecte le transfert et restaure automatiquement l'historique. Aucun QR code, aucune sauvegarde Google Drive nécessaire — le transfert passe par le canal chiffré AES-256 entre les deux appareils.
+
+Pour **Signal**, la procédure a changé en <time dateTime="2025-11-01">novembre 2025</time> avec la version 7.8 : depuis l'Android, ouvre Signal > Paramètres > Compte > Transférer le compte, scanne le QR code affiché sur Signal iPhone. Les discussions passent en local, sans cloud. Pour **Telegram**, aucune action : toutes les discussions sont déjà synchronisées côté serveur, il suffit de se connecter avec ton numéro + code SMS. Plus de détails dans notre [guide complet transfert WhatsApp nouvel iPhone](/blog/astuces/transferer-whatsapp-nouvel-iphone).
+
+## Comment récupérer mes photos Google Photos sur iPhone ?
+
+Move to iOS ne transfère que les **photos de la caméra locale**. Si tu utilises **Google Photos** avec sauvegarde cloud, ces photos ne sont pas forcément sur la mémoire du téléphone — donc pas transférées. Deux scénarios selon ta situation.
+
+**Tu veux garder Google Photos comme bibliothèque principale.** Installe l'app Google Photos depuis l'App Store, connecte-toi avec ton compte Google, toutes tes photos sont accessibles en cloud. C'est la solution la plus simple, aucun transfert nécessaire, compatible avec le quota gratuit 15 Go ou Google One.
+
+**Tu veux migrer vers Photos iOS / iCloud.** Deux options : soit tu lances **Google Takeout** (takeout.google.com), coches Google Photos, reçois une archive .zip par mail, l'importes sur Mac via **Photos > Fichier > Importer**, puis la synchronises via **Photos iCloud** vers ton iPhone. Soit tu passes par une app tierce comme **iCloud Photos Downloader** ou **PhotoSync** qui automatise le transfert compte à compte.
+
+Pour une bibliothèque de 50 000 photos (environ 150 Go), Google Takeout découpe en 8 à 10 archives de 15 Go à télécharger séparément. Compte **6 à 12 heures** de téléchargement + 2 à 4 heures pour l'import Photos Mac. C'est long, mais ça se fait la nuit en une fois.

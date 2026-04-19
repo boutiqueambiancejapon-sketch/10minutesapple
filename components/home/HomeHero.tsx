@@ -10,8 +10,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { AuroraBackground } from '@/components/effects/AuroraBackground'
 import { NoiseOverlay } from '@/components/effects/NoiseOverlay'
+import { RotatingWords } from '@/components/effects/RotatingWords'
 import { getAllArticles } from '@/lib/blog'
 import { getAllProducts } from '@/lib/article-ctas'
+
+const ROTATING_FAMILIES = ['iPhone', 'Mac', 'iPad', 'Apple Watch', 'AirPods']
 
 export function HomeHero() {
   const articleCount = getAllArticles().length
@@ -52,7 +55,11 @@ export function HomeHero() {
             }}
           >
             Choisir votre{' '}
-            <em style={{ color: 'var(--accent-1)', fontStyle: 'italic' }}>iPhone</em>
+            <RotatingWords
+              words={ROTATING_FAMILIES}
+              interval={2600}
+              style={{ color: 'var(--accent-1)', fontStyle: 'italic' }}
+            />
             <br />
             en <span className="shimmer-text">10&nbsp;minutes</span>.
           </h1>

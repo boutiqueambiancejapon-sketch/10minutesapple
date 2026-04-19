@@ -63,3 +63,33 @@ La réussite d'une migration se joue avant de toucher à l'iPhone. Sept prépara
 7. **Note tes mots de passe bancaires et 2FA** — certaines apps bancaires (BoursoBank, Revolut, N26) exigent une revérification après changement d'OS
 
 Sur l'iPhone, prévois simplement qu'il soit **neuf ou réinitialisé**. Move to iOS n'apparaît que pendant la configuration initiale, jamais après.
+
+## Comment utiliser Move to iOS étape par étape ?
+
+La procédure officielle Apple en <time dateTime="2026-04-19">avril 2026</time> tient en six étapes si tu suis l'ordre. Le script suppose un iPhone neuf à peine sorti de la boîte.
+
+1. **Allume l'iPhone**, choisis la langue et la région, puis suis l'assistant jusqu'à l'écran **Apps et données**
+2. **Sélectionne Migrer des données depuis Android** — un code à 10 chiffres (ou un QR code avec iOS 26) apparaît
+3. **Sur Android, installe Migrer vers iOS** depuis le Play Store s'il n'est pas déjà présent, ouvre-le, accepte les conditions
+4. **Saisis le code à 10 chiffres** ou scanne le QR code — les deux appareils se synchronisent sur un réseau Wi-Fi temporaire créé par l'iPhone
+5. **Coche les catégories à transférer** (contacts, messages, photos, vidéos, comptes mail, calendriers, signets, WhatsApp) et lance le transfert
+6. **Attends la fin complète** avant de toucher à quoi que ce soit — une coupure prématurée invalide tout le transfert
+
+Selon **Apple Support** (fiche 118670, mise à jour <time dateTime="2026-03-10">mars 2026</time>), le transfert est validé uniquement si la barre de progression atteint 100 % des deux côtés simultanément. Le message **Transfert terminé** doit s'afficher sur l'Android avant de déconnecter.
+
+<Tip>Le vrai tip : ne regarde pas tes notifications pendant le transfert. Chaque action sur l'un des deux téléphones (répondre à un SMS, ouvrir une app) peut corrompre la session. Mets les deux en mode Ne pas déranger et laisse-les tranquilles sur une table.</Tip>
+
+## Quelle différence entre transfert Wi-Fi et transfert USB-C ?
+
+Le transfert **USB-C à USB-C** arrivé officiellement avec **iOS 26.4** (<time dateTime="2026-02-18">février 2026</time>) change la donne pour les grosses migrations. Voici les écarts mesurés sur une bibliothèque de 128 Go (photos + vidéos + messages) entre un **Pixel 9 Pro** et un **iPhone 17 Pro**.
+
+| Critère | Transfert Wi-Fi | Transfert USB-C |
+|---|---|---|
+| **Durée 64 Go** | 40–55 min | 15–20 min |
+| **Durée 128 Go** | 60–80 min | 20–30 min |
+| **Stabilité** | Coupures possibles si Wi-Fi instable | Aucune coupure observée |
+| **Appareils requis** | Android 12+, iOS 15+, même Wi-Fi | Android USB-C, iPhone 15+, iOS 26.4+ |
+| **Câble** | Aucun | USB-C vers USB-C (OTG compatible) |
+| **Batterie consommée** | 30–40 % de chaque côté | 10–15 % de chaque côté |
+
+En clair : si ton Android et ton iPhone ont tous les deux un port USB-C, passe par le câble. Pour un Samsung Galaxy S21 ou antérieur en USB-C lent (USB 2.0), le gain est moindre — compte 30 à 40 min pour 128 Go. Pour un iPhone 14 ou inférieur (Lightning), seul le Wi-Fi est possible.

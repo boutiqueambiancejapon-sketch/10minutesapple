@@ -126,6 +126,9 @@
 - [x] Blog : 2 articles batch 12 (61 blog articles total)
   - [x] blog/astuces/apple-music-vs-spotify — Comparatif fond Apple Music vs Spotify Premium (prix, Lossless, algos, écosystèmes)
   - [x] blog/accessoires/airpods-5-prix-date-rumeurs — News/rumeurs AirPods 5 (puce H3, autonomie 8 h, Apple Intelligence local)
+- [x] Blog : 2 articles batch 13 (63 blog articles total)
+  - [x] blog/astuces/migrer-android-vers-iphone — Guide complet migration Android → iPhone 2026 (Move to iOS USB-C, WhatsApp, Google Photos, apps équivalentes)
+  - [x] blog/accessoires/apple-tv-4k-2026-rumeurs-prix-date — News/rumeurs Apple TV 4K 4e gen (A18, Apple Intelligence, Wi-Fi 7, homeOS, sortie septembre 2026)
 - [x] Produits : fiches AirTag 2 (unité + pack 4) avec ASINs Amazon FR
 - [x] Produits : 3 fiches accessoires ajoutées (coque TechWoven, chargeur Anker MagGo, protection Spigen)
 - [x] Sidebar article : sommaire sticky (TOC) + "Deals du moment" avec prix barrés et liens affiliés Amazon

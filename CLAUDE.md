@@ -54,7 +54,7 @@ Jamais de lien Amazon nu sans ?tag=ambiancejap0a-21.
 - [ ] prefers-reduced-motion respecté sur toutes les animations
 - [ ] Contraste texte/fond vérifié pour chaque effet DA (dark-only)
 - [ ] Aucune année hardcodée dans title/H1 pour "édition courante"
-- [ ] middleware.ts présent et actif
+- [ ] proxy.ts présent et actif
 
 ## Git
 Jamais direct sur main · feature = branche = PR · Conventional Commits anglais

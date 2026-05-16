@@ -35,6 +35,7 @@ export default function OGImage() {
         {/* Eyebrow */}
         <div
           style={{
+            display: 'flex',
             fontSize: 18,
             color: '#FF3D57',
             letterSpacing: '0.1em',
@@ -43,7 +44,7 @@ export default function OGImage() {
             fontWeight: 700,
           }}
         >
-          10MINUTESAPPLE.COM · {year}
+          {`10MINUTESAPPLE.COM · ${year}`}
         </div>
 
         {/* Headline */}

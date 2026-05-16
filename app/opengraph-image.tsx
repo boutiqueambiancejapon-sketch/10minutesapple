@@ -49,6 +49,8 @@ export default function OGImage() {
         {/* Headline */}
         <div
           style={{
+            display: 'flex',
+            flexDirection: 'column',
             fontSize: 72,
             fontWeight: 400,
             color: '#F0F0F5',
@@ -56,9 +58,8 @@ export default function OGImage() {
             marginBottom: 24,
           }}
         >
-          Le guide Apple
-          <br />
-          le plus honnête de France.
+          <div>Le guide Apple</div>
+          <div>le plus honnête de France.</div>
         </div>
 
         {/* Tagline */}

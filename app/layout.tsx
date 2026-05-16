@@ -52,6 +52,9 @@ export const metadata: Metadata = {
   verification: {
     google: 'XCjdwzrs9aU_ZKYlgrgtCCabqGzkbv6n7C_53EtA8Sg',
   },
+  other: {
+    linkavista: 'link-7138-573',
+  },
 }
 
 export default function RootLayout({

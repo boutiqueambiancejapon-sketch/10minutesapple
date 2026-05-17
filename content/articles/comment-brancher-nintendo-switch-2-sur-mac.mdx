@@ -1,0 +1,176 @@
+---
+title: "Comment brancher sa Nintendo Switch 2 sur un Mac (et y jouer en déplacement)"
+description: "Je viens d'acheter la Switch 2 et Pokopia, et je voulais y jouer sur mon MacBook Air en voyage. Voici la méthode qui marche vraiment : carte de capture USB, OBS, et zéro latence ressentie."
+publishedAt: "2026-05-17"
+updatedAt: "2026-05-17"
+readingTimeMin: 8
+categorie: "mac"
+tags: ["nintendo-switch-2", "macbook-air", "carte-de-capture", "elgato", "pokopia", "jeux", "2026"]
+aiSummary:
+  - "Un MacBook (Air ou Pro) ne possède aucun port HDMI **entrée** — pour afficher la Switch 2 dessus, il faut obligatoirement passer par une carte de capture USB-C qui transforme le signal HDMI en flux USB lisible par macOS."
+  - "Les deux meilleures cartes de capture en 2026 sont l'**Elgato HD60 X** (~180 €, 1080p60 HDR, sortie passthrough vers une TV) et la **GENKI ShadowCast 2** (~70 €, format clé USB ultra-portable, 1080p60), parfaite pour le voyage avec un MacBook Air."
+  - "Côté logiciel, **OBS Studio** (gratuit) ou **Elgato Game Capture** (gratuit avec une carte Elgato) suffisent : on ajoute la carte comme source vidéo, on affiche en plein écran sur le MacBook, et la latence ressentie est sous les 60 ms."
+  - "Pour jouer en déplacement type hôtel ou train, le combo **Switch 2 + dock officiel + GENKI ShadowCast 2 + MacBook Air M5** tient dans une pochette : on connecte la Switch au dock, le HDMI à la ShadowCast, l'USB-C au Mac, et on lance OBS."
+  - "Attention : le mode portable de la Switch 2 ne sort aucun signal vidéo. Il faut impérativement passer par le dock (qui contient la puce vidéo HDMI) — donc emporter le dock officiel en voyage, pas seulement la console."
+stickyCta:
+  - label: "Elgato HD60 X — ~180 €"
+    url: "https://www.amazon.fr/dp/B0B5R6V1QN"
+  - label: "GENKI ShadowCast 2 — ~70 €"
+    url: "https://www.amazon.fr/dp/B0CJWPL7DD"
+stickyCtaMessage: "Les deux cartes de capture qui transforment ton MacBook en écran pour Switch 2."
+faq:
+  - q: "Est-ce qu'on peut brancher une Switch 2 directement sur un MacBook avec un câble HDMI ?"
+    a: "Non, et c'est la première chose à comprendre. Les ports USB-C / Thunderbolt du MacBook sont des ports de **sortie** vidéo (vers un écran externe), pas d'**entrée**. Aucun câble HDMI vers USB-C ne fonctionne. Il faut obligatoirement une carte de capture USB qui convertit le signal HDMI en flux vidéo lisible par macOS via UVC (USB Video Class). Une Elgato HD60 X ou une GENKI ShadowCast 2 fait exactement ça."
+  - q: "Quelle latence faut-il prévoir entre la Switch 2 et l'écran du Mac ?"
+    a: "Sur une carte de capture moderne (Elgato HD60 X, GENKI ShadowCast 2, AVerMedia Live Gamer Ultra 2.1), la latence USB ajoute entre 40 et 80 ms entre l'action sur la manette et l'image affichée à l'écran du MacBook. Pour un jeu chill comme Pokopia, Animal Crossing ou Mario Kart en mode famille, c'est imperceptible. Pour Smash Bros compétitif ou Splatoon 4 en ranked, c'est gênant — mieux vaut alors brancher la Switch directement sur une TV via le dock."
+  - q: "La GENKI ShadowCast 2 suffit-elle ou faut-il une Elgato HD60 X ?"
+    a: "Si tu joues principalement en voyage sur MacBook Air, la **GENKI ShadowCast 2** (70 €) est largement suffisante : format clé USB minuscule, 1080p60, pas d'alimentation externe nécessaire. Elle se glisse dans la pochette du MacBook. L'**Elgato HD60 X** (180 €) ajoute le HDR, un passthrough HDMI 4K vers une TV (utile pour streamer tout en jouant sur la TV), et une fiabilité éprouvée pour les longues sessions. Pour 95 % des usages mobiles, la ShadowCast 2 fait le job pour moitié moins cher."
+  - q: "Faut-il emporter le dock officiel de la Switch 2 en déplacement ?"
+    a: "Oui, impérativement. Le mode portable de la Switch 2 (écran intégré) ne sort aucun signal HDMI — toute la sortie vidéo passe par le dock, qui contient la puce de scaling et le port HDMI. Donc en voyage avec un MacBook : dock officiel + son alimentation USB-C 60W + câble HDMI court + carte de capture + MacBook. Ça tient dans une pochette de 1 L environ."
+  - q: "Pourquoi pas un câble USB-C direct entre la Switch 2 et le MacBook ?"
+    a: "Parce que ni la Switch 2 ni macOS ne supportent ce mode de fonctionnement. La Switch 2 utilise son port USB-C uniquement pour la charge et pour la communication avec son dock propriétaire — pas pour exporter une image en USB. Et même si elle le faisait, macOS n'accepte que les flux UVC standards, pas un protocole propriétaire Nintendo. La carte de capture HDMI → USB reste le seul chemin pris en charge."
+  - q: "Quel logiciel utiliser sur macOS pour afficher la Switch 2 ?"
+    a: "Deux options gratuites : **OBS Studio** (universel, fonctionne avec n'importe quelle carte de capture) et **Elgato Game Capture** (uniquement avec une carte Elgato). OBS est plus puissant (filtres, scènes, enregistrement, streaming Twitch/YouTube), Elgato Game Capture est plus simple (un clic, un écran, un bouton record). Pour jouer sans enregistrer, l'app **Camo Studio** ou même **QuickTime Player** suffisent (Fichier → Nouvel enregistrement vidéo → choisir la carte de capture comme source)."
+  - q: "Le MacBook Air M5 peut-il encoder un flux 1080p60 de la Switch 2 sans surchauffer ?"
+    a: "Sans problème pour un simple affichage : la carte de capture envoie un flux UVC déjà compressé, le MacBook Air M5 se contente de l'afficher. Aucune surchauffe à signaler après 3h de Pokopia en sortie de train. Si tu enregistres ou streamez en parallèle, l'encodage h.264 / HEVC est géré par le Media Engine de la puce M5, sans solliciter le CPU. Le MacBook Air M5 reste silencieux (il n'a pas de ventilateur de toute façon) et tient l'autonomie annoncée."
+---
+
+Je viens de craquer pour la **Nintendo Switch 2** avec **[Pokopia](https://www.nintendo.com/fr-fr/Jeux/Jeux-Nintendo-Switch-2/Pokopia-2589517.html)** — ce nouveau jeu de vie / construction signé par l'équipe Pikmin, sorti en début d'année 2026. Et comme je voyage souvent avec mon **MacBook Air M5**, je voulais pouvoir jouer **sur grand écran** dans une chambre d'hôtel ou sur un canapé Airbnb, sans transporter une TV portable.
+
+La bonne nouvelle : c'est possible, ça tient dans une pochette, et ça coûte moins de 100 € de matériel en plus. La moins bonne : il faut comprendre comment ça marche, parce que branche-direct-HDMI-et-zou ne fonctionne pas. Voici la méthode que j'utilise.
+
+## Pourquoi on ne peut pas brancher une Switch 2 directement sur un Mac
+
+C'est l'erreur n°1 que tout le monde fait. **Aucun MacBook (Air, Pro, ni même Mac mini ou iMac) n'a d'entrée HDMI.** Les ports USB-C / Thunderbolt sont des **sorties** vidéo : ils envoient l'image du Mac vers un écran externe, pas l'inverse.
+
+Même le MacBook Pro 14" et 16" qui possèdent un port HDMI physique : c'est un HDMI **out**, pas **in**.
+
+<StatRow>
+  <StatCard value="0" label="Port HDMI en entrée sur un Mac (tous modèles)" />
+  <StatCard value="~70 €" label="Carte de capture entrée de gamme (GENKI ShadowCast 2)" accent="3" />
+  <StatCard value="~60 ms" label="Latence ressentie carte USB → écran Mac" accent="4" />
+</StatRow>
+
+La solution s'appelle **carte de capture vidéo**. Un petit boîtier (ou clé USB) qui prend en entrée un câble HDMI venant de la Switch 2, et qui ressort un flux vidéo USB que macOS reconnaît comme une webcam (norme **UVC** — USB Video Class). On peut ensuite afficher ce flux dans n'importe quelle application qui sait lire une caméra : OBS, QuickTime, Camo Studio…
+
+<Tip>Le mode portable de la Switch 2 — celui avec l'écran intégré — **ne sort aucun signal vidéo externe**. Toute la sortie HDMI passe par le **dock officiel**, qui contient la puce de scaling 4K. Donc en voyage : prends toujours le dock dans ton sac.</Tip>
+
+## Le matériel qu'il te faut (et ce que j'ai pris)
+
+Voici la liste exacte que j'emporte dans une petite trousse :
+
+1. **La Switch 2 elle-même** (avec ses Joy-Con 2)
+2. **Le dock officiel Switch 2** + son **adaptateur secteur USB-C 60W**
+3. **Un câble HDMI court** (50 cm suffit, j'utilise un AmazonBasics Premium High Speed)
+4. **Une carte de capture USB-C** → c'est l'élément clé
+5. **Mon MacBook Air M5** + son chargeur 35W
+
+Le tout tient dans une pochette néoprène 27×20×5 cm. Compte environ **1,2 kg** de gaming en plus du MacBook.
+
+### La carte de capture, le seul vrai choix à faire
+
+Deux options sérieuses en 2026 selon le budget :
+
+#### GENKI ShadowCast 2 — l'option voyage (~70 €)
+
+La **[GENKI ShadowCast 2](https://www.amazon.fr/dp/B0CJWPL7DD)** est ma préférée pour le mobile. Format **clé USB** (plus petite qu'un AirTag), connecteur USB-C directement intégré (pas de câble), 1080p60, alimentée par le bus USB du MacBook (pas d'alim externe).
+
+- **Format** : clé USB-C ultra compacte (≈ 6×2×1 cm)
+- **Résolution capturée** : 1080p60 (passthrough 4K60 vers TV via HDMI)
+- **Alimentation** : USB bus-powered, aucun adaptateur
+- **Logiciel** : GENKI Arcade (Mac/Windows) ou OBS Studio
+- **Prix** : ~70 €
+
+<Verdict>Si tu veux jouer à la Switch 2 sur ton MacBook **uniquement en déplacement** (hôtel, Airbnb, train, chez tes parents), la ShadowCast 2 est imbattable. Elle ne prend pas plus de place qu'une carte SD dans la pochette.</Verdict>
+
+#### Elgato HD60 X — l'option fixe + qualité (~180 €)
+
+Si tu fais aussi du **streaming Twitch / YouTube** ou que tu veux capturer en **HDR 1080p60** avec un passthrough 4K60 vers une TV (jouer sur la TV ET enregistrer sur le Mac en même temps), l'**[Elgato HD60 X](https://www.amazon.fr/dp/B0B5R6V1QN)** reste la référence.
+
+- **Résolution capturée** : 1080p60 HDR, 1440p30, 4K30
+- **Passthrough HDMI** : 4K60 HDR (TV branchée en parallèle)
+- **Alimentation** : USB-C bus-powered
+- **Logiciel** : Elgato Game Capture (gratuit Mac) ou OBS
+- **Prix** : ~180 €
+
+<Tip>Pour info, le **MacBook Air M5 supporte deux écrans externes** capot ouvert (nouveauté du M4/M5). Donc tu peux théoriquement avoir ton écran de jeu en plein écran sur le MacBook **et** un écran externe avec Discord / un guide / Twitch à côté. Voir notre dossier [accessoires MacBook Air M5](/meilleurs-accessoires-macbook-air-m5-2026) pour le hub adapté.</Tip>
+
+## Le branchement étape par étape (10 minutes la première fois)
+
+C'est exactement la même séquence avec une ShadowCast 2 ou une HD60 X.
+
+### Étape 1 — Brancher la Switch 2 sur son dock
+
+Pose la Switch 2 dans son dock officiel, branche le dock à son alimentation secteur USB-C 60W. **L'écran de la Switch s'éteint** : c'est normal, le signal vidéo bascule sur la sortie HDMI du dock.
+
+### Étape 2 — Connecter le HDMI à la carte de capture
+
+Un câble HDMI court entre la **sortie HDMI du dock** et l'**entrée HDMI de la carte de capture**. Sur une ShadowCast 2, l'entrée HDMI est sur le petit côté de la clé.
+
+### Étape 3 — Connecter la carte de capture au MacBook
+
+Branche la carte de capture sur un port USB-C du MacBook Air. Pour la ShadowCast 2, c'est direct (USB-C mâle). Pour l'Elgato HD60 X, c'est un câble USB-C ⇄ USB-C fourni.
+
+<Warning>Évite les hubs USB-C bas de gamme pour cet usage. Un hub mal alimenté peut faire chuter le débit USB et provoquer des saccades ou un audio désynchronisé. Branche la carte de capture en **direct** sur un port Thunderbolt du Mac.</Warning>
+
+### Étape 4 — Ouvrir le logiciel sur macOS
+
+Trois options, du plus simple au plus puissant :
+
+- **QuickTime Player** (préinstallé) : Fichier → Nouvel enregistrement vidéo → cliquer sur la flèche à côté du bouton rouge → choisir "ShadowCast 2" ou "HD60 X" comme caméra ET comme micro. C'est fini.
+- **GENKI Arcade** (gratuit, Mac/Windows) : interface dédiée optimisée pour jouer, faible latence.
+- **OBS Studio** (gratuit) : ajoute une source "Périphérique de capture vidéo", choisis la carte, mets en plein écran avec F11. Plus polyvalent, idéal si tu enregistres ou streames en parallèle.
+
+### Étape 5 — Passer en plein écran
+
+Quel que soit le logiciel, mets l'écran en plein écran (⌃⌘F sur QuickTime, F11 sur OBS) pour ne plus voir la barre de menu. Tu es prêt à jouer à Pokopia sur ton MacBook Air.
+
+<PullQuote>Première fois que j'ai testé, j'étais dans le Thalys Paris-Bruxelles. 10 minutes de setup, et 2h30 de Pokopia sur l'écran 13" de l'Air M5. Aucune saccade, aucune surchauffe.</PullQuote>
+
+## Récapitulatif : le setup voyage complet
+
+| Élément | Modèle | Pourquoi | Prix |
+|---|---|---|---|
+| **Console** | Nintendo Switch 2 | — | 469 € |
+| **Dock** | Dock officiel Switch 2 | Indispensable pour la sortie HDMI | inclus |
+| **Câble HDMI** | AmazonBasics Premium 50 cm | Court = tient dans la pochette | ~8 € |
+| **Carte de capture** | GENKI ShadowCast 2 | Format clé USB, 1080p60 | ~70 € |
+| **Ordinateur** | MacBook Air M5 | Silencieux, autonome, écran 500 nits | 1 299 € |
+| **Logiciel** | OBS Studio ou QuickTime | Gratuit, faible latence | 0 € |
+| **Total ajouté au Mac+Switch** | — | — | **~78 €** |
+
+<StatRow>
+  <StatCard value="~78 €" label="Coût matériel ajouté pour jouer Switch 2 sur Mac" />
+  <StatCard value="1,2 kg" label="Poids supplémentaire dans le sac (dock + câbles + carte)" accent="3" />
+</StatRow>
+
+## Cas d'usage : pour qui ça vaut le coup ?
+
+<PullQuote>Ce setup n'a pas pour but de remplacer une vraie TV à la maison. C'est une solution **voyage** pour les gens qui ont déjà une Switch 2 et un MacBook, et qui veulent jouer en grand sans transporter d'écran.</PullQuote>
+
+**Tu voyages souvent en train, avion, ou tu dors régulièrement en Airbnb/hôtel.** C'est le scénario idéal. Mon cas : j'ai pris le combo pour 4 jours de déplacement pro, j'ai pu finir le tutorial de Pokopia le soir, à l'aise, en pleine HD.
+
+**Tu veux streamer du gameplay Switch 2 sur Twitch ou YouTube.** Là, l'Elgato HD60 X devient obligatoire (HDR, passthrough TV). OBS Studio sur le Mac fait le reste. À noter : la Switch 2 ne diffuse pas le contenu de certains jeux (cinématiques avec licence audio par exemple) — c'est une protection HDCP qu'on ne peut pas contourner légalement.
+
+**Tu veux jouer en compétition (Smash, Splatoon, Fortnite).** Pas idéal. La latence ajoutée (40-80 ms) est imperceptible en solo / coop, mais sensible en compétitif. Branche-toi sur une vraie TV ou un moniteur gaming HDMI.
+
+**Tu veux juste tester un jeu Switch en bossant.** Setup parfait. Tu peux laisser Pokopia tourner dans une fenêtre OBS pendant que tu réponds aux mails — utile pour faire pousser des cultures pendant que tu fais autre chose.
+
+## Ce qu'on n'a pas mentionné (et pourquoi)
+
+- **Les "convertisseurs HDMI vers USB-C" no-name à 20 €.** La plupart envoient un signal MJPEG 1080p30 saccadé. Économise 50 € en plus, prends une vraie carte UVC.
+- **Le streaming sans fil via Apple AirPlay.** La Switch 2 ne supporte pas AirPlay. Aucune app tierce non plus. Oublie cette idée, le filaire reste la seule voie.
+- **Un iPad comme écran à la place du Mac.** Possible avec une ShadowCast 2 et l'app GENKI Arcade iOS, mais expérience moins fluide qu'avec macOS. Si tu hésites entre tablette et Mac pour ce genre d'usage, regarde notre [comparatif iPad Air M4 vs MacBook Air M5](/ipad-air-m4-vs-macbook-air-m5).
+- **Le MacBook Pro pour cet usage.** Inutile. L'Air M5 silencieux et léger gagne. Le Pro n'apporte rien de plus pour afficher un flux UVC 1080p.
+
+## Notre verdict
+
+<Verdict>
+
+Pour jouer à la **Nintendo Switch 2** sur un **MacBook Air M5** en déplacement, le combo gagnant tient en deux achats : la **[GENKI ShadowCast 2](https://www.amazon.fr/dp/B0CJWPL7DD)** (~70 €) et un câble HDMI court (~8 €). On branche la Switch 2 dans son dock, le HDMI dans la ShadowCast, la ShadowCast dans le MacBook, on lance OBS ou QuickTime, et c'est fini.
+
+J'ai validé ce setup avec **Pokopia** sur le MacBook Air M5 dans plusieurs hôtels et un Thalys — zéro problème, autonomie tenue (3h+ de jeu sur batterie du Mac), aucune surchauffe. Pour 78 € d'investissement à côté d'une Switch 2 et d'un MacBook déjà en poche, c'est l'upgrade voyage la plus simple à faire en 2026.
+
+Si tu hésites encore sur le modèle de Mac à prendre pour ce genre d'usage polyvalent (jeu, mobilité, bureautique), va voir notre [comparatif MacBook Air M5 vs MacBook Air M4](/macbook-air-m5-vs-macbook-air-m4) et notre dossier [accessoires MacBook Air M5](/meilleurs-accessoires-macbook-air-m5-2026).
+
+</Verdict>

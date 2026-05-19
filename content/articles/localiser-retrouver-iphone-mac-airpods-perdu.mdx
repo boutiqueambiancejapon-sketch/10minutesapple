@@ -1,0 +1,165 @@
+---
+title: "Localiser : retrouver un iPhone, un Mac ou des AirPods perdus (guide 2026)"
+description: "Comment activer Localiser et retrouver un iPhone, Mac, iPad ou AirPods perdu ou volé en 2026. Mode Perdu, effacement à distance, AirTag, réseau Find My."
+publishedAt: "2026-05-19"
+updatedAt: "2026-05-19"
+readingTimeMin: 8
+categorie: "astuces"
+tags: ["localiser", "find-my", "iphone", "mac", "airpods", "airtag", "securite", "icloud", "vol-iphone", "guide"]
+aiSummary:
+  - "Localiser (Find My) doit être activé AVANT de perdre l'appareil — Réglages > [Identifiant Apple] > Localiser, puis activer 'Localiser mon iPhone', 'Réseau Localiser' et 'Envoyer la dernière position'."
+  - "Le réseau Localiser exploite plus de 1,5 milliard d'appareils Apple comme relais Bluetooth chiffrés : un iPhone perdu peut être localisé même éteint ou sans réseau, tant qu'un autre appareil Apple passe à proximité."
+  - "Pour retrouver un appareil, ouvrir l'app Localiser ou se connecter à iCloud.com/find depuis n'importe quel navigateur — pas besoin d'avoir un iPhone à portée de main."
+  - "Le Mode Perdu verrouille l'appareil avec son code, suspend Apple Pay et affiche un message + numéro de contact à l'écran sans donner accès aux données."
+  - "L'effacement à distance est irréversible : sur iOS 15 et versions ultérieures, l'appareil reste localisable APRÈS effacement, ce qui permet de continuer à le suivre."
+  - "Un AirTag 2 (35 €) ajoute la couverture du réseau Localiser à n'importe quel objet non-Apple — clés, sac, vélo, bagage. Le pack de 4 (119 €) revient à 30 € l'unité."
+stickyCta:
+  - label: "AirTag 2 — 35 €"
+    url: "https://www.amazon.fr/dp/B0GJTCB2QM"
+  - label: "AirTag 2 Pack de 4 — 119 €"
+    url: "https://www.amazon.fr/dp/B0GJTMMWRS"
+stickyCtaMessage: "Étends Localiser à tes clés, ton sac ou ton vélo."
+faq:
+  - q: "Mon iPhone est éteint ou n'a plus de batterie : peut-on encore le localiser ?"
+    a: "Oui, dans la plupart des cas. Depuis l'iPhone 11, une puce dédiée maintient l'émission Bluetooth pendant plusieurs heures après extinction. Et même hors batterie, la dernière position connue reste affichée pendant 7 jours dans Localiser, à condition d'avoir activé 'Envoyer la dernière position' au préalable. C'est exactement pour ce scénario que ce réglage existe."
+  - q: "Comment Apple peut-il localiser mes appareils sans accéder à ma position ?"
+    a: "Le réseau Localiser fonctionne avec un système de clés publiques et privées. Tes appareils émettent une clé publique en Bluetooth ; les appareils Apple voisins captent ce signal, ajoutent une localisation chiffrée et envoient le tout aux serveurs Apple. Mais Apple ne peut pas déchiffrer la position — seule la clé privée stockée dans ton iPhone ou ton Mac le peut. Apple gère du chiffré qu'il ne sait pas lire."
+  - q: "Quelqu'un a trouvé mon iPhone : peut-il le revendre ou le désactiver ?"
+    a: "Non. Tant que 'Localiser mon iPhone' est activé, le Verrouillage d'activation empêche n'importe quelle réinitialisation sans ton identifiant Apple et ton mot de passe. Un iPhone volé devient une brique inutilisable même après formatage — c'est pour ça que les voleurs ciblent désormais surtout les composants détachés (écrans, capteurs) plus que les appareils complets."
+  - q: "Faut-il déclarer le vol à la police même si l'iPhone est localisé ?"
+    a: "Oui, toujours. Une plainte pour vol génère un numéro de procédure (PV) indispensable pour l'assurance et pour bloquer l'IMEI auprès de ton opérateur. Localiser te donne une position, mais récupérer physiquement un appareil dans le logement de quelqu'un nécessite l'intervention des forces de l'ordre — n'y va jamais seul, c'est la consigne explicite d'Apple."
+  - q: "Le réseau Localiser fonctionne-t-il à l'étranger ?"
+    a: "Oui, dans plus de 100 pays. Le réseau s'appuie sur tous les appareils Apple actifs dans le monde — un iPhone volé qui passe en Espagne ou au Maroc reste détectable dès qu'un autre appareil Apple passe à proximité. La fonction Communications satellite (iPhone 14 et plus) permet même de signaler un appareil dans une zone sans réseau cellulaire ni Wi-Fi."
+  - q: "Comment retrouver mes AirPods s'ils sont rangés dans leur boîtier ?"
+    a: "Les AirPods 3, AirPods 4 (ANC), AirPods Pro (toutes générations) et AirPods Max diffusent leur position dans le réseau Localiser même rangés dans leur boîtier — à condition qu'ils aient été chargés récemment. Tu peux les faire sonner depuis l'app Localiser ; le son est audible à environ 5 mètres. Les AirPods 1, 2 et 4 (sans ANC) ne transmettent leur position que lorsqu'ils sont hors du boîtier."
+  - q: "Mon AirTag indique 'Cet objet pourrait vous suivre' : que faire ?"
+    a: "C'est la protection anti-traque d'iOS. Un AirTag séparé de son propriétaire et qui te suit pendant plusieurs heures déclenche une alerte sur ton iPhone. Tu peux le faire sonner pour le localiser, voir son numéro de série, et désactiver l'AirTag en suivant les instructions affichées. Sur Android, l'app 'Trackeur Detect' d'Apple fait le même travail."
+---
+
+Tu cherches ton iPhone depuis 20 minutes dans toute la maison. Ou pire — tu sors du restaurant et il n'est plus dans ta poche. Le bon réflexe existe, mais il ne marche que si **Localiser** (Find My en anglais) a été activé avant. Et il y a beaucoup plus à savoir que simplement « se connecter à iCloud.com ».
+
+Ce guide couvre tout ce que tu dois savoir sur **Localiser** en 2026 : la configuration à faire **maintenant**, comment retrouver chaque type d'appareil Apple, ce qui se passe vraiment quand on active le Mode Perdu, comment fonctionne ce réseau presque magique de 1,5 milliard d'appareils, et la marche à suivre exacte en cas de vol.
+
+## Activer Localiser avant qu'il ne soit trop tard
+
+C'est l'étape qu'il faut faire **dès la sortie de boîte** de chaque appareil Apple. Sans elle, rien de ce qui suit ne fonctionne.
+
+**Sur iPhone et iPad** : *Réglages > [ton nom Apple Account] > Localiser*. Active les trois bascules :
+
+- **Localiser mon iPhone** : le service principal
+- **Réseau Localiser** : permet de retrouver l'appareil même hors ligne ou éteint
+- **Envoyer la dernière position** : transmet automatiquement la dernière position connue avant extinction
+
+**Sur Mac** : *Réglages Système > [ton nom] > iCloud > Localiser mon Mac > Activer*. Pense aussi à activer *Services de localisation* dans Confidentialité.
+
+**Sur Apple Watch** : se configure automatiquement avec l'iPhone associé.
+
+**Sur AirPods** : se configure automatiquement aussi, à condition qu'ils soient appairés à un identifiant Apple ([Apple Support](https://support.apple.com/en-us/104978)).
+
+<Warning>Si tu désactives Localiser ne serait-ce que 10 minutes pour réparer un bug, profite de la fenêtre pour qu'on te vole l'appareil et c'est terminé : sans Localiser activé au moment du vol, aucune des étapes suivantes ne fonctionne. Laisse-le **toujours actif**.</Warning>
+
+## Comment retrouver un iPhone perdu, étape par étape
+
+Deux chemins existent — utilise celui qui correspond à ta situation.
+
+**Si tu as un autre appareil Apple à portée de main** (un Mac, un iPad, le Mac d'un proche) :
+
+1. Ouvre l'app **Localiser**.
+2. Choisis l'onglet **Appareils**.
+3. Sélectionne ton iPhone dans la liste — sa position s'affiche sur une carte.
+4. Quatre actions deviennent possibles : **Faire sonner**, **Itinéraires** (pour ouvrir Plans vers la position), **Marquer comme perdu** (Mode Perdu), **Effacer cet appareil**.
+
+**Si tu n'as aucun appareil Apple disponible** (depuis un PC, un téléphone d'emprunt, un ordinateur public) :
+
+1. Va sur [iCloud.com/find](https://www.icloud.com/find).
+2. Connecte-toi avec ton identifiant Apple. Une vérification à deux facteurs est demandée — si tu n'y as pas accès, clique sur **Find Devices** au lieu de saisir un code.
+3. Les mêmes actions s'affichent : sonnerie, Mode Perdu, effacement.
+
+<Tip>La fonction **Faire sonner** émet un signal sonore strident qui passe outre le mode silencieux et le mode Ne pas déranger. Idéal quand l'iPhone est à 1 mètre, coincé entre deux coussins de canapé.</Tip>
+
+## Et un Mac, un iPad, une Apple Watch ou des AirPods ?
+
+Les actions disponibles varient légèrement selon l'appareil :
+
+| Appareil | Voir position | Faire sonner | Mode Perdu | Effacer à distance | Réseau Localiser |
+|---|---|---|---|---|---|
+| **iPhone** | Oui | Oui | Oui | Oui | Oui |
+| **iPad** | Oui | Oui | Oui | Oui | Oui |
+| **[MacBook Air M5](https://www.amazon.fr/dp/B0GR1W24CR) / Pro / Mini** | Oui | Oui | Verrouillage Mac | Oui | Oui (Apple Silicon uniquement) |
+| **[Apple Watch Ultra 3](https://www.amazon.fr/dp/B0FQFJQK5K) / Series 11 / SE 3** | Oui | Oui | Oui | Oui | Oui |
+| **Apple Vision Pro** | — | — | Verrouillage activation | — | — |
+| **[AirPods Pro 3](https://www.amazon.fr/dp/B0FQF32239), AirPods 4 ANC, AirPods Max** | Oui | Oui | Oui | — | Oui |
+| **AirPods 1, 2, AirPods 4 (sans ANC)** | Oui | Oui | — | — | — |
+
+**Pour la précision maximale** : si tu cherches un AirTag, des AirPods Pro 2 (ou plus récents) ou un Apple Pencil Pro, ton iPhone (à partir de l'iPhone 11) affiche une **direction précise** via la puce Ultra Wideband (UWB). Cherche le bouton *Find Nearby* dans l'app Localiser — il guide à 10 cm près quand tu es à proximité.
+
+## Comment fonctionne le réseau Localiser (la magie expliquée)
+
+Le réseau **Localiser** est probablement la fonctionnalité Apple la plus impressionnante techniquement — et pourtant la plus discrète. Comprendre comment il marche aide à comprendre pourquoi il fonctionne même iPhone éteint.
+
+Chaque appareil Apple émet en continu une **balise Bluetooth chiffrée** qui contient une clé publique unique. Tout autre appareil Apple passant à portée capte ce signal, ajoute sa propre position (chiffrée avec la clé publique) et envoie l'ensemble aux serveurs Apple ([explication détaillée chez Lokan.fr](https://lokan.fr/2024/04/18/comment-fonctionne-find-my-localiser-apple/)).
+
+Apple ne peut pas déchiffrer cette position : seule **ta clé privée**, stockée localement dans tes appareils, peut le faire. Quand tu ouvres Localiser, ton iPhone interroge les serveurs avec ta clé publique, récupère le bloc chiffré et le déchiffre côté appareil.
+
+<StatRow>
+  <StatCard value="1,5 Md" label="Appareils Apple actifs comme relais" accent="3" />
+  <StatCard value="100+" label="Pays couverts par le réseau" />
+  <StatCard value="0 octet" label="Position lisible par Apple" accent="4" />
+</StatRow>
+
+C'est ce qui permet à un iPhone éteint, sans batterie ou sans réseau, d'être encore retrouvé — il suffit qu'**un seul appareil Apple passe à 10 mètres**. Dans Paris ou Lyon, c'est quelques secondes. En pleine campagne, ça peut prendre des heures.
+
+## Mode Perdu vs effacement à distance : choisir le bon levier
+
+Trois actions, trois niveaux de gravité — il faut savoir laquelle utiliser quand.
+
+**Faire sonner** : pour les pertes domestiques. Aucun risque, sonnerie 30 secondes, gratuit. Premier réflexe quand l'appareil est probablement à 5 mètres.
+
+**Mode Perdu** : pour les pertes sérieuses. L'iPhone est immédiatement verrouillé avec ton code de déverrouillage, Apple Pay est désactivé (cartes bancaires suspendues sur le réseau Apple), et un **message personnalisé** s'affiche sur l'écran de verrouillage avec un numéro de téléphone alternatif. La personne qui trouve l'appareil peut t'appeler depuis l'écran de verrouillage sans rien débloquer d'autre. Tu peux désactiver le Mode Perdu plus tard sans rien perdre.
+
+**Effacer à distance** : la dernière option. Toutes les données sont effacées (irréversible). L'appareil reste verrouillé par le **Verrouillage d'activation** : impossible de le réinitialiser sans tes identifiants Apple. Bonne nouvelle depuis iOS 15 : un iPhone effacé à distance **reste localisable** — tu continues à voir sa position dans Localiser.
+
+<Warning>N'efface jamais avant d'avoir essayé le Mode Perdu pendant 24-48 h. L'effacement est définitif. Et n'essaie pas de récupérer physiquement l'appareil dans le logement d'un voleur — appelle la police avec ton numéro de plainte. C'est la consigne explicite d'Apple.</Warning>
+
+## AirTag : étendre Localiser à tes objets non-Apple
+
+Le réseau Localiser ne sert pas qu'aux appareils Apple. Avec un **[AirTag 2 (35 €)](https://www.amazon.fr/dp/B0GJTCB2QM)** glissé dans un trousseau de clés, un sac à dos, une valise ou collé sous un vélo, tu intègres cet objet à ton app Localiser. Position en temps réel quand un appareil Apple passe à portée, sonnerie pour le trouver à la maison, direction précise via UWB sur les iPhone 11 et plus récents.
+
+L'**[AirTag 2 en pack de 4 (119 €)](https://www.amazon.fr/dp/B0GJTMMWRS)** revient à environ 30 € l'unité — la bonne approche pour équiper plusieurs objets à la fois (clés, sac de cours, sac de sport, valise voyage).
+
+Pour comparer la deuxième génération à la première, lis notre comparatif [AirTag 2 vs AirTag 1](/airtag-2-vs-airtag-1). La principale différence : portée UWB doublée et haut-parleur 50 % plus fort sur le nouveau modèle.
+
+## iPhone volé : le plan d'action en 5 minutes
+
+L'enchaînement à respecter quand tu réalises que ton iPhone n'a pas été perdu mais volé :
+
+1. **Connexion à iCloud.com/find** depuis n'importe quel ordinateur ou téléphone disponible.
+2. **Active immédiatement le Mode Perdu** — Apple Pay est désactivé, l'appareil est verrouillé.
+3. **Note la dernière position connue** (capture d'écran). Elle sert pour la plainte.
+4. **Appelle ton opérateur** pour bloquer l'IMEI et la carte SIM. L'IMEI est dans la facture d'achat ou dans tes Réglages Apple Account si tu as une sauvegarde.
+5. **Dépose plainte au commissariat**. Avec la position et l'IMEI, la procédure est plus rapide.
+6. **Préviens ta banque** si Apple Pay y était lié — par précaution, même si Apple Pay s'est bien désactivé.
+
+<PullQuote>Verrouille d'abord, géolocalise ensuite, n'efface qu'en dernier recours. Un iPhone effacé reste localisable depuis iOS 15, mais perd toutes ses données personnelles — c'est un point de non-retour.</PullQuote>
+
+## Quand Localiser ne marche pas (et que faire à la place)
+
+Trois scénarios où Localiser atteint ses limites :
+
+**Plus de 7 jours sans signal**. Le réseau Localiser ne stocke pas la position au-delà d'une semaine. Si personne n'est passé à portée pendant 7 jours, Localiser affiche *Aucune position trouvée*. Cas typique : appareil enterré dans un tiroir au fond d'un appartement isolé.
+
+**Données ou modes spéciaux**. Si la Protection des appareils volés (Stolen Device Protection) est activée et que tu changes ton mot de passe Apple Account depuis un lieu inhabituel, la position des appareils peut être temporairement masquée pour ta sécurité. Attends 1 heure ou utilise un appareil de confiance.
+
+**Mode Avion permanent ou retrait de la carte mère**. Un voleur expert peut placer l'iPhone dans une cage de Faraday, retirer la batterie ou démonter la puce. Dans ces cas, Localiser ne peut rien — mais le **Verrouillage d'activation** rend quand même l'appareil invendable, ce qui explique pourquoi les vols d'iPhone entiers ont chuté de plus de 50 % depuis 2013.
+
+## Notre verdict
+
+<Verdict>
+
+**Localiser est sans doute la fonctionnalité Apple la plus rentable** : elle ne coûte rien, prend 30 secondes à activer, et fait la différence entre un iPhone retrouvé et un iPhone perdu pour toujours. Active-la sur **chaque appareil** dès qu'il sort de la boîte : iPhone, iPad, Mac, Apple Watch, AirPods. Et pense aux **[AirTag 2](https://www.amazon.fr/dp/B0GJTCB2QM)** pour tout ce qui n'est pas Apple — clés, sac, vélo.
+
+La règle d'or en cas de perte : **sonner d'abord, Mode Perdu ensuite, effacement uniquement en dernier recours**. Et si c'est un vol, déclare-le toujours à la police même si tu as la position — la consigne d'Apple est claire : n'y va jamais seul.
+
+Pour aller plus loin, lis notre comparatif [AirTag 2 vs AirTag 1](/airtag-2-vs-airtag-1) si tu hésites encore sur la nouvelle génération, ou [10 réglages iPhone à changer tout de suite](/10-reglages-iphone-a-changer) pour sécuriser le reste de ton appareil.
+
+</Verdict>

@@ -57,6 +57,7 @@ export const metadata: Metadata = {
   },
   other: {
     linkavista: 'link-7138-573',
+    'google-adsense-account': ADSENSE_CLIENT,
   },
 }
 

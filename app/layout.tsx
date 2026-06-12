@@ -1,7 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import './globals.css'
+
+const ADSENSE_CLIENT = 'ca-pub-7295690633751101'
 
 const fontPrimary = Inter_Tight({
   subsets: ['latin'],
@@ -81,6 +84,14 @@ export default function RootLayout({
         </a>
         {children}
         <Analytics />
+        {/* Google AdSense — chargé sur toutes les pages */}
+        <Script
+          id="google-adsense"
+          async
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+        />
       </body>
     </html>
   )

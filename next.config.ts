@@ -1,12 +1,21 @@
 import type { NextConfig } from 'next'
 
+// Domaines Google AdSense (sans 'unsafe-eval' — voir DECISIONS.md)
+const adsenseScript =
+  'https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.googleadservices.com https://*.google.com https://*.gstatic.com https://*.googleapis.com'
+const adsenseFrame =
+  'https://googleads.g.doubleclick.net https://*.doubleclick.net https://*.googlesyndication.com https://*.google.com'
+const adsenseConnect =
+  'https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.google.com https://*.doubleclick.net https://*.g.doubleclick.net'
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline' ${adsenseScript}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: https:",
   "font-src 'self'",
-  "connect-src 'self' https://vitals.vercel-insights.com https://affiliate-api.amazon.fr https://api.github.com",
+  `frame-src 'self' ${adsenseFrame}`,
+  `connect-src 'self' https://vitals.vercel-insights.com https://affiliate-api.amazon.fr https://api.github.com ${adsenseConnect}`,
 ].join('; ')
 
 const nextConfig: NextConfig = {

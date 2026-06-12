@@ -14,6 +14,8 @@
 - [x] Années dynamiques : currentYear() lib/utils/year.ts
 - [x] Affiliation : addAffiliateTag() + plugin remark · tag=ambiancejap0a-21
 - [x] middleware.ts obligatoire dès le premier commit (CSP + headers sécurité)
+- [x] AdSense : loader chargé une fois dans app/layout.tsx via next/script (strategy afterInteractive) → présent sur toutes les pages · client ca-pub-7295690633751101
+- [x] AdSense CSP : ajout des domaines Google (googlesyndication / googleadservices / doubleclick / google) en script-src, frame-src, connect-src — SANS 'unsafe-eval' pour respecter la règle projet. Display ads OK ; si un format rich-media ne s'affiche pas, c'est le compromis assumé (réévaluer 'unsafe-eval' au cas par cas).
 
 ## DA — effets retenus par section
 - effect-hero → aurora CSS animée (--aurora-1 #FF3D57, --aurora-2 #7B61FF, --aurora-3 #3DFFC0) + noise 0.04 + H1 clip gradient

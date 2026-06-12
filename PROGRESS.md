@@ -143,6 +143,10 @@
 - Pages légales (/mentions-legales · /confidentialite)
 - sitemap.ts mis à jour avec les nouvelles routes
 
+## Complété — Monétisation
+- [x] Google AdSense : loader adsbygoogle.js (client ca-pub-7295690633751101) intégré dans app/layout.tsx via next/script → toutes les pages
+- [x] CSP next.config.ts mise à jour pour autoriser les domaines AdSense (script/frame/connect, sans unsafe-eval)
+
 ## Bloqué
 - Nom de famille Mathias requis pour mentions légales [DÉCISION À VALIDER]
 - LinkedIn Mathias requis pour schema Person EEAT [DÉCISION À VALIDER]

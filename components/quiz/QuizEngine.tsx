@@ -434,7 +434,7 @@ export function QuizEngine({ defaultProduit }: QuizEngineProps = {}) {
             onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
               const el = e.currentTarget
               el.style.borderColor = 'var(--accent-4)'
-              el.style.background = 'rgba(123,97,255,0.06)'
+              el.style.background = 'color-mix(in oklab, var(--accent-4) 8%, transparent)'
             }}
             onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
               const el = e.currentTarget

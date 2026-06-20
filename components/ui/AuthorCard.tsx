@@ -1,11 +1,12 @@
 /**
- * AuthorCard — carte auteur sans photo.
- * Identité : monogramme CSS "M" en Syne 800.
+ * AuthorCard — carte auteur.
+ * Identité : photo (si fournie) sinon monogramme CSS "M" en Syne 800.
  * Variants : 'inline' (en bas d'article) | 'full' (page auteur).
  * Server Component.
  */
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 type AuthorCardVariant = 'inline' | 'full'
 
@@ -13,6 +14,7 @@ type AuthorCardProps = {
   authorSlug: string
   authorName?: string
   bio: string
+  photo?: string
   variant?: AuthorCardVariant
 }
 
@@ -47,13 +49,38 @@ function Monogram({ size }: { size: number }) {
   )
 }
 
+function PhotoAvatar({ size, src, alt }: { size: number; src: string; alt: string }) {
+  return (
+    <div
+      style={{
+        position: 'relative',
+        width: size,
+        height: size,
+        borderRadius: 'var(--radius-full)',
+        overflow: 'hidden',
+        flexShrink: 0,
+      }}
+    >
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={`${size}px`}
+        style={{ objectFit: 'cover' }}
+      />
+    </div>
+  )
+}
+
 export function AuthorCard({
   authorSlug,
   authorName = 'Mathias',
   bio,
+  photo,
   variant = 'inline',
 }: AuthorCardProps) {
   const isInline = variant === 'inline'
+  const avatarSize = isInline ? 44 : 64
 
   return (
     <div
@@ -65,7 +92,11 @@ export function AuthorCard({
         borderTop: '1px solid var(--glass-border)',
       }}
     >
-      <Monogram size={isInline ? 44 : 64} />
+      {photo ? (
+        <PhotoAvatar size={avatarSize} src={photo} alt={authorName} />
+      ) : (
+        <Monogram size={avatarSize} />
+      )}
 
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ marginBottom: 'var(--space-1)' }}>

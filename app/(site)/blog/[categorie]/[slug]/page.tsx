@@ -360,8 +360,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
               </div>
             </div>
 
-            {/* Sidebar — sommaire + deals */}
-            <ArticleSidebar deals={getCTAsForCategory(categorie)} />
+            {/* Sidebar V2 — Résumer IA + Au sommaire + produit de l'article */}
+            <ArticleSidebar produit={meta.produit} asin={meta.asin} prix={meta.prix} prixBarre={meta.prixBarre} productName={meta.title} />
           </div>
         </article>
       </main>

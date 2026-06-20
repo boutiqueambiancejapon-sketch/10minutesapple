@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import type { CSSProperties } from 'react'
 import { RUBRIQUES, type RubriqueKey } from '@/lib/rubriques'
+import { articleHref, formatDate, CATEGORY_LABELS } from '@/lib/blog'
+import { getArticlesByRubrique } from '@/lib/rubrique-articles'
 import { RubricScope } from './RubricScope'
 import { RubricImage } from './RubricImage'
 import { RubricPills } from './RubricPills'
@@ -24,12 +26,14 @@ const eyebrowStyle: CSSProperties = {
 }
 
 /**
- * Hub d'une rubrique : masthead colore par --route-color + couverture + pastilles.
- * La liste d'articles arrivera en Phase 7 (champ `rubrique` au frontmatter).
+ * Hub d'une rubrique : masthead colore (--route-color) + couverture + pastilles
+ * + liste des articles rattaches (rubrique derivee des metadonnees).
  */
 export function RubriqueHub({ rubrique }: { rubrique: RubriqueKey }) {
   const r = RUBRIQUES[rubrique]
   const cover = COVERS[rubrique]
+  const articles = getArticlesByRubrique(rubrique)
+
   return (
     <RubricScope rubrique={rubrique}>
       <header
@@ -75,29 +79,88 @@ export function RubriqueHub({ rubrique }: { rubrique: RubriqueKey }) {
         </div>
       </header>
 
-      <section style={{ maxWidth: 1240, margin: '0 auto', padding: '28px 24px 48px' }}>
-        <p
+      <section style={{ maxWidth: 1240, margin: '0 auto', padding: '28px 24px 56px' }}>
+        <div
           style={{
             fontFamily: 'var(--next-font-mono), monospace',
-            fontSize: 13,
+            fontSize: 12,
             color: 'var(--text-muted)',
-            margin: '0 0 12px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em',
+            marginBottom: 18,
           }}
         >
-          Les articles de cette rubrique arrivent prochainement.
-        </p>
-        <Link
-          href="/blog"
-          style={{
-            fontFamily: 'var(--next-font-mono), monospace',
-            fontSize: 13,
-            fontWeight: 700,
-            color: 'var(--route-color)',
-            textDecoration: 'none',
-          }}
-        >
-          {'Parcourir tous les articles →'}
-        </Link>
+          {articles.length} article{articles.length > 1 ? 's' : ''}
+        </div>
+
+        {articles.length === 0 ? (
+          <p style={{ color: 'var(--text-muted)', fontSize: 15 }}>
+            Aucun article pour le moment.{' '}
+            <Link href="/blog" style={{ color: 'var(--route-color)', textDecoration: 'none', fontWeight: 600 }}>
+              Parcourir tous les articles →
+            </Link>
+          </p>
+        ) : (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+              gap: 16,
+            }}
+          >
+            {articles.map((a) => (
+              <Link
+                key={`${a.categorie}-${a.slug}`}
+                href={articleHref(a)}
+                className="article-card"
+                style={{
+                  textDecoration: 'none',
+                  border: '1px solid var(--border)',
+                  borderTop: '3px solid var(--route-color)',
+                  borderRadius: 'var(--radius-lg)',
+                  background: 'var(--bg-surface)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                  padding: '16px 18px 18px',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--next-font-mono), monospace',
+                    fontSize: 10.5,
+                    fontWeight: 700,
+                    letterSpacing: '0.05em',
+                    textTransform: 'uppercase',
+                    color: 'var(--route-color)',
+                  }}
+                >
+                  {CATEGORY_LABELS[a.categorie] ?? a.categorie}
+                </span>
+                <h2
+                  className="article-card-title"
+                  style={{
+                    fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+                    fontWeight: 700,
+                    fontSize: 19,
+                    lineHeight: 1.12,
+                    letterSpacing: '-0.02em',
+                    color: 'var(--text-primary)',
+                    margin: 0,
+                  }}
+                >
+                  {a.title}
+                </h2>
+                <p style={{ fontSize: 14, lineHeight: 1.45, color: 'var(--text-secondary)', margin: 0, flex: 1 }}>
+                  {a.description}
+                </p>
+                <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: 10.5, color: 'var(--text-muted)' }}>
+                  {formatDate(a.publishedAt)} · {a.readingTimeMin} min
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
     </RubricScope>
   )

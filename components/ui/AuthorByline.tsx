@@ -1,14 +1,16 @@
 /**
  * AuthorByline — byline éditorial.
  * Monogramme rond gradient à gauche + nom/date au milieu + actions à droite.
- * Zero photo. Server Component, indexable.
+ * Avatar photo si `photo` fourni, sinon initiale. Server Component, indexable.
  */
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 type AuthorBylineProps = {
   authorSlug: string
   authorName?: string
+  photo?: string
   publishedAt: string
   updatedAt?: string
   readingTimeMin?: number
@@ -25,6 +27,7 @@ function formatDate(iso: string): string {
 export function AuthorByline({
   authorSlug,
   authorName = 'Mathias',
+  photo,
   publishedAt,
   updatedAt,
   readingTimeMin,
@@ -43,30 +46,57 @@ export function AuthorByline({
         borderTop: '1px solid var(--border)',
       }}
     >
-      {/* Monogramme gradient */}
-      <Link
-        href={`/auteurs/${authorSlug}`}
-        aria-label={`Page de l'auteur ${authorName}`}
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          background: 'linear-gradient(135deg, var(--accent-1), var(--accent-4))',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontFamily: 'var(--next-font-display), serif',
-          fontSize: 20,
-          color: '#fff',
-          fontWeight: 400,
-          flexShrink: 0,
-          textDecoration: 'none',
-          boxShadow: '0 4px 14px color-mix(in oklch, var(--accent-1), transparent 60%)',
-        }}
-        aria-hidden="false"
-      >
-        <span aria-hidden="true">{initial}</span>
-      </Link>
+      {photo ? (
+        /* Avatar photo */
+        <Link
+          href={`/auteurs/${authorSlug}`}
+          aria-label={`Page de l'auteur ${authorName}`}
+          style={{
+            position: 'relative',
+            width: 40,
+            height: 40,
+            borderRadius: '50%',
+            overflow: 'hidden',
+            display: 'block',
+            flexShrink: 0,
+            textDecoration: 'none',
+            boxShadow: '0 4px 14px color-mix(in oklch, var(--accent-1), transparent 60%)',
+          }}
+        >
+          <Image
+            src={photo}
+            alt={authorName}
+            fill
+            sizes="40px"
+            style={{ objectFit: 'cover' }}
+          />
+        </Link>
+      ) : (
+        /* Monogramme gradient */
+        <Link
+          href={`/auteurs/${authorSlug}`}
+          aria-label={`Page de l'auteur ${authorName}`}
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: '50%',
+            background: 'linear-gradient(135deg, var(--accent-1), var(--accent-4))',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontFamily: 'var(--next-font-display), serif',
+            fontSize: 20,
+            color: '#fff',
+            fontWeight: 400,
+            flexShrink: 0,
+            textDecoration: 'none',
+            boxShadow: '0 4px 14px color-mix(in oklch, var(--accent-1), transparent 60%)',
+          }}
+          aria-hidden="false"
+        >
+          <span aria-hidden="true">{initial}</span>
+        </Link>
+      )}
 
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Link

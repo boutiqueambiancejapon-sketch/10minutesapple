@@ -36,11 +36,11 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 }
 
 const HERO_CONFIG: Record<string, { emoji: string; accentRgba: string }> = {
-  iphone:  { emoji: '📱', accentRgba: 'rgba(255,61,87,0.14)' },
-  mac:     { emoji: '💻', accentRgba: 'rgba(123,97,255,0.14)' },
-  ipad:    { emoji: '🖥', accentRgba: 'rgba(61,255,192,0.12)' },
-  watch:   { emoji: '⌚', accentRgba: 'rgba(255,210,63,0.12)' },
-  airpods: { emoji: '🎧', accentRgba: 'rgba(123,97,255,0.14)' },
+  iphone:  { emoji: '📱', accentRgba: 'color-mix(in oklab, var(--accent-1) 17%, transparent)' },
+  mac:     { emoji: '💻', accentRgba: 'color-mix(in oklab, var(--accent-4) 17%, transparent)' },
+  ipad:    { emoji: '🖥', accentRgba: 'color-mix(in oklab, var(--accent-3) 14%, transparent)' },
+  watch:   { emoji: '⌚', accentRgba: 'color-mix(in oklab, var(--accent-2) 14%, transparent)' },
+  airpods: { emoji: '🎧', accentRgba: 'color-mix(in oklab, var(--accent-4) 17%, transparent)' },
 }
 
 const PUBLISHED_DATES: Record<string, string> = {

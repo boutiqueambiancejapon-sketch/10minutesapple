@@ -11,6 +11,8 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles, articleHref } from '@/lib/blog'
+import { deriveRubrique } from '@/lib/rubrique-articles'
+import { RUBRIQUES } from '@/lib/rubriques'
 import { currentYear } from '@/lib/utils/year'
 import { AISummarize } from '@/components/blog/AISummarize'
 import { Tip } from '@/components/blog/Tip'
@@ -85,6 +87,9 @@ export default async function ArticlePage({ params }: { params: Params }) {
   if (!articleExists(categorie, slug)) notFound()
 
   const { meta, content } = getArticleRaw(categorie, slug)
+  const rub = deriveRubrique(meta)
+  const rubColor = RUBRIQUES[rub].colorVar
+  const rubLabel = RUBRIQUES[rub].labelSingular
   const { content: mdxContent } = await compileMDX({
     source: content,
     options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
@@ -178,8 +183,8 @@ export default async function ArticlePage({ params }: { params: Params }) {
       <ReadingProgress />
       <main id="main-content">
         <article>
-          {/* Header — gradient aurora léger + breadcrumb + H1 serif */}
-          <div className="article-hero-band">
+          {/* Header — bandeau coloré par rubrique + breadcrumb + H1 */}
+          <div className="article-hero-band" style={{ background: `color-mix(in oklab, ${rubColor} 10%, var(--bg-primary))`, borderBottom: `3px solid ${rubColor}` }}>
           <header className="article-header-inner">
             {/* Breadcrumb */}
             <nav aria-label="Fil d'Ariane" className="article-breadcrumb">
@@ -194,13 +199,15 @@ export default async function ArticlePage({ params }: { params: Params }) {
                   <Link href={`/blog/${categorie}`}>{catLabel}</Link>
                 </li>
                 <li aria-hidden="true">›</li>
-                <li className="article-breadcrumb-muted">Comparatifs</li>
+                <li>
+                  <Link href={`/${RUBRIQUES[rub].route}`} className="article-breadcrumb-accent">{RUBRIQUES[rub].label}</Link>
+                </li>
               </ol>
             </nav>
 
-            {/* Eyebrow — pill gradient + reading time */}
+            {/* Eyebrow — pill rubrique + reading time */}
             <div className="article-eyebrow">
-              <span className="article-pill">{catLabel.toUpperCase()}</span>
+              <span className="article-pill" style={{ background: rubColor }}>{rubLabel.toUpperCase()}</span>
               <span className="article-reading-time">· {meta.readingTimeMin} min de lecture</span>
             </div>
 

@@ -64,6 +64,7 @@ export type ArticleMeta = {
   prix?: string
   prixBarre?: string
   asin?: string
+  auteur?: string
 }
 
 /** Retourne le href correct pour un article (blog ou standalone). */
@@ -100,6 +101,7 @@ function parseMeta(data: Record<string, unknown>, slug: string, categorie: strin
     prix: data.prix as string | undefined,
     prixBarre: data.prixBarre as string | undefined,
     asin: data.asin as string | undefined,
+    auteur: data.auteur as string | undefined,
   }
 }
 

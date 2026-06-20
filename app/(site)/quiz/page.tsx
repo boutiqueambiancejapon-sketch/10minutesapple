@@ -52,7 +52,7 @@ export default function QuizPage() {
         <section
           style={{
             background:
-              'radial-gradient(ellipse 80% 55% at 50% 0%, rgba(123,97,255,0.20) 0%, var(--bg-primary) 70%)',
+              'radial-gradient(ellipse 80% 55% at 50% 0%, color-mix(in oklab, var(--accent-4) 24%, transparent) 0%, var(--bg-primary) 70%)',
             padding: 'var(--space-16) var(--space-6) var(--space-10)',
           }}
         >
@@ -88,7 +88,7 @@ export default function QuizPage() {
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
                 color: 'var(--accent-4)',
-                background: 'rgba(123,97,255,0.12)',
+                background: 'color-mix(in oklab, var(--accent-4) 14%, transparent)',
                 padding: '4px 14px',
                 borderRadius: 'var(--radius-full)',
                 marginBottom: 'var(--space-5)',

@@ -55,6 +55,15 @@ export type ArticleMeta = {
   draft?: boolean
   stickyCta?: { label: string; url: string }[]
   stickyCtaMessage?: string
+  /** Bloc verdict V2 (jauge + barres) — rendu si `note` defini. */
+  note?: number
+  verdict?: string
+  criteres?: { label: string; note: number }[]
+  /** Buy-box V2. */
+  produit?: string
+  prix?: string
+  prixBarre?: string
+  asin?: string
 }
 
 /** Retourne le href correct pour un article (blog ou standalone). */
@@ -84,6 +93,13 @@ function parseMeta(data: Record<string, unknown>, slug: string, categorie: strin
     draft: !!data.draft,
     stickyCta: data.stickyCta as { label: string; url: string }[] | undefined,
     stickyCtaMessage: data.stickyCtaMessage as string | undefined,
+    note: data.note as number | undefined,
+    verdict: data.verdict as string | undefined,
+    criteres: data.criteres as { label: string; note: number }[] | undefined,
+    produit: data.produit as string | undefined,
+    prix: data.prix as string | undefined,
+    prixBarre: data.prixBarre as string | undefined,
+    asin: data.asin as string | undefined,
   }
 }
 

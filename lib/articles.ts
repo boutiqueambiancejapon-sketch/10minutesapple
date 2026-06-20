@@ -29,6 +29,13 @@ export type StandaloneArticleMeta = {
   stickyCtaMessage?: string
   draft?: boolean
   auteur?: string
+  note?: number
+  verdict?: string
+  criteres?: { label: string; note: number }[]
+  produit?: string
+  prix?: string
+  prixBarre?: string
+  asin?: string
 }
 
 export function getAllStandaloneArticles(): StandaloneArticleMeta[] {

@@ -35,6 +35,7 @@ import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
 import { StickyCTA } from '@/components/blog/StickyCTA'
 import { ArticleSidebar } from '@/components/blog/ArticleSidebar'
+import { ArticleVerdict, ArticleBuyBox } from '@/components/blog/ArticleV2Blocks'
 import type { ReactNode, CSSProperties } from 'react'
 
 export const revalidate = 86400
@@ -226,6 +227,9 @@ export default async function ArticlePage({ params }: { params: Params }) {
             />
           </header>
           </div>{/* /article-hero-band */}
+
+          <ArticleVerdict note={meta.note} verdict={meta.verdict ?? meta.description} criteres={meta.criteres} />
+          <ArticleBuyBox produit={meta.produit} prix={meta.prix} prixBarre={meta.prixBarre} asin={meta.asin} productName={meta.title} />
 
           {/* Body — grille article + sidebar */}
           <div className="article-body-grid">

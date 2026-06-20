@@ -78,9 +78,9 @@ const CYCLES: CyclePrix[] = [
 ]
 
 const REC_CONFIG = {
-  acheter: { label: 'Bon moment', color: 'var(--accent-3)', bg: 'rgba(61,255,192,0.08)' },
-  attendre: { label: 'Attendre', color: 'var(--accent-2)', bg: 'rgba(255,210,63,0.08)' },
-  deal: { label: 'Très bon deal', color: 'var(--accent-1)', bg: 'rgba(255,61,87,0.08)' },
+  acheter: { label: 'Bon moment', color: 'var(--accent-3)', bg: 'color-mix(in oklab, var(--accent-3) 10%, transparent)' },
+  attendre: { label: 'Attendre', color: 'var(--accent-2)', bg: 'color-mix(in oklab, var(--accent-2) 10%, transparent)' },
+  deal: { label: 'Très bon deal', color: 'var(--accent-1)', bg: 'color-mix(in oklab, var(--accent-1) 10%, transparent)' },
 }
 
 const jsonLd = {
@@ -189,7 +189,7 @@ export default function SimulateurPage() {
               color: 'var(--accent-2)',
               fontWeight: 600,
               textDecoration: 'none',
-              borderBottom: '1px solid rgba(255,210,63,0.4)',
+              borderBottom: '1px solid color-mix(in oklab, var(--accent-2) 40%, transparent)',
               paddingBottom: '1px',
             }}
           >
@@ -318,7 +318,7 @@ export default function SimulateurPage() {
                         fontWeight: 600,
                         color: 'var(--accent-2)',
                         textDecoration: 'none',
-                        borderBottom: '1px solid rgba(255,210,63,0.35)',
+                        borderBottom: '1px solid color-mix(in oklab, var(--accent-2) 40%, transparent)',
                         paddingBottom: '1px',
                       }}
                     >

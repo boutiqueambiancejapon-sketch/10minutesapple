@@ -18,6 +18,7 @@ import { RUBRIQUES } from '@/lib/rubriques'
 import { getArticleAuthor } from '@/lib/authors'
 import { getCTAsForCategory } from '@/lib/article-ctas'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
+import { AISummarize } from '@/components/blog/AISummarize'
 import { Tip } from '@/components/blog/Tip'
 import { Warning } from '@/components/blog/Warning'
 import { Verdict } from '@/components/blog/Verdict'
@@ -32,6 +33,8 @@ import { ProductCTA } from '@/components/blog/ProductCTA'
 import { AutoProductCTAs } from '@/components/blog/AutoProductCTAs'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { FaqAccordion } from '@/components/blog/FaqAccordion'
+import { ArticleSidebar } from '@/components/blog/ArticleSidebar'
+import { ArticleVerdict, ArticleBuyBox } from '@/components/blog/ArticleV2Blocks'
 import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
 import { StickyCTA } from '@/components/blog/StickyCTA'
@@ -166,81 +169,82 @@ export default async function StandaloneArticlePage({ params }: { params: Params
             </header>
           </div>
 
-          {/* Feature Image */}
-          {meta.featureImage && (
-            <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 var(--space-6) var(--space-6)' }}>
-              <Image
-                src={meta.featureImage}
-                alt={meta.title}
-                width={760}
-                height={400}
-                priority
-                style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-lg, 12px)', objectFit: 'cover' }}
-              />
-            </div>
-          )}
+          <ArticleVerdict note={meta.note} verdict={meta.verdict ?? meta.description} criteres={meta.criteres} />
+          <ArticleBuyBox produit={meta.produit} prix={meta.prix} prixBarre={meta.prixBarre} asin={meta.asin} productName={meta.title} />
 
-          <div style={{ maxWidth: '760px', margin: '0 auto', padding: '0 var(--space-6) var(--space-12)' }}>
-            {meta.aiSummary && meta.aiSummary.length > 0 && (
-              <div style={{ borderTop: '2px solid var(--accent-4)', borderBottom: '1px solid var(--border)', paddingTop: 'var(--space-4)', paddingBottom: 'var(--space-4)', marginBottom: 'var(--space-8)' }}>
-                <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '10px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--accent-4)', display: 'block', marginBottom: 'var(--space-3)' }}>En bref</span>
-                <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-                  {meta.aiSummary.map((point, i) => (
-                    <li key={i} style={{ display: 'flex', gap: 'var(--space-3)', fontSize: '14px', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                      <span style={{ color: 'var(--accent-4)', flexShrink: 0, fontWeight: 700 }} aria-hidden="true">→</span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
+          {/* Body — grille article + sidebar */}
+          <div className="article-body-grid">
+            {/* Colonne principale */}
+            <div>
+              {/* Feature Image */}
+              {meta.featureImage && (
+                <div style={{ marginBottom: 'var(--space-6)' }}>
+                  <Image
+                    src={meta.featureImage}
+                    alt={meta.title}
+                    width={760}
+                    height={400}
+                    priority
+                    style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-lg, 12px)', objectFit: 'cover' }}
+                  />
+                </div>
+              )}
+
+              {/* AISummarize */}
+              {meta.aiSummary && meta.aiSummary.length > 0 && (
+                <AISummarize points={meta.aiSummary} />
+              )}
+
+              <div className="prose-article">{mdxContent}</div>
+              <AutoProductCTAs ctas={getCTAsForCategory(meta.categorie)} />
+
+              {/* FAQ */}
+              {meta.faq && meta.faq.length > 0 && (
+                <section aria-labelledby="faq-titre" style={{ marginTop: 'var(--space-12)' }}>
+                  <h2 id="faq-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-6)' }}>
+                    Questions fréquentes
+                  </h2>
+                  <FaqAccordion items={meta.faq} />
+                </section>
+              )}
+
+              {/* Continuer votre lecture */}
+              {related.length > 0 && (
+                <section aria-labelledby="related-titre" style={{ marginTop: 'var(--space-12)' }}>
+                  <h2 id="related-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
+                    Continuer votre lecture
+                  </h2>
+                  <ul role="list" style={{ display: 'flex', flexDirection: 'column', gap: 0, listStyle: 'none', borderTop: '1px solid var(--border)' }}>
+                    {related.map((a, i) => (
+                      <li key={a.slug} style={{ borderBottom: '1px solid var(--border)' }}>
+                        <Link href={articleHref(a)} className="related-link" style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)', padding: 'var(--space-4) 0' }}>
+                          <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '12px', color: 'var(--text-muted)', flexShrink: 0, minWidth: '24px' }}>
+                            {String(i + 1).padStart(2, '0')}
+                          </span>
+                          <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                            <span style={{ fontFamily: 'var(--next-font-primary), system-ui, sans-serif', fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.35 }}>
+                              {a.title}
+                            </span>
+                            <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+                              {CATEGORY_LABELS[a.categorie] ?? a.categorie} · {a.readingTimeMin} min
+                            </span>
+                          </span>
+                          <span style={{ color: 'var(--text-muted)', fontSize: '14px', flexShrink: 0 }} aria-hidden="true">→</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              {/* AuthorCard */}
+              <div style={{ marginTop: 'var(--space-10)' }}>
+                <AuthorCard authorSlug={author.slug} authorName={author.name} bio={author.bio} photo={author.photo} variant="inline" />
               </div>
-            )}
-
-            <div className="prose-article">{mdxContent}</div>
-            <AutoProductCTAs ctas={getCTAsForCategory(meta.categorie)} />
-
-            {/* FAQ */}
-            {meta.faq && meta.faq.length > 0 && (
-              <section aria-labelledby="faq-titre" style={{ marginTop: 'var(--space-12)' }}>
-                <h2 id="faq-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-6)' }}>
-                  Questions fréquentes
-                </h2>
-                <FaqAccordion items={meta.faq} />
-              </section>
-            )}
-
-            {/* Continuer votre lecture */}
-            {related.length > 0 && (
-              <section aria-labelledby="related-titre" style={{ marginTop: 'var(--space-12)' }}>
-                <h2 id="related-titre" style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(18px, 2.5vw, 22px)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: 'var(--space-5)' }}>
-                  Continuer votre lecture
-                </h2>
-                <ul role="list" style={{ display: 'flex', flexDirection: 'column', gap: 0, listStyle: 'none', borderTop: '1px solid var(--border)' }}>
-                  {related.map((a, i) => (
-                    <li key={a.slug} style={{ borderBottom: '1px solid var(--border)' }}>
-                      <Link href={articleHref(a)} className="related-link" style={{ textDecoration: 'none', display: 'flex', alignItems: 'baseline', gap: 'var(--space-4)', padding: 'var(--space-4) 0' }}>
-                        <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '12px', color: 'var(--text-muted)', flexShrink: 0, minWidth: '24px' }}>
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                          <span style={{ fontFamily: 'var(--next-font-primary), system-ui, sans-serif', fontSize: '15px', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.35 }}>
-                            {a.title}
-                          </span>
-                          <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
-                            {CATEGORY_LABELS[a.categorie] ?? a.categorie} · {a.readingTimeMin} min
-                          </span>
-                        </span>
-                        <span style={{ color: 'var(--text-muted)', fontSize: '14px', flexShrink: 0 }} aria-hidden="true">→</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* AuthorCard */}
-            <div style={{ marginTop: 'var(--space-10)' }}>
-              <AuthorCard authorSlug={author.slug} authorName={author.name} bio={author.bio} photo={author.photo} variant="inline" />
             </div>
+
+            {/* Sidebar V2 — Résumer IA + Au sommaire + produit de l'article */}
+            <ArticleSidebar produit={meta.produit} asin={meta.asin} prix={meta.prix} prixBarre={meta.prixBarre} productName={meta.title} />
           </div>
         </article>
       </main>

@@ -17,7 +17,7 @@ export function AISummarize({ points }: AISummarizeProps) {
       aria-label="Résumé de l'article"
       style={{
         background: 'var(--bg-surface)',
-        borderLeft: '3px solid var(--accent-4)',
+        borderLeft: '3px solid var(--route-color)',
         borderRadius: '0 var(--radius-md) var(--radius-md) 0',
         padding: 'var(--space-5) var(--space-6)',
         marginBottom: 'var(--space-8)',
@@ -31,7 +31,7 @@ export function AISummarize({ points }: AISummarizeProps) {
           fontWeight: 400,
           letterSpacing: '0.12em',
           textTransform: 'uppercase',
-          color: 'var(--accent-4)',
+          color: 'var(--route-color)',
           marginBottom: 'var(--space-3)',
         }}
       >
@@ -59,7 +59,7 @@ export function AISummarize({ points }: AISummarizeProps) {
             }}
           >
             <span
-              style={{ color: 'var(--accent-4)', flexShrink: 0, fontWeight: 700 }}
+              style={{ color: 'var(--route-color)', flexShrink: 0, fontWeight: 700 }}
               aria-hidden="true"
             >
               →

@@ -88,7 +88,7 @@ export default async function BlogPage({ searchParams }: { searchParams: SearchP
               style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-2)', padding: 'var(--space-3) var(--space-4)', fontSize: '13px', fontWeight: 700, color: 'var(--accent-1)', borderBottom: '2px solid var(--accent-1)', textDecoration: 'none', whiteSpace: 'nowrap' }}
             >
               Tous
-              <span style={{ fontSize: '11px', background: 'rgba(255,61,87,0.10)', borderRadius: 'var(--radius-full)', padding: '1px 6px' }}>
+              <span style={{ fontSize: '11px', background: 'color-mix(in oklab, var(--accent-1) 12%, transparent)', borderRadius: 'var(--radius-full)', padding: '1px 6px' }}>
                 {allArticles.length}
               </span>
             </Link>

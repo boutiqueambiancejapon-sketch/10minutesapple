@@ -13,6 +13,8 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getRelatedArticles, articleHref, CATEGORY_LABELS } from '@/lib/blog'
+import { deriveRubrique } from '@/lib/rubrique-articles'
+import { RUBRIQUES } from '@/lib/rubriques'
 import { getCTAsForCategory } from '@/lib/article-ctas'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
 import { Tip } from '@/components/blog/Tip'
@@ -72,6 +74,9 @@ export default async function StandaloneArticlePage({ params }: { params: Params
   if (!data) notFound()
 
   const { meta, content } = data
+  const rub = deriveRubrique(meta)
+  const rubColor = RUBRIQUES[rub].colorVar
+  const rubLabel = RUBRIQUES[rub].labelSingular
   const { content: mdxContent } = await compileMDX({
     source: content,
     options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
@@ -134,7 +139,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
       <ReadingProgress />
       <main id="main-content">
         <article>
-          <div className="article-hero-band">
+          <div className="article-hero-band" style={{ background: `color-mix(in oklab, ${rubColor} 10%, var(--bg-primary))`, borderBottom: `3px solid ${rubColor}` }}>
             <header style={{ maxWidth: '760px', margin: '0 auto', padding: 'var(--space-12) var(--space-6) var(--space-8)' }}>
               <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
                 <ol style={{ display: 'flex', gap: 'var(--space-2)', listStyle: 'none', fontSize: '13px', color: 'var(--text-muted)', flexWrap: 'wrap' }}>
@@ -142,12 +147,12 @@ export default async function StandaloneArticlePage({ params }: { params: Params
                   <li aria-hidden="true">›</li>
                   <li><Link href="/blog" style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>Blog</Link></li>
                   <li aria-hidden="true">›</li>
-                  <li style={{ color: 'var(--text-secondary)' }}>{catLabel}</li>
+                  <li><Link href={`/${RUBRIQUES[rub].route}`} style={{ color: rubColor, textDecoration: 'none', fontWeight: 600 }}>{RUBRIQUES[rub].label}</Link></li>
                 </ol>
               </nav>
 
-              <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent-1)', background: 'rgba(255,61,87,0.1)', padding: '3px 10px', borderRadius: 'var(--radius-full)', marginBottom: 'var(--space-4)' }}>
-                {catLabel}
+              <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', fontFamily: 'var(--next-font-mono), monospace', color: '#fff', background: rubColor, padding: '4px 10px', borderRadius: '5px', marginBottom: 'var(--space-4)' }}>
+                {rubLabel.toUpperCase()}
               </span>
 
               <h1 style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: 'clamp(28px, 5vw, 48px)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.15, marginBottom: 'var(--space-5)', textWrap: 'balance' }}>

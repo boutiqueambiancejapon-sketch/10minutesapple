@@ -15,15 +15,15 @@ const display = 'var(--next-font-display), system-ui, sans-serif'
 
 const CARDS = [
   { tag: 'ACTU', color: BLUE, hue: 250, img: '/images/da-v2/editorial/editorial-actu-ios27-home.jpeg', title: 'iOS 27 : tout ce qui change pour votre iPhone', excerpt: "Écran d'accueil modulable, IA dans Messages, app Photos repensée.", time: '4 min', kicker: 'IL Y A 4 MIN', href: '/actu' },
-  { tag: 'TEST', color: GREEN, hue: 145, img: '/images/da-v2/editorial/editorial-test-airpods-etui.jpeg', title: 'AirPods Pro 3 : le silence absolu ?', excerpt: '72 heures avec les nouveaux intras. Notre verdict complet.', time: '10 min', kicker: 'NOTE 8,7', href: '/tests' },
+  { tag: 'TEST', color: GREEN, hue: 145, img: '/images/da-v2/editorial/editorial-test-airpods-etui.jpeg', title: 'AirPods Pro 3 : le silence absolu ?', excerpt: '72 heures avec les nouveaux intras. Notre verdict complet.', time: '10 min', kicker: 'NOTE 8,7', href: '/tests/airpods-pro-3' },
   { tag: 'GUIDE', color: AMBER, hue: 70, img: '/images/da-v2/covers/cover-guide.jpeg', title: 'Quel iPhone acheter en 2026 ?', excerpt: '5 modèles testés et classés, filtrables par budget.', time: '8 min', kicker: '5 MODÈLES', href: '/guides' },
   { tag: 'DOSSIER', color: RED, hue: 25, img: '/images/da-v2/editorial/editorial-dossier-photo-hero.jpeg', title: 'La fin de la course aux mégapixels ?', excerpt: "Notre enquête sur la nouvelle stratégie photo d'Apple.", time: '10 min', kicker: 'ENQUÊTE', href: '/dossiers' },
-  { tag: 'COMPARATEUR', color: VIOLET, hue: 300, img: '/images/da-v2/packshots/packshot-iphone-air.jpeg', title: 'iPhone 17 Pro vs iPhone Air', excerpt: 'Lequel choisir ? Le face-à-face complet.', time: '6 min', kicker: 'VS', href: '/comparateur' },
+  { tag: 'COMPARATEUR', color: VIOLET, hue: 300, img: '/images/da-v2/packshots/packshot-iphone-air.jpeg', title: 'iPhone 17 Pro vs iPhone Air', excerpt: 'Lequel choisir ? Le face-à-face complet.', time: '6 min', kicker: 'VS', href: '/comparateur/iphone-17-pro-vs-iphone-air' },
   { tag: 'TUTO', color: CYAN, hue: 195, img: '/images/da-v2/editorial/editorial-tuto-batterie-reglages.jpeg', title: '12 réglages pour économiser la batterie', excerpt: 'Des gains mesurés, testés sous iOS 27.', time: '5 min', kicker: 'PAS-À-PAS', href: '/tutos' },
 ]
 
 const GUIDE_TEASER = [
-  { rank: 1, name: 'iPhone 17 Pro', why: 'Le meilleur, sans compromis', price: '1 329 €' },
+  { rank: 1, name: 'iPhone 17 Pro', why: 'Le meilleur, sans compromis', price: '1 329 €' },
   { rank: 2, name: 'iPhone 17', why: "Le bon équilibre", price: '969 €' },
   { rank: 3, name: 'iPhone 16e', why: 'Le meilleur rapport qualité-prix', price: '719 €' },
 ]
@@ -31,7 +31,7 @@ const GUIDE_TEASER = [
 const DEALS = [
   { name: 'iPhone 16', img: '/images/da-v2/packshots/packshot-iphone-16.jpeg', priceFmt: '699 €', oldFmt: '799 €', off: '−13 %', tag: 'iPhone' },
   { name: 'AirPods Pro 3', img: '/images/da-v2/packshots/packshot-airpods-pro-3.jpeg', priceFmt: '259 €', oldFmt: '279 €', off: '−7 %', tag: 'Audio' },
-  { name: 'MacBook Air M4', img: '/images/da-v2/packshots/packshot-macbook-air-m4.jpeg', priceFmt: '1 099 €', oldFmt: '1 299 €', off: '−15 %', tag: 'Mac' },
+  { name: 'MacBook Air M4', img: '/images/da-v2/packshots/packshot-macbook-air-m4.jpeg', priceFmt: '1 099 €', oldFmt: '1 299 €', off: '−15 %', tag: 'Mac' },
   { name: 'Apple Watch Series 11', img: '/images/da-v2/packshots/packshot-watch-series-11.jpeg', priceFmt: '419 €', oldFmt: '449 €', off: '−7 %', tag: 'Watch' },
 ]
 
@@ -64,7 +64,7 @@ export function HomeSectionsV2() {
             <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: GREEN }}>{'★ LE TEST DU JOUR'}</span>
             <h2 style={{ fontFamily: display, fontWeight: 800, fontSize: 'clamp(30px, 3.8vw, 52px)', lineHeight: 1, letterSpacing: '-0.03em', margin: '14px 0 16px' }}>AirPods Pro 3 :<br />le silence absolu&nbsp;?</h2>
             <p style={{ fontSize: 17, color: 'oklch(0.78 0.01 95)', maxWidth: '48ch', margin: '0 0 18px', lineHeight: 1.5 }}>Réduction de bruit, audio adaptatif, capteur cardiaque… on a passé 72h avec les nouveaux écouteurs d&#39;Apple.</p>
-            <Link href="/tests" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: mono, fontSize: 12, fontWeight: 700, border: '1px solid #fff', color: '#fff', textDecoration: 'none', padding: '9px 14px', borderRadius: 8 }}>{'LIRE LE VERDICT →'}</Link>
+            <Link href="/tests/airpods-pro-3" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: mono, fontSize: 12, fontWeight: 700, border: '1px solid #fff', color: '#fff', textDecoration: 'none', padding: '9px 14px', borderRadius: 8 }}>{'LIRE LE VERDICT →'}</Link>
           </div>
           <div style={{ textAlign: 'center' }}>
             <div style={{ position: 'relative', width: 200, height: 200, display: 'grid', placeItems: 'center' }}>
@@ -86,7 +86,7 @@ export function HomeSectionsV2() {
           <span style={{ fontFamily: mono, fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', color: VIOLET }}>{'⚔ FACE-À-FACE'}</span>
           <h2 style={{ fontFamily: display, fontWeight: 800, fontSize: 'clamp(28px, 3.6vw, 46px)', letterSpacing: '-0.03em', margin: '10px 0 0', color: 'var(--text-primary)' }}>Lequel choisir&nbsp;?</h2>
         </div>
-        <Link href="/comparateur" style={{ textDecoration: 'none', border: `2px solid ${VIOLET}`, borderRadius: 18, overflow: 'hidden', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto minmax(0,1fr)', alignItems: 'stretch' }}>
+        <Link href="/comparateur/iphone-17-pro-vs-iphone-air" style={{ textDecoration: 'none', border: `2px solid ${VIOLET}`, borderRadius: 18, overflow: 'hidden', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) auto minmax(0,1fr)', alignItems: 'stretch' }}>
           <div style={{ padding: 34, background: 'oklch(0.96 0.03 300)' }}>
             <span style={{ fontFamily: mono, fontSize: 11, color: 'oklch(0.5 0.05 300)' }}>CANDIDAT A</span>
             <h3 style={{ fontFamily: display, fontWeight: 800, fontSize: 30, margin: '6px 0 0', letterSpacing: '-0.02em', color: 'oklch(0.2 0.04 300)' }}>iPhone 17 Pro</h3>

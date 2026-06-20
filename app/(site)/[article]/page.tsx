@@ -137,7 +137,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
       ))}
 
       <ReadingProgress />
-      <main id="main-content" style={{ ['--accent-1' as string]: rubColor } as unknown as CSSProperties}>
+      <main id="main-content" style={{ ['--accent-1' as string]: rubColor, ['--aurora-1' as string]: rubColor, ['--aurora-2' as string]: rubColor, ['--aurora-3' as string]: rubColor } as unknown as CSSProperties}>
         <article>
           <div className="article-hero-band" style={{ background: `color-mix(in oklab, ${rubColor} 10%, var(--bg-primary))`, borderBottom: `3px solid ${rubColor}` }}>
             <header style={{ maxWidth: '760px', margin: '0 auto', padding: 'var(--space-12) var(--space-6) var(--space-8)' }}>

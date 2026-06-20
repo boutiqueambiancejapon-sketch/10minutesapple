@@ -13,6 +13,7 @@ import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getAllArticles, getArticleRaw, articleExists, getRelatedArticles, articleHref } from '@/lib/blog'
 import { deriveRubrique } from '@/lib/rubrique-articles'
 import { RUBRIQUES } from '@/lib/rubriques'
+import { getArticleAuthor } from '@/lib/authors'
 import { currentYear } from '@/lib/utils/year'
 import { AISummarize } from '@/components/blog/AISummarize'
 import { Tip } from '@/components/blog/Tip'
@@ -91,6 +92,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
   const rub = deriveRubrique(meta)
   const rubColor = RUBRIQUES[rub].colorVar
   const rubLabel = RUBRIQUES[rub].labelSingular
+  const author = getArticleAuthor(meta.auteur, rub)
   const { content: mdxContent } = await compileMDX({
     source: content,
     options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
@@ -143,11 +145,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
       url: `https://10minutesapple.com/blog/${categorie}/${slug}`,
       author: {
         '@type': 'Person',
-        name: 'Mathias',
+        name: author.name,
         jobTitle: 'Fan Apple & testeur depuis le 3G',
-        url: 'https://10minutesapple.com/auteurs/mathias',
-        description:
-          'Utilisateur Apple depuis l\'iPhone 3G, jailbreakeur Cydia de la première heure.',
+        url: `https://10minutesapple.com/auteurs/${author.slug}`,
+        description: author.bio,
         knowsAbout: ['iPhone', 'iOS', 'MacBook', 'iPad', 'jailbreak', 'accessoires Apple'],
       },
       publisher: {
@@ -219,8 +220,9 @@ export default async function ArticlePage({ params }: { params: Params }) {
             )}
 
             <AuthorByline
-              authorSlug="mathias"
-              authorName="Mathias"
+              authorSlug={author.slug}
+              authorName={author.name}
+              photo={author.photo}
               publishedAt={meta.publishedAt}
               updatedAt={meta.updatedAt}
               readingTimeMin={meta.readingTimeMin}
@@ -352,9 +354,10 @@ export default async function ArticlePage({ params }: { params: Params }) {
               {/* AuthorCard */}
               <div style={{ marginTop: 'var(--space-10)' }}>
                 <AuthorCard
-                  authorSlug="mathias"
-                  authorName="Mathias"
-                  bio="Fan Apple depuis le 3G. Testeur du quotidien, jailbreakeur de la première heure. Pas d'affiliation constructeur — juste l'honnêteté."
+                  authorSlug={author.slug}
+                  authorName={author.name}
+                  bio={author.bio}
+                  photo={author.photo}
                   variant="inline"
                 />
               </div>

@@ -28,6 +28,7 @@ export type StandaloneArticleMeta = {
   stickyCta?: StickyCTAData[]
   stickyCtaMessage?: string
   draft?: boolean
+  auteur?: string
 }
 
 export function getAllStandaloneArticles(): StandaloneArticleMeta[] {

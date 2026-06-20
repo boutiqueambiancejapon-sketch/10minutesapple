@@ -1,20 +1,28 @@
 @import "tailwindcss";
 
 @theme {
-  /* Colors */
-  --color-accent-1: #FF3D57;
-  --color-accent-2: #FFD23F;
-  --color-accent-3: #3DFFC0;
-  --color-accent-4: #7B61FF;
-  --color-bg-primary: #0A0A0F;
-  --color-bg-surface: #13131A;
-  --color-bg-surface-2: #1C1C26;
-  --color-text-primary: #F0F0F5;
-  --color-text-secondary: #9090A8;
-  --color-text-muted: #55556A;
-  --color-success: #3DFFC0;
-  --color-warning: #FFD23F;
-  --color-error: #FF3D57;
+  /* Colors — base claire (DA V2) */
+  --color-accent-1: #C8001F;
+  --color-accent-2: #7A5500;
+  --color-accent-3: #006B4F;
+  --color-accent-4: #5B3FDF;
+  --color-bg-primary: #F7F5F0;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-surface-2: #EFEDE7;
+  --color-text-primary: #1B1B24;
+  --color-text-secondary: #5B5A66;
+  --color-text-muted: #757480;
+  --color-success: #006B4F;
+  --color-warning: #7A5500;
+  --color-error: #C8001F;
+
+  /* Couleurs de rubrique (DA V2) */
+  --color-rubric-actu:    oklch(0.62 0.20 250);
+  --color-rubric-test:    oklch(0.70 0.18 145);
+  --color-rubric-guide:   oklch(0.72 0.17 70);
+  --color-rubric-compare: oklch(0.58 0.20 300);
+  --color-rubric-dossier: oklch(0.60 0.20 25);
+  --color-rubric-tuto:    oklch(0.66 0.15 195);
 
   /* Fonts — Next.js injects the actual values via class on <html> */
   --font-primary: var(--next-font-primary);
@@ -23,54 +31,63 @@
 }
 
 :root {
-  /* Fonds */
-  --bg-primary:   #0A0A0F;
-  --bg-surface:   #13131A;
-  --bg-surface-2: #1C1C26;
+  /* Fonds — clair (DA V2, creme) */
+  --bg-primary:   #F7F5F0;
+  --bg-surface:   #FFFFFF;
+  --bg-surface-2: #EFEDE7;
 
-  /* Accents */
-  --accent-1: #FF3D57;
-  --accent-2: #FFD23F;
-  --accent-3: #3DFFC0;
-  --accent-4: #7B61FF;
-  --accent-5: #3D9BFF;
+  /* Accents semantiques */
+  --accent-1: #C8001F;
+  --accent-2: #7A5500;
+  --accent-3: #006B4F;
+  --accent-4: #5B3FDF;
+  --accent-5: #0066CC;
 
-  /* Texte */
-  --text-primary:   #F0F0F5;
-  --text-secondary: #9090A8;
-  --text-muted:     #55556A;
+  /* Couleurs de rubrique + couleur de la route active */
+  --rubric-actu:    oklch(0.62 0.20 250);
+  --rubric-test:    oklch(0.70 0.18 145);
+  --rubric-guide:   oklch(0.72 0.17 70);
+  --rubric-compare: oklch(0.58 0.20 300);
+  --rubric-dossier: oklch(0.60 0.20 25);
+  --rubric-tuto:    oklch(0.66 0.15 195);
+  --route-color:    var(--accent-1);
+
+  /* Texte — encre */
+  --text-primary:   #1B1B24;
+  --text-secondary: #5B5A66;
+  --text-muted:     #757480;
 
   /* Borders */
-  --border:        rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.15);
+  --border:        rgba(0, 0, 0, 0.09);
+  --border-strong: rgba(0, 0, 0, 0.18);
 
-  /* Sémantique */
-  --success: #3DFFC0;
-  --warning: #FFD23F;
-  --error:   #FF3D57;
+  /* Semantique */
+  --success: #006B4F;
+  --warning: #7A5500;
+  --error:   #C8001F;
 
   /* Glass */
-  --glass-bg:     rgba(19, 19, 26, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-bg:     rgba(255, 255, 255, 0.80);
+  --glass-border: rgba(0, 0, 0, 0.09);
   --glass-blur:   16px;
-  --sticky-cta-glass: rgba(10, 10, 15, 0.35);
+  --sticky-cta-glass: rgba(255, 255, 255, 0.35);
 
-  /* Nav (hardcoded dans inline styles → variables pour le light mode) */
-  --nav-bg-scrolled: rgba(10, 10, 15, 0.97);
-  --nav-mobile-bg:   #0A0A0F;
+  /* Nav */
+  --nav-bg-scrolled: rgba(247, 245, 240, 0.92);
+  --nav-mobile-bg:   #F7F5F0;
 
   /* Effets DA */
-  --noise-opacity:    0.04;
-  --aurora-1:         #FF3D57;
-  --aurora-2:         #7B61FF;
-  --aurora-3:         #3DFFC0;
+  --noise-opacity:    0.025;
+  --aurora-1:         #C8001F;
+  --aurora-2:         #5B3FDF;
+  --aurora-3:         #006B4F;
   --gradient-angle:   135deg;
 
   /* Shadows */
-  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.6);
-  --shadow-accent: 0 0 24px rgba(255, 61, 87, 0.25);
+  --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.10);
+  --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.15);
+  --shadow-accent: 0 0 24px rgba(200, 0, 31, 0.20);
 
   /* Transitions */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -110,77 +127,66 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote {
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
-/* ===== LIGHT MODE — prefers-color-scheme: light ===== */
+/* ===== DARK MODE — prefers-color-scheme: dark (sauf si data-theme=light) ===== */
 /*
- * Palette choisie pour le contraste :
- * - text-primary  #1D1D1F → 16:1 sur bg-primary ✓
- * - text-secondary #4A4A52 → ~9:1 sur blanc ✓
- * - text-muted    #6C6C70 → ~6:1 sur blanc ✓ (WCAG AA)
- * - accent-1 rouge  #C8001F → 6.1:1 sur blanc ✓
- * - accent-2 ambre  #7A5500 → 7.3:1 sur blanc ✓
- * - accent-3 teal   #006B4F → 6.6:1 sur blanc ✓
- * - accent-4 violet #5B3FDF → 6.5:1 sur blanc ✓
+ * Base claire DA V2 (defaut). Le sombre s'active si le systeme est en sombre
+ * et que l'utilisateur n'a pas force le clair, ou via le toggle data-theme.
+ * Contraste clair verifie : encre #1B1B24 sur creme #F7F5F0 (~15:1),
+ * accents red/amber/teal/violet conformes WCAG AA sur fond clair.
  */
-
-/* Sélecteur commun — utilisé par la media query ET par data-theme="light" */
-/*
- * Variables light — réutilisées par la media query ET le toggle data-theme.
- * Toutes les propriétés custom sont posées directement sur html/body pour
- * éviter le sélecteur descendant bugué "html :root" (espace = descendant).
- */
-@media (prefers-color-scheme: light) {
-  html:not([data-theme="dark"]) {
-    color-scheme: light;
-    --bg-primary:   #F5F5F7;
-    --bg-surface:   #FFFFFF;
-    --bg-surface-2: #E8E8ED;
-    --accent-1: #C8001F;
-    --accent-2: #7A5500;
-    --accent-3: #006B4F;
-    --accent-4: #5B3FDF;
-    --accent-5: #0066CC;
-    --text-primary:   #1D1D1F;
-    --text-secondary: #4A4A52;
-    --text-muted:     #6C6C70;
-    --border:        rgba(0, 0, 0, 0.09);
-    --border-strong: rgba(0, 0, 0, 0.18);
-    --success: #006B4F;
-    --warning: #7A5500;
-    --error:   #C8001F;
-    --glass-bg:     rgba(255, 255, 255, 0.80);
-    --glass-border: rgba(0, 0, 0, 0.09);
-    --sticky-cta-glass: rgba(255, 255, 255, 0.35);
-    --noise-opacity: 0.025;
-    --aurora-1:      #C8001F;
-    --aurora-2:      #5B3FDF;
-    --aurora-3:      #006B4F;
-    --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.10);
-    --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.12);
-    --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.15);
-    --shadow-accent: 0 0 24px rgba(200, 0, 31, 0.20);
-    --nav-bg-scrolled: rgba(245, 245, 247, 0.97);
-    --nav-mobile-bg:   #F5F5F7;
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg-primary:   #0A0A0F;
+    --bg-surface:   #13131A;
+    --bg-surface-2: #1C1C26;
+    --accent-1: #FF3D57;
+    --accent-2: #FFD23F;
+    --accent-3: #3DFFC0;
+    --accent-4: #7B61FF;
+    --accent-5: #3D9BFF;
+    --text-primary:   #F0F0F5;
+    --text-secondary: #9090A8;
+    --text-muted:     #55556A;
+    --border:        rgba(255, 255, 255, 0.07);
+    --border-strong: rgba(255, 255, 255, 0.15);
+    --success: #3DFFC0;
+    --warning: #FFD23F;
+    --error:   #FF3D57;
+    --glass-bg:     rgba(19, 19, 26, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --sticky-cta-glass: rgba(10, 10, 15, 0.35);
+    --noise-opacity: 0.04;
+    --aurora-1:      #FF3D57;
+    --aurora-2:      #7B61FF;
+    --aurora-3:      #3DFFC0;
+    --shadow-sm:     0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.5);
+    --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.6);
+    --shadow-accent: 0 0 24px rgba(255, 61, 87, 0.25);
+    --nav-bg-scrolled: rgba(10, 10, 15, 0.97);
+    --nav-mobile-bg:   #0A0A0F;
   }
 }
 
-/* Force light mode via data-theme (toggle manuel, override media query) */
+/* Force light mode via data-theme (override media query) */
 html[data-theme="light"] {
   color-scheme: light;
-  --bg-primary:   #F5F5F7;
+  --bg-primary:   #F7F5F0;
   --bg-surface:   #FFFFFF;
-  --bg-surface-2: #E8E8ED;
+  --bg-surface-2: #EFEDE7;
   --accent-1: #C8001F;
   --accent-2: #7A5500;
   --accent-3: #006B4F;
   --accent-4: #5B3FDF;
   --accent-5: #0066CC;
-  --text-primary:   #1D1D1F;
-  --text-secondary: #4A4A52;
-  --text-muted:     #6C6C70;
+  --text-primary:   #1B1B24;
+  --text-secondary: #5B5A66;
+  --text-muted:     #757480;
   --border:        rgba(0, 0, 0, 0.09);
   --border-strong: rgba(0, 0, 0, 0.18);
   --success: #006B4F;
@@ -197,11 +203,11 @@ html[data-theme="light"] {
   --shadow-md:     0 4px 16px rgba(0, 0, 0, 0.12);
   --shadow-lg:     0 8px 32px rgba(0, 0, 0, 0.15);
   --shadow-accent: 0 0 24px rgba(200, 0, 31, 0.20);
-  --nav-bg-scrolled: rgba(245, 245, 247, 0.97);
-  --nav-mobile-bg:   #F5F5F7;
+  --nav-bg-scrolled: rgba(247, 245, 240, 0.92);
+  --nav-mobile-bg:   #F7F5F0;
 }
 
-/* Force dark mode via data-theme (override media query light) */
+/* Force dark mode via data-theme (override media query) */
 html[data-theme="dark"] {
   color-scheme: dark;
   --bg-primary:   #0A0A0F;
@@ -575,7 +581,7 @@ body {
 .prose-article h2 {
   font-family: var(--next-font-display), serif;
   font-size: clamp(22px, 3vw, 30px);
-  font-weight: 400;
+  font-weight: 800;
   color: var(--text-primary);
   margin-top: var(--space-12);
   margin-bottom: var(--space-4);
@@ -831,11 +837,11 @@ body {
   color: var(--text-secondary);
 }
 
-/* H1 hero article — Instrument Serif 400, grande taille */
+/* H1 hero article — Bricolage Grotesque 800, grande taille */
 .article-hero-h1 {
   font-family: var(--next-font-display), serif;
   font-size: clamp(32px, 5.6vw, 56px);
-  font-weight: 400;
+  font-weight: 800;
   color: var(--text-primary);
   line-height: 1.08;
   letter-spacing: -0.025em;

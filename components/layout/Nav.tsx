@@ -1,70 +1,29 @@
 'use client'
 
 /**
- * Nav — navigation principale.
- * Desktop : liens directs + dropdowns CSS (hover/focus-within).
- * Mobile : overlay avec sections expandables.
- * Pas d'event handler inline — CSS :hover + :focus-within pour les dropdowns.
+ * Nav — navigation principale DA V2.
+ * Desktop : pastilles des 6 rubriques (couleur signature + etat actif) + outils.
+ * Mobile : overlay avec les rubriques (pastille de couleur) puis les outils.
+ * Pas de dropdown : la taxonomie est portee par les rubriques (hubs /[route]).
  */
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
+import { RUBRIQUE_LIST, type Rubrique } from '@/lib/rubriques'
 
-const CHOISIR = [
-  { href: '/choisir/iphone',  label: 'Quel iPhone choisir ?' },
-  { href: '/choisir/mac',     label: 'Quel Mac choisir ?' },
-  { href: '/choisir/ipad',    label: 'Quel iPad choisir ?' },
-  { href: '/choisir/watch',   label: 'Quelle Apple Watch choisir ?' },
-  { href: '/choisir/airpods', label: 'Quels AirPods choisir ?' },
+const TOOLS = [
+  { href: '/deals', label: 'Deals' },
+  { href: '/quiz', label: 'Quiz' },
+  { href: '/simulateur', label: 'Simulateur' },
 ]
-
-const COMPARER = [
-  { href: '/comparer/iphone',  label: 'iPhone' },
-  { href: '/comparer/mac',     label: 'Mac' },
-  { href: '/comparer/ipad',    label: 'iPad' },
-  { href: '/comparer/watch',   label: 'Apple Watch' },
-  { href: '/comparer/airpods', label: 'AirPods' },
-]
-
-const FLAT_LINKS = [
-  { href: '/blog',        label: 'Blog' },
-  { href: '/deals',       label: 'Deals' },
-  { href: '/simulateur',  label: 'Simulateur' },
-]
-
-const navLinkBase = {
-  fontSize: '14px',
-  textDecoration: 'none',
-  paddingBottom: '2px',
-  transition: 'color 200ms ease, border-color 200ms ease',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '3px',
-} as const
-
-const navLinkStyle = (active: boolean) => ({
-  ...navLinkBase,
-  fontWeight: active ? 600 : 400,
-  color: active ? 'var(--text-primary)' : 'var(--text-secondary)',
-  borderBottom: active ? '2px solid var(--accent-1)' : '2px solid transparent',
-})
-
-const navBtnStyle = (active: boolean) => ({
-  ...navLinkStyle(active),
-  background: 'none',
-  border: 'none',
-  borderBottom: active ? '2px solid var(--accent-1)' : '2px solid transparent',
-  cursor: 'pointer',
-})
 
 export function Nav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [mobileSection, setMobileSection] = useState<string | null>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32)
@@ -73,18 +32,17 @@ export function Nav() {
   }, [])
 
   useEffect(() => {
-    const id = setTimeout(() => { setOpen(false); setMobileSection(null) })
+    const id = setTimeout(() => setOpen(false))
     return () => clearTimeout(id)
   }, [pathname])
 
-  // Homepage : le header est int\u00e9gr\u00e9 au hero (voir HomeHeader).
+  // Homepage : le header est integre au hero (voir HomeHeader).
   if (pathname === '/') return null
 
+  const isRubriqueActive = (r: Rubrique) =>
+    pathname === `/${r.route}` || pathname.startsWith(`/${r.route}/`)
   const isActive = (href: string) =>
     pathname === href || (href !== '/' && pathname.startsWith(href))
-
-  const isGroupActive = (items: { href: string }[]) =>
-    items.some(({ href }) => isActive(href))
 
   return (
     <>
@@ -95,55 +53,55 @@ export function Nav() {
           backgroundColor: (scrolled || open) ? 'var(--sticky-cta-glass)' : 'transparent',
           backdropFilter: (scrolled || open) ? 'blur(40px) saturate(1.8)' : 'none',
           WebkitBackdropFilter: (scrolled || open) ? 'blur(40px) saturate(1.8)' : 'none',
-          borderBottom: (scrolled || open) ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
+          borderBottom: (scrolled || open) ? '1px solid var(--border)' : '1px solid transparent',
           transition: 'background-color 300ms ease, backdrop-filter 300ms ease, border-color 300ms ease',
         }}
       >
-        <nav aria-label="Navigation principale" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)', height: '60px', display: 'flex', alignItems: 'center', gap: 'var(--space-6)' }}>
+        <nav aria-label="Navigation principale" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 var(--space-6)', minHeight: '60px', display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
 
           {/* Logo */}
-          <Link href="/" aria-label="10minutesapple — accueil" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: '2px' }}>
-            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 800, fontSize: '16px', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>10min</span>
-            <span style={{ color: 'var(--accent-1)', fontWeight: 800, fontSize: '18px', lineHeight: 1 }} className="nav-logo-dot">·</span>
-            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 400, fontSize: '16px', color: 'var(--text-secondary)' }}>Apple</span>
+          <Link href="/" aria-label="10minutesapple — accueil" style={{ textDecoration: 'none', flexShrink: 0, display: 'flex', alignItems: 'center', gap: '9px' }}>
+            <span style={{ position: 'relative', width: '30px', height: '30px', borderRadius: '50%', background: 'conic-gradient(var(--accent-1) 0deg, var(--accent-1) 300deg, color-mix(in oklab, var(--text-primary) 12%, transparent) 300deg)', display: 'grid', placeItems: 'center' }} className="nav-logo-dot">
+              <span style={{ position: 'absolute', inset: '3px', borderRadius: '50%', background: 'var(--bg-primary)' }} />
+              <span style={{ position: 'relative', fontFamily: 'var(--next-font-mono), monospace', fontWeight: 700, fontSize: '11px', color: 'var(--text-primary)' }}>{"10'"}</span>
+            </span>
+            <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: 800, fontSize: '18px', letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1 }}>minutes<span style={{ color: 'var(--accent-1)' }}>apple</span></span>
           </Link>
 
-          {/* Desktop */}
-          <ul role="list" style={{ display: 'flex', gap: 'var(--space-5)', listStyle: 'none', margin: 0, padding: 0, marginLeft: 'auto', alignItems: 'center' }} className="nav-desktop">
-
-            {/* Choisir — dropdown */}
-            <li className="dropdown-trigger">
-              <button style={navBtnStyle(isGroupActive(CHOISIR))} aria-haspopup="true">
-                Choisir <ChevronDown size={12} aria-hidden="true" />
-              </button>
-              <div className="dropdown-panel" role="menu">
-                {CHOISIR.map(({ href, label }) => (
-                  <Link key={href} href={href} role="menuitem" className={`dropdown-item${isActive(href) ? ' dropdown-item-active' : ''}`}>{label}</Link>
-                ))}
-              </div>
-            </li>
-
-            {/* Comparer — dropdown */}
-            <li className="dropdown-trigger">
-              <Link href="/comparer" style={navLinkStyle(isActive('/comparer'))} aria-haspopup="true">
-                Comparer <ChevronDown size={12} aria-hidden="true" />
-              </Link>
-              <div className="dropdown-panel" role="menu">
-                {COMPARER.map(({ href, label }) => (
-                  <Link key={href} href={href} role="menuitem" className={`dropdown-item${isActive(href) ? ' dropdown-item-active' : ''}`}>{label}</Link>
-                ))}
-              </div>
-            </li>
-
-            {/* Liens plats */}
-            {FLAT_LINKS.map(({ href, label }) => (
-              <li key={href}>
-                <Link href={href} style={navLinkStyle(isActive(href))}>{label}</Link>
-              </li>
-            ))}
+          {/* Desktop : pastilles rubriques */}
+          <ul role="list" className="nav-desktop" style={{ display: 'flex', gap: '4px', listStyle: 'none', margin: 0, padding: 0, marginLeft: 'auto', alignItems: 'center', flexWrap: 'wrap' }}>
+            {RUBRIQUE_LIST.map((r) => {
+              const active = isRubriqueActive(r)
+              return (
+                <li key={r.key}>
+                  <Link
+                    href={`/${r.route}`}
+                    aria-current={active ? 'page' : undefined}
+                    style={{
+                      fontFamily: 'var(--next-font-mono), monospace',
+                      fontSize: '11.5px', fontWeight: 700, letterSpacing: '0.02em',
+                      textTransform: 'uppercase', textDecoration: 'none',
+                      padding: '7px 11px', borderRadius: '7px',
+                      color: active ? '#fff' : 'var(--text-primary)',
+                      background: active ? r.colorVar : `color-mix(in oklab, ${r.colorVar} 12%, transparent)`,
+                      transition: 'background 200ms ease, color 200ms ease',
+                    }}
+                  >
+                    {r.label}
+                  </Link>
+                </li>
+              )
+            })}
           </ul>
 
-          {/* Bouton thème — desktop et mobile */}
+          {/* Desktop : outils */}
+          <div className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)' }}>
+            {TOOLS.map(({ href, label }) => (
+              <Link key={href} href={href} style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '11.5px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', textDecoration: 'none', color: isActive(href) ? 'var(--text-primary)' : 'var(--text-secondary)' }}>{label}</Link>
+            ))}
+          </div>
+
+          {/* Bouton thème */}
           <ThemeToggle />
 
           {/* Hamburger */}
@@ -168,37 +126,22 @@ export function Nav() {
 
       {/* Mobile overlay */}
       {open && (
-        <div style={{ position: 'fixed', inset: '60px 0 0 0', backgroundColor: 'var(--nav-mobile-bg)', borderTop: '1px solid var(--border)', padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-2)', zIndex: 39, overflowY: 'auto' }} aria-label="Menu mobile" role="dialog">
+        <div style={{ position: 'fixed', inset: '60px 0 0 0', backgroundColor: 'var(--nav-mobile-bg)', borderTop: '1px solid var(--border)', padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', zIndex: 39, overflowY: 'auto' }} aria-label="Menu mobile" role="dialog">
 
-          {/* Section Choisir */}
-          <button onClick={() => setMobileSection(s => s === 'choisir' ? null : 'choisir')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-3) 0', width: '100%' }}>
-            <span style={{ fontSize: '22px', fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: isGroupActive(CHOISIR) ? 700 : 400, color: isGroupActive(CHOISIR) ? 'var(--accent-1)' : 'var(--text-primary)' }}>Choisir</span>
-            <ChevronDown size={18} style={{ color: 'var(--text-secondary)', transform: mobileSection === 'choisir' ? 'rotate(180deg)' : 'none', transition: 'transform 200ms ease' }} aria-hidden="true" />
-          </button>
-          {mobileSection === 'choisir' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', paddingLeft: 'var(--space-4)', borderLeft: '2px solid var(--accent-1)', marginBottom: 'var(--space-2)' }}>
-              {CHOISIR.map(({ href, label }) => (
-                <Link key={href} href={href} style={{ fontSize: '16px', color: isActive(href) ? 'var(--accent-1)' : 'var(--text-secondary)', textDecoration: 'none', padding: 'var(--space-2) 0' }}>{label}</Link>
-              ))}
-            </div>
-          )}
+          {RUBRIQUE_LIST.map((r) => {
+            const active = isRubriqueActive(r)
+            return (
+              <Link key={r.key} href={`/${r.route}`} aria-current={active ? 'page' : undefined} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: 'var(--space-3) 0', textDecoration: 'none' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: r.colorVar, flexShrink: 0 }} aria-hidden="true" />
+                <span style={{ fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontSize: '22px', fontWeight: active ? 800 : 600, color: active ? r.colorVar : 'var(--text-primary)' }}>{r.label}</span>
+              </Link>
+            )
+          })}
 
-          {/* Section Comparer */}
-          <button onClick={() => setMobileSection(s => s === 'comparer' ? null : 'comparer')} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--space-3) 0', width: '100%' }}>
-            <span style={{ fontSize: '22px', fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: isGroupActive(COMPARER) ? 700 : 400, color: isGroupActive(COMPARER) ? 'var(--accent-1)' : 'var(--text-primary)' }}>Comparer</span>
-            <ChevronDown size={18} style={{ color: 'var(--text-secondary)', transform: mobileSection === 'comparer' ? 'rotate(180deg)' : 'none', transition: 'transform 200ms ease' }} aria-hidden="true" />
-          </button>
-          {mobileSection === 'comparer' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-1)', paddingLeft: 'var(--space-4)', borderLeft: '2px solid var(--accent-4)', marginBottom: 'var(--space-2)' }}>
-              {COMPARER.map(({ href, label }) => (
-                <Link key={href} href={href} style={{ fontSize: '16px', color: isActive(href) ? 'var(--accent-4)' : 'var(--text-secondary)', textDecoration: 'none', padding: 'var(--space-2) 0' }}>{label}</Link>
-              ))}
-            </div>
-          )}
+          <div style={{ height: '1px', background: 'var(--border)', margin: 'var(--space-3) 0' }} aria-hidden="true" />
 
-          {/* Liens plats */}
-          {FLAT_LINKS.map(({ href, label }) => (
-            <Link key={href} href={href} style={{ fontSize: '22px', fontFamily: 'var(--next-font-display), system-ui, sans-serif', fontWeight: isActive(href) ? 700 : 400, color: isActive(href) ? 'var(--accent-1)' : 'var(--text-primary)', textDecoration: 'none', padding: 'var(--space-3) 0' }}>{label}</Link>
+          {TOOLS.concat([{ href: '/blog', label: 'Blog' }]).map(({ href, label }) => (
+            <Link key={href} href={href} style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.02em', color: isActive(href) ? 'var(--text-primary)' : 'var(--text-secondary)', textDecoration: 'none', padding: 'var(--space-2) 0' }}>{label}</Link>
           ))}
         </div>
       )}

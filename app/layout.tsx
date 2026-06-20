@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
-import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Hanken_Grotesk, Bricolage_Grotesque, Space_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
 import './globals.css'
 
 const ADSENSE_CLIENT = 'ca-pub-7295690633751101'
 
-const fontPrimary = Inter_Tight({
+const fontPrimary = Hanken_Grotesk({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   variable: '--next-font-primary',
@@ -15,19 +15,18 @@ const fontPrimary = Inter_Tight({
   display: 'swap',
 })
 
-const fontDisplay = Instrument_Serif({
+const fontDisplay = Bricolage_Grotesque({
   subsets: ['latin'],
-  weight: ['400'],
-  style: ['normal', 'italic'],
+  weight: ['400', '600', '700', '800'],
   variable: '--next-font-display',
   adjustFontFallback: true,
   preload: true,
   display: 'swap',
 })
 
-const fontMono = JetBrains_Mono({
+const fontMono = Space_Mono({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
+  weight: ['400', '700'],
   variable: '--next-font-mono',
   adjustFontFallback: true,
   preload: false,

@@ -65,7 +65,7 @@ export function ComparateurSelector({ modeles, specsLabels }: Props) {
                   width: '100%',
                   appearance: 'none',
                   WebkitAppearance: 'none',
-                  background: 'var(--surface-2)',
+                  background: 'var(--bg-surface-2)',
                   border: '1px solid var(--glass-border)',
                   borderRadius: 'var(--radius-md)',
                   padding: 'var(--space-3) var(--space-10) var(--space-3) var(--space-4)',

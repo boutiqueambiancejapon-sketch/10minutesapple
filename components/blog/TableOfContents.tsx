@@ -45,21 +45,21 @@ export function TableOfContents() {
   if (items.length === 0) return null
 
   return (
-    <nav aria-label="Sommaire" style={{ marginBottom: 'var(--space-6)' }}>
+    <nav aria-label="Sommaire">
       <p
         style={{
-          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
+          fontFamily: 'var(--next-font-mono), monospace',
           fontSize: '11px',
           fontWeight: 700,
-          letterSpacing: '0.1em',
+          letterSpacing: '0.08em',
           textTransform: 'uppercase',
-          color: 'var(--text-muted)',
+          color: 'var(--route-color)',
           marginBottom: 'var(--space-3)',
         }}
       >
-        Sommaire
+        Au sommaire
       </p>
-      <ol style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '2px' }}>
+      <ol style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '2px', margin: 0, padding: 0 }}>
         {items.map((item, i) => {
           const isActive = activeId === item.id
           return (
@@ -78,8 +78,8 @@ export function TableOfContents() {
                   textDecoration: 'none',
                   fontSize: '13px',
                   lineHeight: 1.35,
-                  color: isActive ? 'var(--text-primary)' : 'var(--text-muted)',
-                  background: isActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+                  color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                  background: isActive ? 'color-mix(in oklab, var(--route-color) 12%, transparent)' : 'transparent',
                   fontWeight: isActive ? 600 : 400,
                   transition: 'color 0.15s, background 0.15s',
                 }}
@@ -88,9 +88,10 @@ export function TableOfContents() {
                   style={{
                     fontFamily: 'var(--next-font-mono), monospace',
                     fontSize: '11px',
-                    color: isActive ? 'var(--accent-1)' : 'var(--text-muted)',
+                    color: 'var(--route-color)',
                     flexShrink: 0,
                     marginTop: '1px',
+                    fontWeight: 700,
                   }}
                 >
                   {String(i + 1).padStart(2, '0')}

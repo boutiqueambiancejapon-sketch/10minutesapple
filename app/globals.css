@@ -775,8 +775,8 @@ body {
 /* --- Hero article — lumière chaude + cadre éditorial --- */
 .article-hero-band {
   background:
-    radial-gradient(ellipse 130% 100% at 50% 0%, rgba(255, 61, 87, 0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 70% at 80% 10%, rgba(123, 97, 255, 0.10) 0%, transparent 60%);
+    radial-gradient(ellipse 130% 100% at 50% 0%, color-mix(in oklab, var(--route-color) 12%, transparent) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 70% at 80% 10%, color-mix(in oklab, var(--route-color) 8%, transparent) 0%, transparent 60%);
   border-bottom: 1px solid var(--border);
 }
 .article-header-inner {
@@ -809,7 +809,7 @@ body {
   transition: color 150ms ease;
 }
 .article-breadcrumb a:hover { color: var(--text-primary); }
-.article-breadcrumb-accent { color: var(--accent-1) !important; font-weight: 600; }
+.article-breadcrumb-accent { color: var(--route-color) !important; font-weight: 600; }
 .article-breadcrumb-muted { color: var(--text-muted); }
 
 /* Eyebrow — pill gradient + reading time */
@@ -827,7 +827,7 @@ body {
   text-transform: uppercase;
   color: #fff;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent-1), var(--accent-4));
+  background: var(--route-color);
   padding: 4px 10px;
   border-radius: 4px;
   display: inline-block;
@@ -877,7 +877,7 @@ body {
   display: grid;
   grid-template-columns: minmax(0, 760px);
   justify-content: center;
-  padding: 0 var(--space-6) var(--space-12);
+  padding: var(--space-10) var(--space-6) var(--space-12);
 }
 @media (min-width: 1080px) {
   .article-body-grid {
@@ -1014,7 +1014,7 @@ body {
 .home-shell {
   position: relative;
   background:
-    radial-gradient(ellipse at top, rgba(255, 61, 87, 0.08) 0%, transparent 55%),
+    radial-gradient(ellipse at top, color-mix(in oklab, var(--accent-1) 6%, transparent) 0%, transparent 55%),
     var(--bg-primary);
   min-height: 100svh;
 }

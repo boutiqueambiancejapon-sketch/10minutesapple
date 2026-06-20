@@ -35,7 +35,7 @@ import { AuthorByline } from '@/components/ui/AuthorByline'
 import { AuthorCard } from '@/components/ui/AuthorCard'
 import { StickyCTA } from '@/components/blog/StickyCTA'
 import { ArticleSidebar } from '@/components/blog/ArticleSidebar'
-import type { ReactNode } from 'react'
+import type { ReactNode, CSSProperties } from 'react'
 
 export const revalidate = 86400
 
@@ -181,7 +181,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
       ))}
 
       <ReadingProgress />
-      <main id="main-content">
+      <main id="main-content" style={{ ['--accent-1' as string]: rubColor } as unknown as CSSProperties}>
         <article>
           {/* Header — bandeau coloré par rubrique + breadcrumb + H1 */}
           <div className="article-hero-band" style={{ background: `color-mix(in oklab, ${rubColor} 10%, var(--bg-primary))`, borderBottom: `3px solid ${rubColor}` }}>

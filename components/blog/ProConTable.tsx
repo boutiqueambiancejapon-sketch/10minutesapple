@@ -78,8 +78,8 @@ export function ProConTable({
       {/* Contre */}
       <div
         style={{
-          background: 'rgba(255,61,87,0.05)',
-          border: '1px solid rgba(255,61,87,0.18)',
+          background: 'color-mix(in oklab, var(--accent-1) 7%, transparent)',
+          border: '1px solid color-mix(in oklab, var(--accent-1) 26%, transparent)',
           borderRadius: 'var(--radius-md)',
           padding: 'var(--space-4) var(--space-5)',
         }}

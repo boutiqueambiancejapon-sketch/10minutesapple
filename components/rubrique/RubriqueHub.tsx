@@ -7,11 +7,12 @@ import { RubricScope } from './RubricScope'
 import { RubricImage } from './RubricImage'
 import { RubricPills } from './RubricPills'
 
-// Couvertures Studio Spectre (group D). Comparateur n'a pas de cover dediee.
+// Couvertures Studio Spectre (group D).
 const COVERS: Partial<Record<RubriqueKey, string>> = {
   actu: '/images/da-v2/covers/cover-actu.jpeg',
   test: '/images/da-v2/covers/cover-test.jpeg',
   guide: '/images/da-v2/covers/cover-guide.jpeg',
+  comparateur: '/images/da-v2/covers/cover-comparateur.jpeg',
   dossier: '/images/da-v2/covers/cover-dossier.jpeg',
   tuto: '/images/da-v2/covers/cover-tuto.jpeg',
 }
@@ -97,7 +98,7 @@ export function RubriqueHub({ rubrique }: { rubrique: RubriqueKey }) {
           <p style={{ color: 'var(--text-muted)', fontSize: 15 }}>
             Aucun article pour le moment.{' '}
             <Link href="/blog" style={{ color: 'var(--route-color)', textDecoration: 'none', fontWeight: 600 }}>
-              Parcourir tous les articles →
+              Parcourir tous les articles &rarr;
             </Link>
           </p>
         ) : (
@@ -155,7 +156,7 @@ export function RubriqueHub({ rubrique }: { rubrique: RubriqueKey }) {
                   {a.description}
                 </p>
                 <span style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: 10.5, color: 'var(--text-muted)' }}>
-                  {formatDate(a.publishedAt)} · {a.readingTimeMin} min
+                  {formatDate(a.publishedAt)} &middot; {a.readingTimeMin} min
                 </span>
               </Link>
             ))}

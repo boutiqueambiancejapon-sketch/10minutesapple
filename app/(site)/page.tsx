@@ -1,7 +1,4 @@
-import { AnnouncementBar } from '@/components/effects/AnnouncementBar'
-import { HomeHeader } from '@/components/home/HomeHeader'
-import { HomeHero } from '@/components/home/HomeHero'
-import { HomeRubricStrip } from '@/components/home/HomeRubricStrip'
+import { HomeMastheadV2 } from '@/components/home/HomeMastheadV2'
 import { DealsOfTheDay } from '@/components/home/DealsOfTheDay'
 import { FeaturedArticle } from '@/components/home/FeaturedArticle'
 import { HomeArticleGrid } from '@/components/home/HomeArticleGrid'
@@ -17,13 +14,7 @@ import { Newsletter } from '@/components/home/Newsletter'
 export default function HomePage() {
   return (
     <main id="main-content" className="home-shell">
-      <AnnouncementBar
-        message="Printemps Apple — jusqu'à −32 % sur l'iPhone 16"
-        href="/deals"
-      />
-      <HomeHeader />
-      <HomeHero />
-      <HomeRubricStrip />
+      <HomeMastheadV2 />
       <DealsOfTheDay />
       <FeaturedArticle />
       <HomeArticleGrid />

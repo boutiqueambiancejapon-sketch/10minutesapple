@@ -182,7 +182,7 @@ export default async function ArticlePage({ params }: { params: Params }) {
       ))}
 
       <ReadingProgress />
-      <main id="main-content" style={{ ['--accent-1' as string]: rubColor } as unknown as CSSProperties}>
+      <main id="main-content" style={{ ['--accent-1' as string]: rubColor, ['--aurora-1' as string]: rubColor, ['--aurora-2' as string]: rubColor, ['--aurora-3' as string]: rubColor } as unknown as CSSProperties}>
         <article>
           {/* Header — bandeau coloré par rubrique + breadcrumb + H1 */}
           <div className="article-hero-band" style={{ background: `color-mix(in oklab, ${rubColor} 10%, var(--bg-primary))`, borderBottom: `3px solid ${rubColor}` }}>

@@ -90,6 +90,23 @@ export function Nav() {
           {/* Bouton thème */}
           <ThemeToggle />
 
+          {/* Recherche — pill, masquee en mobile (nav-desktop) */}
+          <form
+            action="/blog"
+            role="search"
+            className="nav-desktop"
+            style={{ display: 'flex', alignItems: 'center', gap: 7, width: 200, background: 'var(--bg-surface)', border: '1px solid var(--border)', borderRadius: 999, padding: '7px 13px' }}
+          >
+            <span aria-hidden="true" style={{ fontFamily: 'var(--next-font-mono), monospace', fontSize: 14, color: 'var(--text-muted)', lineHeight: 1 }}>{'⌕'}</span>
+            <input
+              name="q"
+              type="search"
+              aria-label="Rechercher"
+              placeholder="Rechercher…"
+              style={{ flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none', fontFamily: 'var(--next-font-mono), monospace', fontSize: '12px', color: 'var(--text-primary)' }}
+            />
+          </form>
+
           {/* CTA Comparer — aligne sur le masthead */}
           <Link href="/comparateur" className="nav-desktop" style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: INK, color: '#fff', textDecoration: 'none', fontFamily: 'var(--next-font-mono), monospace', fontSize: '11.5px', fontWeight: 700, padding: '8px 13px', borderRadius: 8 }}>{'⚔ COMPARER'}</Link>
 

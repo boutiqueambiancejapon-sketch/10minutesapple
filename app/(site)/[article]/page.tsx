@@ -15,6 +15,7 @@ import { remarkAmazonAffiliate } from '@/lib/plugins/remarkAmazonAffiliate'
 import { getRelatedArticles, articleHref, CATEGORY_LABELS } from '@/lib/blog'
 import { deriveRubrique } from '@/lib/rubrique-articles'
 import { RUBRIQUES } from '@/lib/rubriques'
+import { getArticleAuthor } from '@/lib/authors'
 import { getCTAsForCategory } from '@/lib/article-ctas'
 import { getStandaloneArticle, getAllStandaloneSlugs } from '@/lib/articles'
 import { Tip } from '@/components/blog/Tip'
@@ -77,6 +78,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
   const rub = deriveRubrique(meta)
   const rubColor = RUBRIQUES[rub].colorVar
   const rubLabel = RUBRIQUES[rub].labelSingular
+  const author = getArticleAuthor(meta.auteur, rub)
   const { content: mdxContent } = await compileMDX({
     source: content,
     options: { mdxOptions: { remarkPlugins: [remarkGfm, remarkAmazonAffiliate] } },
@@ -111,9 +113,10 @@ export default async function StandaloneArticlePage({ params }: { params: Params
       url: `https://10minutesapple.com/${slug}`,
       author: {
         '@type': 'Person',
-        name: 'Mathias',
+        name: author.name,
         jobTitle: 'Fan Apple & testeur depuis le 3G',
-        url: 'https://10minutesapple.com/auteurs/mathias',
+        url: `https://10minutesapple.com/auteurs/${author.slug}`,
+        description: author.bio,
       },
       publisher: { '@type': 'Organization', name: '10minutesapple', url: 'https://10minutesapple.com' },
     },
@@ -159,7 +162,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
                 {meta.title}
               </h1>
 
-              <AuthorByline authorSlug="mathias" publishedAt={meta.publishedAt} updatedAt={meta.updatedAt} readingTimeMin={meta.readingTimeMin} />
+              <AuthorByline authorSlug={author.slug} authorName={author.name} photo={author.photo} publishedAt={meta.publishedAt} updatedAt={meta.updatedAt} readingTimeMin={meta.readingTimeMin} />
             </header>
           </div>
 
@@ -236,7 +239,7 @@ export default async function StandaloneArticlePage({ params }: { params: Params
 
             {/* AuthorCard */}
             <div style={{ marginTop: 'var(--space-10)' }}>
-              <AuthorCard authorSlug="mathias" bio="Fan Apple depuis le 3G. Testeur du quotidien, jailbreakeur de la première heure. Pas d'affiliation constructeur — juste l'honnêteté." variant="inline" />
+              <AuthorCard authorSlug={author.slug} authorName={author.name} bio={author.bio} photo={author.photo} variant="inline" />
             </div>
           </div>
         </article>

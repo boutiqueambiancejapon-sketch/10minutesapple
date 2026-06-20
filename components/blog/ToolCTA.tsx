@@ -22,8 +22,8 @@ const TOOLS: Record<string, Tool> = {
     description: 'Compare tous les modèles côte à côte : puce, écran, photo, autonomie et prix.',
     cta: 'Comparer maintenant →',
     accentVar: 'var(--accent-1)',
-    bgRgba: 'rgba(255,61,87,0.06)',
-    borderRgba: 'rgba(255,61,87,0.20)',
+    bgRgba: 'color-mix(in oklab, var(--accent-1) 8%, transparent)',
+    borderRgba: 'color-mix(in oklab, var(--accent-1) 28%, transparent)',
   },
   mac: {
     href: '/comparer/mac',
@@ -49,8 +49,8 @@ const TOOLS: Record<string, Tool> = {
     description: 'AirPods 4, Pro 2, Max — les bons écouteurs Apple selon ton usage.',
     cta: 'Comparer les AirPods →',
     accentVar: 'var(--accent-2)',
-    bgRgba: 'rgba(255,210,63,0.06)',
-    borderRgba: 'rgba(255,210,63,0.20)',
+    bgRgba: 'color-mix(in oklab, var(--accent-1) 8%, transparent)',
+    borderRgba: 'color-mix(in oklab, var(--accent-1) 28%, transparent)',
   },
   deals: {
     href: '/simulateur',
@@ -58,8 +58,8 @@ const TOOLS: Record<string, Tool> = {
     description: 'Analyse les cycles de prix Apple et détermine le meilleur moment pour acheter.',
     cta: 'Utiliser le simulateur →',
     accentVar: 'var(--accent-1)',
-    bgRgba: 'rgba(255,61,87,0.06)',
-    borderRgba: 'rgba(255,61,87,0.20)',
+    bgRgba: 'color-mix(in oklab, var(--accent-1) 8%, transparent)',
+    borderRgba: 'color-mix(in oklab, var(--accent-1) 28%, transparent)',
   },
 }
 

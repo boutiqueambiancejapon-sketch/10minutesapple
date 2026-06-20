@@ -17,6 +17,8 @@ import type { CSSProperties } from 'react'
 export type HubArticle = {
   slug: string
   categorie: string
+  /** Libelle produit (CATEGORY_LABELS) calcule cote serveur. */
+  categorieLabel: string
   title: string
   description: string
   /** Date deja formatee (formatDate cote serveur). */

@@ -35,7 +35,7 @@ export function PhonePlaceholder({
           inset: 0,
           borderRadius: s * 0.18,
           background: `linear-gradient(155deg, ${color}, color-mix(in oklch, ${color}, black 40%))`,
-          boxShadow: `0 30px 80px color-mix(in oklch, ${color}, transparent 65%), inset 0 0 0 1px rgba(255,255,255,0.08)`,
+          boxShadow: `0 30px 80px color-mix(in oklch, ${color}, transparent 65%), inset 0 0 0 1px var(--border)`,
         }}
       />
       {/* écran */}
@@ -44,7 +44,7 @@ export function PhonePlaceholder({
           position: 'absolute',
           inset: '4%',
           borderRadius: s * 0.16,
-          background: 'linear-gradient(180deg, #0a0a0f, #1a1a22)',
+          background: 'var(--bg-surface-2)',
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
@@ -57,7 +57,7 @@ export function PhonePlaceholder({
             width: '34%',
             height: s * 0.08,
             borderRadius: 999,
-            background: '#000',
+            background: 'var(--text-muted)',
             marginBottom: s * 0.12,
           }}
         />
@@ -65,7 +65,7 @@ export function PhonePlaceholder({
           style={{
             fontFamily: 'var(--next-font-display), serif',
             fontSize: s * 0.22,
-            color: '#fff',
+            color: 'var(--text-secondary)',
             lineHeight: 1,
             textAlign: 'center',
             opacity: 0.92,
@@ -77,7 +77,7 @@ export function PhonePlaceholder({
           style={{
             fontFamily: 'var(--next-font-mono), monospace',
             fontSize: s * 0.055,
-            color: 'rgba(255,255,255,0.4)',
+            color: 'var(--text-muted)',
             marginTop: s * 0.04,
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
@@ -105,8 +105,8 @@ export function PhonePlaceholder({
           width: s * 0.28,
           height: s * 0.28,
           borderRadius: s * 0.08,
-          background: 'linear-gradient(135deg, #111, #2a2a30)',
-          boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.08)',
+          background: 'var(--bg-surface-2)',
+          boxShadow: 'inset 0 0 0 1px var(--border)',
           display: 'grid',
           gridTemplateColumns: '1fr 1fr',
           gap: 2,
@@ -118,7 +118,7 @@ export function PhonePlaceholder({
             key={i}
             style={{
               borderRadius: '50%',
-              background: 'radial-gradient(circle at 30% 30%, #666, #000)',
+              background: 'radial-gradient(circle at 30% 30%, var(--text-muted), var(--text-primary))',
             }}
           />
         ))}

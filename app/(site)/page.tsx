@@ -1,7 +1,7 @@
 import { AnnouncementBar } from '@/components/effects/AnnouncementBar'
 import { HomeHeader } from '@/components/home/HomeHeader'
 import { HomeHero } from '@/components/home/HomeHero'
-import { CategoryPills } from '@/components/home/CategoryPills'
+import { HomeRubricStrip } from '@/components/home/HomeRubricStrip'
 import { DealsOfTheDay } from '@/components/home/DealsOfTheDay'
 import { FeaturedArticle } from '@/components/home/FeaturedArticle'
 import { HomeArticleGrid } from '@/components/home/HomeArticleGrid'
@@ -23,7 +23,7 @@ export default function HomePage() {
       />
       <HomeHeader />
       <HomeHero />
-      <CategoryPills />
+      <HomeRubricStrip />
       <DealsOfTheDay />
       <FeaturedArticle />
       <HomeArticleGrid />

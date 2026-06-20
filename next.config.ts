@@ -22,6 +22,9 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: '*.public.blob.vercel-storage.com' },
+      // Images produit Amazon (SiteStripe / Creators API) — voir DECISIONS.md
+      { protocol: 'https', hostname: 'm.media-amazon.com' },
+      { protocol: 'https', hostname: 'images-na.ssl-images-amazon.com' },
     ],
   },
   headers: async () => [

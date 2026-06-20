@@ -61,8 +61,8 @@ export function StickyCTA({ items, message }: Props) {
           WebkitBackdropFilter: 'blur(40px) saturate(1.8)',
           background: 'var(--sticky-cta-glass)',
           padding: '8px 10px',
-          border: '1px solid rgba(255,255,255,0.14)',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08)',
+          border: '1px solid var(--border-strong)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 var(--border)',
           borderRadius: '14px',
         }}
       >
@@ -72,7 +72,7 @@ export function StickyCTA({ items, message }: Props) {
           style={{
             position: 'absolute',
             inset: 0,
-            background: 'linear-gradient(175deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.02) 35%, transparent 55%)',
+            background: 'linear-gradient(175deg, color-mix(in oklab, var(--text-primary) 8%, transparent) 0%, transparent 35%, transparent 55%)',
             pointerEvents: 'none',
             borderRadius: '14px',
           }}
@@ -178,10 +178,10 @@ function CTA({ item, primary = false }: { item: StickyCTAItem; primary?: boolean
         padding: '10px 12px',
         minWidth: 0,
         background: primary
-          ? 'linear-gradient(135deg, var(--accent-1), var(--accent-4))'
-          : 'rgba(255,255,255,0.08)',
-        color: primary ? '#fff' : 'var(--text-primary)',
-        border: primary ? 'none' : '1px solid rgba(255,255,255,0.12)',
+          ? 'oklch(0.82 0.16 66)'
+          : 'var(--border)',
+        color: primary ? 'oklch(0.22 0.06 55)' : 'var(--text-primary)',
+        border: primary ? 'none' : '1px solid var(--border-strong)',
         borderRadius: 10,
         fontSize: 12,
         fontWeight: 700,

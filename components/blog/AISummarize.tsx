@@ -1,7 +1,7 @@
 /**
- * AISummarize — bloc "En bref" en haut d'article.
+ * AISummarize — carte "En bref" en haut d'article (DA V2).
  * Résumé 3–5 bullets fournis dans le frontmatter MDX.
- * DA : border-left 3px --accent-4 (violet) · bg --bg-surface · label Syne smallcaps.
+ * Carte arrondie, fond légèrement teinté de la rubrique, label mono.
  * Server Component.
  */
 
@@ -16,27 +16,42 @@ export function AISummarize({ points }: AISummarizeProps) {
     <aside
       aria-label="Résumé de l'article"
       style={{
-        background: 'var(--bg-surface)',
-        borderLeft: '3px solid var(--route-color)',
-        borderRadius: '0 var(--radius-md) var(--radius-md) 0',
-        padding: 'var(--space-5) var(--space-6)',
+        background: 'color-mix(in oklab, var(--route-color) 5%, var(--bg-surface))',
+        border: '1px solid color-mix(in oklab, var(--route-color) 22%, var(--border))',
+        borderRadius: 'var(--radius-lg)',
+        padding: 'var(--space-6) var(--space-6)',
         marginBottom: 'var(--space-8)',
       }}
     >
       <div
-        aria-hidden="true"
         style={{
-          fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-          fontSize: '10px',
-          fontWeight: 400,
-          letterSpacing: '0.12em',
-          textTransform: 'uppercase',
-          color: 'var(--route-color)',
-          marginBottom: 'var(--space-3)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 'var(--space-3)',
+          marginBottom: 'var(--space-4)',
         }}
       >
-        En bref
+        <span
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontFamily: 'var(--next-font-mono), monospace',
+            fontSize: '11px',
+            fontWeight: 700,
+            letterSpacing: '0.1em',
+            textTransform: 'uppercase',
+            color: '#fff',
+            background: 'var(--route-color)',
+            padding: '4px 10px',
+            borderRadius: 'var(--radius-full)',
+          }}
+        >
+          {'⚡ En bref'}
+        </span>
+        <span aria-hidden="true" style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
       </div>
+
       <ul
         style={{
           listStyle: 'none',
@@ -44,7 +59,7 @@ export function AISummarize({ points }: AISummarizeProps) {
           padding: 0,
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--space-2)',
+          gap: 'var(--space-3)',
         }}
       >
         {points.map((point, i) => (
@@ -53,13 +68,19 @@ export function AISummarize({ points }: AISummarizeProps) {
             style={{
               display: 'flex',
               gap: 'var(--space-3)',
-              fontSize: '14px',
+              fontSize: '15px',
               color: 'var(--text-secondary)',
-              lineHeight: 1.6,
+              lineHeight: 1.55,
             }}
           >
             <span
-              style={{ color: 'var(--route-color)', flexShrink: 0, fontWeight: 700 }}
+              style={{
+                color: 'var(--route-color)',
+                flexShrink: 0,
+                fontWeight: 700,
+                fontFamily: 'var(--next-font-mono), monospace',
+                marginTop: '1px',
+              }}
               aria-hidden="true"
             >
               →

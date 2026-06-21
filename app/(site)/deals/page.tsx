@@ -1,358 +1,127 @@
-/**
- * /deals — Page Deals Apple.
- * DA : watermark numéros --accent-2 oversize opacity 0.05 · MarqueeStrip intégré.
- * ISR 900s (deals mis à jour fréquemment). Server Component.
- */
-
-import Link from 'next/link'
 import type { Metadata } from 'next'
-import { currentYear } from '@/lib/utils/year'
-import { AnnouncementBar } from '@/components/effects/AnnouncementBar'
-import { AuroraBackground } from '@/components/effects/AuroraBackground'
-import { NoiseOverlay } from '@/components/effects/NoiseOverlay'
-import { MarqueeStrip } from '@/components/effects/MarqueeStrip'
-import { DealsGrid } from '@/components/deals/DealsGrid'
-import { FaqAccordion } from '@/components/blog/FaqAccordion'
-import { DEALS, DEAL_CATEGORIES } from '@/lib/deals'
+import Link from 'next/link'
+import Image from 'next/image'
+import { PRODUCTS, amazonUrl, amazonSearchUrl, type Product } from '@/lib/products'
 
-export const revalidate = 900
+export const revalidate = 86400
 
-export function generateMetadata(): Metadata {
-  const year = currentYear()
-  return {
-    title: `Deals Apple ${year} — meilleures promos du moment | 10minutesapple`,
-    description:
-      'Les meilleures promos Apple du moment : iPhone, iPad, Mac, accessoires. Sélection manuelle — pas de spam.',
-    alternates: { canonical: 'https://10minutesapple.com/deals' },
-    openGraph: {
-      title: `Deals Apple ${year}`,
-      description: 'Meilleures promos Apple sélectionnées manuellement.',
-      url: 'https://10minutesapple.com/deals',
-      siteName: '10minutesapple',
-      type: 'website',
-    },
-  }
+export const metadata: Metadata = {
+  title: 'Bons plans Apple',
+  description:
+    "Les meilleurs prix du moment sur l'iPhone, le Mac, l'iPad, l'Apple Watch et les AirPods. Sélection mise à jour en continu.",
+  alternates: { canonical: 'https://10minutesapple.com/deals' },
 }
 
+const mono = 'var(--next-font-mono), monospace'
+const display = 'var(--next-font-display), system-ui, sans-serif'
+const ORANGE = 'oklch(0.82 0.16 66)'
+const ORTX = 'oklch(0.22 0.06 55)'
+const INK = 'oklch(0.18 0.012 270)'
 
-const MARQUEE_ITEMS = [
-  'iPhone 17 à 949 €',
-  'iPhone 16 à 819 €',
-  'iPhone 15 à 729 €',
-  'AirPods Pro 2 à 219 €',
-  'MacBook Neo à 669 €',
-  'Apple Watch SE 2 à 239 €',
-  'iPad 11e gen à 349 €',
-  'Sélection mise à jour chaque semaine',
+// Ordre de regroupement + libelle de tag par famille de produit.
+const FAMILIES: { key: string; label: string; match: (id: string) => boolean }[] = [
+  { key: 'iphone', label: 'iPhone', match: (id) => id.startsWith('iphone') },
+  { key: 'mac', label: 'Mac', match: (id) => id.startsWith('macbook') || id === 'imac' || id === 'mac-mini' },
+  { key: 'ipad', label: 'iPad', match: (id) => id.startsWith('ipad') },
+  { key: 'watch', label: 'Apple Watch', match: (id) => id.startsWith('watch') },
+  { key: 'audio', label: 'Audio', match: (id) => id.startsWith('airpods') },
+  { key: 'accessoires', label: 'Accessoires', match: () => true },
 ]
 
-const FAQ_ITEMS = [
-  {
-    q: 'Où trouver les meilleurs bons plans Apple en ce moment ?',
-    a: 'Sur 10minutesapple.com/deals, on sélectionne manuellement les meilleures réductions Apple chaque semaine : iPhone, Mac, iPad, Apple Watch et accessoires. Pas de faux deals ni de prix gonflés avant promo — que des vraies baisses vérifiées sur Amazon.',
-  },
-  {
-    q: 'Existe-t-il un code promo Apple officiel ?',
-    a: 'Apple ne propose quasiment jamais de code promo direct sur son Apple Store. Les vraies réductions Apple passent par les revendeurs agréés (Amazon, Fnac, Boulanger). Sur Amazon, les baisses de prix sont automatiques — pas besoin de code promo Apple.',
-  },
-  {
-    q: 'Quand acheter un produit Apple au meilleur prix ?',
-    a: 'Les meilleurs moments pour une réduction Apple sont : le Black Friday (fin novembre), les soldes d\'été et d\'hiver, et surtout juste après la sortie d\'un nouveau modèle — l\'ancien baisse immédiatement. Notre simulateur te montre les cycles de prix pour chaque produit.',
-  },
-  {
-    q: 'Les deals Apple sur Amazon sont-ils fiables ?',
-    a: 'Oui. Amazon est revendeur agréé Apple. Les produits sont neufs, sous garantie Apple standard, avec retour gratuit 30 jours. On vérifie chaque deal manuellement avant de le publier ici.',
-  },
-  {
-    q: 'Comment savoir si une réduction Apple est une vraie promo ?',
-    a: 'On compare le prix affiché avec le prix Apple Store officiel et l\'historique des prix Amazon. Si le prix barré est gonflé artificiellement, on ne publie pas le deal. Chaque réduction Apple affichée ici est vérifiée.',
-  },
-  {
-    q: 'Y a-t-il des réductions Apple pour les étudiants ?',
-    a: 'Oui. Apple propose le programme Apple Education avec des remises de 5 à 10 % sur Mac et iPad via apple.com/fr/shop/go/education. En plus, Amazon propose parfois des prix encore inférieurs au tarif Education Apple — vérifie les deux avant d\'acheter.',
-  },
-  {
-    q: 'Comment être alerté des prochains bons plans Apple ?',
-    a: 'Reviens régulièrement sur cette page — on la met à jour chaque semaine. Les deals les plus chauds sont marqués avec le badge HOT. Tu peux aussi consulter notre simulateur de prix pour savoir si c\'est le bon moment d\'acheter.',
-  },
-]
-
-const jsonLdBreadcrumb = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://10minutesapple.com' },
-    { '@type': 'ListItem', position: 2, name: 'Deals', item: 'https://10minutesapple.com/deals' },
-  ],
+function familyLabel(id: string): string {
+  return (FAMILIES.find((f) => f.match(id)) ?? FAMILIES[FAMILIES.length - 1]).label
 }
 
-const jsonLdFaq = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: FAQ_ITEMS.map(({ q, a }) => ({
-    '@type': 'Question',
-    name: q,
-    acceptedAnswer: { '@type': 'Answer', text: a },
-  })),
+function DealCard({ p }: { p: Product }) {
+  const url = p.asin ? amazonUrl(p.asin) : amazonSearchUrl(p.name)
+  return (
+    <article
+      style={{
+        border: '1px solid color-mix(in oklab, var(--text-primary) 12%, transparent)',
+        borderRadius: 14,
+        overflow: 'hidden',
+        background: 'var(--bg-surface)',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div style={{ position: 'relative', aspectRatio: '1 / 1', background: '#fff' }}>
+        {p.image ? (
+          <Image src={p.image} alt={p.name} fill sizes="(max-width: 600px) 50vw, 25vw" style={{ objectFit: 'contain', padding: 16 }} />
+        ) : null}
+        <span style={{ position: 'absolute', top: 10, right: 10, background: INK, color: '#fff', fontFamily: mono, fontSize: 9, fontWeight: 700, padding: '3px 7px', borderRadius: 5 }}>
+          {familyLabel(p.id)}
+        </span>
+      </div>
+      <div style={{ padding: '14px 16px 16px', display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
+        <h3 style={{ fontFamily: display, fontWeight: 700, fontSize: 16, lineHeight: 1.15, letterSpacing: '-0.01em', margin: 0, color: 'var(--text-primary)' }}>
+          {p.name}
+        </h3>
+        {p.price ? (
+          <div style={{ marginTop: 'auto' }}>
+            <span style={{ fontFamily: display, fontWeight: 800, fontSize: 22, color: 'oklch(0.4 0.12 45)' }}>{p.price}</span>
+            {p.listPrice ? (
+              <span style={{ fontFamily: mono, fontSize: 11, color: 'var(--text-muted)', textDecoration: 'line-through', marginLeft: 7 }}>{p.listPrice}</span>
+            ) : null}
+          </div>
+        ) : null}
+        <Link
+          href={url}
+          target="_blank"
+          rel="nofollow sponsored noopener"
+          style={{ textAlign: 'center', background: ORANGE, color: ORTX, textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 12, padding: 11, borderRadius: 9, marginTop: 4 }}
+        >
+          {'🛒 Voir sur Amazon'}
+        </Link>
+      </div>
+    </article>
+  )
 }
 
 export default function DealsPage() {
-  const hotCount = DEALS.filter((d) => d.chaud).length
-  const avgDrop = Math.round(
-    DEALS.reduce((acc, d) => acc + ((d.prixAvant - d.prixApres) / d.prixAvant) * 100, 0) /
-      DEALS.length
-  )
-  const maxDrop = Math.max(
-    ...DEALS.map((d) => Math.round(((d.prixAvant - d.prixApres) / d.prixAvant) * 100))
-  )
+  const all = Object.values(PRODUCTS) as Product[]
+  // Regroupe par famille, dans l'ordre FAMILIES.
+  const groups = FAMILIES.map((f) => ({
+    label: f.label,
+    items: all.filter((p) => familyLabel(p.id) === f.label),
+  })).filter((g) => g.items.length > 0)
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBreadcrumb) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdFaq) }}
-      />
+    <main id="main-content">
+      {/* Masthead */}
+      <header style={{ background: `color-mix(in oklab, ${ORANGE} 16%, var(--bg-primary))`, borderBottom: `3px solid ${ORANGE}` }}>
+        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '38px 24px 30px' }}>
+          <span style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'oklch(0.5 0.15 55)' }}>
+            {'⚡ Mis à jour en continu'}
+          </span>
+          <h1 style={{ fontFamily: display, fontWeight: 800, fontSize: 'clamp(34px, 4.6vw, 56px)', letterSpacing: '-0.03em', lineHeight: 1, margin: '12px 0 10px', color: 'var(--text-primary)' }}>
+            Les bons plans Apple
+          </h1>
+          <p style={{ fontSize: 17, lineHeight: 1.5, color: 'var(--text-secondary)', margin: 0, maxWidth: 640 }}>
+            Les meilleurs prix du moment, vérifiés par la rédaction. {all.length} produits suivis — chaque lien mène directement à l&#39;offre Amazon.
+          </p>
+        </div>
+      </header>
 
-      <main id="main-content">
-        <AnnouncementBar
-          message={`Sélection mise à jour ce matin — jusqu'à −${maxDrop}% vérifiés Amazon`}
-          href="#deals-grid"
-        />
-
-        {/* Marquee strip — animation CSS */}
-        <MarqueeStrip direction="left" speed="slow">
-          {MARQUEE_ITEMS.map((item) => (
-            <span
-              key={item}
-              style={{
-                fontSize: '13px',
-                fontWeight: 600,
-                color: 'var(--text-secondary)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-6)',
-              }}
-            >
-              <span style={{ color: 'var(--accent-2)', fontWeight: 400 }}>✦</span>
-              {item}
-            </span>
-          ))}
-        </MarqueeStrip>
-
-        {/* Hero — aurora + H1 serif italique + trust strip */}
-        <AuroraBackground>
-          <NoiseOverlay opacity={0.04} />
-          <section
-            style={{
-              position: 'relative',
-              zIndex: 2,
-              maxWidth: '1280px',
-              margin: '0 auto',
-              padding: 'var(--space-12) var(--space-6) var(--space-10)',
-            }}
-          >
-            <nav aria-label="Fil d'Ariane" style={{ marginBottom: 'var(--space-6)' }}>
-              <ol
-                style={{
-                  display: 'flex',
-                  gap: 6,
-                  listStyle: 'none',
-                  fontSize: 12,
-                  color: 'var(--text-muted)',
-                  alignItems: 'center',
-                  margin: 0,
-                  padding: 0,
-                }}
-              >
-                <li>
-                  <Link
-                    href="/"
-                    style={{
-                      color: 'var(--accent-1)',
-                      fontWeight: 600,
-                      textDecoration: 'none',
-                    }}
-                  >
-                    Accueil
-                  </Link>
-                </li>
-                <li aria-hidden="true">›</li>
-                <li aria-current="page" style={{ color: 'var(--text-muted)' }}>
-                  Deals
-                </li>
-              </ol>
-            </nav>
-
-            {/* Eyebrow */}
-            <div
-              style={{
-                fontSize: 11,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                color: 'var(--accent-1)',
-                fontWeight: 700,
-                marginBottom: 14,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-              }}
-            >
-              <span
-                aria-hidden="true"
-                style={{
-                  width: 7,
-                  height: 7,
-                  borderRadius: '50%',
-                  background: 'var(--accent-1)',
-                  animation: 'pulse-dot 1.4s ease-in-out infinite',
-                }}
-              />
-              Prix vérifiés ce matin
-            </div>
-
-            <h1
-              style={{
-                fontFamily: 'var(--next-font-display), serif',
-                fontSize: 'clamp(40px, 7vw, 88px)',
-                fontWeight: 400,
-                color: 'var(--text-primary)',
-                lineHeight: 0.98,
-                letterSpacing: '-0.025em',
-                marginBottom: 18,
-                textWrap: 'balance',
-                maxWidth: 820,
-              }}
-            >
-              Deals{' '}
-              <em style={{ color: 'var(--accent-1)', fontStyle: 'italic' }}>Apple</em>{' '}
-              <span className="shimmer-text">triés à la main</span>.
-            </h1>
-
-            <p
-              style={{
-                fontSize: 'clamp(15px, 1.7vw, 17px)',
-                color: 'var(--text-secondary)',
-                maxWidth: 560,
-                lineHeight: 1.6,
-                marginBottom: 22,
-              }}
-            >
-              Sélection manuelle, chaque semaine. Pas de deals sponsorisés, pas de prix gonflés
-              avant promo — que des vraies réductions vérifiées.
-            </p>
-
-            {/* Trust strip */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                alignItems: 'center',
-                padding: '16px 18px',
-                background: 'var(--bg-surface)',
-                borderRadius: 14,
-                border: '1px solid var(--border)',
-                maxWidth: 520,
-              }}
-            >
-              <TrustStat value={String(DEALS.length)} label="offres" />
-              <TrustStat value={String(hotCount)} label="HOT" color="var(--accent-1)" divider />
-              <TrustStat value={`−${avgDrop}%`} label="éco. moy." color="var(--accent-3)" divider />
-            </div>
-          </section>
-        </AuroraBackground>
-
-        {/* Liste deals */}
-        <section
-          id="deals-grid"
-          style={{
-            maxWidth: '1280px',
-            margin: '0 auto',
-            padding: '0 var(--space-6) var(--space-24)',
-          }}
-        >
-          <DealsGrid deals={DEALS} />
-
-          {/* FAQ — bons plans Apple, code promo, réductions */}
-          <section aria-labelledby="faq-deals" style={{ marginTop: 'var(--space-12)' }}>
-            <h2
-              id="faq-deals"
-              style={{
-                fontFamily: 'var(--next-font-display), system-ui, sans-serif',
-                fontSize: 'clamp(20px, 3vw, 28px)',
-                fontWeight: 400,
-                color: 'var(--text-primary)',
-                marginBottom: 'var(--space-6)',
-              }}
-            >
-              Questions fréquentes — bons plans Apple
+      {/* Grilles par famille */}
+      <div style={{ maxWidth: 1240, margin: '0 auto', padding: '12px 24px 24px' }}>
+        {groups.map((g) => (
+          <section key={g.label} style={{ marginTop: 28 }}>
+            <h2 style={{ fontFamily: mono, fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)', margin: '0 0 14px' }}>
+              {g.label}
             </h2>
-            <FaqAccordion items={FAQ_ITEMS} />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 16 }}>
+              {g.items.map((p) => (
+                <DealCard key={p.id} p={p} />
+              ))}
+            </div>
           </section>
+        ))}
 
-          <div
-            style={{
-              marginTop: 'var(--space-10)',
-              padding: 'var(--space-5) var(--space-6)',
-              background: 'var(--bg-surface)',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-md)',
-              fontSize: '13px',
-              color: 'var(--text-muted)',
-            }}
-          >
-            <strong style={{ color: 'var(--text-secondary)' }}>Liens affiliés :</strong> certains
-            liens vers Amazon.fr intègrent le tag affilié{' '}
-            <code style={{ fontSize: '12px' }}>ambiancejap0a-21</code>. Le prix que tu paies reste
-            identique.{' '}
-            <Link href="/mentions-legales" style={{ color: 'var(--accent-1)', textDecoration: 'none' }}>
-              Mentions légales →
-            </Link>
-          </div>
-        </section>
-      </main>
-    </>
-  )
-}
-
-function TrustStat({
-  value,
-  label,
-  color = 'var(--text-primary)',
-  divider,
-}: {
-  value: string
-  label: string
-  color?: string
-  divider?: boolean
-}) {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
-        paddingLeft: divider ? 14 : 0,
-        borderLeft: divider ? '1px solid var(--border)' : 'none',
-      }}
-    >
-      <span
-        style={{
-          fontFamily: 'var(--next-font-mono), monospace',
-          fontSize: 22,
-          fontWeight: 700,
-          color,
-          lineHeight: 1,
-          letterSpacing: '-0.02em',
-          fontVariantNumeric: 'tabular-nums',
-        }}
-      >
-        {value}
-      </span>
-      <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>{label}</span>
-    </div>
+        <p style={{ fontFamily: mono, fontSize: 10, color: 'var(--text-muted)', margin: '32px 0 0', textAlign: 'center', lineHeight: 1.6 }}>
+          En tant que Partenaire Amazon, 10minutesApple perçoit une commission sur les achats éligibles. Cela ne change rien au prix que vous payez. Prix et images à titre indicatif, susceptibles de varier.
+        </p>
+      </div>
+    </main>
   )
 }

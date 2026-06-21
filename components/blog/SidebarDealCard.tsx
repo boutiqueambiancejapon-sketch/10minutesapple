@@ -5,6 +5,7 @@
  */
 
 import { PriceTag } from '@/components/ui/PriceTag'
+import { addAffiliateTag } from '@/lib/utils/affiliate'
 
 export type DealItem = {
   name: string
@@ -70,9 +71,9 @@ export function SidebarDealCard({ deals }: { deals: DealItem[] }) {
         return (
           <a
             key={deal.name}
-            href={deal.url}
+            href={addAffiliateTag(deal.url)}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="nofollow sponsored noopener"
             className="sidebar-deal-card"
             style={{
               display: 'flex',

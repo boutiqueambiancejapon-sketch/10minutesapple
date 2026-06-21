@@ -2,6 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { RubricScope } from '@/components/rubrique/RubricScope'
+import { amazonUrl } from '@/lib/products'
+
+/** Lien d'achat affilie Amazon des AirPods Pro 3 (ASIN reel + tag partenaire). */
+const BUY_URL = amazonUrl('B0FQF32239')
 
 export const metadata: Metadata = {
   title: 'Test AirPods Pro 3',
@@ -107,7 +111,7 @@ export default function TestAirPodsPro3() {
               </div>
             </div>
             <div style={{ textAlign: 'center' }}>
-              <Link href="/deals" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: ORANGE, color: ORTX, textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 15, padding: '16px 26px', borderRadius: 12, boxShadow: `0 4px 0 oklch(0.62 0.15 60)`, whiteSpace: 'nowrap' }}>{'Voir sur Amazon →'}</Link>
+              <Link href={BUY_URL} target="_blank" rel="nofollow sponsored noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: ORANGE, color: ORTX, textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 15, padding: '16px 26px', borderRadius: 12, boxShadow: `0 4px 0 oklch(0.62 0.15 60)`, whiteSpace: 'nowrap' }}>{'Voir sur Amazon →'}</Link>
               <div style={{ fontFamily: mono, fontSize: 10, color: 'var(--text-muted)', marginTop: 9 }}>Mis a jour il y a 6 min</div>
             </div>
           </div>
@@ -182,7 +186,7 @@ export default function TestAirPodsPro3() {
                 <span style={{ fontFamily: display, fontWeight: 800, fontSize: 24, color: 'oklch(0.4 0.12 45)' }}>259 &euro;</span>
                 <span style={{ fontFamily: mono, fontSize: 12, color: 'var(--text-muted)', textDecoration: 'line-through' }}>279 &euro;</span>
               </div>
-              <Link href="/deals" style={{ display: 'block', textAlign: 'center', marginTop: 12, background: ORANGE, color: ORTX, textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 13, padding: 12, borderRadius: 10 }}>{'Voir sur Amazon →'}</Link>
+              <Link href={BUY_URL} target="_blank" rel="nofollow sponsored noopener" style={{ display: 'block', textAlign: 'center', marginTop: 12, background: ORANGE, color: ORTX, textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 13, padding: 12, borderRadius: 10 }}>{'Voir sur Amazon →'}</Link>
             </div>
           </div>
         </aside>

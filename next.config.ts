@@ -25,6 +25,8 @@ const nextConfig: NextConfig = {
       // Images produit Amazon (SiteStripe / Creators API) — voir DECISIONS.md
       { protocol: 'https', hostname: 'm.media-amazon.com' },
       { protocol: 'https', hostname: 'images-na.ssl-images-amazon.com' },
+      // Images produit Fnac (feed marchand)
+      { protocol: 'https', hostname: 'static.fnac-static.com' },
     ],
   },
   headers: async () => [

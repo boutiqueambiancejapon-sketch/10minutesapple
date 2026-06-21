@@ -1,13 +1,13 @@
 /**
  * ArticleSidebar V2 — colonne sticky : Resumer avec l'IA + Au sommaire + Le produit.
- * Le produit vient du frontmatter (`produit`/`asin`/`prix`) et du catalogue (CSV).
+ * Le produit : image (Fnac) + lien Amazon affilie (ASIN ou recherche du nom).
  * Server Component (TableOfContents est un client component, rendu ici).
  */
 
 import Image from 'next/image'
 import Link from 'next/link'
 import { TableOfContents } from './TableOfContents'
-import { getProduct, amazonUrl } from '@/lib/products'
+import { getProduct, amazonUrl, amazonSearchUrl } from '@/lib/products'
 
 const mono = 'var(--next-font-mono), monospace'
 const display = 'var(--next-font-display), system-ui, sans-serif'
@@ -35,8 +35,8 @@ export function ArticleSidebar({ produit, asin, prix, prixBarre, productName }: 
   const price = prix ?? p?.price
   const name = p?.name ?? productName ?? 'Le produit'
   const buyAsin = asin ?? p?.asin
-  const hasProduct = Boolean(price || buyAsin)
-  const url = buyAsin ? amazonUrl(buyAsin) : '#'
+  const hasProduct = Boolean(price || buyAsin || image)
+  const url = buyAsin ? amazonUrl(buyAsin) : amazonSearchUrl(name)
 
   return (
     <aside className="article-sidebar" aria-label="Resume, sommaire et achat">
@@ -64,8 +64,8 @@ export function ArticleSidebar({ produit, asin, prix, prixBarre, productName }: 
             <div style={{ background: ORANGE, padding: '8px 14px', fontFamily: mono, fontSize: 10, fontWeight: 700, letterSpacing: '0.05em', color: ORTX }}>{'🛒 Le produit de l’article'}</div>
             <div style={{ padding: 16 }}>
               {image ? (
-                <div style={{ position: 'relative', aspectRatio: '1 / 1', borderRadius: 11, marginBottom: 12, overflow: 'hidden', background: 'oklch(0.95 0.01 95)' }}>
-                  <Image src={image} alt={name} fill sizes="280px" style={{ objectFit: 'cover' }} />
+                <div style={{ position: 'relative', aspectRatio: '1 / 1', borderRadius: 11, marginBottom: 12, overflow: 'hidden', background: '#fff' }}>
+                  <Image src={image} alt={name} fill sizes="280px" style={{ objectFit: 'contain' }} />
                 </div>
               ) : null}
               <h4 style={{ fontFamily: display, fontWeight: 800, fontSize: 17, margin: 0, color: 'var(--text-primary)' }}>{name}</h4>

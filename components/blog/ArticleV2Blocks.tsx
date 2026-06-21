@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { getProduct, amazonUrl } from '@/lib/products'
+import { getProduct, amazonUrl, amazonSearchUrl } from '@/lib/products'
 
 // Blocs V2 d'un article : jauge de verdict + barres de notation + buy-box.
 // Couleur via var(--route-color) (heritee de --accent-1 remappe sur <main>).
@@ -62,7 +62,7 @@ export function ArticleVerdict({
   )
 }
 
-/** Buy-box affiliee. Image depuis le catalogue produits (CSV) si dispo. */
+/** Buy-box affiliee : image (Fnac) + lien Amazon (ASIN ou recherche du nom). */
 export function ArticleBuyBox({
   produit,
   prix,
@@ -81,16 +81,16 @@ export function ArticleBuyBox({
   const price = prix ?? p?.price
   const name = p?.name ?? productName ?? 'Ce produit'
   const buyAsin = asin ?? p?.asin
-  if (!price && !buyAsin) return null
-  const url = buyAsin ? amazonUrl(buyAsin) : '#'
+  if (!price && !buyAsin && !image) return null
+  const url = buyAsin ? amazonUrl(buyAsin) : amazonSearchUrl(name)
   return (
     <section style={{ maxWidth: 1000, margin: '28px auto 0', padding: '0 24px' }}>
       <div style={{ border: `2px solid ${ORANGE}`, borderRadius: 18, overflow: 'hidden', background: 'oklch(0.99 0.01 70)' }}>
         <div style={{ background: ORANGE, padding: '9px 18px', fontFamily: mono, fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', color: ORTX }}>{'🛒 OÙ ACHETER'}</div>
         <div style={{ display: 'flex', gap: 22, alignItems: 'center', padding: '20px 22px', flexWrap: 'wrap' }}>
           {image ? (
-            <div style={{ position: 'relative', width: 110, height: 110, borderRadius: 12, overflow: 'hidden', flexShrink: 0, background: 'oklch(0.95 0.01 95)' }}>
-              <Image src={image} alt={name} fill sizes="110px" style={{ objectFit: 'cover' }} />
+            <div style={{ position: 'relative', width: 110, height: 110, borderRadius: 12, overflow: 'hidden', flexShrink: 0, background: '#fff' }}>
+              <Image src={image} alt={name} fill sizes="110px" style={{ objectFit: 'contain' }} />
             </div>
           ) : null}
           <div style={{ flex: '1 1 220px' }}>
@@ -104,7 +104,7 @@ export function ArticleBuyBox({
           </div>
           <Link href={url} target="_blank" rel="nofollow sponsored noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: ORANGE, color: ORTX, textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 15, padding: '15px 24px', borderRadius: 12, whiteSpace: 'nowrap' }}>{'Voir sur Amazon →'}</Link>
         </div>
-        <p style={{ fontFamily: mono, fontSize: 10, color: 'var(--text-muted)', margin: 0, padding: '10px 22px', background: 'oklch(0.97 0.01 70)' }}>En tant que Partenaire Amazon, 10minutesApple perçoit une commission sur les achats éligibles. Prix indicatif, susceptible de varier.</p>
+        <p style={{ fontFamily: mono, fontSize: 10, color: 'var(--text-muted)', margin: 0, padding: '10px 22px', background: 'oklch(0.97 0.01 70)' }}>En tant que Partenaire Amazon, 10minutesApple perçoit une commission sur les achats éligibles. Image à titre indicatif ; prix susceptible de varier.</p>
       </div>
     </section>
   )

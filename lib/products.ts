@@ -1,8 +1,8 @@
 /**
  * lib/products.ts — catalogue produits pour buy-box / deals / comparateur.
- * Les donnees reelles (images Amazon, variantes couleur, prix) sont generees par
- * `node scripts/fetch-amazon-products.mjs` (Amazon Creators API) dans
- * lib/products-data.json. Aucune image n'est rehebergee : URLs m.media-amazon.com.
+ * Chaque produit : IMAGE (Fnac, pour illustrer) + LIEN d'achat AMAZON affilie.
+ * Le lien Amazon utilise l'ASIN si fourni, sinon une recherche Amazon (nom) +
+ * ton tag partenaire. Donnees dans lib/products-data.json.
  */
 
 import generated from './products-data.json'
@@ -14,9 +14,9 @@ export interface ProductVariant {
   asin: string
   /** Libelle de la variante, ex. "Bleu", "Rose", "256 Go". */
   label: string
-  /** URL image Amazon (m.media-amazon.com). */
+  /** URL image (Fnac / autre marchand). */
   image: string
-  /** Prix formate, ex. "1 329 €". */
+  /** Prix formate, ex. "1 329 €". */
   price?: string
 }
 
@@ -24,7 +24,7 @@ export interface Product {
   /** Identifiant interne utilise par les composants, ex. "iphone-17-pro". */
   id: string
   name: string
-  /** ASIN de la variante par defaut. */
+  /** ASIN Amazon (optionnel) : si absent, le lien est une recherche Amazon. */
   asin: string
   image: string
   price?: string
@@ -37,6 +37,11 @@ export function amazonUrl(asin: string): string {
   return `https://${AMAZON_MARKETPLACE}/dp/${asin}?tag=${AMAZON_PARTNER_TAG}&linkCode=ogi&th=1&psc=1`
 }
 
+/** Lien de recherche affilie Amazon FR (fallback quand pas d'ASIN precis). */
+export function amazonSearchUrl(query: string): string {
+  return `https://${AMAZON_MARKETPLACE}/s?k=${encodeURIComponent(query)}&tag=${AMAZON_PARTNER_TAG}`
+}
+
 /**
  * Retire les suffixes de redimensionnement Amazon pour l'image pleine taille.
  * Ex: .../I/71xxxx._AC_SX300_..._.jpg -> .../I/71xxxx.jpg
@@ -46,9 +51,8 @@ export function cleanAmazonImage(url: string): string {
 }
 
 /**
- * Catalogue produits. Rempli automatiquement depuis lib/products-data.json
- * (genere par le script Creators API). Tant qu'un id est absent, les composants
- * gardent leur packshot da-v2.
+ * Catalogue produits. Rempli depuis lib/products-data.json (images Fnac + prix).
+ * Tant qu'un id est absent, les composants gardent leur packshot da-v2.
  */
 export const PRODUCTS: Record<string, Product> = {
   ...(generated as Record<string, Product>),

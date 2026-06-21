@@ -1,10 +1,10 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { CSSProperties } from 'react'
 import { RUBRIQUES, RUBRIQUE_LIST, type RubriqueKey } from '@/lib/rubriques'
 import { articleHref, formatDate, CATEGORY_LABELS } from '@/lib/blog'
 import { getArticlesByRubrique } from '@/lib/rubrique-articles'
 import { RubricScope } from './RubricScope'
-import { RubricImage } from './RubricImage'
 import { RubricPills } from './RubricPills'
 import { HubArticles, type HubArticle, type HubCategory } from './HubArticles'
 
@@ -38,8 +38,8 @@ const filterLabelStyle: CSSProperties = {
 }
 
 /**
- * Hub d'une rubrique : masthead colore (--route-color) + couverture + barres de
- * filtres (PAR RUBRIQUE / PAR PRODUIT) + article a la une + grille.
+ * Hub d'une rubrique : masthead colore avec la couverture en FOND fondu derriere
+ * le H1 (hauteur contenue) + barres de filtres + article a la une + grille.
  * Server Component : lit le fs (getArticlesByRubrique) puis serialise une liste
  * d'articles (href + date deja calcules) passee a <HubArticles>.
  */
@@ -73,18 +73,46 @@ export function RubriqueHub({ rubrique }: { rubrique: RubriqueKey }) {
     <RubricScope rubrique={rubrique}>
       <header
         style={{
-          background: 'color-mix(in oklab, var(--route-color) 12%, var(--bg-primary))',
+          position: 'relative',
+          overflow: 'hidden',
+          background: 'color-mix(in oklab, var(--route-color) 14%, var(--bg-primary))',
           borderBottom: '3px solid var(--route-color)',
         }}
       >
-        <div style={{ maxWidth: 1240, margin: '0 auto', padding: '40px 24px 32px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, maxWidth: 760 }}>
+        {cover ? (
+          <>
+            {/* Couverture en fond, fondue */}
+            <Image
+              src={cover}
+              alt=""
+              aria-hidden="true"
+              fill
+              priority
+              sizes="100vw"
+              style={{ objectFit: 'cover', opacity: 0.6, zIndex: 0 }}
+            />
+            {/* Voile degrade : lisible a gauche (texte), revele l'image a droite */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 1,
+                background:
+                  'linear-gradient(90deg, color-mix(in oklab, var(--route-color) 26%, var(--bg-primary)) 0%, color-mix(in oklab, var(--route-color) 20%, var(--bg-primary)) 42%, transparent 100%)',
+              }}
+            />
+          </>
+        ) : null}
+
+        <div style={{ position: 'relative', zIndex: 2, maxWidth: 1240, margin: '0 auto', padding: '38px 24px 30px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14, maxWidth: 720 }}>
             <span style={eyebrowStyle}>{'★ ' + r.labelSingular}</span>
             <h1
               style={{
                 fontFamily: 'var(--next-font-display), system-ui, sans-serif',
                 fontWeight: 800,
-                fontSize: 'clamp(36px, 5vw, 60px)',
+                fontSize: 'clamp(34px, 4.6vw, 56px)',
                 letterSpacing: '-0.03em',
                 lineHeight: 1,
                 margin: 0,
@@ -93,24 +121,13 @@ export function RubriqueHub({ rubrique }: { rubrique: RubriqueKey }) {
             >
               {r.label}
             </h1>
-            <p style={{ fontSize: 18, lineHeight: 1.5, color: 'var(--text-secondary)', margin: 0 }}>
+            <p style={{ fontSize: 17, lineHeight: 1.5, color: 'var(--text-secondary)', margin: 0 }}>
               {r.description}
             </p>
             <div style={{ marginTop: 4 }}>
               <RubricPills active={rubrique} />
             </div>
           </div>
-          {cover ? (
-            <RubricImage
-              src={cover}
-              alt={'Illustration de la rubrique ' + r.label}
-              width={1600}
-              height={900}
-              sizes="100vw"
-              priority
-              style={{ marginTop: 28 }}
-            />
-          ) : null}
         </div>
       </header>
 

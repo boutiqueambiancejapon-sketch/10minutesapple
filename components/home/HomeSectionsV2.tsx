@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { getProduct, amazonUrl, amazonSearchUrl } from '@/lib/products'
 
 // Sections de la home, reproduction fidele du mockup DA V2. Valeurs oklch exactes.
 const INK = 'oklch(0.18 0.012 270)'
@@ -28,14 +29,19 @@ const GUIDE_TEASER = [
   { rank: 3, name: 'iPhone 16e', why: 'Le meilleur rapport qualité-prix', price: '719 €' },
 ]
 
-const DEALS = [
-  { name: 'iPhone 16', img: '/images/da-v2/packshots/packshot-iphone-16.jpeg', priceFmt: '699 €', oldFmt: '799 €', off: '−13 %', tag: 'iPhone' },
-  { name: 'AirPods Pro 3', img: '/images/da-v2/packshots/packshot-airpods-pro-3.jpeg', priceFmt: '259 €', oldFmt: '279 €', off: '−7 %', tag: 'Audio' },
-  { name: 'MacBook Air M4', img: '/images/da-v2/packshots/packshot-macbook-air-m4.jpeg', priceFmt: '1 099 €', oldFmt: '1 299 €', off: '−15 %', tag: 'Mac' },
-  { name: 'Apple Watch Series 11', img: '/images/da-v2/packshots/packshot-watch-series-11.jpeg', priceFmt: '419 €', oldFmt: '449 €', off: '−7 %', tag: 'Watch' },
+const DEAL_DEFS = [
+  { id: 'iphone-16', tag: 'iPhone' },
+  { id: 'airpods-pro-3', tag: 'Audio' },
+  { id: 'macbook-air-m4', tag: 'Mac' },
+  { id: 'watch-series-11', tag: 'Watch' },
 ]
 
 export function HomeSectionsV2() {
+  const deals = DEAL_DEFS.map((d) => {
+    const p = getProduct(d.id)
+    const name = p?.name ?? d.id
+    return { id: d.id, tag: d.tag, name, image: p?.image, price: p?.price, url: p?.asin ? amazonUrl(p.asin) : amazonSearchUrl(name) }
+  })
   return (
     <div>
       {/* FEATURE GRID */}
@@ -160,20 +166,22 @@ export function HomeSectionsV2() {
           <Link href="/deals" style={{ fontFamily: mono, fontSize: 12, color: 'var(--text-muted)', textDecoration: 'none' }}>{'Sélection vérifiée par la rédaction →'}</Link>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: 16 }}>
-          {DEALS.map((d) => (
-            <article key={d.name} style={{ border: '1px solid color-mix(in oklab, var(--text-primary) 12%, transparent)', borderRadius: 14, overflow: 'hidden', background: 'var(--bg-surface)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ position: 'relative', aspectRatio: '1 / 1', background: 'oklch(0.95 0.01 95)' }}>
-                <Image src={d.img} alt={d.name} fill sizes="(max-width: 600px) 50vw, 25vw" style={{ objectFit: 'cover' }} />
-                <span style={{ position: 'absolute', top: 10, left: 10, background: RED, color: '#fff', fontFamily: mono, fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 5 }}>{d.off}</span>
+          {deals.map((d) => (
+            <article key={d.id} style={{ border: '1px solid color-mix(in oklab, var(--text-primary) 12%, transparent)', borderRadius: 14, overflow: 'hidden', background: 'var(--bg-surface)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ position: 'relative', aspectRatio: '1 / 1', background: '#fff' }}>
+                {d.image ? (
+                  <Image src={d.image} alt={d.name} fill sizes="(max-width: 600px) 50vw, 25vw" style={{ objectFit: 'contain', padding: 14 }} />
+                ) : null}
                 <span style={{ position: 'absolute', top: 10, right: 10, background: INK, color: '#fff', fontFamily: mono, fontSize: 9, fontWeight: 700, padding: '3px 7px', borderRadius: 5 }}>{d.tag}</span>
               </div>
               <div style={{ padding: '14px 15px 16px', display: 'flex', flexDirection: 'column', gap: 7, flex: 1 }}>
                 <h3 style={{ fontFamily: display, fontWeight: 700, fontSize: 17, lineHeight: 1.1, letterSpacing: '-0.01em', margin: 0, color: 'var(--text-primary)' }}>{d.name}</h3>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, marginTop: 'auto' }}>
-                  <span style={{ fontFamily: display, fontWeight: 800, fontSize: 22, color: 'oklch(0.4 0.12 45)' }}>{d.priceFmt}</span>
-                  <span style={{ fontFamily: mono, fontSize: 11, color: 'var(--text-muted)', textDecoration: 'line-through' }}>{d.oldFmt}</span>
-                </div>
-                <Link href="/deals" style={{ textAlign: 'center', background: ORANGE, color: 'oklch(0.22 0.06 55)', textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 12, padding: 11, borderRadius: 9, marginTop: 4 }}>{'🛒 Voir le deal'}</Link>
+                {d.price ? (
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, marginTop: 'auto' }}>
+                    <span style={{ fontFamily: display, fontWeight: 800, fontSize: 22, color: 'oklch(0.4 0.12 45)' }}>{d.price}</span>
+                  </div>
+                ) : null}
+                <Link href={d.url} target="_blank" rel="nofollow sponsored noopener" style={{ textAlign: 'center', background: ORANGE, color: 'oklch(0.22 0.06 55)', textDecoration: 'none', fontFamily: mono, fontWeight: 700, fontSize: 12, padding: 11, borderRadius: 9, marginTop: 4 }}>{'🛒 Voir sur Amazon'}</Link>
               </div>
             </article>
           ))}
